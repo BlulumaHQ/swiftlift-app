@@ -46,15 +46,12 @@ const Header = () => {
     setMobileOpen(false);
   };
 
-  const isHero = isHome && !scrolled;
-  // On internal pages, use brand-dark bg when not scrolled to blend with hero
-  const isInternalUnscrolled = !isHome && !scrolled;
-
-  const headerBg = isHero
-    ? "header-transparent"
-    : isInternalUnscrolled
+  // Header is always solid
+  const headerBg = scrolled
+    ? "header-scrolled"
+    : isHome
       ? "header-brand-solid"
-      : "header-scrolled";
+      : "header-brand-solid";
 
   return (
     <header
@@ -72,7 +69,7 @@ const Header = () => {
               href={item.href}
               onClick={(e) => handleNavClick(e, item.href)}
               className={`text-[0.9rem] font-bold transition-colors duration-300 ${
-                isHero || isInternalUnscrolled
+                !scrolled
                   ? "text-white hover:text-white/90"
                   : "text-foreground hover:text-primary"
               }`}
@@ -86,21 +83,21 @@ const Header = () => {
           <a
             href="mailto:hello@swiftlift.app"
             className={`hidden md:flex items-center transition-colors ${
-              isHero || isInternalUnscrolled ? "text-white/70 hover:text-white" : "text-muted-foreground hover:text-foreground"
+              !scrolled ? "text-white/70 hover:text-white" : "text-muted-foreground hover:text-foreground"
             }`}
             aria-label="Email us"
           >
             <Mail size={17} />
           </a>
           <div className={`flex items-center rounded-full border overflow-hidden text-[0.85rem] transition-colors duration-300 ${
-            isHero || isInternalUnscrolled ? "border-white/30" : "border-border"
+            !scrolled ? "border-white/30" : "border-border"
           }`}>
             <button
               onClick={() => setLang("en")}
               className={`px-3 py-1.5 font-medium transition-colors ${
                 lang === "en"
                   ? "bg-primary text-primary-foreground"
-                  : isHero || isInternalUnscrolled
+                  : !scrolled
                     ? "text-white/70 hover:text-white"
                     : "text-muted-foreground hover:text-foreground"
               }`}
@@ -112,7 +109,7 @@ const Header = () => {
               className={`px-3 py-1.5 font-medium transition-colors ${
                 lang === "zh"
                   ? "bg-primary text-primary-foreground"
-                  : isHero || isInternalUnscrolled
+                  : !scrolled
                     ? "text-white/70 hover:text-white"
                     : "text-muted-foreground hover:text-foreground"
               }`}
@@ -122,7 +119,7 @@ const Header = () => {
           </div>
 
           <button
-            className={`md:hidden transition-colors duration-300 ${isHero || isInternalUnscrolled ? "text-white" : "text-foreground"}`}
+            className={`md:hidden transition-colors duration-300 ${!scrolled ? "text-white" : "text-foreground"}`}
             onClick={() => setMobileOpen(!mobileOpen)}
             aria-label="Toggle menu"
           >
