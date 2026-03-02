@@ -3,7 +3,6 @@ import { useSearchParams, Link } from "react-router-dom";
 import { LanguageProvider } from "@/contexts/LanguageContext";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import MobileNav from "@/components/MobileNav";
 import CustomCursor from "@/components/CustomCursor";
 import Preloader from "@/components/Preloader";
 import { Check, ChevronDown, ArrowRight, ArrowDown, Plus, Star, ChevronLeft, ChevronRight as ChevronRightIcon, Quote } from "lucide-react";
@@ -162,7 +161,6 @@ const FooterIntakeForm = ({
   return (
     <form onSubmit={handleSubmit}>
       <input type="hidden" name="plan" value={plan} />
-      {/* Desktop: Row 1 - 3 fields + button */}
       <div className="grid grid-cols-1 md:grid-cols-[1fr_1fr_1fr_auto] gap-3">
         <input type="text" name="businessName" required placeholder="Business Name *" className={inputClass} />
         <input type="email" name="email" required placeholder="Email *" className={inputClass} />
@@ -176,7 +174,6 @@ const FooterIntakeForm = ({
           {submitting ? "Sending..." : "Generate My FREE Previews"}
         </button>
       </div>
-      {/* Row 2 - timeline full width */}
       <div className="mt-3">
         <select name="timeline" className={inputClass}>
           <option value="">When do you need your website?</option>
@@ -203,11 +200,14 @@ const portfolioItems = [
   { image: portfolioLogistics, name: "Swift Logistics", desc: "Streamlined service pages for a fast-growing logistics company.", url: "#" },
 ];
 
-/* ── Testimonials ── */
+/* ── Testimonials mapped to portfolio ── */
 const testimonials = [
   { text: "SwiftLift delivered a stunning website in just 3 days. The preview process gave us total confidence before paying.", name: "James Mitchell", company: "Global Trade Co." },
   { text: "We went from an outdated site to a modern booking platform. The process was seamless and stress-free.", name: "Sarah Chen", company: "Serenity Wellness" },
   { text: "Professional, fast, and exactly what we needed. The two-preview approach made decision-making easy.", name: "David Carter", company: "Carter & Associates" },
+  { text: "BuildRight's online presence finally matches the quality of our work. Highly recommend SwiftLift.", name: "Mike Torres", company: "BuildRight Construction" },
+  { text: "Our distributor site is now clear, organized, and brings in new clients weekly.", name: "Linda Park", company: "Metro Wholesale" },
+  { text: "Fast turnaround and clean design. SwiftLift understood our logistics business perfectly.", name: "Ryan Okafor", company: "Swift Logistics" },
 ];
 
 /* ── Pricing plans ── */
@@ -232,7 +232,7 @@ const pricingPlans = [
     name: "Conversion Architecture",
     price: "$2,500+",
     planCode: "C",
-    features: ["Up to 20 Pages", "Full Planning Phase", "Unlimited Revisions (Production Only)", "Structured Content Flow"],
+    features: ["Up to 20 Pages", "Full Planning Phase", "Unlimited Revisions (Production Only)", "Funnel-Based Page Structure"],
     cta: "Claim My FREE Previews",
     highlighted: false,
   },
@@ -259,8 +259,8 @@ const Index = () => {
   const [showPreloader, setShowPreloader] = useState(() => !sessionStorage.getItem(PRELOADER_KEY));
   const [searchParams, setSearchParams] = useSearchParams();
   const [plan, setPlan] = useState(() => searchParams.get("plan") || "");
-  const [testimonialIdx, setTestimonialIdx] = useState(0);
-  const [faqOpen, setFaqOpen] = useState<number | null>(0); // First FAQ open by default
+  const [proofIdx, setProofIdx] = useState(0);
+  const [faqOpen, setFaqOpen] = useState<number | null>(0);
   const intakeRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -280,12 +280,12 @@ const Index = () => {
   const scrollToIntake = (planCode: string) => {
     setPlan(planCode);
     setSearchParams({ plan: planCode }, { replace: true });
-    const el = document.getElementById("intake");
+    const el = document.getElementById("contact");
     if (el) el.scrollIntoView({ behavior: "smooth" });
   };
 
-  const prevTestimonial = () => setTestimonialIdx((i) => (i === 0 ? testimonials.length - 1 : i - 1));
-  const nextTestimonial = () => setTestimonialIdx((i) => (i === testimonials.length - 1 ? 0 : i + 1));
+  const prevProof = () => setProofIdx((i) => (i === 0 ? portfolioItems.length - 1 : i - 1));
+  const nextProof = () => setProofIdx((i) => (i === portfolioItems.length - 1 ? 0 : i + 1));
 
   return (
     <LanguageProvider>
@@ -296,10 +296,10 @@ const Index = () => {
         <main>
           {/* ═══ 1. HERO ═══ */}
           <section
-            id="intake"
+            id="contact"
             className="relative pt-24 pb-14 md:pt-32 md:pb-18 overflow-hidden"
             style={{
-              background: "linear-gradient(180deg, hsl(209 66% 19%) 0%, hsl(209 66% 15%) 100%)",
+              background: "linear-gradient(180deg, hsl(209 66% 16%) 0%, hsl(209 66% 12%) 100%)",
             }}
           >
             {/* Subtle mesh gradient overlay */}
@@ -314,18 +314,28 @@ const Index = () => {
               <div className="grid grid-cols-1 lg:grid-cols-[1fr_0.55fr] gap-10 lg:gap-14 items-start">
                 {/* Left — dominant messaging */}
                 <div className="text-white pt-4 lg:pt-8">
-                  <h1 className="text-[clamp(2.2rem,5.5vw,4rem)] font-black leading-[1.05] font-display tracking-tight">
+                  {/* Desktop headline: exactly 2 lines */}
+                  <h1 className="hidden md:block text-[clamp(2.8rem,5.8vw,4.5rem)] font-black leading-[1.05] font-display tracking-tight">
                     See Your Website First.<br />
                     Pay Only If You Love It.
                   </h1>
-                  <p className="mt-5 text-white/65 text-base leading-relaxed max-w-lg">
+                  {/* Mobile headline: 4-line break */}
+                  <h1 className="md:hidden text-[2.4rem] font-black leading-[1.08] font-display tracking-tight">
+                    See Your<br />
+                    Website First.<br />
+                    Pay Only<br />
+                    If You Love It.
+                  </h1>
+
+                  <p className="mt-6 text-white/70 text-lg md:text-xl leading-relaxed max-w-lg">
                     We build two previews first.<br />
                     You choose. We launch in 3 days.
                   </p>
-                  <ul className="mt-7 space-y-2.5">
+
+                  <ul className="mt-8 space-y-3">
                     {["No upfront payment", "Fixed pricing", "3-day launch"].map((item) => (
-                      <li key={item} className="flex items-center gap-2.5 text-sm text-white/75">
-                        <Check size={15} className="text-white/50 flex-shrink-0" />
+                      <li key={item} className="flex items-center gap-3 text-base md:text-lg text-white/85">
+                        <Check size={18} className="flex-shrink-0" style={{ color: "hsl(275 51% 46%)" }} />
                         {item}
                       </li>
                     ))}
@@ -342,7 +352,7 @@ const Index = () => {
           </section>
 
           {/* ═══ 2. HOW IT WORKS ═══ */}
-          <section className="py-14 md:py-18 bg-background">
+          <section id="process" className="py-14 md:py-18 bg-background">
             <div className="max-w-4xl mx-auto px-6 text-center">
               <h2 className="text-[clamp(1.8rem,4vw,2.8rem)] font-black text-foreground font-display">
                 How SwiftLift Works
@@ -395,77 +405,107 @@ const Index = () => {
             </div>
           </section>
 
-          {/* ═══ 3. PROOF SECTION — Split Layout ═══ */}
-          <section className="py-14 md:py-18" style={{ background: "hsl(var(--surface-sunken))" }}>
+          {/* ═══ 3. PROOF SECTION — Full Card Carousel ═══ */}
+          <section id="portfolio" className="py-14 md:py-18" style={{ background: "hsl(var(--surface-sunken))" }}>
             <div className="max-w-6xl mx-auto px-6">
               <h2 className="text-[clamp(1.8rem,4vw,2.8rem)] font-black text-foreground font-display text-center">
                 Real Businesses. Built with SwiftLift.
               </h2>
               <p className="mt-2 text-muted-foreground text-sm text-center">Before and after — see the difference.</p>
 
-              <div className="mt-10 grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
-                {/* Left: Featured image */}
-                <div className="rounded-2xl overflow-hidden border border-border shadow-lg">
-                  <img
-                    src={portfolioItems[0].image}
-                    alt={portfolioItems[0].name}
-                    className="w-full aspect-[4/3] object-cover"
-                  />
-                </div>
+              {/* Carousel */}
+              <div className="mt-10 relative">
+                <AnimatePresence mode="wait">
+                  <motion.div
+                    key={proofIdx}
+                    initial={{ opacity: 0, x: 40 }}
+                    animate={{ opacity: 1, x: 0 }}
+                    exit={{ opacity: 0, x: -40 }}
+                    transition={{ duration: 0.3 }}
+                    className="grid grid-cols-1 lg:grid-cols-2 gap-6 bg-background rounded-2xl border border-border shadow-lg overflow-hidden"
+                  >
+                    {/* Left: Image with before/after hover */}
+                    <div className="relative group aspect-[4/3] overflow-hidden cursor-pointer">
+                      {/* After image (default) */}
+                      <img
+                        src={portfolioItems[proofIdx].image}
+                        alt={`${portfolioItems[proofIdx].name} - After`}
+                        className="absolute inset-0 w-full h-full object-cover transition-all duration-500 group-hover:opacity-0 group-hover:scale-105 brightness-105 contrast-105 saturate-110"
+                      />
+                      {/* Before image (on hover) - duller */}
+                      <img
+                        src={portfolioItems[proofIdx].image}
+                        alt={`${portfolioItems[proofIdx].name} - Before`}
+                        className="absolute inset-0 w-full h-full object-cover transition-all duration-500 opacity-0 group-hover:opacity-100 brightness-75 contrast-90 saturate-50 sepia-[0.15]"
+                        style={{ filter: "brightness(0.7) contrast(0.85) saturate(0.4) sepia(0.15)" }}
+                      />
+                      {/* Label */}
+                      <span className="absolute top-3 right-3 text-[10px] font-bold uppercase tracking-wider bg-black/60 text-white px-2 py-1 rounded transition-opacity duration-300 group-hover:opacity-0">
+                        After
+                      </span>
+                      <span className="absolute top-3 right-3 text-[10px] font-bold uppercase tracking-wider bg-black/60 text-white/70 px-2 py-1 rounded transition-opacity duration-300 opacity-0 group-hover:opacity-100">
+                        Before
+                      </span>
+                    </div>
 
-                {/* Right: Testimonial carousel + project info */}
-                <div className="flex flex-col justify-between h-full">
-                  {/* Testimonial card */}
-                  <div className="bg-background rounded-2xl border border-border p-6 md:p-8 shadow-sm relative">
-                    <Quote size={24} className="text-muted-foreground/15 absolute top-5 left-6" />
-                    <AnimatePresence mode="wait">
-                      <motion.div
-                        key={testimonialIdx}
-                        initial={{ opacity: 0, y: 10 }}
-                        animate={{ opacity: 1, y: 0 }}
-                        exit={{ opacity: 0, y: -10 }}
-                        transition={{ duration: 0.25 }}
-                      >
-                        <p className="text-foreground text-sm leading-relaxed mt-4 min-h-[3.5rem]">
-                          "{testimonials[testimonialIdx].text}"
+                    {/* Right: Testimonial + project info */}
+                    <div className="flex flex-col justify-between p-6 md:p-8">
+                      {/* Testimonial */}
+                      <div>
+                        <Quote size={24} className="text-muted-foreground/15 mb-3" />
+                        <p className="text-foreground text-sm leading-relaxed">
+                          "{testimonials[proofIdx].text}"
                         </p>
                         <div className="mt-4">
-                          <p className="font-semibold text-sm text-foreground">{testimonials[testimonialIdx].name}</p>
-                          <p className="text-xs text-muted-foreground">{testimonials[testimonialIdx].company}</p>
+                          <p className="font-semibold text-sm text-foreground">{testimonials[proofIdx].name}</p>
+                          <p className="text-xs text-muted-foreground">{testimonials[proofIdx].company}</p>
                         </div>
-                      </motion.div>
-                    </AnimatePresence>
-                    {/* Navigation */}
-                    <div className="flex items-center gap-2 mt-5">
-                      <button onClick={prevTestimonial} className="w-8 h-8 rounded-full border border-border flex items-center justify-center hover:bg-muted transition-colors" aria-label="Previous testimonial">
-                        <ChevronLeft size={14} />
-                      </button>
-                      <button onClick={nextTestimonial} className="w-8 h-8 rounded-full border border-border flex items-center justify-center hover:bg-muted transition-colors" aria-label="Next testimonial">
-                        <ChevronRightIcon size={14} />
-                      </button>
-                      <div className="flex gap-1.5 ml-2">
-                        {testimonials.map((_, i) => (
-                          <button key={i} onClick={() => setTestimonialIdx(i)} className={`w-1.5 h-1.5 rounded-full transition-all ${i === testimonialIdx ? "bg-foreground" : "bg-foreground/20"}`} />
-                        ))}
+                      </div>
+
+                      {/* Project info */}
+                      <div className="mt-6 pt-5 border-t border-border">
+                        <h3 className="text-base font-bold text-foreground font-display">{portfolioItems[proofIdx].name}</h3>
+                        <p className="mt-1 text-sm text-muted-foreground">{portfolioItems[proofIdx].desc}</p>
+                        <a
+                          href={portfolioItems[proofIdx].url}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="mt-2 inline-flex items-center gap-1 text-sm font-semibold hover:underline"
+                          style={{ color: "hsl(275 51% 46%)" }}
+                        >
+                          View Live Website →
+                        </a>
+                        <p className="mt-3 text-[11px] text-muted-foreground">Built with the SwiftLift System.</p>
                       </div>
                     </div>
-                  </div>
+                  </motion.div>
+                </AnimatePresence>
 
-                  {/* Project info below testimonial */}
-                  <div className="mt-5 px-1">
-                    <h3 className="text-base font-bold text-foreground font-display">Global Trade Co.</h3>
-                    <p className="mt-1 text-sm text-muted-foreground">From outdated directory to modern export platform.</p>
-                    <a
-                      href="#"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="mt-2 inline-flex items-center gap-1 text-sm font-semibold hover:underline"
-                      style={{ color: "hsl(275 51% 46%)" }}
-                    >
-                      View Live Website →
-                    </a>
-                    <p className="mt-3 text-[11px] text-muted-foreground">Built with the SwiftLift System.</p>
+                {/* Navigation arrows */}
+                <div className="flex items-center justify-center gap-4 mt-6">
+                  <button
+                    onClick={prevProof}
+                    className="w-10 h-10 rounded-full border border-border flex items-center justify-center hover:bg-muted transition-colors"
+                    aria-label="Previous project"
+                  >
+                    <ChevronLeft size={18} />
+                  </button>
+                  <div className="flex gap-2">
+                    {portfolioItems.map((_, i) => (
+                      <button
+                        key={i}
+                        onClick={() => setProofIdx(i)}
+                        className={`w-2 h-2 rounded-full transition-all ${i === proofIdx ? "bg-foreground scale-125" : "bg-foreground/20"}`}
+                      />
+                    ))}
                   </div>
+                  <button
+                    onClick={nextProof}
+                    className="w-10 h-10 rounded-full border border-border flex items-center justify-center hover:bg-muted transition-colors"
+                    aria-label="Next project"
+                  >
+                    <ChevronRightIcon size={18} />
+                  </button>
                 </div>
               </div>
             </div>
@@ -607,7 +647,6 @@ const Index = () => {
           </section>
         </main>
         <Footer />
-        <MobileNav />
       </div>
     </LanguageProvider>
   );
