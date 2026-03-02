@@ -313,7 +313,7 @@ const Index = () => {
             <div className="relative z-10 max-w-7xl mx-auto px-6">
               <div className="grid grid-cols-1 lg:grid-cols-[1fr_0.55fr] gap-10 lg:gap-14 items-start">
                 {/* Left — dominant messaging */}
-                <div className="text-white pt-4 lg:pt-8">
+                <div className="text-white pt-4 lg:pt-2">
                   <h1 className="text-[2.6rem] md:text-[clamp(3.2rem,6.5vw,5.2rem)] font-black leading-[1.08] font-display tracking-tight">
                     See Your<br />
                     Website First.<br />
