@@ -125,7 +125,9 @@ const FooterIntakeForm = ({
 }) => {
   const [submitting, setSubmitting] = useState(false);
   const inputClass =
-    "w-full rounded-lg border border-white/15 bg-white/5 px-3 py-2.5 text-sm text-white placeholder:text-white/40 focus:outline-none focus:ring-1 focus:ring-[hsl(275_51%_46%)]/50 focus:border-[hsl(275_51%_46%)]/60 transition-all";
+    "w-full rounded-lg border border-[rgba(255,255,255,0.15)] bg-white/5 px-3 py-2.5 text-sm text-[#D0D6DE] placeholder:text-[#9AA3AE] focus:outline-none focus:ring-1 focus:ring-[hsl(275_51%_46%)]/30 focus:border-[rgba(255,255,255,0.3)] transition-all";
+  const selectClass =
+    "w-full rounded-lg border border-[rgba(255,255,255,0.15)] bg-white/5 px-3 py-2.5 text-sm text-[#D0D6DE] placeholder:text-[#9AA3AE] focus:outline-none focus:ring-1 focus:ring-[hsl(275_51%_46%)]/30 focus:border-[rgba(255,255,255,0.3)] transition-all [&>option]:bg-white [&>option]:text-[#2B2F36] [&>option:hover]:bg-[#F3F4F6] [&>option:checked]:bg-[hsl(275_51%_46%_/_0.08)]";
 
   const autoPrefix = (e: React.FocusEvent<HTMLInputElement>) => {
     const val = e.target.value.trim();
@@ -175,7 +177,7 @@ const FooterIntakeForm = ({
         </button>
       </div>
       <div className="mt-3">
-        <select name="timeline" className={inputClass}>
+        <select name="timeline" className={selectClass}>
           <option value="">When do you need your website?</option>
           <option value="asap">As soon as possible</option>
           <option value="2weeks">Within 2 weeks</option>
