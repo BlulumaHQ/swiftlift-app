@@ -6,7 +6,7 @@ import Footer from "@/components/Footer";
 import MobileNav from "@/components/MobileNav";
 import CustomCursor from "@/components/CustomCursor";
 import Preloader from "@/components/Preloader";
-import { Check, ChevronDown, ArrowLeft, ArrowRight, Plus, Star } from "lucide-react";
+import { Check, ChevronDown, ArrowRight, ArrowDown, Plus, Star, ChevronLeft, ChevronRight as ChevronRightIcon, Quote } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
 import portfolioTrade from "@/assets/portfolio-trade.jpg";
@@ -18,7 +18,7 @@ import portfolioLogistics from "@/assets/portfolio-logistics.jpg";
 
 const PRELOADER_KEY = "swiftlift_visited";
 
-/* ── Intake Form (reusable) ── */
+/* ── Intake Form (Hero version) ── */
 const IntakeFormFields = ({
   plan,
   setPlan,
@@ -28,7 +28,7 @@ const IntakeFormFields = ({
 }) => {
   const [submitting, setSubmitting] = useState(false);
   const inputClass =
-    "w-full rounded-xl border border-border bg-background px-4 py-3 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary transition-all";
+    "w-full rounded-lg border border-border bg-background px-3 py-2.5 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-[hsl(275_51%_46%)]/30 focus:border-[hsl(275_51%_46%)] transition-all";
 
   const autoPrefix = (e: React.FocusEvent<HTMLInputElement>) => {
     const val = e.target.value.trim();
@@ -62,35 +62,35 @@ const IntakeFormFields = ({
   };
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-4">
+    <form onSubmit={handleSubmit} className="space-y-3">
       <input type="hidden" name="plan" value={plan} />
       <div>
-        <label className="block text-sm font-medium text-foreground mb-1">
+        <label className="block text-xs font-medium text-foreground mb-1">
           Business Name <span className="text-destructive">*</span>
         </label>
         <input type="text" name="businessName" required placeholder="Your business name" className={inputClass} />
       </div>
       <div>
-        <label className="block text-sm font-medium text-foreground mb-1">
-          Current Website <span className="text-muted-foreground text-xs">(Optional)</span>
+        <label className="block text-xs font-medium text-foreground mb-1">
+          Current Website <span className="text-muted-foreground text-[10px]">(Optional)</span>
         </label>
         <input type="url" name="currentWebsite" placeholder="https://yourbusiness.com" className={inputClass} onBlur={autoPrefix} />
       </div>
       <div>
-        <label className="block text-sm font-medium text-foreground mb-1">
+        <label className="block text-xs font-medium text-foreground mb-1">
           Email <span className="text-destructive">*</span>
         </label>
         <input type="email" name="email" required placeholder="you@email.com" className={inputClass} />
       </div>
       <div>
-        <label className="block text-sm font-medium text-foreground mb-1">
-          Website You Like <span className="text-muted-foreground text-xs">(Optional)</span>
+        <label className="block text-xs font-medium text-foreground mb-1">
+          Website You Like <span className="text-muted-foreground text-[10px]">(Optional)</span>
         </label>
         <input type="url" name="websiteYouLike" placeholder="https://example.com" className={inputClass} onBlur={autoPrefix} />
       </div>
       <div>
-        <label className="block text-sm font-medium text-foreground mb-1">
-          When do you need your website? <span className="text-muted-foreground text-xs">(Optional)</span>
+        <label className="block text-xs font-medium text-foreground mb-1">
+          When do you need your website? <span className="text-muted-foreground text-[10px]">(Optional)</span>
         </label>
         <select name="timeline" className={inputClass}>
           <option value="">Select an option</option>
@@ -103,12 +103,91 @@ const IntakeFormFields = ({
       <button
         type="submit"
         disabled={submitting}
-        className={`w-full btn-brand rounded-full py-4 px-10 text-base font-semibold ${submitting ? "opacity-70 pointer-events-none" : ""}`}
+        className={`w-full rounded-full py-3 px-8 text-sm font-semibold text-white transition-all ${submitting ? "opacity-70 pointer-events-none" : "hover:opacity-90"}`}
+        style={{ background: "hsl(275 51% 46%)" }}
       >
         {submitting ? "Sending..." : "Generate My FREE Previews"}
       </button>
-      <p className="text-xs text-muted-foreground text-center">
-        No spam. No sales calls. Just your previews.
+      <div className="text-[11px] text-muted-foreground text-center leading-relaxed">
+        No credit card required. No obligation.<br />
+        No spam. No sales calls.
+      </div>
+    </form>
+  );
+};
+
+/* ── Footer Intake Form (dark compact) ── */
+const FooterIntakeForm = ({
+  plan,
+  setPlan,
+}: {
+  plan: string;
+  setPlan: (v: string) => void;
+}) => {
+  const [submitting, setSubmitting] = useState(false);
+  const inputClass =
+    "w-full rounded-lg border border-white/15 bg-white/5 px-3 py-2.5 text-sm text-white placeholder:text-white/40 focus:outline-none focus:ring-1 focus:ring-[hsl(275_51%_46%)]/50 focus:border-[hsl(275_51%_46%)]/60 transition-all";
+
+  const autoPrefix = (e: React.FocusEvent<HTMLInputElement>) => {
+    const val = e.target.value.trim();
+    if (val && !val.startsWith("http://") && !val.startsWith("https://")) {
+      e.target.value = "https://" + val;
+    }
+  };
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setSubmitting(true);
+    const form = e.currentTarget;
+    const fd = new FormData(form);
+    try {
+      const res = await fetch("https://formspree.io/f/mbdabbql", {
+        method: "POST",
+        headers: { "Content-Type": "application/json", Accept: "application/json" },
+        body: JSON.stringify({
+          name: fd.get("businessName"),
+          email: fd.get("email"),
+          subject: fd.get("businessName"),
+          message: `Business: ${fd.get("businessName")}\nWebsite: ${fd.get("currentWebsite") || "N/A"}\nInspiration: ${fd.get("websiteYouLike") || "N/A"}\nTimeline: ${fd.get("timeline") || "N/A"}\nPlan: ${fd.get("plan") || "N/A"}`,
+        }),
+      });
+      if (res.ok) window.location.assign("/thank-you");
+    } catch {
+      // silent
+    } finally {
+      setSubmitting(false);
+    }
+  };
+
+  return (
+    <form onSubmit={handleSubmit}>
+      <input type="hidden" name="plan" value={plan} />
+      {/* Desktop: Row 1 - 3 fields + button */}
+      <div className="grid grid-cols-1 md:grid-cols-[1fr_1fr_1fr_auto] gap-3">
+        <input type="text" name="businessName" required placeholder="Business Name *" className={inputClass} />
+        <input type="email" name="email" required placeholder="Email *" className={inputClass} />
+        <input type="url" name="websiteYouLike" placeholder="Website You Like" className={inputClass} onBlur={autoPrefix} />
+        <button
+          type="submit"
+          disabled={submitting}
+          className={`rounded-full py-2.5 px-6 text-sm font-semibold text-white whitespace-nowrap transition-all ${submitting ? "opacity-70 pointer-events-none" : "hover:opacity-90"}`}
+          style={{ background: "hsl(275 51% 46%)" }}
+        >
+          {submitting ? "Sending..." : "Generate My FREE Previews"}
+        </button>
+      </div>
+      {/* Row 2 - timeline full width */}
+      <div className="mt-3">
+        <select name="timeline" className={inputClass}>
+          <option value="">When do you need your website?</option>
+          <option value="asap">As soon as possible</option>
+          <option value="2weeks">Within 2 weeks</option>
+          <option value="1month">Within a month</option>
+          <option value="exploring">Just exploring</option>
+        </select>
+      </div>
+      <p className="mt-3 text-[11px] text-white/40 text-center">
+        No credit card required. No obligation.
       </p>
     </form>
   );
@@ -124,27 +203,37 @@ const portfolioItems = [
   { image: portfolioLogistics, name: "Swift Logistics", desc: "Streamlined service pages for a fast-growing logistics company.", url: "#" },
 ];
 
+/* ── Testimonials ── */
+const testimonials = [
+  { text: "SwiftLift delivered a stunning website in just 3 days. The preview process gave us total confidence before paying.", name: "James Mitchell", company: "Global Trade Co." },
+  { text: "We went from an outdated site to a modern booking platform. The process was seamless and stress-free.", name: "Sarah Chen", company: "Serenity Wellness" },
+  { text: "Professional, fast, and exactly what we needed. The two-preview approach made decision-making easy.", name: "David Carter", company: "Carter & Associates" },
+];
+
 /* ── Pricing plans ── */
 const pricingPlans = [
   {
     name: "Launch",
+    price: "$350",
     planCode: "L",
     features: ["1–2 Pages", "Clean Modern Design", "Mobile Responsive", "1 Free Revision", "Launch in 3 Days"],
-    cta: "Select Launch",
+    cta: "Claim My FREE Previews",
     highlighted: false,
   },
   {
     name: "Growth",
+    price: "$550",
     planCode: "G",
     features: ["3–7 Pages", "Structured Layout", "Mobile Responsive", "1 Free Revision", "Launch in 3 Days"],
-    cta: "Select Growth",
+    cta: "Claim My FREE Previews",
     highlighted: true,
   },
   {
     name: "Conversion Architecture",
+    price: "$2,500+",
     planCode: "C",
     features: ["Up to 20 Pages", "Full Planning Phase", "Unlimited Revisions (Production Only)", "Structured Content Flow"],
-    cta: "Request Custom Quote",
+    cta: "Claim My FREE Previews",
     highlighted: false,
   },
 ];
@@ -170,15 +259,14 @@ const Index = () => {
   const [showPreloader, setShowPreloader] = useState(() => !sessionStorage.getItem(PRELOADER_KEY));
   const [searchParams, setSearchParams] = useSearchParams();
   const [plan, setPlan] = useState(() => searchParams.get("plan") || "");
-  const [carouselIdx, setCarouselIdx] = useState(0);
-  const [faqOpen, setFaqOpen] = useState<number | null>(null);
+  const [testimonialIdx, setTestimonialIdx] = useState(0);
+  const [faqOpen, setFaqOpen] = useState<number | null>(0); // First FAQ open by default
   const intakeRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     document.title = "SwiftLift — See Your Website Before You Pay";
   }, []);
 
-  // Persist plan from URL
   useEffect(() => {
     const p = searchParams.get("plan");
     if (p) setPlan(p);
@@ -196,8 +284,8 @@ const Index = () => {
     if (el) el.scrollIntoView({ behavior: "smooth" });
   };
 
-  const prevSlide = () => setCarouselIdx((i) => (i === 0 ? portfolioItems.length - 1 : i - 1));
-  const nextSlide = () => setCarouselIdx((i) => (i === portfolioItems.length - 1 ? 0 : i + 1));
+  const prevTestimonial = () => setTestimonialIdx((i) => (i === 0 ? testimonials.length - 1 : i - 1));
+  const nextTestimonial = () => setTestimonialIdx((i) => (i === testimonials.length - 1 ? 0 : i + 1));
 
   return (
     <LanguageProvider>
@@ -209,35 +297,44 @@ const Index = () => {
           {/* ═══ 1. HERO ═══ */}
           <section
             id="intake"
-            className="relative pt-24 pb-16 md:pt-32 md:pb-20"
+            className="relative pt-24 pb-14 md:pt-32 md:pb-18 overflow-hidden"
             style={{
-              background: "linear-gradient(180deg, hsl(209 66% 22%) 0%, hsl(209 66% 18%) 100%)",
+              background: "linear-gradient(180deg, hsl(209 66% 19%) 0%, hsl(209 66% 15%) 100%)",
             }}
           >
-            <div className="max-w-7xl mx-auto px-6">
-              <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-16 items-start">
-                {/* Left */}
-                <div className="text-white pt-4">
-                  <h1 className="text-[clamp(2rem,5vw,3.5rem)] font-black leading-[1.1] font-display">
-                    See Your Website<br />Before You Pay.
+            {/* Subtle mesh gradient overlay */}
+            <div
+              className="absolute inset-0 pointer-events-none"
+              style={{
+                background: "radial-gradient(ellipse 80% 60% at 20% 40%, hsl(275 51% 46% / 0.05) 0%, transparent 60%), radial-gradient(ellipse 60% 50% at 80% 30%, hsl(214 58% 60% / 0.04) 0%, transparent 50%)",
+              }}
+            />
+
+            <div className="relative z-10 max-w-7xl mx-auto px-6">
+              <div className="grid grid-cols-1 lg:grid-cols-[1fr_0.55fr] gap-10 lg:gap-14 items-start">
+                {/* Left — dominant messaging */}
+                <div className="text-white pt-4 lg:pt-8">
+                  <h1 className="text-[clamp(2.2rem,5.5vw,4rem)] font-black leading-[1.05] font-display tracking-tight">
+                    See Your Website First.<br />
+                    Pay Only If You Love It.
                   </h1>
-                  <p className="mt-4 text-white/70 text-base leading-relaxed max-w-md">
+                  <p className="mt-5 text-white/65 text-base leading-relaxed max-w-lg">
                     We build two previews first.<br />
                     You choose. We launch in 3 days.
                   </p>
-                  <ul className="mt-6 space-y-2">
+                  <ul className="mt-7 space-y-2.5">
                     {["No upfront payment", "Fixed pricing", "3-day launch"].map((item) => (
-                      <li key={item} className="flex items-center gap-2 text-sm text-white/80">
-                        <Check size={16} className="text-white/60 flex-shrink-0" />
+                      <li key={item} className="flex items-center gap-2.5 text-sm text-white/75">
+                        <Check size={15} className="text-white/50 flex-shrink-0" />
                         {item}
                       </li>
                     ))}
                   </ul>
                 </div>
 
-                {/* Right — Form */}
-                <div ref={intakeRef} className="bg-background rounded-2xl p-6 md:p-8 border border-border/60 shadow-2xl">
-                  <p className="text-xs text-muted-foreground mb-4">Takes less than 60 seconds.</p>
+                {/* Right — Compact Form */}
+                <div ref={intakeRef} className="bg-background rounded-2xl p-5 md:p-6 border border-border/50 shadow-2xl">
+                  <p className="text-[11px] text-muted-foreground mb-3">Takes less than 60 seconds.</p>
                   <IntakeFormFields plan={plan} setPlan={setPlan} />
                 </div>
               </div>
@@ -245,109 +342,142 @@ const Index = () => {
           </section>
 
           {/* ═══ 2. HOW IT WORKS ═══ */}
-          <section className="py-16 md:py-20 bg-background">
+          <section className="py-14 md:py-18 bg-background">
             <div className="max-w-4xl mx-auto px-6 text-center">
               <h2 className="text-[clamp(1.8rem,4vw,2.8rem)] font-black text-foreground font-display">
                 How SwiftLift Works
               </h2>
               <p className="mt-2 text-muted-foreground text-sm">A simple, predictable process.</p>
-              <div className="mt-12 grid grid-cols-1 md:grid-cols-3 gap-10">
+
+              {/* Desktop: horizontal with arrows */}
+              <div className="mt-12 hidden md:flex items-start justify-center gap-0">
                 {[
                   { step: "1", title: "We Build Two Previews", desc: "We design two modern website previews tailored to your business." },
                   { step: "2", title: "You Choose & Approve", desc: "Pick the direction you prefer. Request small refinements if needed." },
                   { step: "3", title: "Launch in 3 Days", desc: "Once approved, your website goes live within 3 days." },
-                ].map((s) => (
-                  <div key={s.step} className="flex flex-col items-center text-center">
-                    <span className="text-3xl font-black text-muted-foreground/30 font-display">{s.step}</span>
-                    <h3 className="mt-2 text-base font-bold text-foreground font-display">{s.title}</h3>
-                    <p className="mt-2 text-sm text-muted-foreground leading-relaxed max-w-xs">{s.desc}</p>
+                ].map((s, i) => (
+                  <div key={s.step} className="flex items-start">
+                    <div className="flex flex-col items-center text-center max-w-[200px]">
+                      <span className="text-3xl font-black text-muted-foreground/25 font-display">{s.step}</span>
+                      <h3 className="mt-2 text-base font-bold text-foreground font-display">{s.title}</h3>
+                      <p className="mt-2 text-sm text-muted-foreground leading-relaxed">{s.desc}</p>
+                    </div>
+                    {i < 2 && (
+                      <div className="flex items-center px-6 pt-3">
+                        <ArrowRight size={32} className="text-muted-foreground/20" strokeWidth={1.5} />
+                      </div>
+                    )}
+                  </div>
+                ))}
+              </div>
+
+              {/* Mobile: vertical with down arrows */}
+              <div className="mt-10 md:hidden space-y-2">
+                {[
+                  { step: "1", title: "We Build Two Previews", desc: "We design two modern website previews tailored to your business." },
+                  { step: "2", title: "You Choose & Approve", desc: "Pick the direction you prefer. Request small refinements if needed." },
+                  { step: "3", title: "Launch in 3 Days", desc: "Once approved, your website goes live within 3 days." },
+                ].map((s, i) => (
+                  <div key={s.step}>
+                    <div className="flex flex-col items-center text-center">
+                      <span className="text-3xl font-black text-muted-foreground/25 font-display">{s.step}</span>
+                      <h3 className="mt-2 text-base font-bold text-foreground font-display">{s.title}</h3>
+                      <p className="mt-2 text-sm text-muted-foreground leading-relaxed max-w-xs mx-auto">{s.desc}</p>
+                    </div>
+                    {i < 2 && (
+                      <div className="flex justify-center py-3">
+                        <ArrowDown size={28} className="text-muted-foreground/20" strokeWidth={1.5} />
+                      </div>
+                    )}
                   </div>
                 ))}
               </div>
             </div>
           </section>
 
-          {/* ═══ 3. PROOF / PORTFOLIO ═══ */}
-          <section className="py-16 md:py-20" style={{ background: "hsl(var(--surface-sunken))" }}>
-            <div className="max-w-5xl mx-auto px-6 text-center">
-              <h2 className="text-[clamp(1.8rem,4vw,2.8rem)] font-black text-foreground font-display">
+          {/* ═══ 3. PROOF SECTION — Split Layout ═══ */}
+          <section className="py-14 md:py-18" style={{ background: "hsl(var(--surface-sunken))" }}>
+            <div className="max-w-6xl mx-auto px-6">
+              <h2 className="text-[clamp(1.8rem,4vw,2.8rem)] font-black text-foreground font-display text-center">
                 Real Businesses. Built with SwiftLift.
               </h2>
-              <p className="mt-2 text-muted-foreground text-sm">Before and after — see the difference.</p>
+              <p className="mt-2 text-muted-foreground text-sm text-center">Before and after — see the difference.</p>
 
-              <div className="mt-10 relative">
-                <button
-                  onClick={prevSlide}
-                  className="absolute -left-2 md:-left-10 top-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-full border border-border bg-background shadow-sm flex items-center justify-center hover:bg-muted transition-colors"
-                  aria-label="Previous"
-                >
-                  <ArrowLeft size={18} className="text-foreground" />
-                </button>
-                <button
-                  onClick={nextSlide}
-                  className="absolute -right-2 md:-right-10 top-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-full border border-border bg-background shadow-sm flex items-center justify-center hover:bg-muted transition-colors"
-                  aria-label="Next"
-                >
-                  <ArrowRight size={18} className="text-foreground" />
-                </button>
+              <div className="mt-10 grid grid-cols-1 lg:grid-cols-2 gap-8 items-start">
+                {/* Left: Featured image */}
+                <div className="rounded-2xl overflow-hidden border border-border shadow-lg">
+                  <img
+                    src={portfolioItems[0].image}
+                    alt={portfolioItems[0].name}
+                    className="w-full aspect-[4/3] object-cover"
+                  />
+                </div>
 
-                <AnimatePresence mode="wait">
-                  <motion.div
-                    key={carouselIdx}
-                    initial={{ opacity: 0, x: 30 }}
-                    animate={{ opacity: 1, x: 0 }}
-                    exit={{ opacity: 0, x: -30 }}
-                    transition={{ duration: 0.3 }}
-                    className="flex flex-col items-center"
-                  >
-                    <div className="rounded-2xl overflow-hidden border border-border shadow-lg max-w-2xl w-full">
-                      <img
-                        src={portfolioItems[carouselIdx].image}
-                        alt={portfolioItems[carouselIdx].name}
-                        className="w-full aspect-video object-cover"
-                      />
+                {/* Right: Testimonial carousel + project info */}
+                <div className="flex flex-col justify-between h-full">
+                  {/* Testimonial card */}
+                  <div className="bg-background rounded-2xl border border-border p-6 md:p-8 shadow-sm relative">
+                    <Quote size={24} className="text-muted-foreground/15 absolute top-5 left-6" />
+                    <AnimatePresence mode="wait">
+                      <motion.div
+                        key={testimonialIdx}
+                        initial={{ opacity: 0, y: 10 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        exit={{ opacity: 0, y: -10 }}
+                        transition={{ duration: 0.25 }}
+                      >
+                        <p className="text-foreground text-sm leading-relaxed mt-4 min-h-[3.5rem]">
+                          "{testimonials[testimonialIdx].text}"
+                        </p>
+                        <div className="mt-4">
+                          <p className="font-semibold text-sm text-foreground">{testimonials[testimonialIdx].name}</p>
+                          <p className="text-xs text-muted-foreground">{testimonials[testimonialIdx].company}</p>
+                        </div>
+                      </motion.div>
+                    </AnimatePresence>
+                    {/* Navigation */}
+                    <div className="flex items-center gap-2 mt-5">
+                      <button onClick={prevTestimonial} className="w-8 h-8 rounded-full border border-border flex items-center justify-center hover:bg-muted transition-colors" aria-label="Previous testimonial">
+                        <ChevronLeft size={14} />
+                      </button>
+                      <button onClick={nextTestimonial} className="w-8 h-8 rounded-full border border-border flex items-center justify-center hover:bg-muted transition-colors" aria-label="Next testimonial">
+                        <ChevronRightIcon size={14} />
+                      </button>
+                      <div className="flex gap-1.5 ml-2">
+                        {testimonials.map((_, i) => (
+                          <button key={i} onClick={() => setTestimonialIdx(i)} className={`w-1.5 h-1.5 rounded-full transition-all ${i === testimonialIdx ? "bg-foreground" : "bg-foreground/20"}`} />
+                        ))}
+                      </div>
                     </div>
-                    <h3 className="mt-4 text-lg font-bold text-foreground font-display">
-                      {portfolioItems[carouselIdx].name}
-                    </h3>
-                    <p className="mt-1 text-sm text-muted-foreground max-w-md">
-                      {portfolioItems[carouselIdx].desc}
-                    </p>
+                  </div>
+
+                  {/* Project info below testimonial */}
+                  <div className="mt-5 px-1">
+                    <h3 className="text-base font-bold text-foreground font-display">Global Trade Co.</h3>
+                    <p className="mt-1 text-sm text-muted-foreground">From outdated directory to modern export platform.</p>
                     <a
-                      href={portfolioItems[carouselIdx].url}
+                      href="#"
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="mt-3 inline-flex items-center gap-1 text-sm font-semibold hover:underline"
-                      style={{ color: "hsl(var(--accent-purple))" }}
+                      className="mt-2 inline-flex items-center gap-1 text-sm font-semibold hover:underline"
+                      style={{ color: "hsl(275 51% 46%)" }}
                     >
                       View Live Website →
                     </a>
-                  </motion.div>
-                </AnimatePresence>
-
-                {/* Dots */}
-                <div className="flex justify-center gap-2 mt-6">
-                  {portfolioItems.map((_, i) => (
-                    <button
-                      key={i}
-                      onClick={() => setCarouselIdx(i)}
-                      className={`w-2 h-2 rounded-full transition-all ${i === carouselIdx ? "bg-foreground scale-125" : "bg-foreground/20"}`}
-                      aria-label={`Slide ${i + 1}`}
-                    />
-                  ))}
+                    <p className="mt-3 text-[11px] text-muted-foreground">Built with the SwiftLift System.</p>
+                  </div>
                 </div>
               </div>
-              <p className="mt-6 text-xs text-muted-foreground">Built with the SwiftLift System.</p>
             </div>
           </section>
 
           {/* ═══ 4. PRICING ═══ */}
-          <section id="pricing" className="py-16 md:py-20 bg-background">
+          <section id="pricing" className="py-14 md:py-18 bg-background">
             <div className="max-w-5xl mx-auto px-6 text-center">
               <h2 className="text-[clamp(1.8rem,4vw,2.8rem)] font-black text-foreground font-display">
                 Simple, Transparent Pricing
               </h2>
-              <p className="mt-2 text-muted-foreground text-sm">Choose the structure that fits your business.</p>
+              <p className="mt-2 text-muted-foreground text-sm">No credit card required to see your previews.</p>
 
               <div className="mt-10 grid grid-cols-1 md:grid-cols-3 gap-6 items-stretch">
                 {pricingPlans.map((p) => (
@@ -369,6 +499,7 @@ const Index = () => {
                       </div>
                     )}
                     <h3 className="text-lg font-bold text-foreground font-display">{p.name}</h3>
+                    <p className="mt-1 text-2xl font-black text-foreground font-display">{p.price}</p>
                     <ul className="mt-4 space-y-2.5 flex-1">
                       {p.features.map((f, i) => (
                         <li key={i} className="flex items-start gap-2 text-sm">
@@ -381,9 +512,13 @@ const Index = () => {
                       onClick={() => scrollToIntake(p.planCode)}
                       className={`mt-6 w-full rounded-full py-3 px-6 text-sm font-semibold transition-all ${
                         p.highlighted
-                          ? "btn-brand"
-                          : "border-2 border-primary text-primary hover:bg-primary hover:text-primary-foreground"
+                          ? "text-white hover:opacity-90"
+                          : "border-2 text-foreground hover:opacity-80"
                       }`}
+                      style={p.highlighted
+                        ? { background: "hsl(275 51% 46%)" }
+                        : { borderColor: "hsl(275 51% 46%)", color: "hsl(275 51% 46%)" }
+                      }
                     >
                       {p.cta}
                     </button>
@@ -394,7 +529,7 @@ const Index = () => {
           </section>
 
           {/* ═══ 5. FAQ ═══ */}
-          <section className="py-16 md:py-20" style={{ background: "hsl(var(--surface-sunken))" }}>
+          <section className="py-14 md:py-18" style={{ background: "hsl(var(--surface-sunken))" }}>
             <div className="max-w-3xl mx-auto px-6">
               <h2 className="text-[clamp(1.8rem,4vw,2.8rem)] font-black text-foreground font-display text-center">
                 Still Have Questions?
@@ -451,22 +586,22 @@ const Index = () => {
             </div>
           </section>
 
-          {/* ═══ 6. FINAL CTA ═══ */}
+          {/* ═══ 6. FINAL CTA — Dark Compact Footer Form ═══ */}
           <section
-            className="py-16 md:py-20"
+            className="py-12 md:py-16"
             style={{
-              background: "linear-gradient(180deg, hsl(209 66% 30%) 0%, hsl(209 66% 18%) 100%)",
+              background: "linear-gradient(180deg, hsl(209 66% 18%) 0%, hsl(209 70% 14%) 100%)",
             }}
           >
-            <div className="max-w-xl mx-auto px-6">
-              <h2 className="text-[clamp(1.8rem,4vw,2.5rem)] font-black text-white text-center font-display">
+            <div className="max-w-4xl mx-auto px-6">
+              <h2 className="text-[clamp(1.6rem,3.5vw,2.2rem)] font-black text-white text-center font-display">
                 Ready to See Your New Website?
               </h2>
-              <p className="mt-2 text-white/60 text-sm text-center">
+              <p className="mt-2 text-white/50 text-sm text-center">
                 Fill out the form. Get two free previews. No obligation.
               </p>
-              <div className="mt-8 bg-background rounded-2xl p-6 md:p-8 border border-border/60 shadow-2xl">
-                <IntakeFormFields plan={plan} setPlan={setPlan} />
+              <div className="mt-8">
+                <FooterIntakeForm plan={plan} setPlan={setPlan} />
               </div>
             </div>
           </section>
