@@ -314,13 +314,7 @@ const Index = () => {
               <div className="grid grid-cols-1 lg:grid-cols-[1fr_0.55fr] gap-10 lg:gap-14 items-start">
                 {/* Left — dominant messaging */}
                 <div className="text-white pt-4 lg:pt-8">
-                  {/* Desktop headline: exactly 2 lines */}
-                  <h1 className="hidden md:block text-[clamp(2.8rem,5.8vw,4.5rem)] font-black leading-[1.05] font-display tracking-tight">
-                    See Your Website First.<br />
-                    Pay Only If You Love It.
-                  </h1>
-                  {/* Mobile headline: 4-line break */}
-                  <h1 className="md:hidden text-[2.4rem] font-black leading-[1.08] font-display tracking-tight">
+                  <h1 className="text-[2.6rem] md:text-[clamp(3.2rem,6.5vw,5.2rem)] font-black leading-[1.08] font-display tracking-tight">
                     See Your<br />
                     Website First.<br />
                     Pay Only<br />
