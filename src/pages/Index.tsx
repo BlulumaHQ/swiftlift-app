@@ -337,7 +337,7 @@ const Index = () => {
                 </div>
 
                 {/* Right — Compact Form */}
-                <div ref={intakeRef} className="bg-background rounded-2xl p-5 md:p-6 border border-border/50 shadow-2xl lg:mt-2">
+                <div ref={intakeRef} className="bg-background rounded-2xl p-5 md:p-6 border border-border/50 shadow-2xl lg:mt-10">
                   <p className="text-[11px] text-muted-foreground mb-3">Takes less than 60 seconds.</p>
                   <IntakeFormFields plan={plan} setPlan={setPlan} />
                 </div>
