@@ -318,7 +318,7 @@ const Index = () => {
                 <div className="text-white pt-4 lg:pt-2">
                   <h1 className="text-[2.6rem] md:text-[clamp(3.2rem,6.5vw,5.2rem)] font-black leading-[1.08] font-display tracking-tight">
                     See Your<br />
-                    Website First.<br />
+                    Websites First.<br />
                     Pay Only<br />
                     If You Love It.
                   </h1>
