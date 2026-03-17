@@ -83,8 +83,8 @@ const ThankYouContent = () => {
             className="mt-4 text-white/80 text-base md:text-lg leading-relaxed max-w-xl mx-auto"
           >
             {lang === "en"
-              ? "We'll email you within 24 hours with two working homepage preview links based on your submission."
-              : "我们将在24小时内通过电子邮件向您发送两个基于您提交内容的首页预览链接。"}
+              ? "You can expect your preview concepts within 48 hours."
+              : "您可以在48小時內收到預覽方案。"}
           </motion.p>
           <motion.p
             initial={{ opacity: 0, y: 20 }}
