@@ -464,7 +464,7 @@ export const translations = {
     heroHeadline: { en: "Let's Build Something\nTailored to Your Business", zh: "讓我們為您的業務\n量身打造" },
     heroSub: { en: "Tell us about your project and we'll prepare a custom proposal.", zh: "告訴我們您的項目需求，我們將為您準備定制方案。" },
     successTitle: { en: "Proposal Request Received", zh: "方案申請已收到" },
-    successDesc: { en: "We'll review your details and get back to you within 24 hours.", zh: "我們將審核您的資訊，並在24小時內與您聯繫。" },
+    successDesc: { en: "We'll review your details and get back to you within 48 hours.", zh: "我們將審核您的資訊，並在48小時內與您聯繫。" },
     businessDetails: { en: "Business Details", zh: "企業資訊" },
     companyName: { en: "Company Name", zh: "公司名稱" },
     companyNamePlaceholder: { en: "Your company name", zh: "您的公司名稱" },
