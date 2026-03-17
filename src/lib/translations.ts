@@ -167,8 +167,8 @@ export const translations = {
       },
       {
         quote: {
-          en: "Two working homepages in 24 hours. I picked one, paid, and was live within days.",
-          zh: "24小時內收到兩個完整主頁。選了一個，付款，數天內就上線了。",
+          en: "Two working homepages in 48 hours. I picked one, paid, and was live within days.",
+          zh: "48小時內收到兩個完整主頁。選了一個，付款，數天內就上線了。",
         },
         name: { en: "Marcus Webb", zh: "Marcus Webb" },
         role: { en: "Wellness Clinic Owner", zh: "健康診所老闆" },
