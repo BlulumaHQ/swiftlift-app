@@ -494,7 +494,7 @@ export const translations = {
     submitButton: { en: "Request My Custom Proposal", zh: "申請我的定制方案" },
     submitting: { en: "Sending...", zh: "發送中..." },
     toastTitle: { en: "Proposal request sent!", zh: "方案申請已發送！" },
-    toastDesc: { en: "We'll be in touch within 24 hours.", zh: "我們將在24小時內與您聯繫。" },
+    toastDesc: { en: "We'll be in touch within 48 hours.", zh: "我們將在48小時內與您聯繫。" },
   },
   /* ── Homepage (Index.tsx) inline content ── */
   home: {
