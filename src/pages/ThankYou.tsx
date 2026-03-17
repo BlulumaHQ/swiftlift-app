@@ -264,14 +264,16 @@ const ThankYouContent = () => {
             <Mail size={18} className="text-muted-foreground flex-shrink-0 mt-0.5" />
             <div>
               <p className="text-sm font-semibold text-foreground">
-                {lang === "en" ? "Need to update something you submitted?" : "需要更新您提交的内容？"}
+                {lang === "en" ? "Need to update something?" : "需要更新內容？"}
               </p>
               <p className="text-sm text-muted-foreground mt-1">
                 {lang === "en"
-                  ? "Reply to our email or message us at "
-                  : "回复我们的邮件或发送消息至 "}
-                <a href="mailto:hello@swiftlift.app" className="text-primary hover:underline">hello@swiftlift.app</a>
-                {lang === "en" ? " with your project name." : " 并附上您的项目名称。"}
+                  ? "Reply to our email or contact us at "
+                  : "回覆我們的電子郵件或聯絡 "}
+                <a href="mailto:support@swiftlift.app" className="text-primary hover:underline">support@swiftlift.app</a>
+                {lang === "en"
+                  ? ". Please include your Project ID so we can quickly locate your request."
+                  : "。請附上您的專案編號（Project ID），以便我們快速找到您的請求。"}
               </p>
             </div>
           </div>
