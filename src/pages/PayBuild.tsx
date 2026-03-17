@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useMemo } from "react";
 import { useSearchParams } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
 import { LanguageProvider } from "@/contexts/LanguageContext";
@@ -8,6 +8,7 @@ import CustomCursor from "@/components/CustomCursor";
 import PreviewSelector from "@/components/PreviewSelector";
 import { Check, CreditCard, AlertCircle, User, Building2, Mail } from "lucide-react";
 import { motion } from "framer-motion";
+import { getOrCreateProjectId } from "@/lib/projectId";
 
 const STARTER_INCLUDED = [
   "1–2 custom-designed pages",
