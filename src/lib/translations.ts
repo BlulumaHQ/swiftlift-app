@@ -65,7 +65,7 @@ export const translations = {
       zh: "兩個免費真實預覽版本，48小時內交付。",
     },
     stats: [
-      { label: { en: "Preview Delivered", zh: "預覽交付" }, value: { en: "24h", zh: "24h" } },
+      { label: { en: "Preview Delivered", zh: "預覽交付" }, value: { en: "48h", zh: "48h" } },
       { label: { en: "Two Real Sites", zh: "兩個真實網站" }, value: { en: "2 Sites", zh: "2 站點" } },
       { label: { en: "Live Within Days", zh: "數天上線" }, value: { en: "3 Days", zh: "3 天" } },
       { label: { en: "Zero Upfront", zh: "零前期費用" }, value: { en: "$0", zh: "$0" } },
