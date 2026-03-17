@@ -21,8 +21,8 @@ export const translations = {
       zh: "獲取免費預覽",
     },
     ctaSub: {
-      en: "Preview delivered within 24 hours.\nLive site ready within days.",
-      zh: "24小時內交付預覽。\n數天內網站正式上線。",
+      en: "Preview delivered within 48 hours.\nLive site ready within days.",
+      zh: "48小時內交付預覽。\n數天內網站正式上線。",
     },
     launchPricing: {
       en: "Launch pricing — limited availability",
@@ -61,11 +61,11 @@ export const translations = {
       zh: "我們打造兩個專業網站方案 —\n您選擇最喜歡的",
     },
     body: {
-      en: "Two FREE real preview versions delivered within 24 hours.",
-      zh: "兩個免費真實預覽版本，24小時內交付。",
+      en: "Two FREE real preview versions delivered within 48 hours.",
+      zh: "兩個免費真實預覽版本，48小時內交付。",
     },
     stats: [
-      { label: { en: "Preview Delivered", zh: "預覽交付" }, value: { en: "24h", zh: "24h" } },
+      { label: { en: "Preview Delivered", zh: "預覽交付" }, value: { en: "48h", zh: "48h" } },
       { label: { en: "Two Real Sites", zh: "兩個真實網站" }, value: { en: "2 Sites", zh: "2 站點" } },
       { label: { en: "Live Within Days", zh: "數天上線" }, value: { en: "3 Days", zh: "3 天" } },
       { label: { en: "Zero Upfront", zh: "零前期費用" }, value: { en: "$0", zh: "$0" } },
@@ -75,12 +75,12 @@ export const translations = {
     headline: { en: "How It Works", zh: "服務流程" },
     steps: [
       {
-        title: { en: "Upload", zh: "上傳" },
+        title: { en: "Submit", zh: "提交" },
         desc: { en: "Share your company name, logo, and vision. Two minutes.", zh: "分享您的公司名稱、Logo和品牌願景。僅需兩分鐘。" },
       },
       {
         title: { en: "Concept", zh: "概念" },
-        desc: { en: "Receive two live homepage designs within 24 hours.", zh: "24小時內收到兩個即時主頁設計。" },
+        desc: { en: "Receive two live homepage designs within 48 hours.", zh: "48小時內收到兩個即時主頁設計。" },
       },
       {
         title: { en: "Refine", zh: "優化" },
@@ -167,8 +167,8 @@ export const translations = {
       },
       {
         quote: {
-          en: "Two working homepages in 24 hours. I picked one, paid, and was live within days.",
-          zh: "24小時內收到兩個完整主頁。選了一個，付款，數天內就上線了。",
+          en: "Two working homepages in 48 hours. I picked one, paid, and was live within days.",
+          zh: "48小時內收到兩個完整主頁。選了一個，付款，數天內就上線了。",
         },
         name: { en: "Marcus Webb", zh: "Marcus Webb" },
         role: { en: "Wellness Clinic Owner", zh: "健康診所老闆" },
@@ -216,7 +216,7 @@ export const translations = {
     items: [
       {
         q: { en: "How do the FREE previews work?", zh: "免費預覽是如何運作的？" },
-        a: { en: "Submit your company name, logo, and business details. Within 24 hours, you'll receive two fully designed, live homepage preview links — viewable on desktop and mobile.\n\nThese are functional previews built specifically around your business structure. There is no payment required to receive them.", zh: "提交您的公司名稱、標誌和業務資訊。24小時內，您將收到兩個專為您的業務量身設計的即時首頁預覽連結——可在桌面和移動裝置上查看。\n\n這些是圍繞您的業務結構專門構建的功能預覽。無需支付任何費用即可獲取。" },
+        a: { en: "Submit your company name, logo, and business details. Within 48 hours, you'll receive two fully designed, live homepage preview links — viewable on desktop and mobile.\n\nThese are functional previews built specifically around your business structure. There is no payment required to receive them.", zh: "提交您的公司名稱、標誌和業務資訊。48小時內，您將收到兩個專為您的業務量身設計的即時首頁預覽連結——可在桌面和移動裝置上查看。\n\n這些是圍繞您的業務結構專門構建的功能預覽。無需支付任何費用即可獲取。" },
       },
       {
         q: { en: "What happens after I choose a concept?", zh: "選擇方案後會發生什麼？" },
@@ -236,7 +236,7 @@ export const translations = {
   },
   intake: {
     headline: { en: "Start Your Transformation", zh: "開啟您的品牌蛻變" },
-    subheadline: { en: "Fill out the form below and we'll send you 2 FREE design previews within 24 hours.", zh: "填寫下方表格，我們將在24小時內發送2個免費設計預覽。" },
+    subheadline: { en: "Fill out the form below and we'll send you 2 FREE design previews within 48 hours.", zh: "填寫下方表格，我們將在48小時內發送2個免費設計預覽。" },
     fields: {
       description: { en: "Business Description", zh: "業務描述" },
       descriptionPlaceholder: { en: "Tell us about your business — what you do, your target audience, and any style preferences", zh: "請介紹您的業務——您做什麼、目標受眾以及任何風格偏好" },
@@ -464,7 +464,7 @@ export const translations = {
     heroHeadline: { en: "Let's Build Something\nTailored to Your Business", zh: "讓我們為您的業務\n量身打造" },
     heroSub: { en: "Tell us about your project and we'll prepare a custom proposal.", zh: "告訴我們您的項目需求，我們將為您準備定制方案。" },
     successTitle: { en: "Proposal Request Received", zh: "方案申請已收到" },
-    successDesc: { en: "We'll review your details and get back to you within 24 hours.", zh: "我們將審核您的資訊，並在24小時內與您聯繫。" },
+    successDesc: { en: "We'll review your details and get back to you within 48 hours.", zh: "我們將審核您的資訊，並在48小時內與您聯繫。" },
     businessDetails: { en: "Business Details", zh: "企業資訊" },
     companyName: { en: "Company Name", zh: "公司名稱" },
     companyNamePlaceholder: { en: "Your company name", zh: "您的公司名稱" },
@@ -494,7 +494,7 @@ export const translations = {
     submitButton: { en: "Request My Custom Proposal", zh: "申請我的定制方案" },
     submitting: { en: "Sending...", zh: "發送中..." },
     toastTitle: { en: "Proposal request sent!", zh: "方案申請已發送！" },
-    toastDesc: { en: "We'll be in touch within 24 hours.", zh: "我們將在24小時內與您聯繫。" },
+    toastDesc: { en: "We'll be in touch within 48 hours.", zh: "我們將在48小時內與您聯繫。" },
   },
   /* ── Homepage (Index.tsx) inline content ── */
   home: {

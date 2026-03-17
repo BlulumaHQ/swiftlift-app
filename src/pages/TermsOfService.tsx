@@ -25,7 +25,7 @@ const TermsContent = () => {
         { title: "Refund Policy", paragraphs: ["Payments are non-refundable once development begins.", "Payment constitutes approval of concept and project direction."] },
         { title: "Limitation of Liability", paragraphs: ["SwiftLift Studio shall not be liable for third-party failures, hosting downtime, content inaccuracies, or indirect damages.", "Total liability shall not exceed the total amount paid for the service."] },
         { title: "Governing Law", paragraphs: ["These Terms are governed by the laws of British Columbia, Canada."] },
-        { title: "Contact", paragraphs: ["SwiftLift Studio\nVancouver, BC, Canada\nEmail: hello@swiftlift.app"], hasEmail: true },
+        { title: "Contact", paragraphs: ["SwiftLift Studio\nVancouver, BC, Canada\nEmail: support@swiftlift.app"], hasEmail: true },
       ]
     : [
         { title: "服务", paragraphs: ["SwiftLift Studio提供结构化的网站设计和集成服务。我们的服务使用预定义的布局系统、模板和第三方集成构建。", "SwiftLift Studio不提供定制软件开发、定制后端工程、专有系统架构或多用户数据库系统，除非在单独的合同中明确以书面形式同意。", "我们提供："], list: ["快速首页预览", "结构化网站建设", "可选的固定价格功能集成", "高级定制项目咨询"] },
@@ -39,7 +39,7 @@ const TermsContent = () => {
         { title: "退款政策", paragraphs: ["一旦开发开始，付款不可退还。", "付款即构成对概念和项目方向的批准。"] },
         { title: "责任限制", paragraphs: ["SwiftLift Studio对第三方故障、托管停机、内容不准确或间接损害不承担责任。", "总责任不超过为服务支付的总金额。"] },
         { title: "管辖法律", paragraphs: ["这些条款受加拿大不列颠哥伦比亚省法律管辖。"] },
-        { title: "联系方式", paragraphs: ["SwiftLift Studio\n温哥华，不列颠哥伦比亚省，加拿大\n电子邮箱：hello@swiftlift.app"], hasEmail: true },
+        { title: "聯絡方式", paragraphs: ["SwiftLift Studio\n溫哥華，不列顛哥倫比亞省，加拿大\n電子郵箱：support@swiftlift.app"], hasEmail: true },
       ];
 
   return (
@@ -73,11 +73,11 @@ const TermsContent = () => {
               {section.paragraphs.map((p, j) => (
                 <p key={j} className={j > 0 ? "mt-2" : ""}>
                   {section.hasEmail
-                    ? p.split("hello@swiftlift.app").map((part, k, arr) => (
+                    ? p.split("support@swiftlift.app").map((part, k, arr) => (
                         <span key={k}>
                           {part}
                           {k < arr.length - 1 && (
-                            <a href="mailto:hello@swiftlift.app" className="text-primary hover:underline">hello@swiftlift.app</a>
+                            <a href="mailto:support@swiftlift.app" className="text-primary hover:underline">support@swiftlift.app</a>
                           )}
                         </span>
                       ))

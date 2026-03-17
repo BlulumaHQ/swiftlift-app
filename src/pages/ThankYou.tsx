@@ -5,7 +5,7 @@ import Footer from "@/components/Footer";
 import CustomCursor from "@/components/CustomCursor";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { Monitor, FileText, Zap, CheckCircle2, Clock, ArrowRight, Upload, Palette, Globe, Mail } from "lucide-react";
+import { Monitor, FileText, Zap, CheckCircle2, Clock, ArrowRight, Palette, Globe, Mail } from "lucide-react";
 import { useState } from "react";
 
 const ThankYouContent = () => {
@@ -19,43 +19,43 @@ const ThankYouContent = () => {
   const cards = [
     {
       icon: Monitor,
-      title: lang === "en" ? "2 Live Preview Links" : "2个实时预览链接",
+      title: lang === "en" ? "2 Live Preview Links" : "2個即時預覽連結",
       text: lang === "en"
         ? "Two functional homepage previews you can click through and view on desktop + mobile."
-        : "两个功能齐全的首页预览，可在桌面和移动设备上查看。",
+        : "兩個功能齊全的首頁預覽，可在桌面和移動裝置上查看。",
     },
     {
       icon: FileText,
       title: lang === "en" ? "Your Copy Included" : "包含您的文案",
       text: lang === "en"
         ? "We'll structure the preview using your company details and the information you submitted (not generic filler)."
-        : "我们将使用您提交的公司信息来构建预览（而非通用内容）。",
+        : "我們將使用您提交的公司資訊來構建預覽（而非通用內容）。",
     },
     {
       icon: Zap,
       title: lang === "en" ? "Fast Next Step" : "快速下一步",
       text: lang === "en"
         ? "Reply with your chosen preview + your revision notes, and we'll proceed based on your package."
-        : "回复您选择的预览和修改意见，我们将根据您的套餐继续。",
+        : "回覆您選擇的預覽和修改意見，我們將根據您的套餐繼續。",
     },
   ];
 
   const steps = [
     {
-      label: lang === "en" ? "Today: Request Submitted" : "今天：请求已提交",
+      label: lang === "en" ? "Today: Request Submitted" : "今天：請求已提交",
       active: true,
     },
     {
-      label: lang === "en" ? "Within 24 hours: 2 Live Previews Delivered by Email" : "24小时内：通过邮件发送2个实时预览",
+      label: lang === "en" ? "Within 48 hours: 2 Live Previews Delivered by Email" : "48小時內：透過電子郵件發送2個即時預覽",
       note: lang === "en"
-        ? "Check your inbox (and spam folder) for an email from hello@swiftlift.app."
-        : "请检查您的收件箱（和垃圾邮件文件夹），查找来自 hello@swiftlift.app 的邮件。",
+        ? "Check your inbox (and spam folder) for updates from support@swiftlift.app."
+        : "請檢查您的收件匣（和垃圾郵件資料夾），查找來自 support@swiftlift.app 的更新。",
       active: false,
     },
     {
       label: lang === "en"
         ? "You Choose a Direction → We Build the Full Site (If you proceed)"
-        : "您选择方向 → 我们构建完整网站（如果您继续）",
+        : "您選擇方向 → 我們構建完整網站（如果您繼續）",
       active: false,
     },
   ];
@@ -74,7 +74,7 @@ const ThankYouContent = () => {
           >
             {lang === "en"
               ? "Request Received — Your 2 FREE Live Previews Are Coming"
-              : "请求已收到 — 您的2个免费实时预览即将到来"}
+              : "請求已收到 — 您的2個免費即時預覽即將到來"}
           </motion.h1>
           <motion.p
             initial={{ opacity: 0, y: 20 }}
@@ -83,8 +83,8 @@ const ThankYouContent = () => {
             className="mt-4 text-white/80 text-base md:text-lg leading-relaxed max-w-xl mx-auto"
           >
             {lang === "en"
-              ? "We'll email you within 24 hours with two working homepage preview links based on your submission."
-              : "我们将在24小时内通过电子邮件向您发送两个基于您提交内容的首页预览链接。"}
+              ? "You can expect your preview concepts within 48 hours."
+              : "您可以在48小時內收到預覽方案。"}
           </motion.p>
           <motion.p
             initial={{ opacity: 0, y: 20 }}
@@ -94,7 +94,7 @@ const ThankYouContent = () => {
           >
             {lang === "en"
               ? "No calls required. Just review the previews and pick a direction."
-              : "无需电话。只需查看预览并选择方向。"}
+              : "無需致電。只需查看預覽並選擇方向。"}
           </motion.p>
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -201,18 +201,24 @@ const ThankYouContent = () => {
       <section className="py-12 md:py-16 bg-background">
         <div className="max-w-2xl mx-auto px-6">
           <h2 className="text-xl md:text-2xl font-black text-foreground font-display text-center mb-2">
-            {lang === "en" ? "Want even better previews?" : "想要更好的预览？"}
+            {lang === "en" ? "Want even better previews?" : "想要更精準的預覽？"}
           </h2>
           <div className="flex justify-center">
             <span className="section-underline section-underline--light" />
           </div>
 
-          <div className="mt-8 rounded-2xl border border-border bg-background p-6 shadow-sm">
+          <p className="mt-4 text-sm text-muted-foreground text-center">
+            {lang === "en"
+              ? "(Optional) Help us create more accurate designs for your business:"
+              : "（選填）幫助我們為您的業務創建更精準的設計："}
+          </p>
+
+          <div className="mt-6 rounded-2xl border border-border bg-background p-6 shadow-sm">
             <ul className="space-y-3">
               {[
-                { icon: Upload, text: lang === "en" ? "Upload your logo (SVG/PNG) and brand colors" : "上传您的标志（SVG/PNG）和品牌颜色" },
-                { icon: Palette, text: lang === "en" ? "Share 5–10 photos (or tell us your preferred style)" : "分享5-10张照片（或告诉我们您喜欢的风格）" },
-                { icon: Globe, text: lang === "en" ? "Send 2–3 reference websites you like" : "发送2-3个您喜欢的参考网站" },
+                { icon: Palette, text: lang === "en" ? "Share your logo (SVG/PNG) and brand colors" : "分享您的標誌（SVG/PNG）和品牌顏色" },
+                { icon: Palette, text: lang === "en" ? "Add 5–10 photos or describe your preferred style" : "添加5–10張照片或描述您偏好的風格" },
+                { icon: Globe, text: lang === "en" ? "Send 2–3 websites you like" : "發送2–3個您喜歡的網站" },
               ].map((item, i) => {
                 const Icon = item.icon;
                 return (
@@ -226,7 +232,7 @@ const ThankYouContent = () => {
 
             <div className="mt-5 space-y-1.5">
               <label className="text-sm font-medium text-foreground">
-                {lang === "en" ? "Optional: Paste a cloud folder link (Google Drive/Dropbox)" : "可选：粘贴云文件夹链接"}
+                {lang === "en" ? "Optional: Paste a cloud folder link (Google Drive / Dropbox)" : "選填：貼上雲端資料夾連結（Google Drive / Dropbox）"}
               </label>
               <input
                 type="url"
@@ -237,10 +243,16 @@ const ThankYouContent = () => {
               />
               <p className="text-xs text-muted-foreground">
                 {lang === "en"
-                  ? 'Make sure link access is set to "Anyone with the link can view."'
-                  : '确保链接访问权限设置为"所有拥有链接的人都可以查看"。'}
+                  ? 'Make sure access is set to "Anyone with the link can view."'
+                  : '確保存取權限設定為「任何擁有連結的人皆可檢視」。'}
               </p>
             </div>
+
+            <p className="mt-4 text-xs text-muted-foreground text-center italic">
+              {lang === "en"
+                ? "All fields above are optional — you can skip this step."
+                : "以上所有欄位均為選填——您可以跳過此步驟。"}
+            </p>
           </div>
         </div>
       </section>
@@ -252,14 +264,16 @@ const ThankYouContent = () => {
             <Mail size={18} className="text-muted-foreground flex-shrink-0 mt-0.5" />
             <div>
               <p className="text-sm font-semibold text-foreground">
-                {lang === "en" ? "Need to update something you submitted?" : "需要更新您提交的内容？"}
+                {lang === "en" ? "Need to update something?" : "需要更新內容？"}
               </p>
               <p className="text-sm text-muted-foreground mt-1">
                 {lang === "en"
-                  ? "Reply to our email or message us at "
-                  : "回复我们的邮件或发送消息至 "}
-                <a href="mailto:hello@swiftlift.app" className="text-primary hover:underline">hello@swiftlift.app</a>
-                {lang === "en" ? " with your project name." : " 并附上您的项目名称。"}
+                  ? "Reply to our email or contact us at "
+                  : "回覆我們的電子郵件或聯絡 "}
+                <a href="mailto:support@swiftlift.app" className="text-primary hover:underline">support@swiftlift.app</a>
+                {lang === "en"
+                  ? ". Please include your Project ID so we can quickly locate your request."
+                  : "。請附上您的專案編號（Project ID），以便我們快速找到您的請求。"}
               </p>
             </div>
           </div>

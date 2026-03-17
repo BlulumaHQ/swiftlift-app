@@ -81,7 +81,7 @@ const Header = () => {
 
         <div className="flex items-center gap-4">
           <a
-            href="mailto:hello@swiftlift.app"
+            href="mailto:support@swiftlift.app"
             className={`hidden md:flex items-center transition-colors ${
               !scrolled ? "text-white/70 hover:text-white" : "text-muted-foreground hover:text-foreground"
             }`}

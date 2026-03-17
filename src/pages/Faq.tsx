@@ -9,7 +9,7 @@ import { Plus } from "lucide-react";
 const faqItems = [
   {
     q: { en: "How do the FREE previews work?", zh: "免费预览是如何运作的？" },
-    a: { en: "Submit your company name, logo, and business details. Within 24 hours, you'll receive two fully designed, live homepage preview links — viewable on desktop and mobile.\n\nThese are functional previews built specifically around your business structure. There is no payment required to receive them.", zh: "提交您的公司名称、标志和业务信息。24小时内，您将收到两个专为您的业务量身设计的实时首页预览链接——可在桌面和移动设备上查看。\n\n这些是围绕您的业务结构专门构建的功能预览。无需支付任何费用即可获取。" },
+    a: { en: "Submit your company name, logo, and business details. Within 48 hours, you'll receive two fully designed, live homepage preview links — viewable on desktop and mobile.\n\nThese are functional previews built specifically around your business structure. There is no payment required to receive them.", zh: "提交您的公司名稱、標誌和業務資訊。48小時內，您將收到兩個專為您的業務量身設計的即時首頁預覽連結——可在桌面和移動裝置上查看。\n\n這些是圍繞您的業務結構專門構建的功能預覽。無需支付任何費用即可獲取。" },
   },
   {
     q: { en: "What happens after I choose a concept?", zh: "选择方案后会发生什么？" },

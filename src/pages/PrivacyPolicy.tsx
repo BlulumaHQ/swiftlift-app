@@ -22,9 +22,9 @@ const PrivacyContent = () => {
         { title: "Cookies & Analytics", content: "We may use cookies and analytics tools to improve user experience. Users may disable cookies in their browser settings." },
         { title: "Data Retention", content: "We retain data only as long as necessary to fulfill services or comply with legal obligations." },
         { title: "Data Security", content: "We implement reasonable safeguards to protect your information." },
-        { title: "Your Rights", content: "You may request access, correction, or deletion of your personal data by contacting hello@swiftlift.app.", hasEmail: true },
+        { title: "Your Rights", content: "You may request access, correction, or deletion of your personal data by contacting support@swiftlift.app.", hasEmail: true },
         { title: "International Transfers", content: "Some third-party services may process data outside Canada." },
-        { title: "Contact", content: "SwiftLift Studio\nVancouver, BC, Canada\nEmail: hello@swiftlift.app", hasEmail: true },
+        { title: "Contact", content: "SwiftLift Studio\nVancouver, BC, Canada\nEmail: support@swiftlift.app", hasEmail: true },
       ]
     : [
         { title: "简介", content: "SwiftLift Studio尊重您的隐私，并遵守适用的加拿大隐私法律。" },
@@ -35,9 +35,9 @@ const PrivacyContent = () => {
         { title: "Cookie与分析", content: "我们可能使用Cookie和分析工具来改善用户体验。用户可以在浏览器设置中禁用Cookie。" },
         { title: "数据保留", content: "我们仅在履行服务或遵守法律义务所需的时间内保留数据。" },
         { title: "数据安全", content: "我们实施合理的安全措施来保护您的信息。" },
-        { title: "您的权利", content: "您可以通过联系 hello@swiftlift.app 请求访问、更正或删除您的个人数据。", hasEmail: true },
-        { title: "国际传输", content: "某些第三方服务可能在加拿大境外处理数据。" },
-        { title: "联系方式", content: "SwiftLift Studio\n温哥华，不列颠哥伦比亚省，加拿大\n电子邮箱：hello@swiftlift.app", hasEmail: true },
+        { title: "您的權利", content: "您可以透過聯絡 support@swiftlift.app 請求存取、更正或刪除您的個人資料。", hasEmail: true },
+        { title: "國際傳輸", content: "某些第三方服務可能在加拿大境外處理資料。" },
+        { title: "聯絡方式", content: "SwiftLift Studio\n溫哥華，不列顛哥倫比亞省，加拿大\n電子郵箱：support@swiftlift.app", hasEmail: true },
       ];
 
   return (
@@ -71,11 +71,11 @@ const PrivacyContent = () => {
               {section.content.split("\n\n").map((p, j) => (
                 <p key={j} className={j > 0 ? "mt-2" : ""}>
                   {section.hasEmail
-                    ? p.split("hello@swiftlift.app").map((part, k, arr) => (
+                    ? p.split("support@swiftlift.app").map((part, k, arr) => (
                         <span key={k}>
                           {part}
                           {k < arr.length - 1 && (
-                            <a href="mailto:hello@swiftlift.app" className="text-primary hover:underline">hello@swiftlift.app</a>
+                            <a href="mailto:support@swiftlift.app" className="text-primary hover:underline">support@swiftlift.app</a>
                           )}
                         </span>
                       ))
