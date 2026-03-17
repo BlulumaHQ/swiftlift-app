@@ -46,9 +46,9 @@ const Footer = () => {
             <p className="mt-3 text-sm text-blue-200/70 leading-relaxed max-w-xs">
               {t(footer.tagline, lang)}
             </p>
-            <a href="mailto:hello@swiftlift.app" className="mt-3 inline-flex items-center gap-1.5 text-sm text-blue-300 hover:text-white transition-colors">
+            <a href="mailto:support@swiftlift.app" className="mt-3 inline-flex items-center gap-1.5 text-sm text-blue-300 hover:text-white transition-colors">
               <Mail size={14} />
-              hello@swiftlift.app
+              support@swiftlift.app
             </a>
           </div>
 
