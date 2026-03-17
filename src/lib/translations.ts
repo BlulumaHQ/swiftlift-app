@@ -61,8 +61,8 @@ export const translations = {
       zh: "我們打造兩個專業網站方案 —\n您選擇最喜歡的",
     },
     body: {
-      en: "Two FREE real preview versions delivered within 24 hours.",
-      zh: "兩個免費真實預覽版本，24小時內交付。",
+      en: "Two FREE real preview versions delivered within 48 hours.",
+      zh: "兩個免費真實預覽版本，48小時內交付。",
     },
     stats: [
       { label: { en: "Preview Delivered", zh: "預覽交付" }, value: { en: "24h", zh: "24h" } },
