@@ -201,18 +201,24 @@ const ThankYouContent = () => {
       <section className="py-12 md:py-16 bg-background">
         <div className="max-w-2xl mx-auto px-6">
           <h2 className="text-xl md:text-2xl font-black text-foreground font-display text-center mb-2">
-            {lang === "en" ? "Want even better previews?" : "想要更好的预览？"}
+            {lang === "en" ? "Want even better previews?" : "想要更精準的預覽？"}
           </h2>
           <div className="flex justify-center">
             <span className="section-underline section-underline--light" />
           </div>
 
-          <div className="mt-8 rounded-2xl border border-border bg-background p-6 shadow-sm">
+          <p className="mt-4 text-sm text-muted-foreground text-center">
+            {lang === "en"
+              ? "(Optional) Help us create more accurate designs for your business:"
+              : "（選填）幫助我們為您的業務創建更精準的設計："}
+          </p>
+
+          <div className="mt-6 rounded-2xl border border-border bg-background p-6 shadow-sm">
             <ul className="space-y-3">
               {[
-                { icon: Upload, text: lang === "en" ? "Upload your logo (SVG/PNG) and brand colors" : "上传您的标志（SVG/PNG）和品牌颜色" },
-                { icon: Palette, text: lang === "en" ? "Share 5–10 photos (or tell us your preferred style)" : "分享5-10张照片（或告诉我们您喜欢的风格）" },
-                { icon: Globe, text: lang === "en" ? "Send 2–3 reference websites you like" : "发送2-3个您喜欢的参考网站" },
+                { icon: Palette, text: lang === "en" ? "Share your logo (SVG/PNG) and brand colors" : "分享您的標誌（SVG/PNG）和品牌顏色" },
+                { icon: Palette, text: lang === "en" ? "Add 5–10 photos or describe your preferred style" : "添加5–10張照片或描述您偏好的風格" },
+                { icon: Globe, text: lang === "en" ? "Send 2–3 websites you like" : "發送2–3個您喜歡的網站" },
               ].map((item, i) => {
                 const Icon = item.icon;
                 return (
@@ -226,7 +232,7 @@ const ThankYouContent = () => {
 
             <div className="mt-5 space-y-1.5">
               <label className="text-sm font-medium text-foreground">
-                {lang === "en" ? "Optional: Paste a cloud folder link (Google Drive/Dropbox)" : "可选：粘贴云文件夹链接"}
+                {lang === "en" ? "Optional: Paste a cloud folder link (Google Drive / Dropbox)" : "選填：貼上雲端資料夾連結（Google Drive / Dropbox）"}
               </label>
               <input
                 type="url"
@@ -237,10 +243,16 @@ const ThankYouContent = () => {
               />
               <p className="text-xs text-muted-foreground">
                 {lang === "en"
-                  ? 'Make sure link access is set to "Anyone with the link can view."'
-                  : '确保链接访问权限设置为"所有拥有链接的人都可以查看"。'}
+                  ? 'Make sure access is set to "Anyone with the link can view."'
+                  : '確保存取權限設定為「任何擁有連結的人皆可檢視」。'}
               </p>
             </div>
+
+            <p className="mt-4 text-xs text-muted-foreground text-center italic">
+              {lang === "en"
+                ? "All fields above are optional — you can skip this step."
+                : "以上所有欄位均為選填——您可以跳過此步驟。"}
+            </p>
           </div>
         </div>
       </section>
