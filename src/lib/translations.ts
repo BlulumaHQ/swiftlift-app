@@ -236,7 +236,7 @@ export const translations = {
   },
   intake: {
     headline: { en: "Start Your Transformation", zh: "開啟您的品牌蛻變" },
-    subheadline: { en: "Fill out the form below and we'll send you 2 FREE design previews within 24 hours.", zh: "填寫下方表格，我們將在24小時內發送2個免費設計預覽。" },
+    subheadline: { en: "Fill out the form below and we'll send you 2 FREE design previews within 48 hours.", zh: "填寫下方表格，我們將在48小時內發送2個免費設計預覽。" },
     fields: {
       description: { en: "Business Description", zh: "業務描述" },
       descriptionPlaceholder: { en: "Tell us about your business — what you do, your target audience, and any style preferences", zh: "請介紹您的業務——您做什麼、目標受眾以及任何風格偏好" },
