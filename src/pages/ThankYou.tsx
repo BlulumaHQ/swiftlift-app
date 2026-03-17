@@ -74,7 +74,7 @@ const ThankYouContent = () => {
           >
             {lang === "en"
               ? "Request Received — Your 2 FREE Live Previews Are Coming"
-              : "请求已收到 — 您的2个免费实时预览即将到来"}
+              : "請求已收到 — 您的2個免費即時預覽即將到來"}
           </motion.h1>
           <motion.p
             initial={{ opacity: 0, y: 20 }}
