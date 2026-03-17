@@ -88,6 +88,7 @@ const PayBuildContent = () => {
           tier,
           selectedPreview: selectedPreview || undefined,
           previewLink: previewLink || undefined,
+          projectId,
         },
       });
       if (error) throw error;
