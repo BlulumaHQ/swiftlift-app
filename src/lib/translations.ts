@@ -80,7 +80,7 @@ export const translations = {
       },
       {
         title: { en: "Concept", zh: "概念" },
-        desc: { en: "Receive two live homepage designs within 24 hours.", zh: "24小時內收到兩個即時主頁設計。" },
+        desc: { en: "Receive two live homepage designs within 48 hours.", zh: "48小時內收到兩個即時主頁設計。" },
       },
       {
         title: { en: "Refine", zh: "優化" },
