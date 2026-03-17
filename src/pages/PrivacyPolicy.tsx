@@ -22,9 +22,9 @@ const PrivacyContent = () => {
         { title: "Cookies & Analytics", content: "We may use cookies and analytics tools to improve user experience. Users may disable cookies in their browser settings." },
         { title: "Data Retention", content: "We retain data only as long as necessary to fulfill services or comply with legal obligations." },
         { title: "Data Security", content: "We implement reasonable safeguards to protect your information." },
-        { title: "Your Rights", content: "You may request access, correction, or deletion of your personal data by contacting hello@swiftlift.app.", hasEmail: true },
+        { title: "Your Rights", content: "You may request access, correction, or deletion of your personal data by contacting support@swiftlift.app.", hasEmail: true },
         { title: "International Transfers", content: "Some third-party services may process data outside Canada." },
-        { title: "Contact", content: "SwiftLift Studio\nVancouver, BC, Canada\nEmail: hello@swiftlift.app", hasEmail: true },
+        { title: "Contact", content: "SwiftLift Studio\nVancouver, BC, Canada\nEmail: support@swiftlift.app", hasEmail: true },
       ]
     : [
         { title: "简介", content: "SwiftLift Studio尊重您的隐私，并遵守适用的加拿大隐私法律。" },
