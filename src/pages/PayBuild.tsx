@@ -37,6 +37,7 @@ const TIER_CONFIG: Record<Tier, { label: string; price: number; priceLabel: stri
 const PayBuildContent = () => {
   const [searchParams] = useSearchParams();
   const canceled = searchParams.get("canceled") === "1";
+  const projectId = useMemo(() => getOrCreateProjectId(), []);
 
   const imgA = searchParams.get("imgA");
   const imgB = searchParams.get("imgB");
