@@ -19,43 +19,43 @@ const ThankYouContent = () => {
   const cards = [
     {
       icon: Monitor,
-      title: lang === "en" ? "2 Live Preview Links" : "2个实时预览链接",
+      title: lang === "en" ? "2 Live Preview Links" : "2個即時預覽連結",
       text: lang === "en"
         ? "Two functional homepage previews you can click through and view on desktop + mobile."
-        : "两个功能齐全的首页预览，可在桌面和移动设备上查看。",
+        : "兩個功能齊全的首頁預覽，可在桌面和移動裝置上查看。",
     },
     {
       icon: FileText,
       title: lang === "en" ? "Your Copy Included" : "包含您的文案",
       text: lang === "en"
         ? "We'll structure the preview using your company details and the information you submitted (not generic filler)."
-        : "我们将使用您提交的公司信息来构建预览（而非通用内容）。",
+        : "我們將使用您提交的公司資訊來構建預覽（而非通用內容）。",
     },
     {
       icon: Zap,
       title: lang === "en" ? "Fast Next Step" : "快速下一步",
       text: lang === "en"
         ? "Reply with your chosen preview + your revision notes, and we'll proceed based on your package."
-        : "回复您选择的预览和修改意见，我们将根据您的套餐继续。",
+        : "回覆您選擇的預覽和修改意見，我們將根據您的套餐繼續。",
     },
   ];
 
   const steps = [
     {
-      label: lang === "en" ? "Today: Request Submitted" : "今天：请求已提交",
+      label: lang === "en" ? "Today: Request Submitted" : "今天：請求已提交",
       active: true,
     },
     {
-      label: lang === "en" ? "Within 24 hours: 2 Live Previews Delivered by Email" : "24小时内：通过邮件发送2个实时预览",
+      label: lang === "en" ? "Within 48 hours: 2 Live Previews Delivered by Email" : "48小時內：透過電子郵件發送2個即時預覽",
       note: lang === "en"
-        ? "Check your inbox (and spam folder) for an email from hello@swiftlift.app."
-        : "请检查您的收件箱（和垃圾邮件文件夹），查找来自 hello@swiftlift.app 的邮件。",
+        ? "Check your inbox (and spam folder) for updates from support@swiftlift.app."
+        : "請檢查您的收件匣（和垃圾郵件資料夾），查找來自 support@swiftlift.app 的更新。",
       active: false,
     },
     {
       label: lang === "en"
         ? "You Choose a Direction → We Build the Full Site (If you proceed)"
-        : "您选择方向 → 我们构建完整网站（如果您继续）",
+        : "您選擇方向 → 我們構建完整網站（如果您繼續）",
       active: false,
     },
   ];
