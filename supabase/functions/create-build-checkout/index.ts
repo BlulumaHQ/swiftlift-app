@@ -22,7 +22,7 @@ serve(async (req) => {
       apiVersion: "2025-08-27.basil",
     });
 
-    const { clientEmail, businessName, clientName, tier, selectedPreview, previewLink } = await req.json();
+    const { clientEmail, businessName, clientName, tier, selectedPreview, previewLink, projectId } = await req.json();
 
     const resolvedTier = tier === "starter" ? "starter" : "growth";
     const priceId = TIER_PRICES[resolvedTier];
@@ -32,9 +32,11 @@ serve(async (req) => {
     const metadata: Record<string, string> = {
       payment_type: "build",
       tier: resolvedTier,
+      project_id: projectId || "",
       client_email: clientEmail || "",
       business_name: businessName || "",
       client_name: clientName || "",
+      selected_package: resolvedTier,
       timestamp: new Date().toISOString(),
     };
 

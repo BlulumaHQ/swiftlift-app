@@ -1,11 +1,13 @@
 import { useSearchParams, Link } from "react-router-dom";
 import { useEffect, useMemo } from "react";
-import { CheckCircle, ArrowRight, Mail } from "lucide-react";
+import { CheckCircle, ArrowRight, Mail, Copy, CheckCircle2 } from "lucide-react";
 import { LanguageProvider, useLanguage } from "@/contexts/LanguageContext";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import CustomCursor from "@/components/CustomCursor";
 import { motion } from "framer-motion";
+import { useState } from "react";
+import { getOrCreateProjectId } from "@/lib/projectId";
 
 type PaymentType = "build" | "deployment" | "custom_quote" | "default";
 
@@ -87,6 +89,8 @@ const CONFIGS: Record<PaymentType, PaymentConfig> = {
 
 const PaymentSuccessContent = () => {
   const [searchParams] = useSearchParams();
+  const [copied, setCopied] = useState(false);
+  const projectId = useMemo(() => getOrCreateProjectId(), []);
 
   useEffect(() => {
     document.title = "Payment Confirmed — SwiftLift";
@@ -133,6 +137,22 @@ const PaymentSuccessContent = () => {
           </div>
           <h2 className="text-2xl font-semibold mb-1">Payment Confirmed</h2>
           <p className="text-muted-foreground text-sm">Your transaction was successful.</p>
+          {/* Project ID */}
+          <div className="mt-4 inline-flex items-center gap-2 rounded-full border border-border bg-muted/50 px-5 py-2">
+            <span className="text-muted-foreground text-sm font-medium">Project ID:</span>
+            <span className="text-foreground font-bold text-base tracking-wide font-mono">{projectId}</span>
+            <button
+              onClick={() => {
+                navigator.clipboard.writeText(projectId);
+                setCopied(true);
+                setTimeout(() => setCopied(false), 2000);
+              }}
+              className="ml-1 text-muted-foreground hover:text-foreground transition-colors"
+              title="Copy"
+            >
+              {copied ? <CheckCircle2 size={14} /> : <Copy size={14} />}
+            </button>
+          </div>
         </div>
       </section>
 
