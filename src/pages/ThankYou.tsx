@@ -94,7 +94,7 @@ const ThankYouContent = () => {
           >
             {lang === "en"
               ? "No calls required. Just review the previews and pick a direction."
-              : "无需电话。只需查看预览并选择方向。"}
+              : "無需致電。只需查看預覽並選擇方向。"}
           </motion.p>
           <motion.div
             initial={{ opacity: 0, y: 20 }}
