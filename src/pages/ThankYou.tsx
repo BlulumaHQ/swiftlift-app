@@ -1,16 +1,19 @@
-import { useEffect } from "react";
+import { useEffect, useMemo } from "react";
 import { LanguageProvider, useLanguage } from "@/contexts/LanguageContext";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import CustomCursor from "@/components/CustomCursor";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { Monitor, FileText, Zap, CheckCircle2, Clock, ArrowRight, Palette, Globe, Mail } from "lucide-react";
+import { Monitor, FileText, Zap, CheckCircle2, Clock, ArrowRight, Palette, Globe, Mail, Copy } from "lucide-react";
 import { useState } from "react";
+import { getOrCreateProjectId } from "@/lib/projectId";
 
 const ThankYouContent = () => {
   const { lang } = useLanguage();
   const [cloudLink, setCloudLink] = useState("");
+  const [copied, setCopied] = useState(false);
+  const projectId = useMemo(() => getOrCreateProjectId(), []);
 
   useEffect(() => {
     document.title = "Request Received — SwiftLift";
