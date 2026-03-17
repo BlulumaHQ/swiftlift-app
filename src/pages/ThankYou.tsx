@@ -5,7 +5,7 @@ import Footer from "@/components/Footer";
 import CustomCursor from "@/components/CustomCursor";
 import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { Monitor, FileText, Zap, CheckCircle2, Clock, ArrowRight, Upload, Palette, Globe, Mail } from "lucide-react";
+import { Monitor, FileText, Zap, CheckCircle2, Clock, ArrowRight, Palette, Globe, Mail } from "lucide-react";
 import { useState } from "react";
 
 const ThankYouContent = () => {
