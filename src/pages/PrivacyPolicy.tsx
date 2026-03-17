@@ -35,9 +35,9 @@ const PrivacyContent = () => {
         { title: "Cookie与分析", content: "我们可能使用Cookie和分析工具来改善用户体验。用户可以在浏览器设置中禁用Cookie。" },
         { title: "数据保留", content: "我们仅在履行服务或遵守法律义务所需的时间内保留数据。" },
         { title: "数据安全", content: "我们实施合理的安全措施来保护您的信息。" },
-        { title: "您的权利", content: "您可以通过联系 hello@swiftlift.app 请求访问、更正或删除您的个人数据。", hasEmail: true },
-        { title: "国际传输", content: "某些第三方服务可能在加拿大境外处理数据。" },
-        { title: "联系方式", content: "SwiftLift Studio\n温哥华，不列颠哥伦比亚省，加拿大\n电子邮箱：hello@swiftlift.app", hasEmail: true },
+        { title: "您的權利", content: "您可以透過聯絡 support@swiftlift.app 請求存取、更正或刪除您的個人資料。", hasEmail: true },
+        { title: "國際傳輸", content: "某些第三方服務可能在加拿大境外處理資料。" },
+        { title: "聯絡方式", content: "SwiftLift Studio\n溫哥華，不列顛哥倫比亞省，加拿大\n電子郵箱：support@swiftlift.app", hasEmail: true },
       ];
 
   return (
