@@ -73,11 +73,11 @@ const TermsContent = () => {
               {section.paragraphs.map((p, j) => (
                 <p key={j} className={j > 0 ? "mt-2" : ""}>
                   {section.hasEmail
-                    ? p.split("hello@swiftlift.app").map((part, k, arr) => (
+                    ? p.split("support@swiftlift.app").map((part, k, arr) => (
                         <span key={k}>
                           {part}
                           {k < arr.length - 1 && (
-                            <a href="mailto:hello@swiftlift.app" className="text-primary hover:underline">hello@swiftlift.app</a>
+                            <a href="mailto:support@swiftlift.app" className="text-primary hover:underline">support@swiftlift.app</a>
                           )}
                         </span>
                       ))

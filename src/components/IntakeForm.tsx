@@ -182,8 +182,8 @@ const IntakeForm = () => {
               <div className="text-5xl mb-4">🎉</div>
               <h3 className="text-2xl font-bold text-foreground font-display">
                 {lang === "en"
-                  ? "Thank you — we received your request. We'll email you within 24 hours."
-                  : "谢谢！您的请求已收到。我们将在24小时内通过电子邮件与您联系。"}
+                  ? "Thank you — we received your request. You can expect your preview concepts within 48 hours."
+                  : "感謝您——我們已收到您的請求。您可以在48小時內收到預覽方案。"}
               </h3>
             </div>
           </ScrollReveal>
