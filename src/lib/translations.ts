@@ -21,8 +21,8 @@ export const translations = {
       zh: "獲取免費預覽",
     },
     ctaSub: {
-      en: "Preview delivered within 24 hours.\nLive site ready within days.",
-      zh: "24小時內交付預覽。\n數天內網站正式上線。",
+      en: "Preview delivered within 48 hours.\nLive site ready within days.",
+      zh: "48小時內交付預覽。\n數天內網站正式上線。",
     },
     launchPricing: {
       en: "Launch pricing — limited availability",
