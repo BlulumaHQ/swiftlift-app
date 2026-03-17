@@ -1,11 +1,13 @@
 import { useSearchParams, Link } from "react-router-dom";
 import { useEffect, useMemo } from "react";
-import { CheckCircle, ArrowRight, Mail } from "lucide-react";
+import { CheckCircle, ArrowRight, Mail, Copy, CheckCircle2 } from "lucide-react";
 import { LanguageProvider, useLanguage } from "@/contexts/LanguageContext";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import CustomCursor from "@/components/CustomCursor";
 import { motion } from "framer-motion";
+import { useState } from "react";
+import { getOrCreateProjectId } from "@/lib/projectId";
 
 type PaymentType = "build" | "deployment" | "custom_quote" | "default";
 

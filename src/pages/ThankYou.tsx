@@ -79,10 +79,34 @@ const ThankYouContent = () => {
               ? "Request Received — Your 2 FREE Live Previews Are Coming"
               : "請求已收到 — 您的2個免費即時預覽即將到來"}
           </motion.h1>
+          {/* Project ID Badge */}
+          <motion.div
+            initial={{ opacity: 0, scale: 0.95 }}
+            animate={{ opacity: 1, scale: 1 }}
+            transition={{ duration: 0.4, delay: 0.1 }}
+            className="mt-5 inline-flex items-center gap-2 rounded-full border border-white/20 bg-white/10 backdrop-blur-sm px-5 py-2.5"
+          >
+            <span className="text-white/70 text-sm font-medium">
+              {lang === "en" ? "Your Project ID:" : "您的專案編號："}
+            </span>
+            <span className="text-white font-bold text-base tracking-wide font-mono">{projectId}</span>
+            <button
+              onClick={() => {
+                navigator.clipboard.writeText(projectId);
+                setCopied(true);
+                setTimeout(() => setCopied(false), 2000);
+              }}
+              className="ml-1 text-white/60 hover:text-white transition-colors"
+              title="Copy"
+            >
+              {copied ? <CheckCircle2 size={14} /> : <Copy size={14} />}
+            </button>
+          </motion.div>
+
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.1 }}
+            transition={{ duration: 0.5, delay: 0.15 }}
             className="mt-4 text-white/80 text-base md:text-lg leading-relaxed max-w-xl mx-auto"
           >
             {lang === "en"
@@ -92,7 +116,7 @@ const ThankYouContent = () => {
           <motion.p
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
+            transition={{ duration: 0.5, delay: 0.25 }}
             className="mt-3 text-white/60 text-sm"
           >
             {lang === "en"
