@@ -75,7 +75,7 @@ export const translations = {
     headline: { en: "How It Works", zh: "服務流程" },
     steps: [
       {
-        title: { en: "Upload", zh: "上傳" },
+        title: { en: "Submit", zh: "提交" },
         desc: { en: "Share your company name, logo, and vision. Two minutes.", zh: "分享您的公司名稱、Logo和品牌願景。僅需兩分鐘。" },
       },
       {
