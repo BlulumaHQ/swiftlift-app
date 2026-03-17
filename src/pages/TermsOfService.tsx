@@ -25,7 +25,7 @@ const TermsContent = () => {
         { title: "Refund Policy", paragraphs: ["Payments are non-refundable once development begins.", "Payment constitutes approval of concept and project direction."] },
         { title: "Limitation of Liability", paragraphs: ["SwiftLift Studio shall not be liable for third-party failures, hosting downtime, content inaccuracies, or indirect damages.", "Total liability shall not exceed the total amount paid for the service."] },
         { title: "Governing Law", paragraphs: ["These Terms are governed by the laws of British Columbia, Canada."] },
-        { title: "Contact", paragraphs: ["SwiftLift Studio\nVancouver, BC, Canada\nEmail: hello@swiftlift.app"], hasEmail: true },
+        { title: "Contact", paragraphs: ["SwiftLift Studio\nVancouver, BC, Canada\nEmail: support@swiftlift.app"], hasEmail: true },
       ]
     : [
         { title: "服务", paragraphs: ["SwiftLift Studio提供结构化的网站设计和集成服务。我们的服务使用预定义的布局系统、模板和第三方集成构建。", "SwiftLift Studio不提供定制软件开发、定制后端工程、专有系统架构或多用户数据库系统，除非在单独的合同中明确以书面形式同意。", "我们提供："], list: ["快速首页预览", "结构化网站建设", "可选的固定价格功能集成", "高级定制项目咨询"] },
