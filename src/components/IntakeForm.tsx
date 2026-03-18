@@ -6,6 +6,7 @@ import { motion, AnimatePresence, useMotionValue, useTransform, useSpring } from
 import { useState, useEffect, useRef } from "react";
 import { useSearchParams } from "react-router-dom";
 import { Info, X } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
 
 const Tooltip = ({ text }: { text: string }) => (
   <div className="relative group/tip inline-flex ml-1.5">
