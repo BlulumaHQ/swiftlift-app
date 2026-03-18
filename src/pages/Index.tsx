@@ -447,8 +447,9 @@ const IndexContent = () => {
 
           {/* Multi-page label */}
           <p className="mt-10 text-xs font-bold text-muted-foreground uppercase tracking-wider">{t(home.multiPageLabel, lang)}</p>
+          <p className="mt-1 text-sm text-muted-foreground">{t(home.multiPageSub, lang)}</p>
 
-          <div className="mt-4 grid grid-cols-1 md:grid-cols-3 gap-6 items-stretch">
+          <div className="mt-6 grid grid-cols-1 md:grid-cols-3 gap-6 items-stretch">
             {pricingPlans.map((p, idx) => {
               const isHighlighted = idx === 1;
               const planCodes = ["P", "L", "G"];
