@@ -5,8 +5,14 @@ import MagneticButton from "./MagneticButton";
 import { motion, AnimatePresence, useMotionValue, useTransform, useSpring } from "framer-motion";
 import { useState, useEffect, useRef } from "react";
 import { useSearchParams } from "react-router-dom";
-import { Info, X } from "lucide-react";
+import { Info, X, Check } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
+
+declare global {
+  interface Window {
+    fbq?: (...args: unknown[]) => void;
+  }
+}
 
 const Tooltip = ({ text }: { text: string }) => (
   <div className="relative group/tip inline-flex ml-1.5">
@@ -23,6 +29,7 @@ const IntakeForm = () => {
   const fields = intake.fields;
   const [submitted, setSubmitted] = useState(false);
   const [submitting, setSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState("");
   const [searchParams, setSearchParams] = useSearchParams();
   const [showLeadConfirm, setShowLeadConfirm] = useState(false);
   const sectionRef = useRef<HTMLElement>(null);
@@ -53,52 +60,49 @@ const IntakeForm = () => {
     }
   }, [searchParams, setSearchParams]);
 
-  const autoPrefix = (e: React.FocusEvent<HTMLInputElement>) => {
-    const val = e.target.value.trim();
-    if (val && !val.startsWith("http://") && !val.startsWith("https://")) {
-      e.target.value = "https://" + val;
+  const normalizeUrl = (val: string): string => {
+    let v = val.trim().toLowerCase();
+    if (!v) return "";
+    if (!v.startsWith("http://") && !v.startsWith("https://")) {
+      v = "https://" + v;
     }
+    return v;
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setSubmitting(true);
+    setSubmitError("");
     const form = e.currentTarget;
     const formData = new FormData(form);
 
+    // Normalize website URL
+    const websiteRaw = (formData.get("website") as string) || "";
+    const website = websiteRaw ? normalizeUrl(websiteRaw) : "";
+
     try {
-      const response = await fetch("https://formspree.io/f/mbdabbql", {
-        method: "POST",
-        headers: { "Content-Type": "application/json", "Accept": "application/json" },
-        body: JSON.stringify({
-          name: formData.get("name"),
-          email: formData.get("email"),
-          subject: formData.get("subject"),
-          message: `${formData.get("message")}\n\nTimeline: ${formData.get("timeline") || "N/A"}\nWebsite: ${formData.get("website") || "N/A"}\nInspiration: ${formData.get("inspiration") || "N/A"}`,
-        }),
+      const { error } = await supabase.functions.invoke("send-intake-confirmation", {
+        body: {
+          client_name: formData.get("name") as string,
+          business_name: formData.get("subject") as string,
+          client_email: formData.get("email") as string,
+          website,
+          service: formData.get("timeline") || "Preview Request",
+          message: formData.get("message") || "",
+        },
       });
 
-      // Send emails via edge function
-      try {
-        await supabase.functions.invoke("send-intake-confirmation", {
-          body: {
-            client_name: formData.get("name") as string,
-            business_name: formData.get("subject") as string,
-            client_email: formData.get("email") as string,
-            website: formData.get("website") || "",
-            service: formData.get("timeline") || "Preview Request",
-            message: formData.get("message") || "",
-          },
-        });
-      } catch (emailErr) {
-        console.error("Email error:", emailErr);
+      if (error) throw new Error(error.message || "Email sending failed");
+
+      // Facebook Lead tracking
+      if (typeof window.fbq !== "undefined") {
+        window.fbq("track", "Lead");
       }
 
-      if (response.ok) {
-        window.location.assign('/thank-you');
-      }
-    } catch {
-      // silently fail
+      setSubmitted(true);
+    } catch (err) {
+      console.error("Submission error:", err);
+      setSubmitError(lang === "en" ? "Something went wrong. Please try again." : "出了點問題。請重試。");
     } finally {
       setSubmitting(false);
     }
@@ -196,12 +200,26 @@ const IntakeForm = () => {
         {submitted ? (
           <ScrollReveal>
             <div className="mt-10 bg-background rounded-3xl p-12 text-center border border-border shadow-xl">
-              <div className="text-5xl mb-4">🎉</div>
+              <div className="w-16 h-16 rounded-full mx-auto mb-4 flex items-center justify-center" style={{ background: "hsl(275 51% 46% / 0.1)" }}>
+                <Check size={32} style={{ color: "hsl(275 51% 46%)" }} />
+              </div>
               <h3 className="text-2xl font-bold text-foreground font-display">
                 {lang === "en"
-                  ? "Thank you — we received your request. You can expect your preview concepts within 48 hours."
-                  : "感謝您——我們已收到您的請求。您可以在48小時內收到預覽方案。"}
+                  ? "Thank you — we received your request."
+                  : "感謝您——我們已收到您的請求。"}
               </h3>
+              <p className="mt-3 text-muted-foreground">
+                {lang === "en"
+                  ? "You can expect your preview concepts within 48 hours."
+                  : "您可以在48小時內收到預覽方案。"}
+              </p>
+              <a
+                href="/"
+                className="mt-6 inline-flex items-center justify-center rounded-full px-8 py-3.5 text-base font-semibold text-white transition-colors"
+                style={{ backgroundColor: "hsl(275 51% 46%)" }}
+              >
+                {lang === "en" ? "Back to Home" : "返回首頁"}
+              </a>
             </div>
           </ScrollReveal>
         ) : (
@@ -210,8 +228,6 @@ const IntakeForm = () => {
               onSubmit={handleSubmit}
               className="mt-10 bg-background rounded-3xl p-8 md:p-10 border border-border/60 shadow-2xl"
             >
-              <input type="hidden" name="redirectTo" value="https://preview--swift-rebuild-master.lovable.app/thank-you" />
-              <input type="hidden" name="redirect_to" value="https://preview--swift-rebuild-master.lovable.app/thank-you" />
               <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                 <div>
                   <label className="block text-sm font-medium text-foreground mb-1.5">
@@ -259,7 +275,7 @@ const IntakeForm = () => {
                     {t(fields.url, lang)} <span className="text-muted-foreground ml-1 text-xs">{t(fields.urlOptional, lang)}</span>
                     <Tooltip text={t(fields.urlTooltip, lang)} />
                   </label>
-                  <input type="text" inputMode="url" name="website" placeholder="Enter your website URL (e.g. yourbusiness.com)" className={inputClass} onBlur={autoPrefix} />
+                  <input type="text" inputMode="url" name="website" placeholder="Enter your website URL (e.g. yourbusiness.com)" className={inputClass} onBlur={e => { if (e.target.value) e.target.value = normalizeUrl(e.target.value); }} />
                 </div>
 
                 <div>
@@ -267,7 +283,7 @@ const IntakeForm = () => {
                     {t(fields.inspiration, lang)} <span className="text-muted-foreground ml-1 text-xs">{t(fields.inspirationOptional, lang)}</span>
                     <Tooltip text={t(fields.inspirationTooltip, lang)} />
                   </label>
-                  <input type="url" name="inspiration" placeholder="https://..." className={inputClass} onBlur={autoPrefix} />
+                  <input type="text" inputMode="url" name="inspiration" placeholder="https://..." className={inputClass} onBlur={e => { if (e.target.value) e.target.value = normalizeUrl(e.target.value); }} />
                 </div>
 
                 <div className="md:col-span-2">
@@ -281,6 +297,9 @@ const IntakeForm = () => {
                   </p>
                 </div>
               </div>
+              {submitError && (
+                <p className="mt-4 text-sm font-medium text-destructive">{submitError}</p>
+              )}
               <MagneticButton
                 as="button"
                 type="submit"

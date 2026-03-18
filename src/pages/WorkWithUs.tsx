@@ -9,43 +9,31 @@ const WorkWithUsContent = () => {
   const { lang } = useLanguage();
   const [submitted, setSubmitted] = useState(false);
   const [submitting, setSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState("");
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setSubmitting(true);
+    setSubmitError("");
     const fd = new FormData(e.currentTarget);
 
     try {
-      await fetch("https://formspree.io/f/mbdabbql", {
-        method: "POST",
-        headers: { "Content-Type": "application/json", Accept: "application/json" },
-        body: JSON.stringify({
-          name: fd.get("name"),
-          email: fd.get("email"),
-          subject: "Designer Inquiry",
-          message: `Designer Inquiry\n\nName: ${fd.get("name")}\nEmail: ${fd.get("email")}\nPortfolio: ${fd.get("portfolio") || "N/A"}\nMessage: ${fd.get("message")}`,
-        }),
+      const { error } = await supabase.functions.invoke("send-intake-confirmation", {
+        body: {
+          client_name: fd.get("name") as string,
+          client_email: fd.get("email") as string,
+          business_name: "Designer Inquiry",
+          service: "Designer Inquiry",
+          message: fd.get("message") as string || "",
+          website: fd.get("portfolio") as string || "",
+        },
       });
 
-      // Send emails via edge function
-      try {
-        await supabase.functions.invoke("send-intake-confirmation", {
-          body: {
-            client_name: fd.get("name") as string,
-            client_email: fd.get("email") as string,
-            business_name: "Designer Inquiry",
-            service: "Designer Inquiry",
-            message: fd.get("message") as string || "",
-            website: fd.get("portfolio") as string || "",
-          },
-        });
-      } catch (emailErr) {
-        console.error("Email error:", emailErr);
-      }
-
+      if (error) throw new Error(error.message || "Email sending failed");
       setSubmitted(true);
-    } catch {
-      setSubmitted(true);
+    } catch (err) {
+      console.error("Submission error:", err);
+      setSubmitError(lang === "en" ? "Something went wrong. Please try again." : "出了點問題。請重試。");
     } finally {
       setSubmitting(false);
     }
@@ -106,6 +94,9 @@ const WorkWithUsContent = () => {
               </label>
               <textarea name="message" required rows={4} className={inputClass + " min-h-[120px] resize-none"} placeholder={lang === "en" ? "Tell us about yourself and how you'd like to collaborate…" : "告訴我們您自己以及您希望如何合作…"} />
             </div>
+            {submitError && (
+              <p className="text-sm font-medium text-destructive">{submitError}</p>
+            )}
             <button
               type="submit"
               disabled={submitting}

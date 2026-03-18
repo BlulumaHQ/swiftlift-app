@@ -61,6 +61,7 @@ const CustomBriefContent = () => {
 
   const [submitted, setSubmitted] = useState(false);
   const [submitting, setSubmitting] = useState(false);
+  const [submitError, setSubmitError] = useState("");
   const [selectedFeatures, setSelectedFeatures] = useState<string[]>([]);
   const [timeline, setTimeline] = useState("");
   const [selectedPreview, setSelectedPreview] = useState<"A" | "B" | null>(
@@ -86,47 +87,33 @@ const CustomBriefContent = () => {
     }
 
     setSubmitting(true);
+    setSubmitError("");
     const formData = new FormData(e.currentTarget);
     const previewLink = selectedPreview === "A" ? linkA : selectedPreview === "B" ? linkB : null;
 
     try {
-      const response = await fetch("https://formspree.io/f/mbdabbql", {
-        method: "POST",
-        headers: { "Content-Type": "application/json", "Accept": "application/json" },
-        body: JSON.stringify({
-          name: formData.get("fullName"),
-          email: formData.get("email"),
-          subject: `[custom_quote_request] ${formData.get("businessName")}`,
-          message: `Business: ${formData.get("businessName")}\nIndustry: ${formData.get("industry")}\nPhone: ${formData.get("phone") || "N/A"}\nCurrent Website: ${formData.get("currentWebsite") || "N/A"}\n\nProject Description:\n${formData.get("projectDescription")}\n\nSelected Features: ${selectedFeatures.join(", ") || "None"}\nTimeline: ${timeline || "Not specified"}\nCloud Link: ${formData.get("cloudLink") || "N/A"}\n\nSelected Preview: ${selectedPreview || "N/A"}\nPreview Link: ${previewLink || "N/A"}`,
-        }),
+      const { error } = await supabase.functions.invoke("send-intake-confirmation", {
+        body: {
+          client_name: formData.get("fullName") as string,
+          business_name: formData.get("businessName") as string,
+          client_email: formData.get("email") as string,
+          phone: formData.get("phone") as string || "",
+          website: formData.get("currentWebsite") as string || "",
+          service: "Custom Quote Request",
+          message: `Project Description: ${formData.get("projectDescription") || ""}\nFeatures: ${selectedFeatures.join(", ") || "None"}\nTimeline: ${timeline || "Not specified"}\nCloud Link: ${formData.get("cloudLink") || "N/A"}\nSelected Preview: ${selectedPreview || "N/A"}\nPreview Link: ${previewLink || "N/A"}`,
+        },
       });
 
-      // Send emails via edge function
-      try {
-        await supabase.functions.invoke("send-intake-confirmation", {
-          body: {
-            client_name: formData.get("fullName") as string,
-            business_name: formData.get("businessName") as string,
-            client_email: formData.get("email") as string,
-            phone: formData.get("phone") as string || "",
-            website: formData.get("currentWebsite") as string || "",
-            service: "Custom Quote Request",
-            message: formData.get("projectDescription") as string || "",
-          },
-        });
-      } catch (emailErr) {
-        console.error("Email error:", emailErr);
-      }
+      if (error) throw new Error(error.message || "Email sending failed");
 
-      if (response.ok) {
-        setSubmitted(true);
-        toast({
-          title: lang === "en" ? "Quote Request Submitted" : "报价请求已提交",
-          description: lang === "en" ? "We'll review your project and get back to you within 48 hours." : "我们将审核您的项目并在48小时内回复您。",
-        });
-      }
-    } catch {
-      // silently fail
+      setSubmitted(true);
+      toast({
+        title: lang === "en" ? "Quote Request Submitted" : "报价请求已提交",
+        description: lang === "en" ? "We'll review your project and get back to you within 48 hours." : "我们将审核您的项目并在48小时内回复您。",
+      });
+    } catch (err) {
+      console.error("Submission error:", err);
+      setSubmitError(lang === "en" ? "Something went wrong. Please try again." : "出了点问题。请重试。");
     } finally {
       setSubmitting(false);
     }
@@ -352,14 +339,19 @@ const CustomBriefContent = () => {
 
                 {/* Submit */}
                 <div className="pt-4">
+                  {submitError && (
+                    <p className="mb-4 text-sm font-medium text-destructive">{submitError}</p>
+                  )}
                   <button
                     type="submit"
                     disabled={submitting}
-                    className="w-full inline-flex items-center justify-center gap-2 rounded-full px-8 py-3.5 text-base font-bold text-white transition-colors disabled:opacity-50"
+                    className="w-full inline-flex items-center justify-center gap-2 rounded-full px-8 py-3.5 text-base font-semibold text-white transition-colors disabled:opacity-60"
                     style={{ backgroundColor: "#7F37AE" }}
                   >
                     <Send size={16} />
-                    {submitting ? (lang === "en" ? "Submitting..." : "提交中...") : (lang === "en" ? "Submit Quote Request" : "提交报价请求")}
+                    {submitting
+                      ? (lang === "en" ? "Submitting..." : "提交中...")
+                      : (lang === "en" ? "Submit Quote Request" : "提交报价请求")}
                   </button>
                 </div>
               </form>
