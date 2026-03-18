@@ -251,7 +251,11 @@ const IndexContent = () => {
                 {t(home.heroTitle, lang)}
               </h1>
 
-              <p className="mt-6 text-white/70 text-lg md:text-xl leading-relaxed max-w-lg whitespace-pre-line">
+              <p className="mt-3 text-lg md:text-xl font-semibold text-white/90">
+                {t(home.heroSubShort, lang)}
+              </p>
+
+              <p className="mt-4 text-white/70 text-base md:text-lg leading-relaxed max-w-lg">
                 {t(home.heroSub, lang)}
               </p>
 
