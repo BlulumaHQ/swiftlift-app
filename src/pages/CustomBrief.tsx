@@ -101,6 +101,7 @@ const CustomBriefContent = () => {
           website: formData.get("currentWebsite") as string || "",
           service: "Custom Quote Request",
           message: `Project Description: ${formData.get("projectDescription") || ""}\nFeatures: ${selectedFeatures.join(", ") || "None"}\nTimeline: ${timeline || "Not specified"}\nCloud Link: ${formData.get("cloudLink") || "N/A"}\nSelected Preview: ${selectedPreview || "N/A"}\nPreview Link: ${previewLink || "N/A"}`,
+          form_type: "custom_quote",
         },
       });
 

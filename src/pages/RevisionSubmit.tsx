@@ -78,6 +78,7 @@ const RevisionSubmitContent = () => {
           business_name: formData.get("project_code") as string || "Revision",
           service: "Revision Request",
           message: `Revision Details: ${formData.get("revision_details") || ""}\nCloud Link: ${formData.get("cloud_link") || "N/A"}\nPlan: ${planParam}`,
+          form_type: "revision",
         },
       });
 

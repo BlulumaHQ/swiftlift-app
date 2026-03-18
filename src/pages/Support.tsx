@@ -32,6 +32,7 @@ const SupportContent = () => {
           client_email: formData.get("email") as string,
           service: "Support Request",
           message: formData.get("message") as string || "",
+          form_type: "support",
         },
       });
 

@@ -265,6 +265,7 @@ const MultiStepIntake = ({ variant = "hero" }: { variant?: "hero" | "cta" }) => 
           website: url,
           service: timeline ? `Timeline: ${timeline}` : "Preview Request",
           message: websiteYouLike ? `Inspiration: ${websiteYouLike}` : "",
+          form_type: "preview",
         },
       });
 
