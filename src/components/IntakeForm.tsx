@@ -242,7 +242,7 @@ const IntakeForm = () => {
                     {t(fields.url, lang)} <span className="text-muted-foreground ml-1 text-xs">{t(fields.urlOptional, lang)}</span>
                     <Tooltip text={t(fields.urlTooltip, lang)} />
                   </label>
-                  <input type="url" name="website" placeholder="https://yourbusiness.com" className={inputClass} onBlur={autoPrefix} />
+                  <input type="text" inputMode="url" name="website" placeholder="Enter your website URL (e.g. yourbusiness.com)" className={inputClass} onBlur={autoPrefix} />
                 </div>
 
                 <div>

@@ -169,14 +169,15 @@ const MultiStepIntake = ({ variant = "hero" }: { variant?: "hero" | "cta" }) => 
       <form onSubmit={handleStep1} className="w-full">
         <div className="flex flex-col gap-3">
           <input
-            type="url"
+            type="text"
+            inputMode="url"
             value={url}
-            onChange={e => setUrl(e.target.value)}
-            onBlur={() => setUrl(autoPrefix(url))}
-            required
-            placeholder="https://yourbusiness.com"
-            className={inputBase}
+            onChange={e => { setUrl(e.target.value); setUrlError(""); }}
+            placeholder={lang === "en" ? "Enter your website URL (e.g. yourbusiness.com)" : "輸入您的網站網址（例如 yourbusiness.com）"}
+            className={`${inputBase}${urlError ? " border-red-400 focus:ring-red-400/30" : ""}`}
+            onKeyDown={e => { if (e.key === "Enter") { e.preventDefault(); submitStep1(); } }}
           />
+          {urlError && <p className={`text-xs ${isDark ? "text-red-300" : "text-destructive"}`}>{urlError}</p>}
           <button
             type="submit"
             className="w-full rounded-full py-4 px-8 text-sm font-bold text-white whitespace-nowrap transition-all hover:opacity-90 hover:scale-[1.01]"
