@@ -60,7 +60,7 @@ serve(async (req) => {
         Authorization: `Bearer ${RESEND_API_KEY}`,
       },
       body: JSON.stringify({
-        from: "SwiftLift <onboarding@resend.dev>",
+        from: "SwiftLift <support@swiftlift.app>",
         to: [ADMIN_EMAIL],
         subject: `Free Hosting Submission: ${clientName || "Unknown Client"}`,
         html,

@@ -9,9 +9,9 @@ import TermsOfService from "./pages/TermsOfService";
 import Deployment from "./pages/Deployment";
 import CustomBrief from "./pages/CustomBrief";
 import RevisionSubmit from "./pages/RevisionSubmit";
-import ThankYou from "./pages/ThankYou";
 import NotFound from "./pages/NotFound";
 import Features from "./pages/Features";
+import Addons from "./pages/Addons";
 import HostingGuide from "./pages/HostingGuide";
 import Faq from "./pages/Faq";
 import Support from "./pages/Support";
@@ -37,8 +37,8 @@ const App = () => (
           <Route path="/deployment" element={<Deployment />} />
           <Route path="/custom-brief" element={<CustomBrief />} />
           <Route path="/revision-request" element={<RevisionSubmit />} />
-          <Route path="/thank-you" element={<ThankYou />} />
           <Route path="/features" element={<Features />} />
+          <Route path="/addons" element={<Addons />} />
           <Route path="/hosting-guide" element={<HostingGuide />} />
           <Route path="/faq" element={<Faq />} />
           <Route path="/support" element={<Support />} />

@@ -228,7 +228,10 @@ const DeploymentContent = () => {
           body: { clientName, businessName, clientEmail, selectedAddons: [] },
         });
         if (error) throw error;
-        window.location.href = "/thank-you";
+        alert("Free hosting request submitted successfully! We'll be in touch soon.");
+        if (typeof (window as any).fbq !== 'undefined') {
+          (window as any).fbq('track', 'Lead');
+        }
         return;
       }
 
