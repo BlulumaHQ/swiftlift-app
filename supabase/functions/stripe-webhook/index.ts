@@ -41,7 +41,7 @@ async function sendAdminEmail(data: Record<string, string>) {
       Authorization: `Bearer ${RESEND_API_KEY}`,
     },
     body: JSON.stringify({
-      from: "SwiftLift <onboarding@resend.dev>",
+      from: "SwiftLift <support@swiftlift.app>",
       to: [ADMIN_EMAIL],
       subject: `New Deployment: ${data["Client Name"] || "Unknown"} — ${data["Hosting Plan"] || ""}`,
       html,
