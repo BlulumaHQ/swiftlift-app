@@ -1,11 +1,84 @@
 import { useEffect } from "react";
 import { Link } from "react-router-dom";
-import { LanguageProvider, useLanguage } from "@/contexts/LanguageContext";
+import { LanguageProvider } from "@/contexts/LanguageContext";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import ScrollReveal from "@/components/ScrollReveal";
-import { ArrowRight, ExternalLink, Quote, Monitor, Smartphone, Star } from "lucide-react";
-import { motion } from "framer-motion";
+import CustomCursor from "@/components/CustomCursor";
+import { ArrowRight, ExternalLink, Quote, Star } from "lucide-react";
+
+/* ── Mock Thumbnail Component ── */
+const MockThumb = ({
+  variant,
+  industry,
+  size = "md",
+}: {
+  variant: "A" | "B";
+  industry: string;
+  size?: "md" | "sm";
+}) => {
+  const isA = variant === "A";
+  const h = size === "md" ? "h-28" : "h-20";
+
+  return (
+    <div
+      className={`${h} w-full rounded-lg border border-border overflow-hidden relative`}
+      style={{
+        background: isA
+          ? "linear-gradient(135deg, hsl(210 25% 97%) 0%, hsl(210 20% 93%) 100%)"
+          : "linear-gradient(135deg, hsl(220 30% 96%) 0%, hsl(215 25% 90%) 100%)",
+      }}
+    >
+      {/* Nav bar mock */}
+      <div
+        className="h-3 w-full flex items-center px-2 gap-1"
+        style={{ background: isA ? "hsl(210 20% 18%)" : "hsl(220 35% 22%)" }}
+      >
+        <div className="w-1 h-1 rounded-full bg-white/30" />
+        <div className="w-1 h-1 rounded-full bg-white/30" />
+        <div className="w-1 h-1 rounded-full bg-white/30" />
+      </div>
+
+      {/* Content mock */}
+      <div className="p-1.5 space-y-1">
+        {isA ? (
+          <>
+            <div className="h-1.5 w-3/4 rounded-full bg-foreground/10" />
+            <div className="h-1 w-1/2 rounded-full bg-foreground/6" />
+            <div className="flex gap-1 mt-1">
+              <div className="h-6 flex-1 rounded bg-foreground/5" />
+              <div className="h-6 flex-1 rounded bg-foreground/5" />
+            </div>
+            <div className="h-1 w-2/3 rounded-full bg-foreground/6" />
+          </>
+        ) : (
+          <>
+            <div
+              className="h-8 w-full rounded"
+              style={{
+                background: "linear-gradient(135deg, hsl(var(--accent-purple) / 0.12), hsl(var(--accent-blue) / 0.08))",
+              }}
+            />
+            <div className="h-1.5 w-4/5 rounded-full bg-foreground/10" />
+            <div className="h-3 w-1/3 rounded-full" style={{ background: "hsl(var(--accent-purple) / 0.2)" }} />
+          </>
+        )}
+      </div>
+
+      {/* Label */}
+      <div className="absolute bottom-1 right-1">
+        <span
+          className="text-[8px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded"
+          style={{
+            background: isA ? "hsl(210 20% 18% / 0.7)" : "hsl(var(--accent-purple) / 0.8)",
+            color: "white",
+          }}
+        >
+          {isA ? "Clean" : "Convert"}
+        </span>
+      </div>
+    </div>
+  );
+};
 
 /* ── Data ── */
 
@@ -13,7 +86,7 @@ interface FeaturedCase {
   company: string;
   industry: string;
   description: string;
-  beforeDescription: string;
+  beforeSummary: string;
   previewA: string;
   previewB: string;
   selectedVersion: "A" | "B";
@@ -28,33 +101,35 @@ const featuredCases: FeaturedCase[] = [
     company: "NorthBuild Construction",
     industry: "Construction",
     description: "A local construction company with an outdated website and unclear service presentation.",
-    beforeDescription: "Old cluttered layout, poor mobile experience, outdated visuals",
+    beforeSummary: "Old cluttered layout, poor mobile experience, outdated visuals.",
     previewA: "northbuild-preview-a.swiftlift.app",
     previewB: "northbuild-preview-b.swiftlift.app",
     selectedVersion: "B",
     selectedLabel: "Version B — Conversion-Focused",
     liveUrl: "www.northbuildconstruction.com",
-    testimonial: "SwiftLift completely transformed our website. The preview process made it easy to understand what we were getting before committing. We chose the conversion-focused version, and it represents our business far better than before.",
+    testimonial:
+      "SwiftLift completely transformed our website. The preview process made it easy to understand what we were getting before committing. We chose the conversion-focused version, and it represents our business far better than before.",
     testimonialAuthor: "Marcus T., Owner",
   },
   {
     company: "BrightSmile Dental",
     industry: "Dental Clinic",
     description: "A small dental clinic needing a clean and trustworthy online presence.",
-    beforeDescription: "Outdated design, inconsistent branding, hard-to-read content",
+    beforeSummary: "Outdated design, inconsistent branding, hard-to-read content.",
     previewA: "brightsmile-preview-a.swiftlift.app",
     previewB: "brightsmile-preview-b.swiftlift.app",
     selectedVersion: "A",
     selectedLabel: "Version A — Clean Professional",
     liveUrl: "www.brightsmiledental.ca",
-    testimonial: "The new design feels modern and professional. The preview helped us feel confident before moving forward.",
+    testimonial:
+      "The new design feels modern and professional. The preview helped us feel confident before moving forward.",
     testimonialAuthor: "Dr. Sarah L.",
   },
   {
     company: "Precision Auto Repair",
     industry: "Auto Repair",
     description: "Auto shop website lacking structure and clear service communication.",
-    beforeDescription: "Text-heavy layout, no clear hierarchy, not mobile optimized",
+    beforeSummary: "Text-heavy layout, no clear hierarchy, not mobile optimized.",
     previewA: "precisionauto-preview-a.swiftlift.app",
     previewB: "precisionauto-preview-b.swiftlift.app",
     selectedVersion: "B",
@@ -86,142 +161,145 @@ const gridCases: GridCase[] = [
   { company: "Spark Cleaning Services", industry: "Cleaning", description: "Simple, conversion-focused cleaning service website.", previewA: "sparkclean-preview-a.swiftlift.app", previewB: "sparkclean-preview-b.swiftlift.app", liveUrl: "www.sparkcleaningservices.ca" },
 ];
 
-/* ── Components ── */
-
-const VersionBadge = ({ label, selected }: { label: string; selected?: boolean }) => (
-  <span className={`inline-flex items-center gap-1.5 rounded-full px-3 py-1 text-xs font-semibold tracking-wide ${
-    selected
-      ? "bg-[hsl(var(--accent-purple))] text-white"
-      : "bg-secondary text-secondary-foreground"
-  }`}>
-    {selected && <Star className="w-3 h-3" />}
-    {label}
-  </span>
-);
-
-const PreviewLink = ({ url, label }: { url: string; label: string }) => (
-  <a
-    href={`https://${url}`}
-    target="_blank"
-    rel="noopener noreferrer"
-    className="group flex items-center gap-2 rounded-lg border border-border bg-card px-4 py-3 text-sm font-medium text-foreground transition-all hover:border-[hsl(var(--accent-purple))] hover:shadow-md"
-  >
-    <Monitor className="w-4 h-4 text-muted-foreground group-hover:text-[hsl(var(--accent-purple))] transition-colors" />
-    <span>{label}</span>
-    <ExternalLink className="w-3.5 h-3.5 ml-auto text-muted-foreground group-hover:text-[hsl(var(--accent-purple))] transition-colors" />
-  </a>
-);
-
-/* ── Featured Case Card ── */
-const FeaturedCaseCard = ({ c, index }: { c: FeaturedCase; index: number }) => (
-  <ScrollReveal delay={index * 0.1}>
-    <div className="rounded-2xl border border-border bg-card overflow-hidden shadow-sm">
-      {/* Header */}
-      <div className="bg-[hsl(var(--surface-sunken))] px-6 py-5 sm:px-8 sm:py-6 border-b border-border">
-        <div className="flex flex-wrap items-center gap-3 mb-2">
-          <span className="text-xs font-semibold uppercase tracking-widest text-[hsl(var(--accent-purple))]">
-            {c.industry}
-          </span>
-          <span className="text-xs text-muted-foreground">•</span>
-          <span className="text-xs font-medium text-muted-foreground">Before → After Transformation</span>
-        </div>
-        <h3 className="text-xl sm:text-2xl font-bold text-foreground">{c.company}</h3>
-        <p className="mt-1 text-sm text-muted-foreground max-w-xl">{c.description}</p>
-      </div>
-
-      <div className="p-6 sm:p-8 space-y-6">
-        {/* Before */}
-        <div>
-          <h4 className="text-xs font-semibold uppercase tracking-widest text-muted-foreground mb-2">Before</h4>
-          <div className="rounded-xl bg-[hsl(var(--surface-sunken))] border border-border p-4 sm:p-5">
-            <p className="text-sm text-muted-foreground italic">{c.beforeDescription}</p>
-          </div>
-        </div>
-
-        {/* Preview versions */}
-        <div className="grid sm:grid-cols-2 gap-4">
-          <div>
-            <div className="flex items-center gap-2 mb-2">
-              <VersionBadge label="Version A — Clean Professional" selected={c.selectedVersion === "A"} />
-              {c.selectedVersion === "A" && <span className="text-xs text-[hsl(var(--accent-purple))] font-medium">✓ Selected</span>}
-            </div>
-            <PreviewLink url={c.previewA} label="View Preview A" />
-          </div>
-          <div>
-            <div className="flex items-center gap-2 mb-2">
-              <VersionBadge label="Version B — Conversion-Focused" selected={c.selectedVersion === "B"} />
-              {c.selectedVersion === "B" && <span className="text-xs text-[hsl(var(--accent-purple))] font-medium">✓ Selected</span>}
-            </div>
-            <PreviewLink url={c.previewB} label="View Preview B" />
-          </div>
-        </div>
-
-        {/* Final result */}
-        <div className="rounded-xl border-2 border-[hsl(var(--accent-purple))]/20 bg-[hsl(var(--accent-purple))]/[0.03] p-4 sm:p-5">
-          <div className="flex flex-wrap items-center justify-between gap-3">
-            <div>
-              <p className="text-xs font-semibold uppercase tracking-widest text-[hsl(var(--accent-purple))] mb-1">Final Selected Version</p>
-              <p className="text-sm font-bold text-foreground">{c.selectedLabel}</p>
-            </div>
-            <a
-              href={`https://${c.liveUrl}`}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="inline-flex items-center gap-2 rounded-lg bg-[hsl(var(--accent-purple))] px-5 py-2.5 text-sm font-semibold text-white transition-all hover:opacity-90 shadow-sm"
-            >
-              View Live Website
-              <ExternalLink className="w-4 h-4" />
-            </a>
-          </div>
-        </div>
-
-        {/* Testimonial */}
-        <div className="flex gap-3 pt-2">
-          <Quote className="w-5 h-5 text-[hsl(var(--accent-purple))] shrink-0 mt-0.5" />
-          <div>
-            <p className="text-sm text-foreground leading-relaxed italic">"{c.testimonial}"</p>
-            <p className="mt-2 text-xs font-semibold text-muted-foreground">{c.testimonialAuthor}</p>
-          </div>
-        </div>
-      </div>
+/* ── Featured Case Card (compact for 3-col) ── */
+const FeaturedCaseCard = ({ c }: { c: FeaturedCase }) => (
+  <div className="rounded-2xl border border-border bg-card overflow-hidden shadow-sm flex flex-col h-full">
+    {/* Header */}
+    <div className="bg-[hsl(var(--surface-sunken))] px-5 py-4 border-b border-border">
+      <span className="text-[10px] font-semibold uppercase tracking-widest text-[hsl(var(--accent-purple))]">
+        {c.industry}
+      </span>
+      <h3 className="text-base font-bold text-foreground mt-1">{c.company}</h3>
+      <p className="mt-1 text-xs text-muted-foreground leading-relaxed">{c.description}</p>
     </div>
-  </ScrollReveal>
-);
 
-/* ── Grid Case Card ── */
-const GridCaseCard = ({ c, index }: { c: GridCase; index: number }) => (
-  <ScrollReveal delay={index * 0.05}>
-    <div className="rounded-xl border border-border bg-card p-5 sm:p-6 transition-all hover:shadow-lg hover:border-[hsl(var(--accent-purple))]/30 group">
-      <div className="flex items-center gap-2 mb-3">
-        <span className="text-[10px] font-semibold uppercase tracking-widest text-[hsl(var(--accent-purple))]">
-          {c.industry}
-        </span>
+    <div className="p-5 space-y-4 flex-1 flex flex-col">
+      {/* Before summary */}
+      <div>
+        <p className="text-[10px] font-semibold uppercase tracking-widest text-muted-foreground mb-1">Before</p>
+        <p className="text-xs text-muted-foreground italic">{c.beforeSummary}</p>
       </div>
-      <h3 className="text-lg font-bold text-foreground mb-1">{c.company}</h3>
-      <p className="text-sm text-muted-foreground mb-4">{c.description}</p>
 
-      <div className="space-y-2">
-        <div className="grid grid-cols-2 gap-2">
-          <a href={`https://${c.previewA}`} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1.5 rounded-md border border-border px-3 py-2 text-xs font-medium text-muted-foreground hover:text-foreground hover:border-[hsl(var(--accent-purple))]/40 transition-all">
-            <Monitor className="w-3 h-3" /> Version A
-            <ExternalLink className="w-2.5 h-2.5 ml-auto opacity-0 group-hover:opacity-100 transition-opacity" />
-          </a>
-          <a href={`https://${c.previewB}`} target="_blank" rel="noopener noreferrer" className="flex items-center gap-1.5 rounded-md border border-border px-3 py-2 text-xs font-medium text-muted-foreground hover:text-foreground hover:border-[hsl(var(--accent-purple))]/40 transition-all">
-            <Monitor className="w-3 h-3" /> Version B
-            <ExternalLink className="w-2.5 h-2.5 ml-auto opacity-0 group-hover:opacity-100 transition-opacity" />
+      {/* Preview thumbnails */}
+      <div className="grid grid-cols-2 gap-3">
+        <div>
+          <p className="text-[10px] font-semibold text-muted-foreground mb-1.5">
+            Version A{" "}
+            {c.selectedVersion === "A" && (
+              <span className="text-[hsl(var(--accent-purple))]">
+                <Star className="w-2.5 h-2.5 inline fill-current" /> Selected
+              </span>
+            )}
+          </p>
+          <MockThumb variant="A" industry={c.industry} size="md" />
+          <a
+            href={`https://${c.previewA}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mt-1.5 flex items-center justify-center gap-1 rounded-md border border-border px-2 py-1.5 text-[11px] font-medium text-muted-foreground hover:text-foreground hover:border-[hsl(var(--accent-purple))]/40 transition-all"
+          >
+            View Preview A <ExternalLink className="w-2.5 h-2.5" />
           </a>
         </div>
+        <div>
+          <p className="text-[10px] font-semibold text-muted-foreground mb-1.5">
+            Version B{" "}
+            {c.selectedVersion === "B" && (
+              <span className="text-[hsl(var(--accent-purple))]">
+                <Star className="w-2.5 h-2.5 inline fill-current" /> Selected
+              </span>
+            )}
+          </p>
+          <MockThumb variant="B" industry={c.industry} size="md" />
+          <a
+            href={`https://${c.previewB}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mt-1.5 flex items-center justify-center gap-1 rounded-md border border-border px-2 py-1.5 text-[11px] font-medium text-muted-foreground hover:text-foreground hover:border-[hsl(var(--accent-purple))]/40 transition-all"
+          >
+            View Preview B <ExternalLink className="w-2.5 h-2.5" />
+          </a>
+        </div>
+      </div>
+
+      {/* Final result */}
+      <div className="rounded-lg border border-[hsl(var(--accent-purple))]/20 bg-[hsl(var(--accent-purple))]/[0.03] p-3">
+        <p className="text-[10px] font-semibold uppercase tracking-widest text-[hsl(var(--accent-purple))] mb-1">
+          Final Selected Version
+        </p>
+        <p className="text-xs font-bold text-foreground mb-2">{c.selectedLabel}</p>
         <a
           href={`https://${c.liveUrl}`}
           target="_blank"
           rel="noopener noreferrer"
-          className="flex items-center justify-center gap-2 rounded-md bg-primary px-3 py-2 text-xs font-semibold text-primary-foreground hover:bg-primary/90 transition-all"
+          className="inline-flex items-center gap-1.5 rounded-md bg-[hsl(var(--accent-purple))] px-3.5 py-1.5 text-[11px] font-semibold text-white hover:opacity-90 transition-all"
         >
           View Live Website <ExternalLink className="w-3 h-3" />
         </a>
       </div>
+
+      {/* Testimonial */}
+      <div className="flex gap-2 pt-1 mt-auto">
+        <Quote className="w-4 h-4 text-[hsl(var(--accent-purple))] shrink-0 mt-0.5" />
+        <div>
+          <p className="text-xs text-foreground leading-relaxed italic">"{c.testimonial}"</p>
+          <p className="mt-1.5 text-[11px] font-semibold text-muted-foreground">{c.testimonialAuthor}</p>
+        </div>
+      </div>
     </div>
-  </ScrollReveal>
+  </div>
+);
+
+/* ── Grid Case Card ── */
+const GridCaseCard = ({ c }: { c: GridCase }) => (
+  <div className="rounded-xl border border-border bg-card p-4 transition-all hover:shadow-lg hover:border-[hsl(var(--accent-purple))]/30 group flex flex-col">
+    <span className="text-[10px] font-semibold uppercase tracking-widest text-[hsl(var(--accent-purple))]">
+      {c.industry}
+    </span>
+    <h3 className="text-sm font-bold text-foreground mt-1 mb-1">{c.company}</h3>
+    <p className="text-xs text-muted-foreground mb-3">{c.description}</p>
+
+    {/* Small thumbnails */}
+    <div className="grid grid-cols-2 gap-2 mb-3">
+      <div>
+        <p className="text-[9px] font-semibold text-muted-foreground mb-1">Version A</p>
+        <MockThumb variant="A" industry={c.industry} size="sm" />
+      </div>
+      <div>
+        <p className="text-[9px] font-semibold text-muted-foreground mb-1">Version B</p>
+        <MockThumb variant="B" industry={c.industry} size="sm" />
+      </div>
+    </div>
+
+    <div className="space-y-1.5 mt-auto">
+      <div className="grid grid-cols-2 gap-1.5">
+        <a
+          href={`https://${c.previewA}`}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="flex items-center justify-center gap-1 rounded-md border border-border px-2 py-1.5 text-[10px] font-medium text-muted-foreground hover:text-foreground hover:border-[hsl(var(--accent-purple))]/40 transition-all"
+        >
+          View Preview A <ExternalLink className="w-2.5 h-2.5" />
+        </a>
+        <a
+          href={`https://${c.previewB}`}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="flex items-center justify-center gap-1 rounded-md border border-border px-2 py-1.5 text-[10px] font-medium text-muted-foreground hover:text-foreground hover:border-[hsl(var(--accent-purple))]/40 transition-all"
+        >
+          View Preview B <ExternalLink className="w-2.5 h-2.5" />
+        </a>
+      </div>
+      <a
+        href={`https://${c.liveUrl}`}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="flex items-center justify-center gap-1.5 rounded-md bg-primary px-3 py-1.5 text-[10px] font-semibold text-primary-foreground hover:bg-primary/90 transition-all"
+      >
+        View Live Website <ExternalLink className="w-2.5 h-2.5" />
+      </a>
+    </div>
+  </div>
 );
 
 /* ── Page ── */
@@ -232,90 +310,77 @@ const PortfolioContent = () => {
 
   return (
     <div className="min-h-screen bg-background text-foreground">
+      <CustomCursor />
       <Header />
 
       {/* SECTION 1 — HERO */}
-      <section className="pt-32 pb-16 sm:pt-40 sm:pb-20 px-4">
+      <section className="pt-28 pb-10 sm:pt-36 sm:pb-14 px-4">
         <div className="max-w-4xl mx-auto text-center">
-          <ScrollReveal>
-            <span className="inline-block rounded-full bg-[hsl(var(--accent-purple))]/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-widest text-[hsl(var(--accent-purple))] mb-5">
-              Portfolio
-            </span>
-          </ScrollReveal>
-          <ScrollReveal delay={0.1}>
-            <h1 className="text-4xl sm:text-5xl lg:text-6xl font-black leading-[1.1] tracking-tight text-foreground mb-4">
-              Real Website Transformations
-            </h1>
-          </ScrollReveal>
-          <ScrollReveal delay={0.15}>
-            <p className="text-lg sm:text-xl text-muted-foreground max-w-2xl mx-auto mb-3">
-              Compare two preview versions. See what clients chose. Explore real live websites.
-            </p>
-          </ScrollReveal>
-          <ScrollReveal delay={0.2}>
-            <p className="text-sm text-muted-foreground">
-              From outdated websites to modern, high-performing experiences.
-            </p>
-          </ScrollReveal>
+          <span className="inline-block rounded-full bg-[hsl(var(--accent-purple))]/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-widest text-[hsl(var(--accent-purple))] mb-4">
+            Portfolio
+          </span>
+          <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black leading-[1.1] tracking-tight text-foreground mb-3">
+            Real Website Transformations
+          </h1>
+          <p className="text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto mb-2">
+            Compare two preview versions. See what clients chose. Explore real live websites.
+          </p>
+          <p className="text-sm text-muted-foreground">
+            From outdated websites to modern, high-performing experiences.
+          </p>
         </div>
       </section>
 
-      {/* SECTION 2 — FEATURED CASE STUDIES */}
-      <section className="pb-20 sm:pb-28 px-4">
-        <div className="max-w-4xl mx-auto">
-          <ScrollReveal>
-            <h2 className="text-2xl sm:text-3xl font-bold text-foreground text-center mb-3">
-              Featured Transformations
-            </h2>
-            <p className="text-sm text-muted-foreground text-center mb-12 max-w-lg mx-auto">
-              Full before → after breakdowns with preview versions and live results.
-            </p>
-          </ScrollReveal>
-          <div className="space-y-10">
-            {featuredCases.map((c, i) => (
-              <FeaturedCaseCard key={c.company} c={c} index={i} />
+      {/* SECTION 2 — FEATURED CASE STUDIES (3 in one row on desktop) */}
+      <section className="pb-14 sm:pb-18 px-4">
+        <div className="max-w-7xl mx-auto">
+          <h2 className="text-xl sm:text-2xl font-bold text-foreground text-center mb-2">
+            Featured Transformations
+          </h2>
+          <p className="text-sm text-muted-foreground text-center mb-8 max-w-lg mx-auto">
+            Full before → after breakdowns with preview versions and live results.
+          </p>
+          <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
+            {featuredCases.map((c) => (
+              <FeaturedCaseCard key={c.company} c={c} />
             ))}
           </div>
         </div>
       </section>
 
       {/* SECTION 3 — PORTFOLIO GRID */}
-      <section className="pb-20 sm:pb-28 px-4 bg-[hsl(var(--surface-sunken))]">
-        <div className="max-w-6xl mx-auto pt-16 sm:pt-20">
-          <ScrollReveal>
-            <h2 className="text-2xl sm:text-3xl font-bold text-foreground text-center mb-3">
-              More Projects
-            </h2>
-            <p className="text-sm text-muted-foreground text-center mb-12 max-w-lg mx-auto">
-              Browse preview versions and live websites across different industries.
-            </p>
-          </ScrollReveal>
-          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-5">
-            {gridCases.map((c, i) => (
-              <GridCaseCard key={c.company} c={c} index={i} />
+      <section className="pb-14 sm:pb-18 px-4 bg-[hsl(var(--surface-sunken))]">
+        <div className="max-w-6xl mx-auto pt-12 sm:pt-16">
+          <h2 className="text-xl sm:text-2xl font-bold text-foreground text-center mb-2">
+            More Projects
+          </h2>
+          <p className="text-sm text-muted-foreground text-center mb-8 max-w-lg mx-auto">
+            Browse preview versions and live websites across different industries.
+          </p>
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
+            {gridCases.map((c) => (
+              <GridCaseCard key={c.company} c={c} />
             ))}
           </div>
         </div>
       </section>
 
       {/* SECTION 4 — CTA */}
-      <section className="py-20 sm:py-28 px-4">
+      <section className="py-14 sm:py-20 px-4">
         <div className="max-w-2xl mx-auto text-center">
-          <ScrollReveal>
-            <h2 className="text-3xl sm:text-4xl font-black text-foreground mb-4">
-              Get Your Free Website Preview
-            </h2>
-            <p className="text-muted-foreground mb-8">
-              See your new website before making any payment.
-            </p>
-            <Link
-              to="/#contact"
-              className="inline-flex items-center gap-2 rounded-xl bg-[hsl(var(--accent-purple))] px-8 py-4 text-base font-bold text-white shadow-lg hover:opacity-90 transition-all"
-            >
-              Start My Preview
-              <ArrowRight className="w-5 h-5" />
-            </Link>
-          </ScrollReveal>
+          <h2 className="text-2xl sm:text-3xl font-black text-foreground mb-3">
+            Get Your Free Website Preview
+          </h2>
+          <p className="text-muted-foreground mb-6">
+            See your new website before making any payment.
+          </p>
+          <Link
+            to="/#contact"
+            className="inline-flex items-center gap-2 rounded-xl bg-[hsl(var(--accent-purple))] px-8 py-3.5 text-sm font-bold text-white shadow-lg hover:opacity-90 transition-all"
+          >
+            Start My Preview
+            <ArrowRight className="w-4 h-4" />
+          </Link>
         </div>
       </section>
 
