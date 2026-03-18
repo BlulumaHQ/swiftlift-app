@@ -361,20 +361,20 @@ const IndexContent = () => {
                 <div className="relative group aspect-[4/3] overflow-hidden cursor-pointer">
                   <img
                     src={portfolioImages[proofIdx]}
-                    alt={`${t(home.portfolioItems[proofIdx].name, lang)} - ${t(home.after, lang)}`}
+                    alt={`${t(home.portfolioItems[proofIdx].name, lang)} - ${t(home.versionA, lang)}`}
                     className="absolute inset-0 w-full h-full object-cover transition-all duration-500 group-hover:opacity-0 group-hover:scale-105 brightness-105 contrast-105 saturate-110"
                   />
                   <img
                     src={portfolioImages[proofIdx]}
-                    alt={`${t(home.portfolioItems[proofIdx].name, lang)} - ${t(home.before, lang)}`}
-                    className="absolute inset-0 w-full h-full object-cover transition-all duration-500 opacity-0 group-hover:opacity-100 brightness-75 contrast-90 saturate-50 sepia-[0.15]"
-                    style={{ filter: "brightness(0.7) contrast(0.85) saturate(0.4) sepia(0.15)" }}
+                    alt={`${t(home.portfolioItems[proofIdx].name, lang)} - ${t(home.versionB, lang)}`}
+                    className="absolute inset-0 w-full h-full object-cover transition-all duration-500 opacity-0 group-hover:opacity-100"
+                    style={{ filter: "brightness(0.95) contrast(1.1) saturate(1.15)" }}
                   />
                   <span className="absolute top-3 right-3 text-[10px] font-bold uppercase tracking-wider bg-black/60 text-white px-2 py-1 rounded transition-opacity duration-300 group-hover:opacity-0">
-                    {t(home.after, lang)}
+                    {t(home.versionA, lang)}
                   </span>
-                  <span className="absolute top-3 right-3 text-[10px] font-bold uppercase tracking-wider bg-black/60 text-white/70 px-2 py-1 rounded transition-opacity duration-300 opacity-0 group-hover:opacity-100">
-                    {t(home.before, lang)}
+                  <span className="absolute top-3 right-3 text-[10px] font-bold uppercase tracking-wider bg-black/60 text-white px-2 py-1 rounded transition-opacity duration-300 opacity-0 group-hover:opacity-100">
+                    {t(home.versionB, lang)}
                   </span>
                 </div>
 
