@@ -501,6 +501,26 @@ const IndexContent = () => {
                       <p className="mt-2 text-xs font-semibold text-foreground">{t(home.testimonialItems[proofIdx].name, lang)}</p>
                       <p className="text-xs text-muted-foreground">{t(home.testimonialItems[proofIdx].company, lang)}</p>
                     </div>
+
+                    {/* Open Live Preview links */}
+                    <div className="mt-5 flex gap-3">
+                      <a
+                        href="#"
+                        onClick={(e) => e.preventDefault()}
+                        className="inline-flex items-center gap-1.5 rounded-lg px-4 py-2 text-xs font-semibold text-white transition-all hover:opacity-90"
+                        style={{ background: "#2DA8FF" }}
+                      >
+                        {lang === "en" ? "Open Live Preview A" : "打開即時預覽A"}
+                      </a>
+                      <a
+                        href="#"
+                        onClick={(e) => e.preventDefault()}
+                        className="inline-flex items-center gap-1.5 rounded-lg px-4 py-2 text-xs font-semibold text-white transition-all hover:opacity-90"
+                        style={{ background: "#2DA8FF" }}
+                      >
+                        {lang === "en" ? "Open Live Preview B" : "打開即時預覽B"}
+                      </a>
+                    </div>
                   </div>
 
                   <p className="mt-4 text-[11px] text-muted-foreground">
