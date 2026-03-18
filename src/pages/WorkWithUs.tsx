@@ -26,6 +26,23 @@ const WorkWithUsContent = () => {
           message: `Designer Inquiry\n\nName: ${fd.get("name")}\nEmail: ${fd.get("email")}\nPortfolio: ${fd.get("portfolio") || "N/A"}\nMessage: ${fd.get("message")}`,
         }),
       });
+
+      // Send emails via edge function
+      try {
+        await supabase.functions.invoke("send-intake-confirmation", {
+          body: {
+            client_name: fd.get("name") as string,
+            client_email: fd.get("email") as string,
+            business_name: "Designer Inquiry",
+            service: "Designer Inquiry",
+            message: fd.get("message") as string || "",
+            website: fd.get("portfolio") as string || "",
+          },
+        });
+      } catch (emailErr) {
+        console.error("Email error:", emailErr);
+      }
+
       setSubmitted(true);
     } catch {
       setSubmitted(true);

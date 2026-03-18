@@ -6,6 +6,7 @@ import { motion, AnimatePresence, useMotionValue, useTransform, useSpring } from
 import { useState, useEffect, useRef } from "react";
 import { useSearchParams } from "react-router-dom";
 import { Info, X } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
 
 const Tooltip = ({ text }: { text: string }) => (
   <div className="relative group/tip inline-flex ml-1.5">
@@ -76,6 +77,22 @@ const IntakeForm = () => {
           message: `${formData.get("message")}\n\nTimeline: ${formData.get("timeline") || "N/A"}\nWebsite: ${formData.get("website") || "N/A"}\nInspiration: ${formData.get("inspiration") || "N/A"}`,
         }),
       });
+
+      // Send emails via edge function
+      try {
+        await supabase.functions.invoke("send-intake-confirmation", {
+          body: {
+            client_name: formData.get("name") as string,
+            business_name: formData.get("subject") as string,
+            client_email: formData.get("email") as string,
+            website: formData.get("website") || "",
+            service: formData.get("timeline") || "Preview Request",
+            message: formData.get("message") || "",
+          },
+        });
+      } catch (emailErr) {
+        console.error("Email error:", emailErr);
+      }
 
       if (response.ok) {
         window.location.assign('/thank-you');

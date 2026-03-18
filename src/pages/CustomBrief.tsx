@@ -8,6 +8,7 @@ import PreviewSelector from "@/components/PreviewSelector";
 import { toast } from "@/hooks/use-toast";
 import { motion } from "framer-motion";
 import { Check, Send } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
 
 const FEATURES_EN = [
   "E-commerce / Online Store",
@@ -99,6 +100,23 @@ const CustomBriefContent = () => {
           message: `Business: ${formData.get("businessName")}\nIndustry: ${formData.get("industry")}\nPhone: ${formData.get("phone") || "N/A"}\nCurrent Website: ${formData.get("currentWebsite") || "N/A"}\n\nProject Description:\n${formData.get("projectDescription")}\n\nSelected Features: ${selectedFeatures.join(", ") || "None"}\nTimeline: ${timeline || "Not specified"}\nCloud Link: ${formData.get("cloudLink") || "N/A"}\n\nSelected Preview: ${selectedPreview || "N/A"}\nPreview Link: ${previewLink || "N/A"}`,
         }),
       });
+
+      // Send emails via edge function
+      try {
+        await supabase.functions.invoke("send-intake-confirmation", {
+          body: {
+            client_name: formData.get("fullName") as string,
+            business_name: formData.get("businessName") as string,
+            client_email: formData.get("email") as string,
+            phone: formData.get("phone") as string || "",
+            website: formData.get("currentWebsite") as string || "",
+            service: "Custom Quote Request",
+            message: formData.get("projectDescription") as string || "",
+          },
+        });
+      } catch (emailErr) {
+        console.error("Email error:", emailErr);
+      }
 
       if (response.ok) {
         setSubmitted(true);

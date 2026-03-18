@@ -6,6 +6,7 @@ import Footer from "@/components/Footer";
 import CustomCursor from "@/components/CustomCursor";
 import { Check, User, Mail, Hash, Link as LinkIcon, Upload, AlertCircle } from "lucide-react";
 import { motion } from "framer-motion";
+import { supabase } from "@/integrations/supabase/client";
 
 type PlanTier = "L" | "LP" | "G" | "GP" | "C" | "unknown";
 
@@ -84,6 +85,21 @@ const RevisionSubmitContent = () => {
         body: formData,
         headers: { Accept: "application/json" },
       });
+      // Send emails via edge function
+      try {
+        await supabase.functions.invoke("send-intake-confirmation", {
+          body: {
+            client_name: formData.get("name") as string,
+            client_email: formData.get("email") as string,
+            business_name: formData.get("projectCode") as string || "Revision",
+            service: "Revision Request",
+            message: formData.get("notes") as string || "",
+          },
+        });
+      } catch (emailErr) {
+        console.error("Email error:", emailErr);
+      }
+
       if (res.ok) {
         setSubmitted(true);
         window.scrollTo({ top: 0, behavior: "smooth" });
