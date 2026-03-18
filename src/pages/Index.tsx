@@ -400,7 +400,7 @@ const IndexContent = () => {
                       className="mt-2 inline-flex items-center gap-1 text-sm font-semibold hover:underline"
                       style={{ color: "hsl(275 51% 46%)" }}
                     >
-                      {t(home.viewLiveWebsite, lang)}
+                      {t(home.viewPreviewVersions, lang)}
                     </a>
                     <p className="mt-3 text-[11px] text-muted-foreground">{t(home.builtWith, lang)}</p>
                   </div>
