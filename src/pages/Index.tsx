@@ -277,9 +277,26 @@ const IndexContent = () => {
         </div>
       </section>
 
+      {/* ═══ VALUE PROPOSITION ═══ */}
+      <section className="py-12 md:py-16" style={{ background: "hsl(var(--surface-sunken))" }}>
+        <div className="max-w-5xl mx-auto px-6">
+          <h2 className="text-[clamp(1.8rem,4vw,2.8rem)] font-black text-foreground font-display text-center">
+            {t(home.valuePropTitle, lang)}
+          </h2>
+          <div className="mt-10 grid grid-cols-1 md:grid-cols-3 gap-6">
+            {home.valueProps.map((vp, i) => (
+              <div key={i} className="text-center p-6 rounded-2xl border border-border bg-background">
+                <h3 className="text-lg font-bold text-foreground font-display">{t(vp.title, lang)}</h3>
+                <p className="mt-2 text-sm text-muted-foreground leading-relaxed">{t(vp.desc, lang)}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* ═══ 2. HOW IT WORKS ═══ */}
       <section id="process" className="py-14 md:py-18 bg-background">
-        <div className="max-w-4xl mx-auto px-6 text-center">
+        <div className="max-w-5xl mx-auto px-6 text-center">
           <h2 className="text-[clamp(1.8rem,4vw,2.8rem)] font-black text-foreground font-display">
             {t(home.howItWorks, lang)}
           </h2>
@@ -289,13 +306,13 @@ const IndexContent = () => {
           <div className="mt-12 hidden md:flex items-start justify-center gap-0">
             {home.steps.map((s, i) => (
               <div key={i} className="flex items-start">
-                <div className="flex flex-col items-center text-center max-w-[200px]">
+                <div className="flex flex-col items-center text-center max-w-[180px]">
                   <span className="text-3xl font-black text-muted-foreground/25 font-display">{i + 1}</span>
                   <h3 className="mt-2 text-base font-bold text-foreground font-display">{t(s.title, lang)}</h3>
                   <p className="mt-2 text-sm text-muted-foreground leading-relaxed">{t(s.desc, lang)}</p>
                 </div>
-                {i < 2 && (
-                  <div className="flex items-center px-6 pt-3">
+                {i < 3 && (
+                  <div className="flex items-center px-4 pt-3">
                     <ArrowRight size={32} className="text-muted-foreground/20" strokeWidth={1.5} />
                   </div>
                 )}
@@ -312,7 +329,7 @@ const IndexContent = () => {
                   <h3 className="mt-2 text-base font-bold text-foreground font-display">{t(s.title, lang)}</h3>
                   <p className="mt-2 text-sm text-muted-foreground leading-relaxed max-w-xs mx-auto">{t(s.desc, lang)}</p>
                 </div>
-                {i < 2 && (
+                {i < 3 && (
                   <div className="flex justify-center py-3">
                     <ArrowDown size={28} className="text-muted-foreground/20" strokeWidth={1.5} />
                   </div>
