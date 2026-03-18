@@ -48,7 +48,7 @@ function buildInternalNotification(data: {
 }
 
 function buildClientConfirmation(): string {
-  const logoUrl = "https://swiftlift-conversion-version.lovable.app/swiftsite-logo.png";
+  const logoUrl = "https://swiftlift.app/swiftsite-logo.png";
   return `<!DOCTYPE html>
 <html>
 <head><meta charset="utf-8"></head>
