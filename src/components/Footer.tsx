@@ -211,7 +211,7 @@ const Footer = () => {
           </div>
         </div>
 
-        {/* Secondary custom path */}
+        {/* Single secondary custom path */}
         <div className="mt-8 text-center">
           <p className="text-sm text-blue-200/50">
             {lang === "en" ? "Need a brand new website instead?" : "需要全新網站嗎？"}{" "}

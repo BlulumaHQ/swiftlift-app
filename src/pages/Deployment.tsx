@@ -22,54 +22,39 @@ interface Addon {
 
 const ADDONS: Addon[] = [
   {
-    id: "brand",
-    name: "Brand Package",
-    price: 700,
-    outcome: "Build trust and professional credibility from day one.",
-    why: "A consistent brand increases customer confidence and conversion.",
-    included: [
-      "Logo refinement system",
-      "Color palette definition",
-      "Typography hierarchy",
-      "Brand usage guide (PDF)",
-    ],
-    badge: "Most Popular for New Businesses",
-    icon: Palette,
-  },
-  {
-    id: "seo",
-    name: "SEO Optimization",
-    price: 250,
-    outcome: "Improve visibility on Google.",
-    why: "Better indexing helps customers find you organically.",
-    included: [
-      "Meta title & description setup",
-      "Sitemap submission",
-      "Basic indexing configuration",
-      "Search console setup",
-    ],
-    icon: Search,
-  },
-  {
     id: "performance",
     name: "Performance Optimization",
-    price: 180,
-    outcome: "Faster load times and smoother experience.",
+    price: 199,
+    outcome: "Improve loading speed and website performance for a better user experience and stronger conversion.",
     why: "Speed improves conversion rates and search ranking.",
     included: [
-      "Image compression",
-      "Asset optimization",
-      "Baseline caching",
+      "Image compression & optimization",
+      "Asset minification & caching",
       "Performance tuning adjustments",
+      "Core Web Vitals improvement",
     ],
     badge: "Improves Speed & SEO",
     icon: Zap,
   },
   {
+    id: "seo",
+    name: "SEO Optimization",
+    price: 299,
+    outcome: "Improve your visibility on Google with stronger structure and search-friendly setup.",
+    why: "Better indexing helps customers find you organically.",
+    included: [
+      "Meta title & description setup",
+      "Sitemap generation & submission",
+      "Search console configuration",
+      "Schema markup implementation",
+    ],
+    icon: Search,
+  },
+  {
     id: "social",
-    name: "Social Media Launch Package",
-    price: 350,
-    outcome: "Launch with a cohesive brand across platforms.",
+    name: "Social Media Launch Kit",
+    price: 299,
+    outcome: "Get ready-to-use social visuals and launch content to promote your new website.",
     why: "Consistency builds recognition and authority.",
     included: [
       "Profile image formatting (up to 3 platforms)",
@@ -80,6 +65,21 @@ const ADDONS: Addon[] = [
     ],
     badge: "Perfect for Launch Week",
     icon: Share2,
+  },
+  {
+    id: "brand",
+    name: "Brand Package",
+    price: 499,
+    outcome: "Build a stronger first impression with a cleaner and more professional brand identity.",
+    why: "A consistent brand increases customer confidence and conversion.",
+    included: [
+      "Logo refinement system",
+      "Color palette definition",
+      "Typography hierarchy",
+      "Brand usage guide (PDF)",
+    ],
+    badge: "Most Popular for New Businesses",
+    icon: Palette,
   },
 ];
 
@@ -101,7 +101,7 @@ const HOSTING_OPTIONS = [
   {
     value: "monthly" as const,
     label: "Managed Hosting",
-    price: "$8",
+    price: "$12",
     period: "/month",
     badge: null,
     description: "Dedicated hosting under your own domain.",
@@ -116,9 +116,9 @@ const HOSTING_OPTIONS = [
   {
     value: "yearly" as const,
     label: "Managed Hosting",
-    price: "$75",
+    price: "$100",
     period: "/year",
-    badge: "Best Value",
+    badge: "Best Value — Save $44/yr",
     description: "Same benefits as monthly with annual savings.",
     details: [
       "SSL certificate included",
@@ -137,13 +137,13 @@ const COMPARE_ROWS = [
     value: "free",
   },
   {
-    label: "Managed Monthly ($8/mo)",
+    label: "Managed Monthly ($12/mo)",
     note: "Best for flexibility • cancel anytime",
     value: "monthly",
   },
   {
-    label: "Managed Yearly ($75/yr)",
-    note: "Best value • save 22% vs monthly",
+    label: "Managed Yearly ($100/yr)",
+    note: "Best value • save $44 vs monthly",
     value: "yearly",
     badge: "Best Value",
   },
@@ -151,7 +151,7 @@ const COMPARE_ROWS = [
 
 const DeploymentContent = () => {
   useEffect(() => {
-    document.title = "Deployment — SwiftLift";
+    document.title = "Launch Your Website — SwiftLift";
   }, []);
   const [hostingPlan, setHostingPlan] = useState<HostingPlan>("");
   const [selectedAddons, setSelectedAddons] = useState<Set<string>>(new Set());
@@ -208,11 +208,11 @@ const DeploymentContent = () => {
     let recurring = 0;
     let recurringLabel = "";
     if (hostingPlan === "monthly") {
-      recurring = 8;
-      recurringLabel = "$8/month";
+      recurring = 12;
+      recurringLabel = "$12/month";
     } else if (hostingPlan === "yearly") {
-      recurring = 75;
-      recurringLabel = "$75/year";
+      recurring = 100;
+      recurringLabel = "$100/year";
     }
     const todayTotal = oneTime + recurring;
     return { oneTime, recurring, recurringLabel, todayTotal };
@@ -225,12 +225,7 @@ const DeploymentContent = () => {
     try {
       if (hostingPlan === "free" && selectedAddons.size === 0) {
         const { data, error } = await supabase.functions.invoke("submit-free-hosting", {
-          body: {
-            clientName,
-            businessName,
-            clientEmail,
-            selectedAddons: [],
-          },
+          body: { clientName, businessName, clientEmail, selectedAddons: [] },
         });
         if (error) throw error;
         window.location.href = "/thank-you";
@@ -266,9 +261,9 @@ const DeploymentContent = () => {
   const hostingLabel = hostingPlan === "free"
     ? "Included (Free)"
     : hostingPlan === "monthly"
-    ? "Managed – $8/mo"
+    ? "Managed – $12/mo"
     : hostingPlan === "yearly"
-    ? "Managed – $75/yr"
+    ? "Managed – $100/yr"
     : "Not selected";
 
   const OrderSummary = ({ compact = false }: { compact?: boolean }) => (
@@ -333,7 +328,7 @@ const DeploymentContent = () => {
       <motion.button
         onClick={handleCheckout}
         disabled={!planSelected || isSubmitting}
-        className="mt-5 w-full inline-flex items-center justify-center gap-2 rounded-full px-8 py-3.5 text-base font-semibold text-white transition-colors focus:outline-none focus:ring-2 focus:ring-[hsl(275,51%,46%)]/50 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed"
+        className="mt-5 w-full inline-flex items-center justify-center gap-2 rounded-full px-8 py-3.5 text-base font-bold text-white transition-colors focus:outline-none focus:ring-2 focus:ring-[hsl(275,51%,46%)]/50 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed"
         style={{ backgroundColor: "#7F37AE" }}
         whileHover={planSelected ? { scale: 1.02 } : {}}
         whileTap={planSelected ? { scale: 0.98 } : {}}
@@ -362,7 +357,7 @@ const DeploymentContent = () => {
             transition={{ duration: 0.5 }}
             className="text-[clamp(2rem,4.5vw,3rem)] font-black text-white font-display leading-tight"
           >
-            Stage 3 – Deployment &amp; Hosting
+            You're One Step Away from Launch
           </motion.h1>
           <motion.p
             initial={{ opacity: 0, y: 20 }}
@@ -370,7 +365,7 @@ const DeploymentContent = () => {
             transition={{ duration: 0.5, delay: 0.1 }}
             className="mt-4 text-white/80 text-base md:text-lg leading-relaxed max-w-xl mx-auto"
           >
-            Choose your hosting plan and optional add-ons, then proceed to secure checkout to launch your website.
+            Choose your setup and get your website live. Pick a hosting plan, add optional upgrades, and proceed to secure checkout.
           </motion.p>
         </div>
       </section>
@@ -388,11 +383,11 @@ const DeploymentContent = () => {
                   <div className="flex items-center gap-2 mb-1">
                     <span className="inline-flex items-center justify-center w-7 h-7 rounded-full text-xs font-bold text-white" style={{ backgroundColor: "#7F37AE" }}>1</span>
                     <h2 className="text-lg md:text-xl font-black text-foreground font-display">
-                      Required Details
+                      Your Details
                     </h2>
                   </div>
                   <p className="text-sm text-muted-foreground mb-5 ml-9">
-                    We use this to match your activation/payment to your project.
+                    We use this to match your payment to your project.
                   </p>
 
                   <AnimatePresence>
@@ -582,6 +577,7 @@ const DeploymentContent = () => {
                 <h2 className="text-xl md:text-2xl font-black text-foreground font-display">
                   Enhance Your Website
                 </h2>
+                <p className="text-sm text-muted-foreground mt-1">Optional upgrades to maximize your results.</p>
                 <div className="flex">
                   <span className="section-underline section-underline--light" />
                 </div>
@@ -633,7 +629,6 @@ const DeploymentContent = () => {
                               )}
                             </div>
                             <p className="text-sm text-foreground/80 mt-1 leading-snug">{addon.outcome}</p>
-                            <p className="text-xs text-muted-foreground mt-0.5 italic">{addon.why}</p>
 
                             <button
                               type="button"
@@ -707,7 +702,7 @@ const DeploymentContent = () => {
           <motion.button
             onClick={handleCheckout}
             disabled={!planSelected || isSubmitting}
-            className="inline-flex items-center justify-center gap-1.5 rounded-full px-6 py-2.5 text-sm font-semibold text-white transition-colors focus:outline-none disabled:opacity-50 disabled:cursor-not-allowed flex-shrink-0"
+            className="inline-flex items-center justify-center gap-1.5 rounded-full px-6 py-2.5 text-sm font-bold text-white transition-colors focus:outline-none disabled:opacity-50 disabled:cursor-not-allowed flex-shrink-0"
             style={{ backgroundColor: "#7F37AE" }}
             whileHover={planSelected ? { scale: 1.02 } : {}}
             whileTap={planSelected ? { scale: 0.98 } : {}}
