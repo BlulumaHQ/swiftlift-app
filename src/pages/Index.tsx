@@ -635,7 +635,7 @@ const IndexContent = () => {
         </div>
       </section>
 
-      {/* ═══ 4. REAL BUSINESS TRANSFORMATIONS — swipeable carousel ═══ */}
+      {/* ═══ 4. REAL BUSINESS TRANSFORMATIONS — 2-col carousel ═══ */}
       <section id="portfolio" className="py-16 md:py-24 bg-background">
         <div className="max-w-6xl mx-auto px-6">
           <h2 className="text-[clamp(1.8rem,4vw,2.8rem)] font-black text-foreground font-display text-center">
@@ -657,45 +657,92 @@ const IndexContent = () => {
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: -40 }}
                 transition={{ duration: 0.3 }}
-                className="relative rounded-2xl overflow-hidden border border-border shadow-lg"
+                className="rounded-2xl overflow-hidden border border-border bg-secondary/30 shadow-lg"
               >
-                <img
-                  src={portfolioImages[proofIdx]}
-                  alt={t(home.portfolioItems[proofIdx].name, lang)}
-                  className="w-full aspect-[16/9] object-cover"
-                  loading="lazy"
-                />
-                <div className="absolute bottom-0 left-0 right-0 p-6" style={{ background: "linear-gradient(0deg, hsl(209 66% 14% / 0.95) 0%, transparent 100%)" }}>
-                  <h3 className="text-white text-lg md:text-xl font-bold font-display mt-1">
-                    {t(home.portfolioItems[proofIdx].name, lang)}
-                  </h3>
-                  <p className="text-white/60 text-sm mt-1">
-                    {t(home.portfolioItems[proofIdx].desc, lang)}
-                  </p>
+                <div className="grid grid-cols-1 md:grid-cols-2">
+                  {/* Left — Laptop mockup image */}
+                  <div className="flex items-center justify-center p-6 md:p-8 bg-gradient-to-br from-[hsl(195_60%_92%)] to-[hsl(200_40%_96%)]">
+                    <div className="relative w-full max-w-md">
+                      {/* Laptop frame */}
+                      <div className="rounded-t-lg overflow-hidden border-[6px] border-[#333] border-b-0 bg-[#333]">
+                        <img
+                          src={portfolioImages[proofIdx]}
+                          alt={t(home.portfolioItems[proofIdx].name, lang)}
+                          className="w-full aspect-[16/10] object-cover"
+                          loading="lazy"
+                        />
+                      </div>
+                      {/* Laptop base */}
+                      <div className="h-4 bg-[#555] rounded-b-lg mx-auto" style={{ width: "110%", marginLeft: "-5%" }} />
+                      <div className="h-1.5 bg-[#444] rounded-b-md mx-auto" style={{ width: "40%" }} />
+                    </div>
+                  </div>
+
+                  {/* Right — Testimonial card */}
+                  <div className="p-6 md:p-8 flex flex-col justify-center">
+                    <h3 className="text-lg md:text-xl font-bold text-foreground font-display">
+                      {t(home.portfolioItems[proofIdx].name, lang)}
+                    </h3>
+                    <p className="text-sm text-muted-foreground mt-1">
+                      {t(home.portfolioItems[proofIdx].desc, lang)}
+                    </p>
+
+                    {/* Testimonial quote */}
+                    <div className="mt-5">
+                      <span className="text-3xl text-muted-foreground/30 leading-none font-serif">"</span>
+                      <p className="text-sm text-muted-foreground leading-relaxed mt-1">
+                        "{t(home.testimonialItems[proofIdx].text, lang)}"
+                      </p>
+                      <div className="mt-4">
+                        <p className="text-sm font-bold text-foreground">{t(home.testimonialItems[proofIdx].name, lang)}</p>
+                        <p className="text-xs text-muted-foreground">{t(home.testimonialItems[proofIdx].company, lang)}</p>
+                      </div>
+                    </div>
+
+                    {/* CTA Buttons */}
+                    <div className="mt-6 flex flex-wrap gap-3">
+                      <a
+                        href="#"
+                        className="inline-flex items-center rounded-full px-5 py-2.5 text-sm font-semibold text-white transition-all hover:opacity-90"
+                        style={{ background: "hsl(199 89% 58%)" }}
+                      >
+                        Open Live Preview A
+                      </a>
+                      <a
+                        href="#"
+                        className="inline-flex items-center rounded-full px-5 py-2.5 text-sm font-semibold text-white transition-all hover:opacity-90"
+                        style={{ background: "hsl(199 89% 58%)" }}
+                      >
+                        Open Live Preview B
+                      </a>
+                    </div>
+
+                    <p className="mt-4 text-xs text-muted-foreground">
+                      {t(home.builtWith, lang)}
+                    </p>
+                  </div>
                 </div>
               </motion.div>
             </AnimatePresence>
 
             {/* Controls */}
-            <div className="flex items-center justify-between mt-5">
+            <div className="flex items-center justify-center mt-6 gap-4">
+              <button onClick={prevProof} className="p-2 rounded-full border border-border hover:bg-secondary transition-colors">
+                <ChevronLeft size={16} className="text-muted-foreground" />
+              </button>
               <div className="flex gap-1.5">
                 {home.portfolioItems.map((_, i) => (
                   <button
                     key={i}
                     onClick={() => setProofIdx(i)}
-                    className={`w-2 h-2 rounded-full transition-all ${i === proofIdx ? "w-6" : "opacity-30"}`}
-                    style={{ background: i === proofIdx ? "hsl(275 51% 46%)" : "hsl(var(--muted-foreground))" }}
+                    className={`w-2.5 h-2.5 rounded-full transition-all ${i === proofIdx ? "scale-125" : "opacity-30"}`}
+                    style={{ background: i === proofIdx ? "hsl(0 0% 20%)" : "hsl(var(--muted-foreground))" }}
                   />
                 ))}
               </div>
-              <div className="flex gap-2">
-                <button onClick={prevProof} className="p-2 rounded-full border border-border hover:bg-secondary transition-colors">
-                  <ChevronLeft size={16} className="text-muted-foreground" />
-                </button>
-                <button onClick={nextProof} className="p-2 rounded-full border border-border hover:bg-secondary transition-colors">
-                  <ChevronRightIcon size={16} className="text-muted-foreground" />
-                </button>
-              </div>
+              <button onClick={nextProof} className="p-2 rounded-full border border-border hover:bg-secondary transition-colors">
+                <ChevronRightIcon size={16} className="text-muted-foreground" />
+              </button>
             </div>
           </div>
 
