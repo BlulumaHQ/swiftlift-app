@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, useCallback } from "react";
+import { useEffect, useRef, useState, useCallback, useMemo } from "react";
 import { useSearchParams, Link } from "react-router-dom";
 import { LanguageProvider, useLanguage } from "@/contexts/LanguageContext";
 import { translations, t } from "@/lib/translations";
@@ -6,9 +6,10 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import CustomCursor from "@/components/CustomCursor";
 import Preloader from "@/components/Preloader";
-import { Check, ChevronDown, ArrowRight, ArrowDown, Plus, Star, ChevronLeft, ChevronRight as ChevronRightIcon, Quote, Shield, Zap, Target, Users, Loader2 } from "lucide-react";
+import { Check, ChevronDown, ArrowRight, ArrowDown, Plus, Star, ChevronLeft, ChevronRight as ChevronRightIcon, Quote, Shield, Zap, Target, Users, Loader2, CheckCircle2, Clock, Mail, Copy, Palette, Globe } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { supabase } from "@/integrations/supabase/client";
+import { getOrCreateProjectId } from "@/lib/projectId";
 
 import portfolioTrade from "@/assets/portfolio-trade.jpg";
 import portfolioWellness from "@/assets/portfolio-wellness-new.jpg";
@@ -21,6 +22,158 @@ const PRELOADER_KEY = "swiftlift_visited";
 
 const portfolioImages = [portfolioTrade, portfolioWellness, portfolioLaw, portfolioConstruction, portfolioWholesale, portfolioLogistics];
 
+declare global {
+  interface Window {
+    fbq?: (...args: unknown[]) => void;
+  }
+}
+
+/* ── Inline Success Section ── */
+const SuccessSection = ({ email, isDark }: { email: string; isDark?: boolean }) => {
+  const { lang } = useLanguage();
+  const [copied, setCopied] = useState(false);
+  const [cloudLink, setCloudLink] = useState("");
+  const projectId = useMemo(() => getOrCreateProjectId(), []);
+
+  return (
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5 }}
+    >
+      {/* Header */}
+      <div className="text-center mb-8">
+        <div
+          className="w-16 h-16 rounded-full mx-auto mb-5 flex items-center justify-center"
+          style={{ background: "hsl(275 51% 46% / 0.15)" }}
+        >
+          <CheckCircle2 size={32} style={{ color: "hsl(275 51% 46%)" }} />
+        </div>
+        <h2 className={`text-2xl md:text-3xl font-black font-display leading-tight ${isDark ? "text-white" : "text-foreground"}`}>
+          {lang === "en" ? "Your Preview Request Is In" : "您的預覽請求已收到"}
+        </h2>
+        <p className={`mt-3 text-base leading-relaxed max-w-md mx-auto ${isDark ? "text-white/70" : "text-muted-foreground"}`}>
+          {lang === "en"
+            ? "We've received your website details and we're preparing your 2 preview directions now."
+            : "我們已收到您的網站詳情，正在為您準備2個預覽方向。"}
+        </p>
+
+        {/* Project ID Badge */}
+        <div className={`mt-4 inline-flex items-center gap-2 rounded-full border px-5 py-2.5 ${isDark ? "border-white/20 bg-white/10" : "border-border bg-secondary/50"}`}>
+          <span className={`text-sm font-medium ${isDark ? "text-white/70" : "text-muted-foreground"}`}>
+            {lang === "en" ? "Project ID:" : "專案編號："}
+          </span>
+          <span className={`font-bold text-base tracking-wide font-mono ${isDark ? "text-white" : "text-foreground"}`}>{projectId}</span>
+          <button
+            onClick={() => {
+              navigator.clipboard.writeText(projectId);
+              setCopied(true);
+              setTimeout(() => setCopied(false), 2000);
+            }}
+            className={`ml-1 transition-colors ${isDark ? "text-white/60 hover:text-white" : "text-muted-foreground hover:text-foreground"}`}
+            title="Copy"
+          >
+            {copied ? <CheckCircle2 size={14} /> : <Copy size={14} />}
+          </button>
+        </div>
+      </div>
+
+      {/* What You'll Receive */}
+      <div className={`rounded-2xl border p-6 space-y-4 ${isDark ? "border-white/15 bg-white/5" : "border-border bg-background"}`}>
+        <div className="flex items-center gap-3 text-sm">
+          <Mail size={16} style={{ color: "hsl(275 51% 46%)" }} className="flex-shrink-0" />
+          <span className={isDark ? "text-white/70" : "text-muted-foreground"}>
+            {lang === "en" ? "Previews will be sent to:" : "預覽將發送至："}{" "}
+            <span className={`font-medium ${isDark ? "text-white" : "text-foreground"}`}>{email}</span>
+          </span>
+        </div>
+        <div className="space-y-2">
+          {[
+            lang === "en" ? "Version A — Clean & Professional" : "版本A — 簡潔專業",
+            lang === "en" ? "Version B — Conversion Focused" : "版本B — 轉化導向",
+          ].map((label, i) => (
+            <div key={i} className="flex items-start gap-3">
+              <CheckCircle2 size={16} className="flex-shrink-0 mt-0.5" style={{ color: "hsl(275 51% 46%)" }} />
+              <p className={`text-sm font-semibold ${isDark ? "text-white" : "text-foreground"}`}>{label}</p>
+            </div>
+          ))}
+        </div>
+        <div className={`pt-3 border-t flex items-center gap-3 ${isDark ? "border-white/10" : "border-border"}`}>
+          <Clock size={16} className={`flex-shrink-0 ${isDark ? "text-white/50" : "text-muted-foreground"}`} />
+          <p className={`text-sm ${isDark ? "text-white/60" : "text-muted-foreground"}`}>
+            {lang === "en" ? "Estimated delivery: Within 24–48 hours" : "預計交付：24–48小時內"}
+          </p>
+        </div>
+      </div>
+
+      {/* Back to Home */}
+      <div className="mt-6 text-center">
+        <a
+          href="/"
+          onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: "smooth" }); }}
+          className="inline-flex items-center justify-center rounded-full px-8 py-3.5 text-sm font-semibold text-white transition-all hover:opacity-90"
+          style={{ backgroundColor: "hsl(275 51% 46%)" }}
+        >
+          {lang === "en" ? "Back to Home" : "返回首頁"}
+        </a>
+      </div>
+
+      {/* Optional Improvement */}
+      <div className={`mt-8 rounded-2xl border p-6 ${isDark ? "border-white/10 bg-white/5" : "border-border bg-secondary/30"}`}>
+        <h3 className={`text-base font-bold font-display mb-3 ${isDark ? "text-white" : "text-foreground"}`}>
+          {lang === "en" ? "Want even better previews?" : "想要更精準的預覽？"}
+        </h3>
+        <ul className="space-y-2 mb-4">
+          {[
+            { icon: Palette, text: lang === "en" ? "Share your logo (SVG/PNG) and brand colors" : "分享您的標誌（SVG/PNG）和品牌顏色" },
+            { icon: Globe, text: lang === "en" ? "Send 2–3 websites you like" : "發送2–3個您喜歡的網站" },
+          ].map((item, i) => {
+            const Icon = item.icon;
+            return (
+              <li key={i} className={`flex items-start gap-3 text-sm ${isDark ? "text-white/60" : "text-muted-foreground"}`}>
+                <Icon size={16} className="flex-shrink-0 mt-0.5" style={{ color: "hsl(275 51% 46%)" }} />
+                {item.text}
+              </li>
+            );
+          })}
+        </ul>
+        <div className="space-y-1.5">
+          <label className={`text-sm font-medium ${isDark ? "text-white/80" : "text-foreground"}`}>
+            {lang === "en" ? "Optional: Paste a cloud folder link (Google Drive / Dropbox)" : "選填：貼上雲端資料夾連結"}
+          </label>
+          <input
+            type="url"
+            value={cloudLink}
+            onChange={(e) => setCloudLink(e.target.value)}
+            placeholder="https://drive.google.com/..."
+            className={`w-full rounded-lg border px-4 py-2.5 text-sm focus:outline-none focus:ring-2 transition-colors ${isDark ? "border-white/15 bg-white/5 text-white placeholder:text-white/30 focus:ring-[hsl(275_51%_46%)]/40" : "border-border bg-background text-foreground placeholder:text-muted-foreground/60 focus:ring-[hsl(275,51%,46%)]/40"}`}
+          />
+        </div>
+        <p className={`mt-3 text-xs text-center italic ${isDark ? "text-white/30" : "text-muted-foreground"}`}>
+          {lang === "en" ? "All fields above are optional — you can skip this step." : "以上所有欄位均為選填——您可以跳過此步驟。"}
+        </p>
+      </div>
+
+      {/* Support section */}
+      <div className={`mt-6 rounded-xl border p-5 flex items-start gap-3 ${isDark ? "border-white/10 bg-white/5" : "border-border bg-background"}`}>
+        <Mail size={18} className={`flex-shrink-0 mt-0.5 ${isDark ? "text-white/50" : "text-muted-foreground"}`} />
+        <div>
+          <p className={`text-sm font-semibold ${isDark ? "text-white" : "text-foreground"}`}>
+            {lang === "en" ? "Need to update something?" : "需要更新內容？"}
+          </p>
+          <p className={`text-sm mt-1 ${isDark ? "text-white/60" : "text-muted-foreground"}`}>
+            {lang === "en" ? "Reply to " : "回覆 "}
+            <a href="mailto:support@swiftlift.app" className="hover:underline" style={{ color: "#337DAF" }}>support@swiftlift.app</a>
+            {lang === "en"
+              ? " and include your Project ID so we can quickly locate your request."
+              : " 並附上您的專案編號以便快速找到您的請求。"}
+          </p>
+        </div>
+      </div>
+    </motion.div>
+  );
+};
+
 /* ── Multi-Step Intake Form ── */
 const MultiStepIntake = ({ variant = "hero" }: { variant?: "hero" | "cta" }) => {
   const { lang } = useLanguage();
@@ -29,6 +182,9 @@ const MultiStepIntake = ({ variant = "hero" }: { variant?: "hero" | "cta" }) => 
   const [submitting, setSubmitting] = useState(false);
   const [showProcessing, setShowProcessing] = useState(false);
   const [processingStep, setProcessingStep] = useState(0);
+  const [submitted, setSubmitted] = useState(false);
+  const [submittedEmail, setSubmittedEmail] = useState("");
+  const [submitError, setSubmitError] = useState("");
 
   const isDark = variant === "cta";
 
@@ -52,7 +208,6 @@ const MultiStepIntake = ({ variant = "hero" }: { variant?: "hero" | "cta" }) => 
   const isValidUrl = (val: string): boolean => {
     try {
       const u = new URL(val);
-      // Must have a dot in hostname (reject "https://abc")
       return u.hostname.includes(".");
     } catch {
       return false;
@@ -85,6 +240,7 @@ const MultiStepIntake = ({ variant = "hero" }: { variant?: "hero" | "cta" }) => 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setSubmitting(true);
+    setSubmitError("");
     const fd = new FormData(e.currentTarget);
     const email = fd.get("email") as string;
     const businessName = fd.get("businessName") as string;
@@ -100,42 +256,36 @@ const MultiStepIntake = ({ variant = "hero" }: { variant?: "hero" | "cta" }) => 
     }
 
     try {
-      // 1) Submit to Formspree
-      const res = await fetch("https://formspree.io/f/mbdabbql", {
-        method: "POST",
-        headers: { "Content-Type": "application/json", Accept: "application/json" },
-        body: JSON.stringify({
-          name: businessName,
-          email: email,
-          subject: businessName,
-          message: `Business: ${businessName}\nWebsite: ${url}\nInspiration: ${websiteYouLike || "N/A"}\nTimeline: ${timeline || "N/A"}\nEmail: ${email}`,
-        }),
+      // Send emails via Resend edge function (ONLY email system)
+      const { error } = await supabase.functions.invoke("send-intake-confirmation", {
+        body: {
+          client_name: businessName,
+          business_name: businessName,
+          client_email: email,
+          website: url,
+          service: timeline ? `Timeline: ${timeline}` : "Preview Request",
+          message: websiteYouLike ? `Inspiration: ${websiteYouLike}` : "",
+        },
       });
 
-      // 2) Send Resend confirmation email via edge function (fire and forget)
-      try {
-        await supabase.functions.invoke("send-intake-confirmation", {
-          body: {
-            email,
-            businessName,
-            websiteUrl: url,
-            timeline: timeline || "N/A",
-            inspiration: websiteYouLike || "N/A",
-          },
-        });
-      } catch (emailErr) {
-        console.error("Email confirmation error:", emailErr);
+      if (error) throw new Error(error.message || "Email sending failed");
+
+      // Facebook Lead tracking — only after confirmed success
+      if (typeof window.fbq !== "undefined") {
+        window.fbq("track", "Lead");
       }
 
-      if (res.ok) {
-        try { sessionStorage.setItem("swiftlift_email", email); } catch {}
-        window.location.assign("/thank-you");
-      }
-    } catch {
-      // silent
+      // Store email and show inline success
+      try { sessionStorage.setItem("swiftlift_email", email); } catch {}
+      setSubmittedEmail(email);
+      setSubmitted(true);
+      setShowProcessing(false);
+    } catch (err) {
+      console.error("Submission error:", err);
+      setShowProcessing(false);
+      setSubmitError(lang === "en" ? "Something went wrong. Please try again." : "出了點問題。請重試。");
     } finally {
       setSubmitting(false);
-      setShowProcessing(false);
     }
   };
 
@@ -144,6 +294,11 @@ const MultiStepIntake = ({ variant = "hero" }: { variant?: "hero" | "cta" }) => 
     lang === "en" ? "Preparing your preview request..." : "正在準備您的預覽請求...",
     lang === "en" ? "Organizing your project details..." : "正在整理您的項目細節...",
   ];
+
+  // Show inline success state
+  if (submitted) {
+    return <SuccessSection email={submittedEmail} isDark={isDark} />;
+  }
 
   if (showProcessing) {
     return (
@@ -235,6 +390,9 @@ const MultiStepIntake = ({ variant = "hero" }: { variant?: "hero" | "cta" }) => 
             <option value="exploring">{lang === "en" ? "Just exploring for now" : "目前只是探索"}</option>
           </select>
         </div>
+        {submitError && (
+          <p className={`text-sm font-medium ${isDark ? "text-red-300" : "text-destructive"}`}>{submitError}</p>
+        )}
         <div className="flex gap-3 pt-2">
           <button
             type="button"
@@ -499,92 +657,59 @@ const IndexContent = () => {
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: -40 }}
                 transition={{ duration: 0.3 }}
-                className="grid grid-cols-1 lg:grid-cols-2 gap-0 bg-background rounded-2xl border border-border shadow-lg overflow-hidden"
+                className="relative rounded-2xl overflow-hidden border border-border shadow-lg"
               >
-                {/* Image */}
-                <div className="aspect-[4/3] overflow-hidden">
-                  <img
-                    src={portfolioImages[proofIdx]}
-                    alt={home.portfolioItems[proofIdx].name.en}
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-
-                {/* Content */}
-                <div className="flex flex-col justify-between p-6 md:p-8">
-                  <div>
-                    <h3 className="text-lg font-bold text-foreground font-display">
-                      {t(home.portfolioItems[proofIdx].name, lang)}
-                    </h3>
-                    <p className="mt-1 text-sm text-muted-foreground">
-                      {t(home.portfolioItems[proofIdx].desc, lang)}
-                    </p>
-
-                    <div className="mt-5">
-                      <Quote size={20} className="text-muted-foreground/20 mb-2" />
-                      <p className="text-foreground text-sm leading-relaxed">
-                        "{t(home.testimonialItems[proofIdx].text, lang)}"
-                      </p>
-                      <p className="mt-2 text-xs font-semibold text-foreground">{t(home.testimonialItems[proofIdx].name, lang)}</p>
-                      <p className="text-xs text-muted-foreground">{t(home.testimonialItems[proofIdx].company, lang)}</p>
-                    </div>
-
-                    {/* Open Live Preview links */}
-                    <div className="mt-5 flex gap-3">
-                      <a
-                        href="#"
-                        onClick={(e) => e.preventDefault()}
-                        className="inline-flex items-center gap-1.5 rounded-lg px-4 py-2 text-xs font-semibold text-white transition-all hover:opacity-90"
-                        style={{ background: "#2DA8FF" }}
-                      >
-                        {lang === "en" ? "Open Live Preview A" : "打開即時預覽A"}
-                      </a>
-                      <a
-                        href="#"
-                        onClick={(e) => e.preventDefault()}
-                        className="inline-flex items-center gap-1.5 rounded-lg px-4 py-2 text-xs font-semibold text-white transition-all hover:opacity-90"
-                        style={{ background: "#2DA8FF" }}
-                      >
-                        {lang === "en" ? "Open Live Preview B" : "打開即時預覽B"}
-                      </a>
-                    </div>
-                  </div>
-
-                  <p className="mt-4 text-[11px] text-muted-foreground">
-                    {lang === "en" ? "Built with the SwiftLift System." : "使用 SwiftLift 系統構建。"}
+                <img
+                  src={portfolioImages[proofIdx]}
+                  alt={t(home.portfolioItems[proofIdx].title, lang)}
+                  className="w-full aspect-[16/9] object-cover"
+                  loading="lazy"
+                />
+                <div className="absolute bottom-0 left-0 right-0 p-6" style={{ background: "linear-gradient(0deg, hsl(209 66% 14% / 0.95) 0%, transparent 100%)" }}>
+                  <span className="text-white/50 text-xs uppercase tracking-widest font-medium">
+                    {t(home.portfolioItems[proofIdx].industry, lang)}
+                  </span>
+                  <h3 className="text-white text-lg md:text-xl font-bold font-display mt-1">
+                    {t(home.portfolioItems[proofIdx].title, lang)}
+                  </h3>
+                  <p className="text-white/60 text-sm mt-1">
+                    {t(home.portfolioItems[proofIdx].description, lang)}
                   </p>
                 </div>
               </motion.div>
             </AnimatePresence>
 
-            <div className="flex items-center justify-center gap-4 mt-6">
-              <button
-                onClick={prevProof}
-                className="w-10 h-10 rounded-full border border-border flex items-center justify-center hover:bg-muted transition-colors"
-                aria-label="Previous project"
-              >
-                <ChevronLeft size={18} />
-              </button>
-              <div className="flex gap-2">
+            {/* Controls */}
+            <div className="flex items-center justify-between mt-5">
+              <div className="flex gap-1.5">
                 {home.portfolioItems.map((_, i) => (
                   <button
                     key={i}
                     onClick={() => setProofIdx(i)}
-                    className={`w-2 h-2 rounded-full transition-all ${i === proofIdx ? "bg-foreground scale-125" : "bg-foreground/20"}`}
+                    className={`w-2 h-2 rounded-full transition-all ${i === proofIdx ? "w-6" : "opacity-30"}`}
+                    style={{ background: i === proofIdx ? "hsl(275 51% 46%)" : "hsl(var(--muted-foreground))" }}
                   />
                 ))}
               </div>
-              <button
-                onClick={nextProof}
-                className="w-10 h-10 rounded-full border border-border flex items-center justify-center hover:bg-muted transition-colors"
-                aria-label="Next project"
-              >
-                <ChevronRightIcon size={18} />
-              </button>
+              <div className="flex gap-2">
+                <button onClick={prevProof} className="p-2 rounded-full border border-border hover:bg-secondary transition-colors">
+                  <ChevronLeft size={16} className="text-muted-foreground" />
+                </button>
+                <button onClick={nextProof} className="p-2 rounded-full border border-border hover:bg-secondary transition-colors">
+                  <ChevronRightIcon size={16} className="text-muted-foreground" />
+                </button>
+              </div>
             </div>
-            <p className="mt-3 text-center text-xs text-muted-foreground md:hidden">
-              {lang === "en" ? "← Swipe to explore →" : "← 滑動查看 →"}
-            </p>
+          </div>
+
+          <div className="mt-8 text-center">
+            <Link
+              to="/portfolio"
+              className="text-sm font-semibold hover:underline transition-all"
+              style={{ color: "hsl(275 51% 46%)" }}
+            >
+              {lang === "en" ? "View Full Portfolio →" : "查看完整作品集 →"}
+            </Link>
           </div>
         </div>
       </section>
@@ -593,23 +718,23 @@ const IndexContent = () => {
       <section className="py-16 md:py-24" style={{ background: "hsl(var(--surface-sunken))" }}>
         <div className="max-w-5xl mx-auto px-6">
           <h2 className="text-[clamp(1.8rem,4vw,2.8rem)] font-black text-foreground font-display text-center">
-            {lang === "en" ? "Why SwiftLift" : "為什麼選擇 SwiftLift"}
+            {lang === "en" ? "Why SwiftLift?" : "為什麼選擇 SwiftLift？"}
           </h2>
-          <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+          <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 gap-5">
             {whyCards.map((card, i) => {
               const Icon = card.icon;
               return (
                 <div
                   key={i}
-                  className="rounded-2xl border border-border bg-background p-6 transition-all hover:shadow-lg hover:-translate-y-1"
+                  className="rounded-2xl border border-border bg-background p-6 md:p-7 hover:border-[hsl(275_51%_46%)]/20 transition-colors"
                 >
                   <div
-                    className="w-11 h-11 rounded-xl flex items-center justify-center mb-4"
+                    className="w-10 h-10 rounded-xl flex items-center justify-center mb-4"
                     style={{ background: "hsl(275 51% 46% / 0.08)" }}
                   >
                     <Icon size={20} style={{ color: "hsl(275 51% 46%)" }} />
                   </div>
-                  <h3 className="font-bold text-foreground font-display text-base">{card.title}</h3>
+                  <h3 className="font-bold text-foreground font-display">{card.title}</h3>
                   <p className="mt-2 text-sm text-muted-foreground leading-relaxed">{card.desc}</p>
                 </div>
               );
@@ -620,92 +745,64 @@ const IndexContent = () => {
 
       {/* ═══ 6. PRICING ═══ */}
       <section id="pricing" className="py-16 md:py-24 bg-background">
-        <div className="max-w-5xl mx-auto px-6 text-center">
-          <h2 className="text-[clamp(1.8rem,4vw,2.8rem)] font-black text-foreground font-display">
-            {lang === "en" ? "Simple Pricing. Start with a Preview." : "簡單定價。從預覽開始。"}
+        <div className="max-w-5xl mx-auto px-6">
+          <h2 className="text-[clamp(1.8rem,4vw,2.8rem)] font-black text-foreground font-display text-center">
+            {lang === "en" ? "Simple, Transparent Pricing" : "簡單透明的定價"}
           </h2>
-          <p className="mt-2 text-muted-foreground text-sm">
-            {lang === "en" ? "See your direction first. Upgrade only when you're ready." : "先看方向。準備好了再升級。"}
+          <p className="mt-2 text-muted-foreground text-sm text-center">
+            {lang === "en" ? "Only upgrade once you've seen the preview and feel confident." : "只有在看過預覽並有信心後才升級。"}
           </p>
 
-          {/* Multi-page label */}
-          <p className="mt-12 text-xs font-bold text-muted-foreground uppercase tracking-wider">
-            {lang === "en" ? "Multi-Page Website" : "多頁面網站"}
-          </p>
-          <p className="mt-1 text-sm text-muted-foreground">
-            {lang === "en" ? "Best for businesses that need a complete website presence" : "最適合需要完整網站形象的企業"}
-          </p>
+          {/* Single page note */}
+          <div className="mt-6 text-center">
+            <p className="text-xs text-muted-foreground">
+              {lang === "en" ? "Need a single-page website? " : "需要單頁網站？ "}
+              <span className="font-semibold text-foreground">
+                {singlePagePlans.map((p, i) => (
+                  <span key={i}>
+                    {p.name}: {p.price}
+                    {i < singlePagePlans.length - 1 ? " · " : ""}
+                  </span>
+                ))}
+              </span>
+            </p>
+          </div>
 
-          <div className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-6 items-stretch">
-            {multiPagePlans.map((p, idx) => (
+          {/* Multi-page cards */}
+          <div className="mt-10 grid grid-cols-1 md:grid-cols-3 gap-5">
+            {multiPagePlans.map((plan, i) => (
               <div
-                key={idx}
-                className={`rounded-2xl flex flex-col border p-6 md:p-8 text-left relative h-full ${
-                  p.highlighted
-                    ? "bg-background border-border shadow-2xl border-t-4 md:-translate-y-2"
-                    : "bg-background border-border shadow-sm"
+                key={i}
+                className={`relative rounded-2xl border p-6 flex flex-col ${
+                  plan.highlighted
+                    ? "border-[hsl(275_51%_46%)] bg-background shadow-xl"
+                    : "border-border bg-background"
                 }`}
-                style={p.highlighted ? { borderTopColor: "hsl(275 51% 46%)" } : {}}
               >
-                {p.badge && (
-                  <div
-                    className="absolute -top-4 left-1/2 -translate-x-1/2 px-5 py-1.5 rounded-full text-xs font-bold text-white flex items-center gap-1.5 whitespace-nowrap"
-                    style={{ background: "hsl(275 51% 46%)" }}
-                  >
-                    <Star size={13} className="fill-current" /> {p.badge}
-                  </div>
+                {plan.badge && (
+                  <span className="absolute -top-3 left-1/2 -translate-x-1/2 text-[10px] font-bold text-white px-3 py-1 rounded-full" style={{ background: "hsl(275 51% 46%)" }}>
+                    {plan.badge}
+                  </span>
                 )}
-                <h3 className="text-lg font-bold text-foreground font-display">{p.name}</h3>
-                <p className="mt-1 text-3xl font-black text-foreground font-display">{p.price}</p>
-                <ul className="mt-5 space-y-2.5 flex-1">
-                  {p.features.map((f, i) => (
-                    <li key={i} className="flex items-start gap-2 text-sm">
-                      <Check size={16} className="mt-0.5 flex-shrink-0" style={{ color: "hsl(275 51% 46%)" }} />
-                      <span className="text-muted-foreground">{f}</span>
+                <h3 className="font-bold text-foreground font-display">{plan.name}</h3>
+                <p className="text-3xl font-black text-foreground font-display mt-2">{plan.price}</p>
+                <ul className="mt-5 space-y-2 flex-1">
+                  {plan.features.map((f, fi) => (
+                    <li key={fi} className="flex items-start gap-2 text-sm text-muted-foreground">
+                      <Check size={14} className="flex-shrink-0 mt-0.5" style={{ color: "hsl(275 51% 46%)" }} />
+                      {f}
                     </li>
                   ))}
                 </ul>
                 <button
                   onClick={scrollToIntake}
-                  className={`mt-6 w-full rounded-full py-3 px-6 text-sm font-bold transition-all ${
-                    p.highlighted
-                      ? "text-white hover:opacity-90"
-                      : "border-2 hover:opacity-80"
-                  }`}
-                  style={p.highlighted
-                    ? { background: "hsl(275 51% 46%)" }
-                    : { borderColor: "hsl(275 51% 46%)", color: "hsl(275 51% 46%)" }
-                  }
+                  className="mt-4 w-full rounded-full py-2.5 px-4 text-xs font-bold border-2 transition-all hover:opacity-80"
+                  style={{ borderColor: "hsl(275 51% 46%)", color: "hsl(275 51% 46%)" }}
                 >
                   {lang === "en" ? "Get My 2 Free Previews" : "獲取我的2個免費預覽"}
                 </button>
               </div>
             ))}
-          </div>
-
-          {/* One Page / Landing Page */}
-          <div className="mt-16 pt-10 border-t border-border">
-            <p className="text-xs font-bold text-muted-foreground uppercase tracking-wider">
-              {lang === "en" ? "One Page Website / Landing Page" : "單頁面網站 / 登陸頁"}
-            </p>
-            <p className="mt-1 text-sm text-muted-foreground">
-              {lang === "en" ? "Best for simple businesses or quick online presentations." : "最適合簡單企業或快速線上展示。"}
-            </p>
-            <div className="mt-6 grid grid-cols-1 md:grid-cols-3 gap-4 max-w-3xl mx-auto">
-              {singlePagePlans.map((sp, idx) => (
-                <div key={idx} className="rounded-xl border border-border p-5 bg-background text-left">
-                  <h4 className="text-base font-bold text-foreground font-display">{sp.name}</h4>
-                  <p className="mt-1 text-xl font-black text-foreground font-display">{sp.price}</p>
-                  <button
-                    onClick={scrollToIntake}
-                    className="mt-4 w-full rounded-full py-2.5 px-4 text-xs font-bold border-2 transition-all hover:opacity-80"
-                    style={{ borderColor: "hsl(275 51% 46%)", color: "hsl(275 51% 46%)" }}
-                  >
-                    {lang === "en" ? "Get My 2 Free Previews" : "獲取我的2個免費預覽"}
-                  </button>
-                </div>
-              ))}
-            </div>
           </div>
 
           {/* Secondary path */}

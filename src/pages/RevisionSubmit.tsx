@@ -70,44 +70,24 @@ const RevisionSubmitContent = () => {
     const form = e.currentTarget;
     const formData = new FormData(form);
 
-    formData.append("site_name", "SwiftLift");
-    formData.append("mode", "revision_request");
-    formData.append("plan_tier", planParam);
     try {
-      formData.append("source_url", window.location.origin);
-    } catch {
-      formData.append("source_url", "N/A");
-    }
-
-    try {
-      const res = await fetch("https://formspree.io/f/mbdabbql", {
-        method: "POST",
-        body: formData,
-        headers: { Accept: "application/json" },
+      const { error: fnError } = await supabase.functions.invoke("send-intake-confirmation", {
+        body: {
+          client_name: formData.get("name") as string,
+          client_email: formData.get("email") as string,
+          business_name: formData.get("project_code") as string || "Revision",
+          service: "Revision Request",
+          message: `Revision Details: ${formData.get("revision_details") || ""}\nCloud Link: ${formData.get("cloud_link") || "N/A"}\nPlan: ${planParam}`,
+        },
       });
-      // Send emails via edge function
-      try {
-        await supabase.functions.invoke("send-intake-confirmation", {
-          body: {
-            client_name: formData.get("name") as string,
-            client_email: formData.get("email") as string,
-            business_name: formData.get("projectCode") as string || "Revision",
-            service: "Revision Request",
-            message: formData.get("notes") as string || "",
-          },
-        });
-      } catch (emailErr) {
-        console.error("Email error:", emailErr);
-      }
 
-      if (res.ok) {
-        setSubmitted(true);
-        window.scrollTo({ top: 0, behavior: "smooth" });
-      } else {
-        setError("Something went wrong. Please try again.");
-      }
-    } catch {
-      setError("Network error. Please try again.");
+      if (fnError) throw new Error(fnError.message || "Email sending failed");
+
+      setSubmitted(true);
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    } catch (err) {
+      console.error("Submission error:", err);
+      setError("Something went wrong. Please try again.");
     } finally {
       setIsSubmitting(false);
     }
