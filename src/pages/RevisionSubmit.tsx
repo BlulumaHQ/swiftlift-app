@@ -6,6 +6,7 @@ import Footer from "@/components/Footer";
 import CustomCursor from "@/components/CustomCursor";
 import { Check, User, Mail, Hash, Link as LinkIcon, Upload, AlertCircle } from "lucide-react";
 import { motion } from "framer-motion";
+import { supabase } from "@/integrations/supabase/client";
 
 type PlanTier = "L" | "LP" | "G" | "GP" | "C" | "unknown";
 
