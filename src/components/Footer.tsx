@@ -13,15 +13,15 @@ const Footer = () => {
   const navItems = [
     { label: lang === "en" ? "Home" : "首页", href: "/" },
     { label: t(translations.nav.pricing, lang), href: "/#pricing" },
-    { label: t(translations.nav.portfolio, lang), href: "/#portfolio" },
+    { label: t(translations.nav.portfolio, lang), href: "/portfolio" },
     { label: t(translations.nav.contact, lang), href: "/#contact" },
   ];
 
   const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
     e.preventDefault();
-    if (href === "/") {
-      navigate("/");
-      window.scrollTo({ top: 0, behavior: "smooth" });
+    if (href === "/" || href === "/portfolio") {
+      navigate(href);
+      if (href === "/") window.scrollTo({ top: 0, behavior: "smooth" });
     } else if (href.startsWith("/#")) {
       const id = href.slice(2);
       if (location.pathname !== "/") {
@@ -44,7 +44,9 @@ const Footer = () => {
               <img src={swiftsiteLogo} alt="SwiftLift Studio" className="h-[calc(4rem-10px)] w-auto brightness-0 invert" />
             </Link>
             <p className="mt-3 text-sm text-blue-200/70 leading-relaxed max-w-xs">
-              {t(footer.tagline, lang)}
+              {lang === "en"
+                ? "SwiftLift creates faster, cleaner, conversion-focused website upgrades for small businesses."
+                : "SwiftLift 為小企業創建更快、更簡潔、以轉化為核心的網站升級。"}
             </p>
             <a href="mailto:support@swiftlift.app" className="mt-3 inline-flex items-center gap-1.5 text-sm text-blue-300 hover:text-white transition-colors">
               <Mail size={14} />
@@ -58,7 +60,7 @@ const Footer = () => {
           {/* Column 3: Navigation */}
           <div>
             <h4 className="text-sm font-semibold text-white mb-3">
-              {lang === "en" ? "Navigation" : "导航"}
+              {lang === "en" ? "Navigation" : "導航"}
             </h4>
             <nav className="flex flex-col gap-2" aria-label="Footer navigation">
               {navItems.map((item) => (
@@ -77,20 +79,20 @@ const Footer = () => {
           {/* Column 4: Resources */}
           <div>
             <h4 className="text-sm font-semibold text-white mb-3">
-              {lang === "en" ? "Resources" : "资源"}
+              {lang === "en" ? "Resources" : "資源"}
             </h4>
             <div className="flex flex-col gap-2">
               <Link to="/faq" className="text-sm text-blue-200/70 hover:text-white transition-colors">
-                {lang === "en" ? "FAQ" : "常见问题"}
+                {lang === "en" ? "FAQ" : "常見問題"}
               </Link>
               <Link to="/features" className="text-sm text-blue-200/70 hover:text-white transition-colors">
                 {lang === "en" ? "Add Features" : "追加功能"}
               </Link>
               <Link to="/hosting-guide" className="text-sm text-blue-200/70 hover:text-white transition-colors">
-                {lang === "en" ? "Hosting Guide" : "托管指南"}
+                {lang === "en" ? "Hosting Guide" : "託管指南"}
               </Link>
               <Link to="/support" className="text-sm text-blue-200/70 hover:text-white transition-colors">
-                {lang === "en" ? "Support" : "联系客服"}
+                {lang === "en" ? "Support" : "聯繫客服"}
               </Link>
             </div>
           </div>
@@ -133,7 +135,9 @@ const Footer = () => {
               <img src={swiftsiteLogo} alt="SwiftLift Studio" className="h-[calc(4rem-10px)] w-auto brightness-0 invert" />
             </Link>
             <p className="mt-3 text-sm text-blue-200/70 leading-relaxed max-w-xs mx-auto">
-              {t(footer.tagline, lang)}
+              {lang === "en"
+                ? "SwiftLift creates faster, cleaner, conversion-focused website upgrades for small businesses."
+                : "SwiftLift 為小企業創建更快、更簡潔、以轉化為核心的網站升級。"}
             </p>
             <a href="mailto:support@swiftlift.app" className="mt-3 inline-flex items-center gap-1.5 text-sm text-blue-300 hover:text-white transition-colors">
               <Mail size={14} />
@@ -144,7 +148,7 @@ const Footer = () => {
           <div className="grid grid-cols-3 gap-4">
             <div>
               <h4 className="text-sm font-semibold text-white mb-3">
-                {lang === "en" ? "Navigation" : "导航"}
+                {lang === "en" ? "Navigation" : "導航"}
               </h4>
               <nav className="flex flex-col gap-2" aria-label="Footer navigation">
                 {navItems.map((item) => (
@@ -161,20 +165,20 @@ const Footer = () => {
             </div>
             <div>
               <h4 className="text-sm font-semibold text-white mb-3">
-                {lang === "en" ? "Resources" : "资源"}
+                {lang === "en" ? "Resources" : "資源"}
               </h4>
               <div className="flex flex-col gap-2">
                 <Link to="/faq" className="text-sm text-blue-200/70 hover:text-white transition-colors">
-                  {lang === "en" ? "FAQ" : "常见问题"}
+                  {lang === "en" ? "FAQ" : "常見問題"}
                 </Link>
                 <Link to="/features" className="text-sm text-blue-200/70 hover:text-white transition-colors">
                   {lang === "en" ? "Add Features" : "追加功能"}
                 </Link>
                 <Link to="/hosting-guide" className="text-sm text-blue-200/70 hover:text-white transition-colors">
-                  {lang === "en" ? "Hosting Guide" : "托管指南"}
+                  {lang === "en" ? "Hosting Guide" : "託管指南"}
                 </Link>
                 <Link to="/support" className="text-sm text-blue-200/70 hover:text-white transition-colors">
-                  {lang === "en" ? "Support" : "联系客服"}
+                  {lang === "en" ? "Support" : "聯繫客服"}
                 </Link>
               </div>
             </div>
@@ -207,10 +211,13 @@ const Footer = () => {
           </div>
         </div>
 
-        {/* Footer tagline */}
+        {/* Secondary custom path */}
         <div className="mt-8 text-center">
-          <p className="text-sm text-blue-200/60 leading-relaxed">
-            {t(translations.home?.footerTagline ?? { en: "Designed for small businesses that want real results — without upfront risk.", zh: "為想要真實成效的小企業設計——無需承擔前期風險。" }, lang)}
+          <p className="text-sm text-blue-200/50">
+            {lang === "en" ? "Need a brand new website instead?" : "需要全新網站嗎？"}{" "}
+            <Link to="/custom-brief" className="text-blue-300 hover:text-white underline">
+              {lang === "en" ? "Explore custom new website options" : "探索定制新網站選項"}
+            </Link>
           </p>
         </div>
 

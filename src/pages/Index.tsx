@@ -6,7 +6,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import CustomCursor from "@/components/CustomCursor";
 import Preloader from "@/components/Preloader";
-import { Check, ChevronDown, ArrowRight, ArrowDown, Plus, Star, ChevronLeft, ChevronRight as ChevronRightIcon, Quote } from "lucide-react";
+import { Check, ChevronDown, ArrowRight, ArrowDown, Plus, Star, ChevronLeft, ChevronRight as ChevronRightIcon, Quote, Shield, Zap, Target, Users, Loader2 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
 import portfolioTrade from "@/assets/portfolio-trade.jpg";
@@ -20,32 +20,51 @@ const PRELOADER_KEY = "swiftlift_visited";
 
 const portfolioImages = [portfolioTrade, portfolioWellness, portfolioLaw, portfolioConstruction, portfolioWholesale, portfolioLogistics];
 
-/* ── Intake Form (Hero version) ── */
-const IntakeFormFields = ({
-  plan,
-  setPlan,
-}: {
-  plan: string;
-  setPlan: (v: string) => void;
-}) => {
+/* ── Multi-Step Intake Form ── */
+const MultiStepIntake = ({ variant = "hero" }: { variant?: "hero" | "cta" }) => {
   const { lang } = useLanguage();
-  const home = translations.home;
+  const [step, setStep] = useState(1);
+  const [url, setUrl] = useState("");
   const [submitting, setSubmitting] = useState(false);
-  const inputClass =
-    "w-full rounded-lg border border-border bg-background px-3 py-2.5 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-[hsl(275_51%_46%)]/30 focus:border-[hsl(275_51%_46%)] transition-all";
+  const [showProcessing, setShowProcessing] = useState(false);
+  const [processingStep, setProcessingStep] = useState(0);
 
-  const autoPrefix = (e: React.FocusEvent<HTMLInputElement>) => {
-    const val = e.target.value.trim();
+  const isDark = variant === "cta";
+
+  const inputBase = isDark
+    ? "w-full rounded-xl border border-white/15 bg-white/5 px-4 py-3.5 text-sm text-white placeholder:text-white/40 focus:outline-none focus:ring-2 focus:ring-[hsl(275_51%_46%)]/40 focus:border-white/30 transition-all"
+    : "w-full rounded-xl border border-border bg-background px-4 py-3.5 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-[hsl(275_51%_46%)]/30 focus:border-[hsl(275_51%_46%)] transition-all";
+
+  const selectBase = isDark
+    ? "w-full rounded-xl border border-white/15 bg-white/5 px-4 py-3.5 text-sm text-white placeholder:text-white/40 focus:outline-none focus:ring-2 focus:ring-[hsl(275_51%_46%)]/40 focus:border-white/30 transition-all [&>option]:bg-[hsl(209_66%_18%)] [&>option]:text-white"
+    : "w-full rounded-xl border border-border bg-background px-4 py-3.5 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-[hsl(275_51%_46%)]/30 focus:border-[hsl(275_51%_46%)] transition-all";
+
+  const autoPrefix = (val: string) => {
     if (val && !val.startsWith("http://") && !val.startsWith("https://")) {
-      e.target.value = "https://" + val;
+      return "https://" + val;
     }
+    return val;
+  };
+
+  const handleStep1 = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!url.trim()) return;
+    setStep(2);
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setSubmitting(true);
-    const form = e.currentTarget;
-    const fd = new FormData(form);
+    const fd = new FormData(e.currentTarget);
+
+    // Show processing animation
+    setShowProcessing(true);
+    const processingSteps = [0, 1, 2];
+    for (const s of processingSteps) {
+      setProcessingStep(s);
+      await new Promise(r => setTimeout(r, 1200));
+    }
+
     try {
       const res = await fetch("https://formspree.io/f/mbdabbql", {
         method: "POST",
@@ -54,145 +73,139 @@ const IntakeFormFields = ({
           name: fd.get("businessName"),
           email: fd.get("email"),
           subject: fd.get("businessName"),
-          message: `Business: ${fd.get("businessName")}\nWebsite: ${fd.get("currentWebsite") || "N/A"}\nInspiration: ${fd.get("websiteYouLike") || "N/A"}\nTimeline: ${fd.get("timeline") || "N/A"}\nPlan: ${fd.get("plan") || "N/A"}`,
+          message: `Business: ${fd.get("businessName")}\nWebsite: ${url}\nInspiration: ${fd.get("websiteYouLike") || "N/A"}\nTimeline: ${fd.get("timeline") || "N/A"}\nEmail: ${fd.get("email")}`,
         }),
       });
-      if (res.ok) window.location.assign("/thank-you");
+      if (res.ok) {
+        // Store email for thank you page
+        try { sessionStorage.setItem("swiftlift_email", fd.get("email") as string); } catch {}
+        window.location.assign("/thank-you");
+      }
     } catch {
       // silent
     } finally {
       setSubmitting(false);
+      setShowProcessing(false);
     }
   };
+
+  const processingMessages = [
+    lang === "en" ? "Reviewing your website..." : "正在審查您的網站...",
+    lang === "en" ? "Preparing your preview request..." : "正在準備您的預覽請求...",
+    lang === "en" ? "Organizing your project details..." : "正在整理您的項目細節...",
+  ];
+
+  if (showProcessing) {
+    return (
+      <div className="flex flex-col items-center justify-center py-12 gap-4">
+        <Loader2 size={32} className="animate-spin" style={{ color: "hsl(275 51% 46%)" }} />
+        <AnimatePresence mode="wait">
+          <motion.p
+            key={processingStep}
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -10 }}
+            className={`text-sm font-medium ${isDark ? "text-white/80" : "text-muted-foreground"}`}
+          >
+            {processingMessages[processingStep]}
+          </motion.p>
+        </AnimatePresence>
+      </div>
+    );
+  }
+
+  if (step === 1) {
+    return (
+      <form onSubmit={handleStep1} className="w-full">
+        <div className="flex flex-col sm:flex-row gap-3">
+          <input
+            type="url"
+            value={url}
+            onChange={e => setUrl(e.target.value)}
+            onBlur={() => setUrl(autoPrefix(url))}
+            required
+            placeholder="https://yourbusiness.com"
+            className={`${inputBase} flex-1`}
+          />
+          <button
+            type="submit"
+            className="rounded-full py-3.5 px-8 text-sm font-semibold text-white whitespace-nowrap transition-all hover:opacity-90 hover:scale-[1.02]"
+            style={{ background: "hsl(275 51% 46%)" }}
+          >
+            {lang === "en" ? "Get My Free Previews" : "獲取免費預覽"}
+          </button>
+        </div>
+        <p className={`mt-3 text-xs ${isDark ? "text-white/40" : "text-muted-foreground"}`}>
+          {lang === "en" ? "No upfront payment · No obligation · Built for real business results" : "無預付款 · 無義務 · 為真實商業成效而設計"}
+        </p>
+      </form>
+    );
+  }
 
   return (
-    <form onSubmit={handleSubmit} className="space-y-3">
-      <input type="hidden" name="plan" value={plan} />
-      <div>
-        <label className="block text-xs font-medium text-foreground mb-1">
-          {t(home.formBusinessName, lang)} <span className="text-destructive">*</span>
-        </label>
-        <input type="text" name="businessName" required placeholder={t(home.formBusinessNamePlaceholder, lang)} className={inputClass} />
-      </div>
-      <div>
-        <label className="block text-xs font-medium text-foreground mb-1">
-          {t(home.formCurrentWebsite, lang)} <span className="text-muted-foreground text-[10px]">{t(home.optional, lang)}</span>
-        </label>
-        <input type="url" name="currentWebsite" placeholder="https://yourbusiness.com" className={inputClass} onBlur={autoPrefix} />
-      </div>
-      <div>
-        <label className="block text-xs font-medium text-foreground mb-1">
-          {t(home.formEmail, lang)} <span className="text-destructive">*</span>
-        </label>
-        <input type="email" name="email" required placeholder="you@email.com" className={inputClass} />
-      </div>
-      <div>
-        <label className="block text-xs font-medium text-foreground mb-1">
-          {t(home.formWebsiteYouLike, lang)} <span className="text-muted-foreground text-[10px]">{t(home.optional, lang)}</span>
-        </label>
-        <input type="url" name="websiteYouLike" placeholder="https://example.com" className={inputClass} onBlur={autoPrefix} />
-      </div>
-      <div>
-        <label className="block text-xs font-medium text-foreground mb-1">
-          {t(home.formTimeline, lang)} <span className="text-muted-foreground text-[10px]">{t(home.optional, lang)}</span>
-        </label>
-        <select name="timeline" className={inputClass}>
-          <option value="">{t(home.formSelectOption, lang)}</option>
-          {home.formTimelineOptions.map((opt, i) => (
-            <option key={i} value={t(opt, lang)}>{t(opt, lang)}</option>
-          ))}
-        </select>
-      </div>
-      <button
-        type="submit"
-        disabled={submitting}
-        className={`w-full rounded-full py-3 px-8 text-sm font-semibold text-white transition-all ${submitting ? "opacity-70 pointer-events-none" : "hover:opacity-90"}`}
-        style={{ background: "hsl(275 51% 46%)" }}
-      >
-        {submitting ? t(home.formSending, lang) : t(home.formSubmit, lang)}
-      </button>
-      <div className="text-[11px] text-muted-foreground text-center leading-relaxed whitespace-pre-line">
-        {t(home.formDisclaimer, lang)}
-      </div>
-    </form>
-  );
-};
-
-/* ── Footer Intake Form (dark compact) ── */
-const FooterIntakeForm = ({
-  plan,
-  setPlan,
-}: {
-  plan: string;
-  setPlan: (v: string) => void;
-}) => {
-  const { lang } = useLanguage();
-  const home = translations.home;
-  const [submitting, setSubmitting] = useState(false);
-  const inputClass =
-    "w-full rounded-lg border border-[rgba(255,255,255,0.15)] bg-white/5 px-3 py-2.5 text-sm text-[#D0D6DE] placeholder:text-[#9AA3AE] focus:outline-none focus:ring-1 focus:ring-[hsl(275_51%_46%)]/30 focus:border-[rgba(255,255,255,0.3)] transition-all";
-  const selectClass =
-    "w-full rounded-lg border border-[rgba(255,255,255,0.15)] bg-white/5 px-3 py-2.5 text-sm text-[#D0D6DE] placeholder:text-[#9AA3AE] focus:outline-none focus:ring-1 focus:ring-[hsl(275_51%_46%)]/30 focus:border-[rgba(255,255,255,0.3)] transition-all [&>option]:bg-white [&>option]:text-[#2B2F36] [&>option:hover]:bg-[#F3F4F6] [&>option:checked]:bg-[hsl(275_51%_46%_/_0.08)]";
-
-  const autoPrefix = (e: React.FocusEvent<HTMLInputElement>) => {
-    const val = e.target.value.trim();
-    if (val && !val.startsWith("http://") && !val.startsWith("https://")) {
-      e.target.value = "https://" + val;
-    }
-  };
-
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setSubmitting(true);
-    const form = e.currentTarget;
-    const fd = new FormData(form);
-    try {
-      const res = await fetch("https://formspree.io/f/mbdabbql", {
-        method: "POST",
-        headers: { "Content-Type": "application/json", Accept: "application/json" },
-        body: JSON.stringify({
-          name: fd.get("businessName"),
-          email: fd.get("email"),
-          subject: fd.get("businessName"),
-          message: `Business: ${fd.get("businessName")}\nWebsite: ${fd.get("currentWebsite") || "N/A"}\nInspiration: ${fd.get("websiteYouLike") || "N/A"}\nTimeline: ${fd.get("timeline") || "N/A"}\nPlan: ${fd.get("plan") || "N/A"}`,
-        }),
-      });
-      if (res.ok) window.location.assign("/thank-you");
-    } catch {
-      // silent
-    } finally {
-      setSubmitting(false);
-    }
-  };
-
-  return (
-    <form onSubmit={handleSubmit}>
-      <input type="hidden" name="plan" value={plan} />
-      <div className="grid grid-cols-1 md:grid-cols-[1fr_1fr_1fr_auto] gap-3">
-        <input type="text" name="businessName" required placeholder={`${t(home.formBusinessName, lang)} *`} className={inputClass} />
-        <input type="email" name="email" required placeholder={`${t(home.formEmail, lang)} *`} className={inputClass} />
-        <input type="url" name="websiteYouLike" placeholder={t(home.formWebsiteYouLike, lang)} className={inputClass} onBlur={autoPrefix} />
-        <button
-          type="submit"
-          disabled={submitting}
-          className={`rounded-full py-2.5 px-6 text-sm font-semibold text-white whitespace-nowrap transition-all ${submitting ? "opacity-70 pointer-events-none" : "hover:opacity-90"}`}
-          style={{ background: "hsl(275 51% 46%)" }}
-        >
-          {submitting ? t(home.formSending, lang) : t(home.formSubmit, lang)}
-        </button>
-      </div>
-      <div className="mt-3">
-        <select name="timeline" className={selectClass}>
-          <option value="">{t(home.formTimeline, lang)}</option>
-          {home.formTimelineOptions.map((opt, i) => (
-            <option key={i} value={t(opt, lang)}>{t(opt, lang)}</option>
-          ))}
-        </select>
-      </div>
-      <p className="mt-3 text-[11px] text-white/40 text-center">
-        {t(home.formDisclaimerShort, lang)}
+    <motion.div
+      initial={{ opacity: 0, y: 20 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.4 }}
+    >
+      <p className={`text-sm mb-5 ${isDark ? "text-white/60" : "text-muted-foreground"}`}>
+        {lang === "en"
+          ? "Tell us where to send your previews and what style direction you like so we can create a more tailored result for your business."
+          : "告訴我們將預覽發送到哪裡以及您喜歡的風格方向，以便我們為您的業務創建更量身定制的結果。"}
       </p>
-    </form>
+      <form onSubmit={handleSubmit} className="space-y-4">
+        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <div>
+            <label className={`block text-xs font-medium mb-1.5 ${isDark ? "text-white/70" : "text-foreground"}`}>
+              {lang === "en" ? "Business Name" : "企業名稱"} <span className="text-destructive">*</span>
+            </label>
+            <input type="text" name="businessName" required placeholder={lang === "en" ? "Your business name" : "您的企業名稱"} className={inputBase} />
+          </div>
+          <div>
+            <label className={`block text-xs font-medium mb-1.5 ${isDark ? "text-white/70" : "text-foreground"}`}>
+              {lang === "en" ? "Email Address" : "電子郵箱"} <span className="text-destructive">*</span>
+            </label>
+            <input type="email" name="email" required placeholder="you@email.com" className={inputBase} />
+          </div>
+        </div>
+        <div>
+          <label className={`block text-xs font-medium mb-1.5 ${isDark ? "text-white/70" : "text-foreground"}`}>
+            {lang === "en" ? "Website You Like" : "您喜歡的網站"} <span className={`text-[10px] ${isDark ? "text-white/30" : "text-muted-foreground"}`}>{lang === "en" ? "(Optional)" : "（選填）"}</span>
+          </label>
+          <input type="url" name="websiteYouLike" placeholder="https://example.com" className={inputBase} onBlur={e => { if (e.target.value) e.target.value = autoPrefix(e.target.value); }} />
+        </div>
+        <div>
+          <label className={`block text-xs font-medium mb-1.5 ${isDark ? "text-white/70" : "text-foreground"}`}>
+            {lang === "en" ? "When do you need your website?" : "您何時需要網站？"} <span className="text-destructive">*</span>
+          </label>
+          <select name="timeline" required className={selectBase}>
+            <option value="">{lang === "en" ? "Select an option" : "請選擇"}</option>
+            <option value="asap">{lang === "en" ? "As soon as possible" : "盡快"}</option>
+            <option value="1week">{lang === "en" ? "Within 1 week" : "1週內"}</option>
+            <option value="2weeks">{lang === "en" ? "Within 2 weeks" : "2週內"}</option>
+            <option value="1month">{lang === "en" ? "Within 1 month" : "1個月內"}</option>
+            <option value="exploring">{lang === "en" ? "Just exploring for now" : "目前只是探索"}</option>
+          </select>
+        </div>
+        <div className="flex gap-3 pt-2">
+          <button
+            type="button"
+            onClick={() => setStep(1)}
+            className={`rounded-full py-3 px-6 text-sm font-medium border transition-all ${isDark ? "border-white/20 text-white/60 hover:text-white" : "border-border text-muted-foreground hover:text-foreground"}`}
+          >
+            {lang === "en" ? "Back" : "返回"}
+          </button>
+          <button
+            type="submit"
+            disabled={submitting}
+            className={`flex-1 rounded-full py-3 px-8 text-sm font-semibold text-white transition-all hover:opacity-90 ${submitting ? "opacity-70 pointer-events-none" : ""}`}
+            style={{ background: "hsl(275 51% 46%)" }}
+          >
+            {submitting ? (lang === "en" ? "Sending..." : "發送中...") : (lang === "en" ? "Get My Free Previews" : "獲取免費預覽")}
+          </button>
+        </div>
+      </form>
+    </motion.div>
   );
 };
 
@@ -200,39 +213,75 @@ const FooterIntakeForm = ({
 const IndexContent = () => {
   const { lang } = useLanguage();
   const home = translations.home;
-  const [searchParams, setSearchParams] = useSearchParams();
-  const [plan, setPlan] = useState(() => searchParams.get("plan") || "");
   const [proofIdx, setProofIdx] = useState(0);
   const [faqOpen, setFaqOpen] = useState<number | null>(0);
-  const intakeRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     document.title = "SwiftLift — See Your Website Before You Pay";
   }, []);
 
-  useEffect(() => {
-    const p = searchParams.get("plan");
-    if (p) setPlan(p);
-  }, [searchParams]);
+  const prevProof = () => setProofIdx((i) => (i === 0 ? home.portfolioItems.length - 1 : i - 1));
+  const nextProof = () => setProofIdx((i) => (i === home.portfolioItems.length - 1 ? 0 : i + 1));
 
-  const scrollToIntake = (planCode: string) => {
-    setPlan(planCode);
-    setSearchParams({ plan: planCode }, { replace: true });
+  const scrollToIntake = () => {
     const el = document.getElementById("contact");
     if (el) el.scrollIntoView({ behavior: "smooth" });
   };
 
-  const prevProof = () => setProofIdx((i) => (i === 0 ? home.portfolioItems.length - 1 : i - 1));
-  const nextProof = () => setProofIdx((i) => (i === home.portfolioItems.length - 1 ? 0 : i + 1));
+  const whyCards = [
+    { icon: Shield, title: lang === "en" ? "No Risk" : "零風險", desc: lang === "en" ? "See your previews first. Move forward only if it feels right." : "先看預覽。感覺對了再繼續。" },
+    { icon: Zap, title: lang === "en" ? "Fast Turnaround" : "快速交付", desc: lang === "en" ? "Get a stronger website direction without waiting through a long agency process." : "無需漫長等待即可獲得更強的網站方向。" },
+    { icon: Target, title: lang === "en" ? "Built for Results" : "注重成效", desc: lang === "en" ? "We redesign with clearer messaging, better structure, and stronger conversion intent." : "我們以更清晰的訊息、更好的結構和更強的轉化意圖進行重新設計。" },
+    { icon: Users, title: lang === "en" ? "Done for You" : "為您完成", desc: lang === "en" ? "You share your website. We handle the strategy, design direction, and heavy lifting." : "您分享您的網站。我們處理策略、設計方向和繁重工作。" },
+  ];
 
-  const pricingPlans = home.plans;
+  const faqItems = [
+    { q: lang === "en" ? "Is the preview really free?" : "預覽真的免費嗎？", a: lang === "en" ? "Yes. We create your preview directions first so you can review the concept before deciding whether to move forward." : "是的。我們先創建您的預覽方向，讓您在決定是否繼續之前審查概念。" },
+    { q: lang === "en" ? "How long does it take to receive my previews?" : "收到預覽需要多長時間？", a: lang === "en" ? "Most preview requests are prepared within 24 to 48 hours depending on project volume and urgency." : "大多數預覽請求會根據項目量和緊急程度在24至48小時內準備好。" },
+    { q: lang === "en" ? "What if I need changes after choosing a version?" : "選擇版本後需要修改怎麼辦？", a: lang === "en" ? "Once you move forward with a paid package, we refine the chosen direction and prepare it for launch." : "一旦您選擇付費套餐繼續，我們將完善所選方向並準備上線。" },
+    { q: lang === "en" ? "What if I don't have a website yet?" : "如果我還沒有網站怎麼辦？", a: lang === "en" ? "SwiftLift is currently optimized for businesses with an existing website. If you need a brand new site, you can explore our custom build options." : "SwiftLift 目前針對已有網站的企業進行了優化。如果您需要全新網站，可以探索我們的定制建設選項。" },
+  ];
+
+  const multiPagePlans = [
+    {
+      name: lang === "en" ? "Preview Access" : "預覽版",
+      price: "$299",
+      features: lang === "en"
+        ? ["Live website preview", "Clean professional layout", "Delivered with no risk", "No revisions included at preview stage"]
+        : ["即時網站預覽", "簡潔專業版面", "零風險交付", "預覽階段不含修改"],
+      highlighted: false,
+    },
+    {
+      name: lang === "en" ? "Launch Ready" : "上線版",
+      price: "$499",
+      badge: lang === "en" ? "Most Popular" : "最受歡迎",
+      features: lang === "en"
+        ? ["Fully polished website", "Bug fixes and final content refinement", "Ready for real business use"]
+        : ["完全打磨的網站", "修復和最終內容優化", "適合實際商業使用"],
+      highlighted: true,
+    },
+    {
+      name: lang === "en" ? "Growth Optimized" : "成長版",
+      price: "$799",
+      features: lang === "en"
+        ? ["Conversion-focused layout", "Optimized structure and stronger content flow", "Designed to generate more leads"]
+        : ["轉化導向版面", "優化結構和更強的內容流程", "設計以產生更多潛在客戶"],
+      highlighted: false,
+    },
+  ];
+
+  const singlePagePlans = [
+    { name: lang === "en" ? "Preview" : "預覽版", price: "$199" },
+    { name: lang === "en" ? "Launch" : "上線版", price: "$349" },
+    { name: lang === "en" ? "Growth" : "成長版", price: "$549" },
+  ];
 
   return (
     <main>
       {/* ═══ 1. HERO ═══ */}
       <section
         id="contact"
-        className="relative pt-24 pb-14 md:pt-32 md:pb-18 overflow-hidden"
+        className="relative pt-28 pb-16 md:pt-36 md:pb-24 overflow-hidden"
         style={{
           background: "linear-gradient(180deg, hsl(209 66% 16%) 0%, hsl(209 66% 12%) 100%)",
         }}
@@ -244,76 +293,79 @@ const IndexContent = () => {
           }}
         />
 
-        <div className="relative z-10 max-w-7xl mx-auto px-6">
-          <div className="grid grid-cols-1 lg:grid-cols-[1fr_0.55fr] gap-10 lg:gap-14 items-start">
-            <div className="text-white pt-4 lg:pt-2">
-              <h1 className="text-[2.6rem] md:text-[clamp(3.2rem,6.5vw,5.2rem)] font-black leading-[1.08] font-display tracking-tight whitespace-pre-line">
-                {t(home.heroTitle, lang)}
+        <div className="relative z-10 max-w-6xl mx-auto px-6">
+          <div className="grid grid-cols-1 lg:grid-cols-[1.1fr_0.9fr] gap-12 lg:gap-16 items-start">
+            {/* Left: Copy */}
+            <div className="text-white pt-2 lg:pt-4">
+              <h1 className="text-[2.4rem] md:text-[clamp(2.8rem,5.5vw,4.2rem)] font-black leading-[1.08] font-display tracking-tight">
+                {lang === "en" ? "See Your New Website\nBefore You Pay" : "先看您的\n新網站\n再付款"}
               </h1>
 
-              <p className="mt-3 text-lg md:text-xl font-semibold text-white/90">
-                {t(home.heroSubShort, lang)}
+              <p className="mt-5 text-base md:text-lg text-white/80 leading-relaxed max-w-lg">
+                {lang === "en"
+                  ? "Get 2 free website previews for your business before making any decision."
+                  : "在做任何決定之前，獲取2個免費網站預覽。"}
               </p>
-
-              <p className="mt-4 text-white/70 text-base md:text-lg leading-relaxed max-w-lg">
-                {t(home.heroSub, lang)}
+              <p className="mt-2 text-sm md:text-base text-white/60 leading-relaxed max-w-lg">
+                {lang === "en"
+                  ? "Compare two different design directions and choose what actually works for your customers."
+                  : "比較兩個不同的設計方向，選擇真正適合您客戶的方案。"}
               </p>
 
               <ul className="mt-8 space-y-3">
-                {home.heroBullets.map((item, i) => (
-                  <li key={i} className="flex items-center gap-3 text-base md:text-lg text-white/85">
-                    <Check size={18} className="flex-shrink-0" style={{ color: "hsl(275 51% 46%)" }} />
-                    {t(item, lang)}
+                {[
+                  lang === "en" ? "2 preview versions to compare" : "2個預覽版本可比較",
+                  lang === "en" ? "No upfront payment required" : "無需預付款",
+                  lang === "en" ? "Upgrade only when you're ready" : "準備好了再升級",
+                ].map((item, i) => (
+                  <li key={i} className="flex items-center gap-3 text-sm md:text-base text-white/85">
+                    <Check size={16} className="flex-shrink-0" style={{ color: "hsl(275 51% 46%)" }} />
+                    {item}
                   </li>
                 ))}
               </ul>
             </div>
 
-            <div ref={intakeRef} className="bg-background rounded-2xl p-5 md:p-6 border border-border/50 shadow-2xl lg:mt-10">
-              <p className="text-[11px] text-muted-foreground mb-3">{t(home.formNote, lang)}</p>
-              <IntakeFormFields plan={plan} setPlan={setPlan} />
+            {/* Right: Intake Form */}
+            <div className="bg-background rounded-2xl p-6 md:p-8 border border-border/50 shadow-2xl lg:mt-4">
+              <p className="text-xs text-muted-foreground mb-4">
+                {lang === "en" ? "Enter your current website to get started." : "輸入您目前的網站以開始。"}
+              </p>
+              <MultiStepIntake variant="hero" />
             </div>
           </div>
         </div>
       </section>
 
-      {/* ═══ VALUE PROPOSITION ═══ */}
-      <section className="py-12 md:py-16" style={{ background: "hsl(var(--surface-sunken))" }}>
-        <div className="max-w-5xl mx-auto px-6">
-          <h2 className="text-[clamp(1.8rem,4vw,2.8rem)] font-black text-foreground font-display text-center">
-            {t(home.valuePropTitle, lang)}
-          </h2>
-          <div className="mt-10 grid grid-cols-1 md:grid-cols-3 gap-6">
-            {home.valueProps.map((vp, i) => (
-              <div key={i} className="text-center p-6 rounded-2xl border border-border bg-background">
-                <h3 className="text-lg font-bold text-foreground font-display">{t(vp.title, lang)}</h3>
-                <p className="mt-2 text-sm text-muted-foreground leading-relaxed">{t(vp.desc, lang)}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
-
       {/* ═══ 2. HOW IT WORKS ═══ */}
-      <section id="process" className="py-14 md:py-18 bg-background">
+      <section id="process" className="py-16 md:py-24 bg-background">
         <div className="max-w-5xl mx-auto px-6 text-center">
           <h2 className="text-[clamp(1.8rem,4vw,2.8rem)] font-black text-foreground font-display">
-            {t(home.howItWorks, lang)}
+            {lang === "en" ? "How It Works" : "如何運作"}
           </h2>
-          <p className="mt-2 text-muted-foreground text-sm">{t(home.howItWorksSub, lang)}</p>
+          <p className="mt-2 text-muted-foreground text-sm">
+            {lang === "en" ? "A simple, low-risk way to upgrade your website." : "一種簡單、低風險的網站升級方式。"}
+          </p>
 
           {/* Desktop */}
-          <div className="mt-12 hidden md:flex items-start justify-center gap-0">
-            {home.steps.map((s, i) => (
+          <div className="mt-14 hidden md:flex items-start justify-center gap-0">
+            {[
+              { title: lang === "en" ? "Submit Your Current Website" : "提交您的當前網站", desc: lang === "en" ? "Enter your website URL to start your free preview request." : "輸入您的網站URL以開始免費預覽請求。" },
+              { title: lang === "en" ? "Receive 2 Preview Directions" : "收到2個預覽方向", desc: lang === "en" ? "We create two homepage concepts so you can compare different directions before making any decision." : "我們創建兩個主頁概念，讓您在做任何決定前比較不同方向。" },
+              { title: lang === "en" ? "Choose What Fits Best" : "選擇最適合的", desc: lang === "en" ? "Pick the version that feels right for your business, your audience, and your goals." : "選擇最適合您的業務、受眾和目標的版本。" },
+              { title: lang === "en" ? "Upgrade When You're Ready" : "準備好了再升級", desc: lang === "en" ? "Move forward only when you're confident in the direction." : "只有在對方向有信心時才繼續。" },
+            ].map((s, i) => (
               <div key={i} className="flex items-start">
-                <div className="flex flex-col items-center text-center max-w-[180px]">
-                  <span className="text-3xl font-black text-muted-foreground/25 font-display">{i + 1}</span>
-                  <h3 className="mt-2 text-base font-bold text-foreground font-display">{t(s.title, lang)}</h3>
-                  <p className="mt-2 text-sm text-muted-foreground leading-relaxed">{t(s.desc, lang)}</p>
+                <div className="flex flex-col items-center text-center max-w-[200px]">
+                  <span className="w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold text-white" style={{ background: "hsl(275 51% 46%)" }}>
+                    {i + 1}
+                  </span>
+                  <h3 className="mt-3 text-sm font-bold text-foreground font-display">{s.title}</h3>
+                  <p className="mt-2 text-xs text-muted-foreground leading-relaxed">{s.desc}</p>
                 </div>
                 {i < 3 && (
-                  <div className="flex items-center px-4 pt-3">
-                    <ArrowRight size={32} className="text-muted-foreground/20" strokeWidth={1.5} />
+                  <div className="flex items-center px-3 pt-4">
+                    <ArrowRight size={20} className="text-muted-foreground/25" strokeWidth={1.5} />
                   </div>
                 )}
               </div>
@@ -321,32 +373,56 @@ const IndexContent = () => {
           </div>
 
           {/* Mobile */}
-          <div className="mt-10 md:hidden space-y-2">
-            {home.steps.map((s, i) => (
-              <div key={i}>
-                <div className="flex flex-col items-center text-center">
-                  <span className="text-3xl font-black text-muted-foreground/25 font-display">{i + 1}</span>
-                  <h3 className="mt-2 text-base font-bold text-foreground font-display">{t(s.title, lang)}</h3>
-                  <p className="mt-2 text-sm text-muted-foreground leading-relaxed max-w-xs mx-auto">{t(s.desc, lang)}</p>
-                </div>
-                {i < 3 && (
-                  <div className="flex justify-center py-3">
-                    <ArrowDown size={28} className="text-muted-foreground/20" strokeWidth={1.5} />
-                  </div>
-                )}
+          <div className="mt-10 md:hidden space-y-6">
+            {[
+              { title: lang === "en" ? "Submit Your Current Website" : "提交您的當前網站", desc: lang === "en" ? "Enter your website URL to start your free preview request." : "輸入您的網站URL以開始免費預覽請求。" },
+              { title: lang === "en" ? "Receive 2 Preview Directions" : "收到2個預覽方向", desc: lang === "en" ? "We create two homepage concepts so you can compare different directions." : "我們創建兩個主頁概念供您比較。" },
+              { title: lang === "en" ? "Choose What Fits Best" : "選擇最適合的", desc: lang === "en" ? "Pick the version that feels right for your business." : "選擇最適合您業務的版本。" },
+              { title: lang === "en" ? "Upgrade When You're Ready" : "準備好了再升級", desc: lang === "en" ? "Move forward only when you're confident." : "有信心時再繼續。" },
+            ].map((s, i) => (
+              <div key={i} className="flex flex-col items-center text-center">
+                <span className="w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold text-white" style={{ background: "hsl(275 51% 46%)" }}>
+                  {i + 1}
+                </span>
+                <h3 className="mt-3 text-sm font-bold text-foreground font-display">{s.title}</h3>
+                <p className="mt-1.5 text-xs text-muted-foreground leading-relaxed max-w-xs">{s.desc}</p>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      {/* ═══ 3. PROOF SECTION ═══ */}
-      <section id="portfolio" className="py-14 md:py-18" style={{ background: "hsl(var(--surface-sunken))" }}>
+      {/* ═══ 3. VALUE / BRAND POSITIONING ═══ */}
+      <section className="py-20 md:py-28" style={{ background: "hsl(var(--surface-sunken))" }}>
+        <div className="max-w-3xl mx-auto px-6 text-center">
+          <h2 className="text-[clamp(1.8rem,4.5vw,3.2rem)] font-black text-foreground font-display leading-tight">
+            {lang === "en" ? "Let SwiftLift Do the Heavy Lifting for You" : "讓 SwiftLift 為您承擔繁重工作"}
+          </h2>
+          <p className="mt-4 text-lg md:text-xl text-foreground/80 font-medium">
+            {lang === "en" ? "Create a Website That Your Customers Will Actually Love." : "創建一個您的客戶真正喜歡的網站。"}
+          </p>
+          <p className="mt-4 text-sm text-muted-foreground max-w-lg mx-auto leading-relaxed">
+            {lang === "en" ? "No guesswork. No wasted money. Just real results you can see before you commit." : "不用猜測。不浪費錢。只有在承諾之前就能看到的真實成果。"}
+          </p>
+          <button
+            onClick={scrollToIntake}
+            className="mt-8 rounded-full py-3.5 px-10 text-sm font-semibold text-white transition-all hover:opacity-90 hover:scale-[1.02]"
+            style={{ background: "hsl(275 51% 46%)" }}
+          >
+            {lang === "en" ? "Get My Free Previews" : "獲取免費預覽"}
+          </button>
+        </div>
+      </section>
+
+      {/* ═══ 4. REAL BUSINESS TRANSFORMATIONS ═══ */}
+      <section id="portfolio" className="py-16 md:py-24 bg-background">
         <div className="max-w-6xl mx-auto px-6">
           <h2 className="text-[clamp(1.8rem,4vw,2.8rem)] font-black text-foreground font-display text-center">
-            {t(home.portfolioTitle, lang)}
+            {lang === "en" ? "Real Businesses. Reimagined with SwiftLift." : "真實企業。SwiftLift 重新構想。"}
           </h2>
-          <p className="mt-2 text-muted-foreground text-sm text-center">{t(home.portfolioSub, lang)}</p>
+          <p className="mt-2 text-muted-foreground text-sm text-center">
+            {lang === "en" ? "See how an outdated website can become two stronger directions before you decide." : "看看過時的網站如何在您決定之前變成兩個更強的方向。"}
+          </p>
 
           <div className="mt-10 relative">
             <AnimatePresence mode="wait">
@@ -356,54 +432,40 @@ const IndexContent = () => {
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: -40 }}
                 transition={{ duration: 0.3 }}
-                className="grid grid-cols-1 lg:grid-cols-2 gap-6 bg-background rounded-2xl border border-border shadow-lg overflow-hidden"
+                className="grid grid-cols-1 lg:grid-cols-2 gap-0 bg-background rounded-2xl border border-border shadow-lg overflow-hidden"
               >
-                <div className="relative group aspect-[4/3] overflow-hidden cursor-pointer">
+                {/* Image */}
+                <div className="aspect-[4/3] overflow-hidden">
                   <img
                     src={portfolioImages[proofIdx]}
-                    alt={`${t(home.portfolioItems[proofIdx].name, lang)} - ${t(home.versionA, lang)}`}
-                    className="absolute inset-0 w-full h-full object-cover transition-all duration-500 group-hover:opacity-0 group-hover:scale-105 brightness-105 contrast-105 saturate-110"
+                    alt={home.portfolioItems[proofIdx].name.en}
+                    className="w-full h-full object-cover"
                   />
-                  <img
-                    src={portfolioImages[proofIdx]}
-                    alt={`${t(home.portfolioItems[proofIdx].name, lang)} - ${t(home.versionB, lang)}`}
-                    className="absolute inset-0 w-full h-full object-cover transition-all duration-500 opacity-0 group-hover:opacity-100"
-                    style={{ filter: "brightness(0.95) contrast(1.1) saturate(1.15)" }}
-                  />
-                  <span className="absolute top-3 right-3 text-[10px] font-bold uppercase tracking-wider bg-black/60 text-white px-2 py-1 rounded transition-opacity duration-300 group-hover:opacity-0">
-                    {t(home.versionA, lang)}
-                  </span>
-                  <span className="absolute top-3 right-3 text-[10px] font-bold uppercase tracking-wider bg-black/60 text-white px-2 py-1 rounded transition-opacity duration-300 opacity-0 group-hover:opacity-100">
-                    {t(home.versionB, lang)}
-                  </span>
                 </div>
 
+                {/* Content */}
                 <div className="flex flex-col justify-between p-6 md:p-8">
                   <div>
-                    <Quote size={24} className="text-muted-foreground/15 mb-3" />
-                    <p className="text-foreground text-sm leading-relaxed">
-                      "{t(home.testimonialItems[proofIdx].text, lang)}"
+                    <h3 className="text-lg font-bold text-foreground font-display">
+                      {t(home.portfolioItems[proofIdx].name, lang)}
+                    </h3>
+                    <p className="mt-1 text-sm text-muted-foreground">
+                      {t(home.portfolioItems[proofIdx].desc, lang)}
                     </p>
-                    <div className="mt-4">
-                      <p className="font-semibold text-sm text-foreground">{t(home.testimonialItems[proofIdx].name, lang)}</p>
+
+                    <div className="mt-5">
+                      <Quote size={20} className="text-muted-foreground/20 mb-2" />
+                      <p className="text-foreground text-sm leading-relaxed">
+                        "{t(home.testimonialItems[proofIdx].text, lang)}"
+                      </p>
+                      <p className="mt-2 text-xs font-semibold text-foreground">{t(home.testimonialItems[proofIdx].name, lang)}</p>
                       <p className="text-xs text-muted-foreground">{t(home.testimonialItems[proofIdx].company, lang)}</p>
                     </div>
                   </div>
 
-                  <div className="mt-6 pt-5 border-t border-border">
-                    <h3 className="text-base font-bold text-foreground font-display">{t(home.portfolioItems[proofIdx].name, lang)}</h3>
-                    <p className="mt-1 text-sm text-muted-foreground">{t(home.portfolioItems[proofIdx].desc, lang)}</p>
-                    <a
-                      href="#"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="mt-2 inline-flex items-center gap-1 text-sm font-semibold hover:underline"
-                      style={{ color: "hsl(275 51% 46%)" }}
-                    >
-                      {t(home.viewPreviewVersions, lang)}
-                    </a>
-                    <p className="mt-3 text-[11px] text-muted-foreground">{t(home.builtWith, lang)}</p>
-                  </div>
+                  <p className="mt-4 text-[11px] text-muted-foreground">
+                    {lang === "en" ? "Built with the SwiftLift System." : "使用 SwiftLift 系統構建。"}
+                  </p>
                 </div>
               </motion.div>
             </AnimatePresence>
@@ -437,124 +499,145 @@ const IndexContent = () => {
         </div>
       </section>
 
-      {/* ═══ 4. PRICING ═══ */}
-      <section id="pricing" className="py-14 md:py-18 bg-background">
-        <div className="max-w-5xl mx-auto px-6 text-center">
-          <h2 className="text-[clamp(1.8rem,4vw,2.8rem)] font-black text-foreground font-display">
-            {t(home.pricingTitle, lang)}
+      {/* ═══ 5. WHY SWIFTLIFT ═══ */}
+      <section className="py-16 md:py-24" style={{ background: "hsl(var(--surface-sunken))" }}>
+        <div className="max-w-5xl mx-auto px-6">
+          <h2 className="text-[clamp(1.8rem,4vw,2.8rem)] font-black text-foreground font-display text-center">
+            {lang === "en" ? "Why SwiftLift" : "為什麼選擇 SwiftLift"}
           </h2>
-          <p className="mt-2 text-muted-foreground text-sm">{t(home.pricingSub, lang)}</p>
-
-          {/* Multi-page label */}
-          <p className="mt-10 text-xs font-bold text-muted-foreground uppercase tracking-wider">{t(home.multiPageLabel, lang)}</p>
-          <p className="mt-1 text-sm text-muted-foreground">{t(home.multiPageSub, lang)}</p>
-
-          <div className="mt-6 grid grid-cols-1 md:grid-cols-3 gap-6 items-stretch">
-            {pricingPlans.map((p, idx) => {
-              const isHighlighted = idx === 1;
-              const planCodes = ["P", "L", "G"];
+          <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+            {whyCards.map((card, i) => {
+              const Icon = card.icon;
               return (
                 <div
-                  key={idx}
-                  className={`rounded-2xl flex flex-col border p-6 md:p-8 text-left relative h-full ${
-                    isHighlighted
-                      ? "bg-background border-border shadow-2xl border-t-4 md:-translate-y-2"
-                      : "bg-background border-border shadow-sm"
-                  }`}
-                  style={isHighlighted ? { borderTopColor: "hsl(275 51% 46%)" } : {}}
+                  key={i}
+                  className="rounded-2xl border border-border bg-background p-6 transition-all hover:shadow-lg hover:-translate-y-1"
                 >
-                  {isHighlighted && (
-                    <div
-                      className="absolute -top-4 left-1/2 -translate-x-1/2 px-5 py-1.5 rounded-full text-xs font-bold text-white flex items-center gap-1.5 whitespace-nowrap"
-                      style={{ background: "hsl(275 51% 46%)" }}
-                    >
-                      <Star size={13} className="fill-current" /> {t(home.mostPopular, lang)}
-                    </div>
-                  )}
-                  <h3 className="text-lg font-bold text-foreground font-display">{t(p.name, lang)}</h3>
-                  <p className="mt-1 text-2xl font-black text-foreground font-display">{p.price}</p>
-                  <ul className="mt-4 space-y-2.5 flex-1">
-                    {p.features[lang].map((f, i) => (
-                      <li key={i} className="flex items-start gap-2 text-sm">
-                        <Check size={16} className="mt-0.5 flex-shrink-0" style={{ color: "hsl(275 51% 46%)" }} />
-                        <span className="text-muted-foreground">{f}</span>
-                      </li>
-                    ))}
-                  </ul>
-                  {p.note && t(p.note, lang) && (
-                    <p className="mt-3 text-xs text-muted-foreground">{t(p.note, lang)}</p>
-                  )}
-                  <button
-                    onClick={() => scrollToIntake(planCodes[idx])}
-                    className={`mt-6 w-full rounded-full py-3 px-6 text-sm font-semibold transition-all ${
-                      isHighlighted
-                        ? "text-white hover:opacity-90"
-                        : "border-2 text-foreground hover:opacity-80"
-                    }`}
-                    style={isHighlighted
-                      ? { background: "hsl(275 51% 46%)" }
-                      : { borderColor: "hsl(275 51% 46%)", color: "hsl(275 51% 46%)" }
-                    }
+                  <div
+                    className="w-11 h-11 rounded-xl flex items-center justify-center mb-4"
+                    style={{ background: "hsl(275 51% 46% / 0.08)" }}
                   >
-                    {t(p.cta, lang)}
-                  </button>
+                    <Icon size={20} style={{ color: "hsl(275 51% 46%)" }} />
+                  </div>
+                  <h3 className="font-bold text-foreground font-display text-base">{card.title}</h3>
+                  <p className="mt-2 text-sm text-muted-foreground leading-relaxed">{card.desc}</p>
                 </div>
               );
             })}
           </div>
+        </div>
+      </section>
+
+      {/* ═══ 6. PRICING ═══ */}
+      <section id="pricing" className="py-16 md:py-24 bg-background">
+        <div className="max-w-5xl mx-auto px-6 text-center">
+          <h2 className="text-[clamp(1.8rem,4vw,2.8rem)] font-black text-foreground font-display">
+            {lang === "en" ? "Simple Pricing. Start with a Preview." : "簡單定價。從預覽開始。"}
+          </h2>
+          <p className="mt-2 text-muted-foreground text-sm">
+            {lang === "en" ? "See your direction first. Upgrade only when you're ready." : "先看方向。準備好了再升級。"}
+          </p>
+
+          {/* Multi-page label */}
+          <p className="mt-12 text-xs font-bold text-muted-foreground uppercase tracking-wider">
+            {lang === "en" ? "Multi-Page Website" : "多頁面網站"}
+          </p>
+          <p className="mt-1 text-sm text-muted-foreground">
+            {lang === "en" ? "Best for businesses that need a complete website presence" : "最適合需要完整網站形象的企業"}
+          </p>
+
+          <div className="mt-8 grid grid-cols-1 md:grid-cols-3 gap-6 items-stretch">
+            {multiPagePlans.map((p, idx) => (
+              <div
+                key={idx}
+                className={`rounded-2xl flex flex-col border p-6 md:p-8 text-left relative h-full ${
+                  p.highlighted
+                    ? "bg-background border-border shadow-2xl border-t-4 md:-translate-y-2"
+                    : "bg-background border-border shadow-sm"
+                }`}
+                style={p.highlighted ? { borderTopColor: "hsl(275 51% 46%)" } : {}}
+              >
+                {p.badge && (
+                  <div
+                    className="absolute -top-4 left-1/2 -translate-x-1/2 px-5 py-1.5 rounded-full text-xs font-bold text-white flex items-center gap-1.5 whitespace-nowrap"
+                    style={{ background: "hsl(275 51% 46%)" }}
+                  >
+                    <Star size={13} className="fill-current" /> {p.badge}
+                  </div>
+                )}
+                <h3 className="text-lg font-bold text-foreground font-display">{p.name}</h3>
+                <p className="mt-1 text-3xl font-black text-foreground font-display">{p.price}</p>
+                <ul className="mt-5 space-y-2.5 flex-1">
+                  {p.features.map((f, i) => (
+                    <li key={i} className="flex items-start gap-2 text-sm">
+                      <Check size={16} className="mt-0.5 flex-shrink-0" style={{ color: "hsl(275 51% 46%)" }} />
+                      <span className="text-muted-foreground">{f}</span>
+                    </li>
+                  ))}
+                </ul>
+                <button
+                  onClick={scrollToIntake}
+                  className={`mt-6 w-full rounded-full py-3 px-6 text-sm font-semibold transition-all ${
+                    p.highlighted
+                      ? "text-white hover:opacity-90"
+                      : "border-2 hover:opacity-80"
+                  }`}
+                  style={p.highlighted
+                    ? { background: "hsl(275 51% 46%)" }
+                    : { borderColor: "hsl(275 51% 46%)", color: "hsl(275 51% 46%)" }
+                  }
+                >
+                  {lang === "en" ? "Get My Free Previews" : "獲取免費預覽"}
+                </button>
+              </div>
+            ))}
+          </div>
 
           {/* Single Page */}
-          <div className="mt-14 pt-10 border-t border-border">
-            <p className="text-xs font-bold text-muted-foreground uppercase tracking-wider">{t(home.singlePageLabel, lang)}</p>
-            <p className="mt-1 text-sm text-muted-foreground">{t(home.singlePageSub, lang)}</p>
+          <div className="mt-16 pt-10 border-t border-border">
+            <p className="text-xs font-bold text-muted-foreground uppercase tracking-wider">
+              {lang === "en" ? "Single Page Website" : "單頁面網站"}
+            </p>
+            <p className="mt-1 text-sm text-muted-foreground">
+              {lang === "en" ? "Best for simple businesses or quick online presentations." : "最適合簡單企業或快速線上展示。"}
+            </p>
             <div className="mt-6 grid grid-cols-1 md:grid-cols-3 gap-4 max-w-3xl mx-auto">
-              {home.singlePagePlans.map((sp, idx) => (
+              {singlePagePlans.map((sp, idx) => (
                 <div key={idx} className="rounded-xl border border-border p-5 bg-background text-left">
-                  <h4 className="text-base font-bold text-foreground font-display">{t(sp.name, lang)}</h4>
+                  <h4 className="text-base font-bold text-foreground font-display">{sp.name}</h4>
                   <p className="mt-1 text-xl font-black text-foreground font-display">{sp.price}</p>
                   <button
-                    onClick={() => scrollToIntake("S" + idx)}
+                    onClick={scrollToIntake}
                     className="mt-4 w-full rounded-full py-2.5 px-4 text-xs font-semibold border-2 transition-all hover:opacity-80"
                     style={{ borderColor: "hsl(275 51% 46%)", color: "hsl(275 51% 46%)" }}
                   >
-                    {t(sp.cta, lang)}
+                    {lang === "en" ? "Get My Free Previews" : "獲取免費預覽"}
                   </button>
                 </div>
               ))}
             </div>
           </div>
 
-          {/* Custom */}
-          <div className="mt-14 pt-10 border-t border-border">
-            <p className="text-xs font-bold text-muted-foreground uppercase tracking-wider">{t(home.customLabel, lang)}</p>
-            <p className="mt-1 text-sm text-muted-foreground">{t(home.customSub, lang)}</p>
-            <div className="mt-6 grid grid-cols-1 md:grid-cols-3 gap-4 max-w-3xl mx-auto">
-              {home.customPlans.map((cp, idx) => (
-                <div key={idx} className="rounded-xl border border-border p-5 bg-background text-left">
-                  <h4 className="text-base font-bold text-foreground font-display">{t(cp.name, lang)}</h4>
-                  <p className="mt-1 text-xl font-black text-foreground font-display">{cp.price}</p>
-                </div>
-              ))}
-            </div>
-            <button
-              onClick={() => scrollToIntake("custom")}
-              className="mt-6 rounded-full py-3 px-8 text-sm font-semibold text-white transition-all hover:opacity-90"
-              style={{ background: "hsl(275 51% 46%)" }}
-            >
-              {t(home.customCta, lang)}
-            </button>
+          {/* Secondary path for no-website users */}
+          <div className="mt-10 text-center">
+            <p className="text-sm text-muted-foreground">
+              {lang === "en" ? "Need a brand new website instead?" : "需要全新網站嗎？"}{" "}
+              <Link to="/custom-brief" className="font-semibold hover:underline" style={{ color: "hsl(275 51% 46%)" }}>
+                {lang === "en" ? "Explore custom new website options" : "探索定制新網站選項"}
+              </Link>
+            </p>
           </div>
         </div>
       </section>
 
-      {/* ═══ 5. FAQ ═══ */}
-      <section className="py-14 md:py-18" style={{ background: "hsl(var(--surface-sunken))" }}>
+      {/* ═══ 7. FAQ ═══ */}
+      <section className="py-16 md:py-24" style={{ background: "hsl(var(--surface-sunken))" }}>
         <div className="max-w-3xl mx-auto px-6">
           <h2 className="text-[clamp(1.8rem,4vw,2.8rem)] font-black text-foreground font-display text-center">
-            {t(home.faqTitle, lang)}
+            {lang === "en" ? "Still Have Questions?" : "還有疑問？"}
           </h2>
           <div className="mt-10 space-y-3">
-            {home.faqItems.map((item, i) => {
+            {faqItems.map((item, i) => {
               const isOpen = faqOpen === i;
               return (
                 <div
@@ -566,7 +649,7 @@ const IndexContent = () => {
                     onClick={() => setFaqOpen(isOpen ? null : i)}
                     className="w-full flex items-center justify-between p-5 text-left"
                   >
-                    <span className="font-semibold text-foreground pr-4">{t(item.q, lang)}</span>
+                    <span className="font-semibold text-foreground pr-4">{item.q}</span>
                     <motion.div
                       animate={{ rotate: isOpen ? 45 : 0 }}
                       transition={{ duration: 0.3, type: "spring", stiffness: 300 }}
@@ -583,8 +666,8 @@ const IndexContent = () => {
                         exit={{ height: 0, opacity: 0 }}
                         transition={{ type: "spring", stiffness: 300, damping: 30 }}
                       >
-                        <div className="px-5 pb-5 text-muted-foreground text-sm leading-relaxed whitespace-pre-line">
-                          {t(item.a, lang)}
+                        <div className="px-5 pb-5 text-muted-foreground text-sm leading-relaxed">
+                          {item.a}
                         </div>
                       </motion.div>
                     )}
@@ -599,28 +682,41 @@ const IndexContent = () => {
               className="text-sm font-semibold hover:underline transition-all"
               style={{ color: "hsl(275 51% 46%)" }}
             >
-              {t(home.viewFullFaq, lang)}
+              {lang === "en" ? "View Full FAQ →" : "查看完整FAQ →"}
             </Link>
           </div>
         </div>
       </section>
 
-      {/* ═══ 6. FINAL CTA ═══ */}
+      {/* ═══ 8. FINAL CTA ═══ */}
       <section
-        className="py-12 md:py-16"
+        className="py-16 md:py-24"
         style={{
           background: "linear-gradient(180deg, hsl(209 66% 18%) 0%, hsl(209 70% 14%) 100%)",
         }}
       >
-        <div className="max-w-4xl mx-auto px-6">
-          <h2 className="text-[clamp(1.6rem,3.5vw,2.2rem)] font-black text-white text-center font-display">
-            {t(home.ctaTitle, lang)}
+        <div className="max-w-2xl mx-auto px-6 text-center">
+          <h2 className="text-[clamp(1.6rem,4vw,2.6rem)] font-black text-white font-display">
+            {lang === "en" ? "Get Your 2 Free Website Previews" : "獲取您的2個免費網站預覽"}
           </h2>
-          <p className="mt-2 text-white/50 text-sm text-center">
-            {t(home.ctaSub, lang)}
+          <p className="mt-3 text-white/60 text-sm max-w-lg mx-auto">
+            {lang === "en"
+              ? "Submit your current website and see two new directions before making any payment."
+              : "提交您的當前網站，在付款前查看兩個新方向。"}
           </p>
-          <div className="mt-8">
-            <FooterIntakeForm plan={plan} setPlan={setPlan} />
+          <div className="mt-10 max-w-xl mx-auto text-left">
+            <MultiStepIntake variant="cta" />
+          </div>
+          <p className="mt-6 text-xs text-white/30">
+            {lang === "en" ? "No upfront payment. No obligation. Just a better way to decide." : "無預付款。無義務。只是更好的決策方式。"}
+          </p>
+          <div className="mt-4">
+            <p className="text-sm text-white/40">
+              {lang === "en" ? "Need a brand new website instead?" : "需要全新網站嗎？"}{" "}
+              <Link to="/custom-brief" className="text-white/60 hover:text-white underline">
+                {lang === "en" ? "Explore custom new website options" : "探索定制新網站選項"}
+              </Link>
+            </p>
           </div>
         </div>
       </section>

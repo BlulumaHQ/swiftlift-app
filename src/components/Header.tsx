@@ -12,7 +12,6 @@ const Header = () => {
   const nav = translations.nav;
   const navigate = useNavigate();
   const location = useLocation();
-  const isHome = location.pathname === "/";
 
   useEffect(() => {
     const onScroll = () => setScrolled(window.scrollY > 60);
@@ -46,12 +45,7 @@ const Header = () => {
     setMobileOpen(false);
   };
 
-  // Header is always solid
-  const headerBg = scrolled
-    ? "header-scrolled"
-    : isHome
-      ? "header-brand-solid"
-      : "header-brand-solid";
+  const headerBg = scrolled ? "header-scrolled" : "header-brand-solid";
 
   return (
     <header
