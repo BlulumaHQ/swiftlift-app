@@ -576,10 +576,11 @@ export const translations = {
     mostPopular: { en: "Most Popular", zh: "最受歡迎" },
     /* Multi-page plans (primary) */
     multiPageLabel: { en: "Multi-Page Website", zh: "多頁面網站" },
+    multiPageSub: { en: "Best for businesses that need a complete website presence", zh: "最適合需要完整網站形象的企業" },
     plans: [
-      { name: { en: "Preview Access", zh: "預覽版" }, price: "$299", features: { en: ["Live website preview", "Clean professional layout", "Delivered as-is"], zh: ["即時網站預覽", "簡潔專業版面", "按原樣交付"] }, note: { en: "No revisions included. Minor edits available.", zh: "不含修改。可進行小幅編輯。" }, cta: { en: "Get Your Free Website Preview", zh: "獲取免費網站預覽" } },
-      { name: { en: "Launch Ready", zh: "上線版" }, price: "$499", features: { en: ["Fully polished website", "Bug fixes and content refinement", "Ready for real business use"], zh: ["完全打磨的網站", "修復和內容優化", "適合實際商業使用"] }, note: { en: "", zh: "" }, cta: { en: "Get Your Free Website Preview", zh: "獲取免費網站預覽" } },
-      { name: { en: "Growth Optimized", zh: "成長版" }, price: "$799", features: { en: ["Conversion-focused layout", "Optimized structure and content flow", "Designed to generate more leads"], zh: ["轉化導向版面", "優化結構和內容流程", "設計以產生更多潛在客戶"] }, note: { en: "", zh: "" }, cta: { en: "Get Your Free Website Preview", zh: "獲取免費網站預覽" } },
+      { name: { en: "Preview Access", zh: "預覽版" }, price: "$299", features: { en: ["Live website preview", "Clean professional layout", "Delivered as-is", "Up to 7 pages", "Mobile responsive", "SEO-friendly structure"], zh: ["即時網站預覽", "簡潔專業版面", "按原樣交付", "最多7頁", "行動裝置響應式", "SEO友好結構"] }, note: { en: "No revisions included. Minor edits available.", zh: "不含修改。可進行小幅編輯。" }, cta: { en: "Get Your Free Website Preview", zh: "獲取免費網站預覽" } },
+      { name: { en: "Launch Ready", zh: "上線版" }, price: "$499", features: { en: ["Fully polished website", "Bug fixes and content refinement", "Ready for real business use", "Up to 7 pages", "Mobile responsive", "SEO-friendly structure"], zh: ["完全打磨的網站", "修復和內容優化", "適合實際商業使用", "最多7頁", "行動裝置響應式", "SEO友好結構"] }, note: { en: "", zh: "" }, cta: { en: "Get Your Free Website Preview", zh: "獲取免費網站預覽" } },
+      { name: { en: "Growth Optimized", zh: "成長版" }, price: "$799", features: { en: ["Conversion-focused layout", "Optimized structure and content flow", "Designed to generate more leads", "Up to 7 pages", "Mobile responsive", "SEO-friendly structure"], zh: ["轉化導向版面", "優化結構和內容流程", "設計以產生更多潛在客戶", "最多7頁", "行動裝置響應式", "SEO友好結構"] }, note: { en: "", zh: "" }, cta: { en: "Get Your Free Website Preview", zh: "獲取免費網站預覽" } },
     ],
     /* Single-page plans (secondary) */
     singlePageLabel: { en: "Single Page Website", zh: "單頁面網站" },
