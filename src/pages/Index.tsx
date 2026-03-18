@@ -40,17 +40,46 @@ const MultiStepIntake = ({ variant = "hero" }: { variant?: "hero" | "cta" }) => 
     ? "w-full rounded-xl border border-white/15 bg-white/5 px-5 py-4 text-sm text-white placeholder:text-white/40 focus:outline-none focus:ring-2 focus:ring-[hsl(275_51%_46%)]/40 focus:border-white/30 transition-all [&>option]:bg-[hsl(209_66%_18%)] [&>option]:text-white"
     : "w-full rounded-xl border border-border bg-background px-5 py-4 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-[hsl(275_51%_46%)]/30 focus:border-[hsl(275_51%_46%)] transition-all";
 
-  const autoPrefix = (val: string) => {
-    if (val && !val.startsWith("http://") && !val.startsWith("https://")) {
-      return "https://" + val;
+  const normalizeUrl = (val: string): string => {
+    let v = val.trim().toLowerCase();
+    if (!v) return "";
+    if (!v.startsWith("http://") && !v.startsWith("https://")) {
+      v = "https://" + v;
     }
-    return val;
+    return v;
+  };
+
+  const isValidUrl = (val: string): boolean => {
+    try {
+      const u = new URL(val);
+      // Must have a dot in hostname (reject "https://abc")
+      return u.hostname.includes(".");
+    } catch {
+      return false;
+    }
+  };
+
+  const [urlError, setUrlError] = useState("");
+
+  const submitStep1 = () => {
+    setUrlError("");
+    const trimmed = url.trim();
+    if (!trimmed) {
+      setUrlError(lang === "en" ? "Please enter a valid website URL." : "請輸入有效的網站網址。");
+      return;
+    }
+    const normalized = normalizeUrl(trimmed);
+    if (!isValidUrl(normalized)) {
+      setUrlError(lang === "en" ? "Please enter a valid website URL." : "請輸入有效的網站網址。");
+      return;
+    }
+    setUrl(normalized);
+    setStep(2);
   };
 
   const handleStep1 = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!url.trim()) return;
-    setStep(2);
+    submitStep1();
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
