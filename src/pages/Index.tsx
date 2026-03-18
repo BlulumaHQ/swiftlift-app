@@ -661,19 +661,16 @@ const IndexContent = () => {
               >
                 <img
                   src={portfolioImages[proofIdx]}
-                  alt={t(home.portfolioItems[proofIdx].title, lang)}
+                  alt={t(home.portfolioItems[proofIdx].name, lang)}
                   className="w-full aspect-[16/9] object-cover"
                   loading="lazy"
                 />
                 <div className="absolute bottom-0 left-0 right-0 p-6" style={{ background: "linear-gradient(0deg, hsl(209 66% 14% / 0.95) 0%, transparent 100%)" }}>
-                  <span className="text-white/50 text-xs uppercase tracking-widest font-medium">
-                    {t(home.portfolioItems[proofIdx].industry, lang)}
-                  </span>
                   <h3 className="text-white text-lg md:text-xl font-bold font-display mt-1">
-                    {t(home.portfolioItems[proofIdx].title, lang)}
+                    {t(home.portfolioItems[proofIdx].name, lang)}
                   </h3>
                   <p className="text-white/60 text-sm mt-1">
-                    {t(home.portfolioItems[proofIdx].description, lang)}
+                    {t(home.portfolioItems[proofIdx].desc, lang)}
                   </p>
                 </div>
               </motion.div>
