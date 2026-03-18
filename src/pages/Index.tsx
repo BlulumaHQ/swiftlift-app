@@ -660,22 +660,14 @@ const IndexContent = () => {
                 className="rounded-2xl overflow-hidden border border-border bg-secondary/30 shadow-lg"
               >
                 <div className="grid grid-cols-1 md:grid-cols-2">
-                  {/* Left — Laptop mockup image */}
-                  <div className="flex items-center justify-center p-6 md:p-8 bg-gradient-to-br from-[hsl(195_60%_92%)] to-[hsl(200_40%_96%)]">
-                    <div className="relative w-full max-w-md">
-                      {/* Laptop frame */}
-                      <div className="rounded-t-lg overflow-hidden border-[6px] border-[#333] border-b-0 bg-[#333]">
-                        <img
-                          src={portfolioImages[proofIdx]}
-                          alt={t(home.portfolioItems[proofIdx].name, lang)}
-                          className="w-full aspect-[16/10] object-cover"
-                          loading="lazy"
-                        />
-                      </div>
-                      {/* Laptop base */}
-                      <div className="h-4 bg-[#555] rounded-b-lg mx-auto" style={{ width: "110%", marginLeft: "-5%" }} />
-                      <div className="h-1.5 bg-[#444] rounded-b-md mx-auto" style={{ width: "40%" }} />
-                    </div>
+                  {/* Left — Feature image */}
+                  <div className="overflow-hidden rounded-l-2xl md:rounded-l-2xl rounded-t-2xl md:rounded-tr-none">
+                    <img
+                      src={portfolioImages[proofIdx]}
+                      alt={t(home.portfolioItems[proofIdx].name, lang)}
+                      className="w-full h-full object-cover"
+                      loading="lazy"
+                    />
                   </div>
 
                   {/* Right — Testimonial card */}
