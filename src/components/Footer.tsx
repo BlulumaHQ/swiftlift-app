@@ -211,16 +211,6 @@ const Footer = () => {
           </div>
         </div>
 
-        {/* Single secondary custom path */}
-        <div className="mt-8 text-center">
-          <p className="text-sm text-blue-200/50">
-            {lang === "en" ? "Need a brand new website instead?" : "需要全新網站嗎？"}{" "}
-            <Link to="/custom-brief" className="text-blue-300 hover:text-white underline">
-              {lang === "en" ? "Explore custom new website options" : "探索定制新網站選項"}
-            </Link>
-          </p>
-        </div>
-
         {/* Copyright bar */}
         <div className="mt-6 pt-6 border-t border-white/10 text-center text-xs text-blue-200/50">
           {t(footer.copyright, lang)}{" "}
