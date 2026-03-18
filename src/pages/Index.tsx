@@ -40,17 +40,46 @@ const MultiStepIntake = ({ variant = "hero" }: { variant?: "hero" | "cta" }) => 
     ? "w-full rounded-xl border border-white/15 bg-white/5 px-5 py-4 text-sm text-white placeholder:text-white/40 focus:outline-none focus:ring-2 focus:ring-[hsl(275_51%_46%)]/40 focus:border-white/30 transition-all [&>option]:bg-[hsl(209_66%_18%)] [&>option]:text-white"
     : "w-full rounded-xl border border-border bg-background px-5 py-4 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-[hsl(275_51%_46%)]/30 focus:border-[hsl(275_51%_46%)] transition-all";
 
-  const autoPrefix = (val: string) => {
-    if (val && !val.startsWith("http://") && !val.startsWith("https://")) {
-      return "https://" + val;
+  const normalizeUrl = (val: string): string => {
+    let v = val.trim().toLowerCase();
+    if (!v) return "";
+    if (!v.startsWith("http://") && !v.startsWith("https://")) {
+      v = "https://" + v;
     }
-    return val;
+    return v;
+  };
+
+  const isValidUrl = (val: string): boolean => {
+    try {
+      const u = new URL(val);
+      // Must have a dot in hostname (reject "https://abc")
+      return u.hostname.includes(".");
+    } catch {
+      return false;
+    }
+  };
+
+  const [urlError, setUrlError] = useState("");
+
+  const submitStep1 = () => {
+    setUrlError("");
+    const trimmed = url.trim();
+    if (!trimmed) {
+      setUrlError(lang === "en" ? "Please enter a valid website URL." : "請輸入有效的網站網址。");
+      return;
+    }
+    const normalized = normalizeUrl(trimmed);
+    if (!isValidUrl(normalized)) {
+      setUrlError(lang === "en" ? "Please enter a valid website URL." : "請輸入有效的網站網址。");
+      return;
+    }
+    setUrl(normalized);
+    setStep(2);
   };
 
   const handleStep1 = (e: React.FormEvent) => {
     e.preventDefault();
-    if (!url.trim()) return;
-    setStep(2);
+    submitStep1();
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
@@ -140,14 +169,15 @@ const MultiStepIntake = ({ variant = "hero" }: { variant?: "hero" | "cta" }) => 
       <form onSubmit={handleStep1} className="w-full">
         <div className="flex flex-col gap-3">
           <input
-            type="url"
+            type="text"
+            inputMode="url"
             value={url}
-            onChange={e => setUrl(e.target.value)}
-            onBlur={() => setUrl(autoPrefix(url))}
-            required
-            placeholder="https://yourbusiness.com"
-            className={inputBase}
+            onChange={e => { setUrl(e.target.value); setUrlError(""); }}
+            placeholder={lang === "en" ? "Enter your website URL (e.g. yourbusiness.com)" : "輸入您的網站網址（例如 yourbusiness.com）"}
+            className={`${inputBase}${urlError ? " border-red-400 focus:ring-red-400/30" : ""}`}
+            onKeyDown={e => { if (e.key === "Enter") { e.preventDefault(); submitStep1(); } }}
           />
+          {urlError && <p className={`text-xs ${isDark ? "text-red-300" : "text-destructive"}`}>{urlError}</p>}
           <button
             type="submit"
             className="w-full rounded-full py-4 px-8 text-sm font-bold text-white whitespace-nowrap transition-all hover:opacity-90 hover:scale-[1.01]"
@@ -190,7 +220,7 @@ const MultiStepIntake = ({ variant = "hero" }: { variant?: "hero" | "cta" }) => 
           <label className={`block text-xs font-medium mb-1.5 ${isDark ? "text-white/70" : "text-foreground"}`}>
             {lang === "en" ? "Website You Like" : "您喜歡的網站"} <span className={`text-[10px] ${isDark ? "text-white/30" : "text-muted-foreground"}`}>{lang === "en" ? "(Optional)" : "（選填）"}</span>
           </label>
-          <input type="url" name="websiteYouLike" placeholder="https://example.com" className={inputBase} onBlur={e => { if (e.target.value) e.target.value = autoPrefix(e.target.value); }} />
+          <input type="text" inputMode="url" name="websiteYouLike" placeholder="https://example.com" className={inputBase} onBlur={e => { if (e.target.value) e.target.value = normalizeUrl(e.target.value); }} />
         </div>
         <div>
           <label className={`block text-xs font-medium mb-1.5 ${isDark ? "text-white/70" : "text-foreground"}`}>
