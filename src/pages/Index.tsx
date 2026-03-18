@@ -156,9 +156,6 @@ const MultiStepIntake = ({ variant = "hero" }: { variant?: "hero" | "cta" }) => 
             {lang === "en" ? "Get My 2 Free Previews" : "獲取我的2個免費預覽"}
           </button>
         </div>
-        <p className={`mt-3 text-xs ${isDark ? "text-white/40" : "text-muted-foreground"}`}>
-          {lang === "en" ? "No upfront payment · No obligation · Built for real business results" : "無預付款 · 無義務 · 為真實商業成效而設計"}
-        </p>
       </form>
     );
   }
