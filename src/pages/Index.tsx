@@ -280,8 +280,8 @@ const IndexContent = () => {
       name: lang === "en" ? "Preview Access" : "預覽版",
       price: "$299",
       features: lang === "en"
-        ? ["Up to 7 pages", "Mobile responsive design", "SEO-friendly structure", "Live website preview", "Clean professional layout", "Delivered with no risk"]
-        : ["最多7頁", "移動端響應式設計", "SEO友好結構", "即時網站預覽", "簡潔專業版面", "零風險交付"],
+        ? ["Live website preview", "Clean professional layout", "Delivered with no risk", "Up to 7 pages", "Mobile responsive design", "SEO-friendly structure"]
+        : ["即時網站預覽", "簡潔專業版面", "零風險交付", "最多7頁", "移動端響應式設計", "SEO友好結構"],
       highlighted: false,
     },
     {
@@ -289,16 +289,16 @@ const IndexContent = () => {
       price: "$499",
       badge: lang === "en" ? "Most Popular" : "最受歡迎",
       features: lang === "en"
-        ? ["Up to 7 pages", "Mobile responsive design", "SEO-friendly structure", "Fully polished website", "Bug fixes and final content refinement", "Ready for real business use"]
-        : ["最多7頁", "移動端響應式設計", "SEO友好結構", "完全打磨的網站", "修復和最終內容優化", "適合實際商業使用"],
+        ? ["Fully polished website", "Bug fixes and final content refinement", "Ready for real business use", "Up to 7 pages", "Mobile responsive design", "SEO-friendly structure"]
+        : ["完全打磨的網站", "修復和最終內容優化", "適合實際商業使用", "最多7頁", "移動端響應式設計", "SEO友好結構"],
       highlighted: true,
     },
     {
       name: lang === "en" ? "Growth Optimized" : "成長版",
       price: "$799",
       features: lang === "en"
-        ? ["Up to 7 pages", "Mobile responsive design", "SEO-friendly structure", "Conversion-focused layout", "Optimized structure and stronger content flow", "Designed to generate more leads"]
-        : ["最多7頁", "移動端響應式設計", "SEO友好結構", "轉化導向版面", "優化結構和更強的內容流程", "設計以產生更多潛在客戶"],
+        ? ["Conversion-focused layout", "Optimized structure and stronger content flow", "Designed to generate more leads", "Up to 7 pages", "Mobile responsive design", "SEO-friendly structure"]
+        : ["轉化導向版面", "優化結構和更強的內容流程", "設計以產生更多潛在客戶", "最多7頁", "移動端響應式設計", "SEO友好結構"],
       highlighted: false,
     },
   ];
