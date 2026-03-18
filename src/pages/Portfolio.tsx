@@ -131,7 +131,7 @@ const FeaturedCaseCard = ({ c }: { c: FeaturedCase }) => (
           className="flex items-center justify-center gap-1 rounded-lg px-3 py-2 text-[11px] font-semibold text-white transition-all hover:opacity-90"
           style={{ background: "#2DA8FF" }}
         >
-          Preview A <ExternalLink className="w-2.5 h-2.5" />
+          Open Live Preview A <ExternalLink className="w-2.5 h-2.5" />
         </a>
         <a
           href={`https://${c.previewB}`}
