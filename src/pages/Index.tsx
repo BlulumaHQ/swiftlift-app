@@ -251,7 +251,11 @@ const IndexContent = () => {
                 {t(home.heroTitle, lang)}
               </h1>
 
-              <p className="mt-6 text-white/70 text-lg md:text-xl leading-relaxed max-w-lg whitespace-pre-line">
+              <p className="mt-3 text-lg md:text-xl font-semibold text-white/90">
+                {t(home.heroSubShort, lang)}
+              </p>
+
+              <p className="mt-4 text-white/70 text-base md:text-lg leading-relaxed max-w-lg">
                 {t(home.heroSub, lang)}
               </p>
 
@@ -273,9 +277,26 @@ const IndexContent = () => {
         </div>
       </section>
 
+      {/* ═══ VALUE PROPOSITION ═══ */}
+      <section className="py-12 md:py-16" style={{ background: "hsl(var(--surface-sunken))" }}>
+        <div className="max-w-5xl mx-auto px-6">
+          <h2 className="text-[clamp(1.8rem,4vw,2.8rem)] font-black text-foreground font-display text-center">
+            {t(home.valuePropTitle, lang)}
+          </h2>
+          <div className="mt-10 grid grid-cols-1 md:grid-cols-3 gap-6">
+            {home.valueProps.map((vp, i) => (
+              <div key={i} className="text-center p-6 rounded-2xl border border-border bg-background">
+                <h3 className="text-lg font-bold text-foreground font-display">{t(vp.title, lang)}</h3>
+                <p className="mt-2 text-sm text-muted-foreground leading-relaxed">{t(vp.desc, lang)}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* ═══ 2. HOW IT WORKS ═══ */}
       <section id="process" className="py-14 md:py-18 bg-background">
-        <div className="max-w-4xl mx-auto px-6 text-center">
+        <div className="max-w-5xl mx-auto px-6 text-center">
           <h2 className="text-[clamp(1.8rem,4vw,2.8rem)] font-black text-foreground font-display">
             {t(home.howItWorks, lang)}
           </h2>
@@ -285,13 +306,13 @@ const IndexContent = () => {
           <div className="mt-12 hidden md:flex items-start justify-center gap-0">
             {home.steps.map((s, i) => (
               <div key={i} className="flex items-start">
-                <div className="flex flex-col items-center text-center max-w-[200px]">
+                <div className="flex flex-col items-center text-center max-w-[180px]">
                   <span className="text-3xl font-black text-muted-foreground/25 font-display">{i + 1}</span>
                   <h3 className="mt-2 text-base font-bold text-foreground font-display">{t(s.title, lang)}</h3>
                   <p className="mt-2 text-sm text-muted-foreground leading-relaxed">{t(s.desc, lang)}</p>
                 </div>
-                {i < 2 && (
-                  <div className="flex items-center px-6 pt-3">
+                {i < 3 && (
+                  <div className="flex items-center px-4 pt-3">
                     <ArrowRight size={32} className="text-muted-foreground/20" strokeWidth={1.5} />
                   </div>
                 )}
@@ -308,7 +329,7 @@ const IndexContent = () => {
                   <h3 className="mt-2 text-base font-bold text-foreground font-display">{t(s.title, lang)}</h3>
                   <p className="mt-2 text-sm text-muted-foreground leading-relaxed max-w-xs mx-auto">{t(s.desc, lang)}</p>
                 </div>
-                {i < 2 && (
+                {i < 3 && (
                   <div className="flex justify-center py-3">
                     <ArrowDown size={28} className="text-muted-foreground/20" strokeWidth={1.5} />
                   </div>
@@ -424,10 +445,13 @@ const IndexContent = () => {
           </h2>
           <p className="mt-2 text-muted-foreground text-sm">{t(home.pricingSub, lang)}</p>
 
-          <div className="mt-10 grid grid-cols-1 md:grid-cols-3 gap-6 items-stretch">
+          {/* Multi-page label */}
+          <p className="mt-10 text-xs font-bold text-muted-foreground uppercase tracking-wider">{t(home.multiPageLabel, lang)}</p>
+
+          <div className="mt-4 grid grid-cols-1 md:grid-cols-3 gap-6 items-stretch">
             {pricingPlans.map((p, idx) => {
               const isHighlighted = idx === 1;
-              const planCodes = ["L", "G", "C"];
+              const planCodes = ["P", "L", "G"];
               return (
                 <div
                   key={idx}
@@ -447,9 +471,7 @@ const IndexContent = () => {
                     </div>
                   )}
                   <h3 className="text-lg font-bold text-foreground font-display">{t(p.name, lang)}</h3>
-                  <p className="mt-1 text-2xl font-black text-foreground font-display">
-                    {idx === 0 ? "$350" : idx === 1 ? "$550" : "$2,500+"}
-                  </p>
+                  <p className="mt-1 text-2xl font-black text-foreground font-display">{p.price}</p>
                   <ul className="mt-4 space-y-2.5 flex-1">
                     {p.features[lang].map((f, i) => (
                       <li key={i} className="flex items-start gap-2 text-sm">
@@ -458,6 +480,9 @@ const IndexContent = () => {
                       </li>
                     ))}
                   </ul>
+                  {p.note && t(p.note, lang) && (
+                    <p className="mt-3 text-xs text-muted-foreground">{t(p.note, lang)}</p>
+                  )}
                   <button
                     onClick={() => scrollToIntake(planCodes[idx])}
                     className={`mt-6 w-full rounded-full py-3 px-6 text-sm font-semibold transition-all ${
@@ -475,6 +500,48 @@ const IndexContent = () => {
                 </div>
               );
             })}
+          </div>
+
+          {/* Single Page */}
+          <div className="mt-14 pt-10 border-t border-border">
+            <p className="text-xs font-bold text-muted-foreground uppercase tracking-wider">{t(home.singlePageLabel, lang)}</p>
+            <p className="mt-1 text-sm text-muted-foreground">{t(home.singlePageSub, lang)}</p>
+            <div className="mt-6 grid grid-cols-1 md:grid-cols-3 gap-4 max-w-3xl mx-auto">
+              {home.singlePagePlans.map((sp, idx) => (
+                <div key={idx} className="rounded-xl border border-border p-5 bg-background text-left">
+                  <h4 className="text-base font-bold text-foreground font-display">{t(sp.name, lang)}</h4>
+                  <p className="mt-1 text-xl font-black text-foreground font-display">{sp.price}</p>
+                  <button
+                    onClick={() => scrollToIntake("S" + idx)}
+                    className="mt-4 w-full rounded-full py-2.5 px-4 text-xs font-semibold border-2 transition-all hover:opacity-80"
+                    style={{ borderColor: "hsl(275 51% 46%)", color: "hsl(275 51% 46%)" }}
+                  >
+                    {t(sp.cta, lang)}
+                  </button>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Custom */}
+          <div className="mt-14 pt-10 border-t border-border">
+            <p className="text-xs font-bold text-muted-foreground uppercase tracking-wider">{t(home.customLabel, lang)}</p>
+            <p className="mt-1 text-sm text-muted-foreground">{t(home.customSub, lang)}</p>
+            <div className="mt-6 grid grid-cols-1 md:grid-cols-3 gap-4 max-w-3xl mx-auto">
+              {home.customPlans.map((cp, idx) => (
+                <div key={idx} className="rounded-xl border border-border p-5 bg-background text-left">
+                  <h4 className="text-base font-bold text-foreground font-display">{t(cp.name, lang)}</h4>
+                  <p className="mt-1 text-xl font-black text-foreground font-display">{cp.price}</p>
+                </div>
+              ))}
+            </div>
+            <button
+              onClick={() => scrollToIntake("custom")}
+              className="mt-6 rounded-full py-3 px-8 text-sm font-semibold text-white transition-all hover:opacity-90"
+              style={{ background: "hsl(275 51% 46%)" }}
+            >
+              {t(home.customCta, lang)}
+            </button>
           </div>
         </div>
       </section>

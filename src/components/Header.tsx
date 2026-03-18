@@ -24,16 +24,16 @@ const Header = () => {
   const navItems = [
     { label: lang === "en" ? "Home" : "首页", href: "/" },
     { label: t(nav.process, lang), href: "/#process" },
-    { label: t(nav.portfolio, lang), href: "/#portfolio" },
+    { label: t(nav.portfolio, lang), href: "/portfolio" },
     { label: t(nav.pricing, lang), href: "/#pricing" },
     { label: t(nav.contact, lang), href: "/#contact" },
   ];
 
   const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
     e.preventDefault();
-    if (href === "/") {
-      navigate("/");
-      window.scrollTo({ top: 0, behavior: "smooth" });
+    if (href === "/" || href === "/portfolio") {
+      navigate(href);
+      if (href === "/") window.scrollTo({ top: 0, behavior: "smooth" });
     } else if (href.startsWith("/#")) {
       const id = href.slice(2);
       if (location.pathname !== "/") {
