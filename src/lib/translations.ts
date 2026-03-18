@@ -550,7 +550,7 @@ export const translations = {
       { title: { en: "Upgrade to Launch", zh: "升級上線" }, desc: { en: "Pay to finalize and launch your new website.", zh: "付款完成並發佈您的新網站。" } },
     ],
     portfolioTitle: { en: "Real Businesses. Built with SwiftLift.", zh: "真實企業。SwiftLift 打造。" },
-    portfolioSub: { en: "Before → After Transformation", zh: "前 → 後 轉變" },
+    portfolioSub: { en: "Compare Version A and Version B side by side.", zh: "並排比較版本A和版本B。" },
     portfolioItems: [
       { name: { en: "Global Trade Co.", zh: "環球貿易公司" }, desc: { en: "From outdated directory to modern export platform.", zh: "從過時目錄到現代化出口平台。" } },
       { name: { en: "Serenity Wellness", zh: "寧靜健康" }, desc: { en: "Transformed a basic page into a booking-ready clinic site.", zh: "將基礎頁面轉變為可預約的診所網站。" } },
