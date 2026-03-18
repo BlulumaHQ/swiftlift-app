@@ -207,8 +207,15 @@ const Footer = () => {
           </div>
         </div>
 
+        {/* Footer tagline */}
+        <div className="mt-8 text-center">
+          <p className="text-sm text-blue-200/60 leading-relaxed">
+            {t(translations.home?.footerTagline ?? { en: "Designed for small businesses that want real results — without upfront risk.", zh: "為想要真實成效的小企業設計——無需承擔前期風險。" }, lang)}
+          </p>
+        </div>
+
         {/* Copyright bar */}
-        <div className="mt-10 pt-6 border-t border-white/10 text-center text-xs text-blue-200/50">
+        <div className="mt-6 pt-6 border-t border-white/10 text-center text-xs text-blue-200/50">
           {t(footer.copyright, lang)}{" "}
           | Web Design by{" "}
           <a
