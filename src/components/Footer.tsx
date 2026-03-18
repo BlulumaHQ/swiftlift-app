@@ -94,6 +94,9 @@ const Footer = () => {
               <Link to="/support" className="text-sm text-blue-200/70 hover:text-white transition-colors">
                 {lang === "en" ? "Support" : "聯繫客服"}
               </Link>
+              <Link to="/work-with-us" className="text-sm text-blue-200/70 hover:text-white transition-colors">
+                {lang === "en" ? "Are You a Designer?" : "你是設計師嗎？"}
+              </Link>
             </div>
           </div>
 
@@ -179,6 +182,9 @@ const Footer = () => {
                 </Link>
                 <Link to="/support" className="text-sm text-blue-200/70 hover:text-white transition-colors">
                   {lang === "en" ? "Support" : "聯繫客服"}
+                </Link>
+                <Link to="/work-with-us" className="text-sm text-blue-200/70 hover:text-white transition-colors">
+                  {lang === "en" ? "Are You a Designer?" : "你是設計師嗎？"}
                 </Link>
               </div>
             </div>
