@@ -445,10 +445,13 @@ const IndexContent = () => {
           </h2>
           <p className="mt-2 text-muted-foreground text-sm">{t(home.pricingSub, lang)}</p>
 
-          <div className="mt-10 grid grid-cols-1 md:grid-cols-3 gap-6 items-stretch">
+          {/* Multi-page label */}
+          <p className="mt-10 text-xs font-bold text-muted-foreground uppercase tracking-wider">{t(home.multiPageLabel, lang)}</p>
+
+          <div className="mt-4 grid grid-cols-1 md:grid-cols-3 gap-6 items-stretch">
             {pricingPlans.map((p, idx) => {
               const isHighlighted = idx === 1;
-              const planCodes = ["L", "G", "C"];
+              const planCodes = ["P", "L", "G"];
               return (
                 <div
                   key={idx}
@@ -468,9 +471,7 @@ const IndexContent = () => {
                     </div>
                   )}
                   <h3 className="text-lg font-bold text-foreground font-display">{t(p.name, lang)}</h3>
-                  <p className="mt-1 text-2xl font-black text-foreground font-display">
-                    {idx === 0 ? "$350" : idx === 1 ? "$550" : "$2,500+"}
-                  </p>
+                  <p className="mt-1 text-2xl font-black text-foreground font-display">{p.price}</p>
                   <ul className="mt-4 space-y-2.5 flex-1">
                     {p.features[lang].map((f, i) => (
                       <li key={i} className="flex items-start gap-2 text-sm">
@@ -479,6 +480,9 @@ const IndexContent = () => {
                       </li>
                     ))}
                   </ul>
+                  {p.note && t(p.note, lang) && (
+                    <p className="mt-3 text-xs text-muted-foreground">{t(p.note, lang)}</p>
+                  )}
                   <button
                     onClick={() => scrollToIntake(planCodes[idx])}
                     className={`mt-6 w-full rounded-full py-3 px-6 text-sm font-semibold transition-all ${
@@ -496,6 +500,48 @@ const IndexContent = () => {
                 </div>
               );
             })}
+          </div>
+
+          {/* Single Page */}
+          <div className="mt-14 pt-10 border-t border-border">
+            <p className="text-xs font-bold text-muted-foreground uppercase tracking-wider">{t(home.singlePageLabel, lang)}</p>
+            <p className="mt-1 text-sm text-muted-foreground">{t(home.singlePageSub, lang)}</p>
+            <div className="mt-6 grid grid-cols-1 md:grid-cols-3 gap-4 max-w-3xl mx-auto">
+              {home.singlePagePlans.map((sp, idx) => (
+                <div key={idx} className="rounded-xl border border-border p-5 bg-background text-left">
+                  <h4 className="text-base font-bold text-foreground font-display">{t(sp.name, lang)}</h4>
+                  <p className="mt-1 text-xl font-black text-foreground font-display">{sp.price}</p>
+                  <button
+                    onClick={() => scrollToIntake("S" + idx)}
+                    className="mt-4 w-full rounded-full py-2.5 px-4 text-xs font-semibold border-2 transition-all hover:opacity-80"
+                    style={{ borderColor: "hsl(275 51% 46%)", color: "hsl(275 51% 46%)" }}
+                  >
+                    {t(sp.cta, lang)}
+                  </button>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          {/* Custom */}
+          <div className="mt-14 pt-10 border-t border-border">
+            <p className="text-xs font-bold text-muted-foreground uppercase tracking-wider">{t(home.customLabel, lang)}</p>
+            <p className="mt-1 text-sm text-muted-foreground">{t(home.customSub, lang)}</p>
+            <div className="mt-6 grid grid-cols-1 md:grid-cols-3 gap-4 max-w-3xl mx-auto">
+              {home.customPlans.map((cp, idx) => (
+                <div key={idx} className="rounded-xl border border-border p-5 bg-background text-left">
+                  <h4 className="text-base font-bold text-foreground font-display">{t(cp.name, lang)}</h4>
+                  <p className="mt-1 text-xl font-black text-foreground font-display">{cp.price}</p>
+                </div>
+              ))}
+            </div>
+            <button
+              onClick={() => scrollToIntake("custom")}
+              className="mt-6 rounded-full py-3 px-8 text-sm font-semibold text-white transition-all hover:opacity-90"
+              style={{ background: "hsl(275 51% 46%)" }}
+            >
+              {t(home.customCta, lang)}
+            </button>
           </div>
         </div>
       </section>
