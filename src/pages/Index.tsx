@@ -753,25 +753,29 @@ const IndexContent = () => {
 
       {/* ═══ 8. FINAL CTA ═══ */}
       <section
-        className="py-16 md:py-24"
+        className="relative py-20 md:py-28 overflow-hidden"
         style={{
-          background: "linear-gradient(180deg, hsl(209 66% 18%) 0%, hsl(209 70% 14%) 100%)",
+          background: "linear-gradient(160deg, hsl(213 55% 22%) 0%, hsl(215 60% 16%) 50%, hsl(217 65% 12%) 100%)",
         }}
       >
-        <div className="max-w-2xl mx-auto px-6 text-center">
-          <h2 className="text-[clamp(1.6rem,4vw,2.6rem)] font-black text-white font-display">
-            {lang === "en" ? "Get Your 2 Free Website Previews" : "獲取您的2個免費網站預覽"}
+        {/* Subtle radial glow */}
+        <div className="absolute inset-0 pointer-events-none" style={{ background: "radial-gradient(ellipse 60% 50% at 50% 40%, hsl(209 70% 30% / 0.25), transparent)" }} />
+        <div className="relative max-w-2xl mx-auto px-6 text-center">
+          <h2 className="text-[clamp(1.7rem,4.5vw,2.8rem)] font-black text-white font-display leading-tight">
+            {lang === "en" ? "See What Your Website Could Become" : "看看您的網站可以變成什麼樣"}
           </h2>
-          <p className="mt-3 text-white/60 text-sm max-w-lg mx-auto">
+          <p className="mt-4 text-white/55 text-base max-w-md mx-auto leading-relaxed">
             {lang === "en"
-              ? "Submit your current website and see two new directions before making any payment."
-              : "提交您的當前網站，在付款前查看兩個新方向。"}
+              ? "Get 2 free design previews and decide with confidence — before spending a dollar."
+              : "獲取2個免費設計預覽，在花一分錢之前自信決策。"}
           </p>
           <div className="mt-10 max-w-xl mx-auto text-left">
             <MultiStepIntake variant="cta" />
           </div>
-          <p className="mt-6 text-xs text-white/30">
-            {lang === "en" ? "No upfront payment. No obligation. Just a better way to decide." : "無預付款。無義務。只是更好的決策方式。"}
+          <p className="mt-8 text-xs text-white/35 tracking-wide">
+            {lang === "en"
+              ? "No upfront payment · No obligation · Built for real business results"
+              : "無預付款 · 無義務 · 為真實商業成果而構建"}
           </p>
         </div>
       </section>
