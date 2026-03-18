@@ -33,6 +33,21 @@ const SupportContent = () => {
           message: `[support_request]\n\n${formData.get("message")}`,
         }),
       });
+      // Send emails via edge function
+      try {
+        await supabase.functions.invoke("send-intake-confirmation", {
+          body: {
+            client_name: formData.get("name") as string,
+            business_name: formData.get("subject") as string || "Support Request",
+            client_email: formData.get("email") as string,
+            service: "Support Request",
+            message: formData.get("message") as string || "",
+          },
+        });
+      } catch (emailErr) {
+        console.error("Email error:", emailErr);
+      }
+
       if (response.ok) {
         setSubmitted(true);
       }

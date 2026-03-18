@@ -101,6 +101,23 @@ const CustomBriefContent = () => {
         }),
       });
 
+      // Send emails via edge function
+      try {
+        await supabase.functions.invoke("send-intake-confirmation", {
+          body: {
+            client_name: formData.get("fullName") as string,
+            business_name: formData.get("businessName") as string,
+            client_email: formData.get("email") as string,
+            phone: formData.get("phone") as string || "",
+            website: formData.get("currentWebsite") as string || "",
+            service: "Custom Quote Request",
+            message: formData.get("projectDescription") as string || "",
+          },
+        });
+      } catch (emailErr) {
+        console.error("Email error:", emailErr);
+      }
+
       if (response.ok) {
         setSubmitted(true);
         toast({
