@@ -6,6 +6,7 @@ import CustomCursor from "@/components/CustomCursor";
 import { motion } from "framer-motion";
 import { useState } from "react";
 import { Send, Check } from "lucide-react";
+import { supabase } from "@/integrations/supabase/client";
 
 const SupportContent = () => {
   const { lang } = useLanguage();
