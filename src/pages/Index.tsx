@@ -8,6 +8,7 @@ import CustomCursor from "@/components/CustomCursor";
 import Preloader from "@/components/Preloader";
 import { Check, ChevronDown, ArrowRight, ArrowDown, Plus, Star, ChevronLeft, ChevronRight as ChevronRightIcon, Quote, Shield, Zap, Target, Users, Loader2 } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
+import { supabase } from "@/integrations/supabase/client";
 
 import portfolioTrade from "@/assets/portfolio-trade.jpg";
 import portfolioWellness from "@/assets/portfolio-wellness-new.jpg";
@@ -32,12 +33,12 @@ const MultiStepIntake = ({ variant = "hero" }: { variant?: "hero" | "cta" }) => 
   const isDark = variant === "cta";
 
   const inputBase = isDark
-    ? "w-full rounded-xl border border-white/15 bg-white/5 px-4 py-3.5 text-sm text-white placeholder:text-white/40 focus:outline-none focus:ring-2 focus:ring-[hsl(275_51%_46%)]/40 focus:border-white/30 transition-all"
-    : "w-full rounded-xl border border-border bg-background px-4 py-3.5 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-[hsl(275_51%_46%)]/30 focus:border-[hsl(275_51%_46%)] transition-all";
+    ? "w-full rounded-xl border border-white/15 bg-white/5 px-5 py-4 text-sm text-white placeholder:text-white/40 focus:outline-none focus:ring-2 focus:ring-[hsl(275_51%_46%)]/40 focus:border-white/30 transition-all"
+    : "w-full rounded-xl border border-border bg-background px-5 py-4 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-[hsl(275_51%_46%)]/30 focus:border-[hsl(275_51%_46%)] transition-all";
 
   const selectBase = isDark
-    ? "w-full rounded-xl border border-white/15 bg-white/5 px-4 py-3.5 text-sm text-white placeholder:text-white/40 focus:outline-none focus:ring-2 focus:ring-[hsl(275_51%_46%)]/40 focus:border-white/30 transition-all [&>option]:bg-[hsl(209_66%_18%)] [&>option]:text-white"
-    : "w-full rounded-xl border border-border bg-background px-4 py-3.5 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-[hsl(275_51%_46%)]/30 focus:border-[hsl(275_51%_46%)] transition-all";
+    ? "w-full rounded-xl border border-white/15 bg-white/5 px-5 py-4 text-sm text-white placeholder:text-white/40 focus:outline-none focus:ring-2 focus:ring-[hsl(275_51%_46%)]/40 focus:border-white/30 transition-all [&>option]:bg-[hsl(209_66%_18%)] [&>option]:text-white"
+    : "w-full rounded-xl border border-border bg-background px-5 py-4 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-[hsl(275_51%_46%)]/30 focus:border-[hsl(275_51%_46%)] transition-all";
 
   const autoPrefix = (val: string) => {
     if (val && !val.startsWith("http://") && !val.startsWith("https://")) {
@@ -56,6 +57,10 @@ const MultiStepIntake = ({ variant = "hero" }: { variant?: "hero" | "cta" }) => 
     e.preventDefault();
     setSubmitting(true);
     const fd = new FormData(e.currentTarget);
+    const email = fd.get("email") as string;
+    const businessName = fd.get("businessName") as string;
+    const websiteYouLike = fd.get("websiteYouLike") as string;
+    const timeline = fd.get("timeline") as string;
 
     // Show processing animation
     setShowProcessing(true);
@@ -66,19 +71,35 @@ const MultiStepIntake = ({ variant = "hero" }: { variant?: "hero" | "cta" }) => 
     }
 
     try {
+      // 1) Submit to Formspree
       const res = await fetch("https://formspree.io/f/mbdabbql", {
         method: "POST",
         headers: { "Content-Type": "application/json", Accept: "application/json" },
         body: JSON.stringify({
-          name: fd.get("businessName"),
-          email: fd.get("email"),
-          subject: fd.get("businessName"),
-          message: `Business: ${fd.get("businessName")}\nWebsite: ${url}\nInspiration: ${fd.get("websiteYouLike") || "N/A"}\nTimeline: ${fd.get("timeline") || "N/A"}\nEmail: ${fd.get("email")}`,
+          name: businessName,
+          email: email,
+          subject: businessName,
+          message: `Business: ${businessName}\nWebsite: ${url}\nInspiration: ${websiteYouLike || "N/A"}\nTimeline: ${timeline || "N/A"}\nEmail: ${email}`,
         }),
       });
+
+      // 2) Send Resend confirmation email via edge function (fire and forget)
+      try {
+        await supabase.functions.invoke("send-intake-confirmation", {
+          body: {
+            email,
+            businessName,
+            websiteUrl: url,
+            timeline: timeline || "N/A",
+            inspiration: websiteYouLike || "N/A",
+          },
+        });
+      } catch (emailErr) {
+        console.error("Email confirmation error:", emailErr);
+      }
+
       if (res.ok) {
-        // Store email for thank you page
-        try { sessionStorage.setItem("swiftlift_email", fd.get("email") as string); } catch {}
+        try { sessionStorage.setItem("swiftlift_email", email); } catch {}
         window.location.assign("/thank-you");
       }
     } catch {
@@ -117,7 +138,7 @@ const MultiStepIntake = ({ variant = "hero" }: { variant?: "hero" | "cta" }) => 
   if (step === 1) {
     return (
       <form onSubmit={handleStep1} className="w-full">
-        <div className="flex flex-col sm:flex-row gap-3">
+        <div className="flex flex-col gap-3">
           <input
             type="url"
             value={url}
@@ -125,14 +146,14 @@ const MultiStepIntake = ({ variant = "hero" }: { variant?: "hero" | "cta" }) => 
             onBlur={() => setUrl(autoPrefix(url))}
             required
             placeholder="https://yourbusiness.com"
-            className={`${inputBase} flex-1`}
+            className={inputBase}
           />
           <button
             type="submit"
-            className="rounded-full py-3.5 px-8 text-sm font-semibold text-white whitespace-nowrap transition-all hover:opacity-90 hover:scale-[1.02]"
+            className="w-full rounded-full py-4 px-8 text-sm font-bold text-white whitespace-nowrap transition-all hover:opacity-90 hover:scale-[1.01]"
             style={{ background: "hsl(275 51% 46%)" }}
           >
-            {lang === "en" ? "Get My Free Previews" : "獲取免費預覽"}
+            {lang === "en" ? "Get My 2 Free Previews" : "獲取我的2個免費預覽"}
           </button>
         </div>
         <p className={`mt-3 text-xs ${isDark ? "text-white/40" : "text-muted-foreground"}`}>
@@ -191,17 +212,17 @@ const MultiStepIntake = ({ variant = "hero" }: { variant?: "hero" | "cta" }) => 
           <button
             type="button"
             onClick={() => setStep(1)}
-            className={`rounded-full py-3 px-6 text-sm font-medium border transition-all ${isDark ? "border-white/20 text-white/60 hover:text-white" : "border-border text-muted-foreground hover:text-foreground"}`}
+            className={`rounded-full py-3.5 px-6 text-sm font-medium border transition-all ${isDark ? "border-white/20 text-white/60 hover:text-white" : "border-border text-muted-foreground hover:text-foreground"}`}
           >
             {lang === "en" ? "Back" : "返回"}
           </button>
           <button
             type="submit"
             disabled={submitting}
-            className={`flex-1 rounded-full py-3 px-8 text-sm font-semibold text-white transition-all hover:opacity-90 ${submitting ? "opacity-70 pointer-events-none" : ""}`}
+            className={`flex-1 rounded-full py-3.5 px-8 text-sm font-bold text-white transition-all hover:opacity-90 ${submitting ? "opacity-70 pointer-events-none" : ""}`}
             style={{ background: "hsl(275 51% 46%)" }}
           >
-            {submitting ? (lang === "en" ? "Sending..." : "發送中...") : (lang === "en" ? "Get My Free Previews" : "獲取免費預覽")}
+            {submitting ? (lang === "en" ? "Sending..." : "發送中...") : (lang === "en" ? "Get My 2 Free Previews" : "獲取我的2個免費預覽")}
           </button>
         </div>
       </form>
@@ -215,6 +236,7 @@ const IndexContent = () => {
   const home = translations.home;
   const [proofIdx, setProofIdx] = useState(0);
   const [faqOpen, setFaqOpen] = useState<number | null>(0);
+  const touchStartX = useRef(0);
 
   useEffect(() => {
     document.title = "SwiftLift — See Your Website Before You Pay";
@@ -222,6 +244,17 @@ const IndexContent = () => {
 
   const prevProof = () => setProofIdx((i) => (i === 0 ? home.portfolioItems.length - 1 : i - 1));
   const nextProof = () => setProofIdx((i) => (i === home.portfolioItems.length - 1 ? 0 : i + 1));
+
+  const handleTouchStart = (e: React.TouchEvent) => {
+    touchStartX.current = e.touches[0].clientX;
+  };
+  const handleTouchEnd = (e: React.TouchEvent) => {
+    const diff = touchStartX.current - e.changedTouches[0].clientX;
+    if (Math.abs(diff) > 50) {
+      if (diff > 0) nextProof();
+      else prevProof();
+    }
+  };
 
   const scrollToIntake = () => {
     const el = document.getElementById("contact");
@@ -247,8 +280,8 @@ const IndexContent = () => {
       name: lang === "en" ? "Preview Access" : "預覽版",
       price: "$299",
       features: lang === "en"
-        ? ["Live website preview", "Clean professional layout", "Delivered with no risk", "No revisions included at preview stage"]
-        : ["即時網站預覽", "簡潔專業版面", "零風險交付", "預覽階段不含修改"],
+        ? ["Up to 7 pages", "Mobile responsive design", "SEO-friendly structure", "Live website preview", "Clean professional layout", "Delivered with no risk"]
+        : ["最多7頁", "移動端響應式設計", "SEO友好結構", "即時網站預覽", "簡潔專業版面", "零風險交付"],
       highlighted: false,
     },
     {
@@ -256,16 +289,16 @@ const IndexContent = () => {
       price: "$499",
       badge: lang === "en" ? "Most Popular" : "最受歡迎",
       features: lang === "en"
-        ? ["Fully polished website", "Bug fixes and final content refinement", "Ready for real business use"]
-        : ["完全打磨的網站", "修復和最終內容優化", "適合實際商業使用"],
+        ? ["Up to 7 pages", "Mobile responsive design", "SEO-friendly structure", "Fully polished website", "Bug fixes and final content refinement", "Ready for real business use"]
+        : ["最多7頁", "移動端響應式設計", "SEO友好結構", "完全打磨的網站", "修復和最終內容優化", "適合實際商業使用"],
       highlighted: true,
     },
     {
       name: lang === "en" ? "Growth Optimized" : "成長版",
       price: "$799",
       features: lang === "en"
-        ? ["Conversion-focused layout", "Optimized structure and stronger content flow", "Designed to generate more leads"]
-        : ["轉化導向版面", "優化結構和更強的內容流程", "設計以產生更多潛在客戶"],
+        ? ["Up to 7 pages", "Mobile responsive design", "SEO-friendly structure", "Conversion-focused layout", "Optimized structure and stronger content flow", "Designed to generate more leads"]
+        : ["最多7頁", "移動端響應式設計", "SEO友好結構", "轉化導向版面", "優化結構和更強的內容流程", "設計以產生更多潛在客戶"],
       highlighted: false,
     },
   ];
@@ -294,9 +327,9 @@ const IndexContent = () => {
         />
 
         <div className="relative z-10 max-w-6xl mx-auto px-6">
-          <div className="grid grid-cols-1 lg:grid-cols-[1.1fr_0.9fr] gap-12 lg:gap-16 items-start">
+          <div className="grid grid-cols-1 lg:grid-cols-[1fr_1fr] gap-10 lg:gap-14 items-start">
             {/* Left: Copy */}
-            <div className="text-white pt-2 lg:pt-4">
+            <div className="text-white pt-2 lg:pt-6">
               <h1 className="text-[2.4rem] md:text-[clamp(2.8rem,5.5vw,4.2rem)] font-black leading-[1.08] font-display tracking-tight">
                 {lang === "en" ? "See Your New Website\nBefore You Pay" : "先看您的\n新網站\n再付款"}
               </h1>
@@ -326,9 +359,12 @@ const IndexContent = () => {
               </ul>
             </div>
 
-            {/* Right: Intake Form */}
-            <div className="bg-background rounded-2xl p-6 md:p-8 border border-border/50 shadow-2xl lg:mt-4">
-              <p className="text-xs text-muted-foreground mb-4">
+            {/* Right: Intake Form — stronger visual weight */}
+            <div className="bg-background rounded-2xl p-7 md:p-10 border border-border/50 shadow-[0_25px_60px_-12px_rgba(0,0,0,0.35)] lg:mt-2">
+              <h3 className="text-base font-bold text-foreground font-display mb-1">
+                {lang === "en" ? "Start Your Free Preview" : "開始您的免費預覽"}
+              </h3>
+              <p className="text-xs text-muted-foreground mb-5">
                 {lang === "en" ? "Enter your current website to get started." : "輸入您目前的網站以開始。"}
               </p>
               <MultiStepIntake variant="hero" />
@@ -406,15 +442,15 @@ const IndexContent = () => {
           </p>
           <button
             onClick={scrollToIntake}
-            className="mt-8 rounded-full py-3.5 px-10 text-sm font-semibold text-white transition-all hover:opacity-90 hover:scale-[1.02]"
+            className="mt-8 rounded-full py-3.5 px-10 text-sm font-bold text-white transition-all hover:opacity-90 hover:scale-[1.02]"
             style={{ background: "hsl(275 51% 46%)" }}
           >
-            {lang === "en" ? "Get My Free Previews" : "獲取免費預覽"}
+            {lang === "en" ? "Get My 2 Free Previews" : "獲取我的2個免費預覽"}
           </button>
         </div>
       </section>
 
-      {/* ═══ 4. REAL BUSINESS TRANSFORMATIONS ═══ */}
+      {/* ═══ 4. REAL BUSINESS TRANSFORMATIONS — swipeable carousel ═══ */}
       <section id="portfolio" className="py-16 md:py-24 bg-background">
         <div className="max-w-6xl mx-auto px-6">
           <h2 className="text-[clamp(1.8rem,4vw,2.8rem)] font-black text-foreground font-display text-center">
@@ -424,7 +460,11 @@ const IndexContent = () => {
             {lang === "en" ? "See how an outdated website can become two stronger directions before you decide." : "看看過時的網站如何在您決定之前變成兩個更強的方向。"}
           </p>
 
-          <div className="mt-10 relative">
+          <div
+            className="mt-10 relative"
+            onTouchStart={handleTouchStart}
+            onTouchEnd={handleTouchEnd}
+          >
             <AnimatePresence mode="wait">
               <motion.div
                 key={proofIdx}
@@ -495,6 +535,9 @@ const IndexContent = () => {
                 <ChevronRightIcon size={18} />
               </button>
             </div>
+            <p className="mt-3 text-center text-xs text-muted-foreground md:hidden">
+              {lang === "en" ? "← Swipe to explore →" : "← 滑動查看 →"}
+            </p>
           </div>
         </div>
       </section>
@@ -577,7 +620,7 @@ const IndexContent = () => {
                 </ul>
                 <button
                   onClick={scrollToIntake}
-                  className={`mt-6 w-full rounded-full py-3 px-6 text-sm font-semibold transition-all ${
+                  className={`mt-6 w-full rounded-full py-3 px-6 text-sm font-bold transition-all ${
                     p.highlighted
                       ? "text-white hover:opacity-90"
                       : "border-2 hover:opacity-80"
@@ -587,16 +630,16 @@ const IndexContent = () => {
                     : { borderColor: "hsl(275 51% 46%)", color: "hsl(275 51% 46%)" }
                   }
                 >
-                  {lang === "en" ? "Get My Free Previews" : "獲取免費預覽"}
+                  {lang === "en" ? "Get My 2 Free Previews" : "獲取我的2個免費預覽"}
                 </button>
               </div>
             ))}
           </div>
 
-          {/* Single Page */}
+          {/* One Page / Landing Page */}
           <div className="mt-16 pt-10 border-t border-border">
             <p className="text-xs font-bold text-muted-foreground uppercase tracking-wider">
-              {lang === "en" ? "Single Page Website" : "單頁面網站"}
+              {lang === "en" ? "One Page Website / Landing Page" : "單頁面網站 / 登陸頁"}
             </p>
             <p className="mt-1 text-sm text-muted-foreground">
               {lang === "en" ? "Best for simple businesses or quick online presentations." : "最適合簡單企業或快速線上展示。"}
@@ -608,17 +651,17 @@ const IndexContent = () => {
                   <p className="mt-1 text-xl font-black text-foreground font-display">{sp.price}</p>
                   <button
                     onClick={scrollToIntake}
-                    className="mt-4 w-full rounded-full py-2.5 px-4 text-xs font-semibold border-2 transition-all hover:opacity-80"
+                    className="mt-4 w-full rounded-full py-2.5 px-4 text-xs font-bold border-2 transition-all hover:opacity-80"
                     style={{ borderColor: "hsl(275 51% 46%)", color: "hsl(275 51% 46%)" }}
                   >
-                    {lang === "en" ? "Get My Free Previews" : "獲取免費預覽"}
+                    {lang === "en" ? "Get My 2 Free Previews" : "獲取我的2個免費預覽"}
                   </button>
                 </div>
               ))}
             </div>
           </div>
 
-          {/* Secondary path for no-website users */}
+          {/* Secondary path */}
           <div className="mt-10 text-center">
             <p className="text-sm text-muted-foreground">
               {lang === "en" ? "Need a brand new website instead?" : "需要全新網站嗎？"}{" "}
@@ -710,14 +753,6 @@ const IndexContent = () => {
           <p className="mt-6 text-xs text-white/30">
             {lang === "en" ? "No upfront payment. No obligation. Just a better way to decide." : "無預付款。無義務。只是更好的決策方式。"}
           </p>
-          <div className="mt-4">
-            <p className="text-sm text-white/40">
-              {lang === "en" ? "Need a brand new website instead?" : "需要全新網站嗎？"}{" "}
-              <Link to="/custom-brief" className="text-white/60 hover:text-white underline">
-                {lang === "en" ? "Explore custom new website options" : "探索定制新網站選項"}
-              </Link>
-            </p>
-          </div>
         </div>
       </section>
     </main>

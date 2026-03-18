@@ -5,7 +5,7 @@ export const translations = {
     process: { en: "Process", zh: "流程" },
     portfolio: { en: "Portfolio", zh: "作品集" },
     pricing: { en: "Pricing", zh: "價格" },
-    contact: { en: "Claim FREE Previews", zh: "獲取免費預覽" },
+    contact: { en: "Get My 2 Free Previews", zh: "獲取我的2個免費預覽" },
   },
   hero: {
     headline: {
