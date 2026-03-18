@@ -48,19 +48,23 @@ function buildInternalNotification(data: {
 }
 
 function buildClientConfirmation(): string {
+  const logoUrl = "https://swiftlift-conversion-version.lovable.app/swiftsite-logo.png";
   return `<!DOCTYPE html>
 <html>
 <head><meta charset="utf-8"></head>
 <body style="margin:0;padding:0;background:#ffffff;">
 <div style="font-family:Arial,Helvetica,sans-serif;font-size:16px;line-height:1.6;color:#111111;max-width:600px;margin:0 auto;padding:20px;">
+  <div style="text-align:center;margin-bottom:20px;">
+    <img src="${logoUrl}" alt="SwiftLift" width="140" style="width:140px;height:auto;display:inline-block;" />
+  </div>
   <h1 style="font-size:28px;font-weight:700;margin:0 0 16px 0;">Thanks for your request</h1>
   <p style="margin:0 0 16px 0;">We've received your submission successfully.</p>
   <p style="margin:0 0 16px 0;">Our team is now preparing your website preview.</p>
   <p style="margin:0 0 16px 0;">You will receive your preview within 24–48 hours.</p>
   <p style="margin:0 0 16px 0;">If you have additional details or references, simply reply to this email.</p>
-  <br/>
+  <hr style="border:none;border-top:1px solid #337DAF;margin:24px 0;" />
   <p style="margin:0 0 4px 0;">SwiftLift</p>
-  <p style="margin:0;">support@swiftlift.app</p>
+  <p style="margin:0;"><a href="mailto:support@swiftlift.app" style="color:#337DAF;text-decoration:none;">support@swiftlift.app</a></p>
 </div>
 </body>
 </html>`;
