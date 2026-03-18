@@ -89,6 +89,7 @@ const IntakeForm = () => {
           website,
           service: formData.get("timeline") || "Preview Request",
           message: formData.get("message") || "",
+          form_type: "preview",
         },
       });
 

@@ -26,6 +26,7 @@ const WorkWithUsContent = () => {
           service: "Designer Inquiry",
           message: fd.get("message") as string || "",
           website: fd.get("portfolio") as string || "",
+          form_type: "designer",
         },
       });
 
