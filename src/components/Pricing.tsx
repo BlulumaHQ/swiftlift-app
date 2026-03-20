@@ -219,10 +219,11 @@ const Pricing = () => {
 
                   {/* CTA area — pushed to bottom */}
                   <div className="mt-6 flex flex-col items-center">
-                    <MagneticButton
-                      as="a"
+                    <a
                       href={plan.ctaHref}
-                      className={`w-full inline-flex items-center justify-center rounded-full px-6 py-3 text-sm font-semibold transition-all ${
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className={`w-full inline-flex items-center justify-center rounded-full px-6 py-3 text-sm font-semibold transition-all active:scale-[0.97] ${
                         isHero
                           ? "btn-brand text-base py-3.5"
                           : plan.isPremium
@@ -231,7 +232,7 @@ const Pricing = () => {
                       }`}
                     >
                       {t(plan.cta, lang)}
-                    </MagneticButton>
+                    </a>
                     {plan.ctaSub && (
                       <p className="mt-2 text-xs text-muted-foreground">
                         {t(plan.ctaSub, lang)}

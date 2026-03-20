@@ -242,6 +242,50 @@ export const PRICING = {
   },
 } as const;
 
+// ── Stripe Payment Links ──
+
+export const STRIPE_LINKS: Record<string, string> = {
+  // Multi-Page Website Packages
+  "preview-access": "https://buy.stripe.com/test_aFa00ibbra6IedU4F4aMU00",
+  "launch-ready": "https://buy.stripe.com/test_28E5kC6VbceQ9XE1sSaMU01",
+  "growth-optimized": "https://buy.stripe.com/test_bJe00i2EVbaM6Ls3B0aMU02",
+
+  // Single-Page Website Packages
+  "preview": "https://buy.stripe.com/test_6oU5kC5R77YAgm27RgaMU03",
+  "launch": "https://buy.stripe.com/test_3cIaEWcfv1Ac9XE1sSaMU04",
+  "growth": "https://buy.stripe.com/test_fZuaEW0wN1Ac4DkdbAaMU05",
+
+  // Add-ons
+  "performance-optimization": "https://buy.stripe.com/test_bJe14mfrHdiU9XEc7waMU06",
+  "seo-optimization": "https://buy.stripe.com/test_5kQ3cufrHbaM0n4fjIaMU07",
+  "social-media-launch-kit": "https://buy.stripe.com/test_6oU5kC3IZ92E1r8c7waMU08",
+  "brand-identity-package": "https://buy.stripe.com/test_cNi14m1ARfr24Dk5J8aMU09",
+
+  // Features
+  "review-testimonial-section": "https://buy.stripe.com/test_28EaEWbbrgv68TA8VkaMU0f",
+  "faq-section": "https://buy.stripe.com/test_bJe8wOa7n6Uw0n40oOaMU0g",
+  "advanced-contact-form": "https://buy.stripe.com/test_4gMfZg1AR5Qs8TA1sSaMU0h",
+  "booking-request-form": "https://buy.stripe.com/test_fZu6oGdjzbaM7PwdbAaMU0t",
+  "multi-step-quote-form": "https://buy.stripe.com/test_8x2bJ0enD5Qs1r8fjIaMU0i",
+  "basic-bilingual-setup": "https://buy.stripe.com/test_8x24gy0wN0w84DkdbAaMU0s",
+  "blog-setup": "https://buy.stripe.com/test_14A7sK93jdiU8TA1sSaMU0r",
+  "gallery-section": "https://buy.stripe.com/test_eVq9AS0wNa6Ib1I2wWaMU0q",
+  "google-map-hours-service-area": "https://buy.stripe.com/test_8x2aEW93j5Qsc5MgnMaMU0o",
+  "analytics-pixel-tag-setup": "https://buy.stripe.com/test_14A5kCgvL0w80n4b3saMU0m",
+  "ecommerce-integration": "https://buy.stripe.com/test_dRm00ifrH0w8edUc7waMU0n",
+  "membership-client-portal": "https://buy.stripe.com/test_6oUfZgdjza6I2vcgnMaMU0l",
+  "inventory-directory-database": "https://buy.stripe.com/test_14A9AS7Zf2Eg8TA3B0aMU0k",
+  "payment-integration": "https://buy.stripe.com/test_8x2bJ03IZgv69XE9ZoaMU0j",
+
+  // Fees
+  "reactivation-fee": "https://buy.stripe.com/test_28E00ienD3Ikb1I4F4aMU0c",
+  "additional-revision": "https://buy.stripe.com/test_6oUaEWdjzdiU6Ls6NcaMU0d",
+
+  // Hosting
+  "managed-monthly": "https://buy.stripe.com/test_cNi5kC5R76Uwb1I4F4aMU0a",
+  "managed-yearly": "https://buy.stripe.com/test_4gM6oG0wNfr24Dk9ZoaMU0e",
+};
+
 // ── Formatting helpers ──
 
 export const formatPrice = (value: number): string =>
