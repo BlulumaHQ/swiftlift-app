@@ -154,8 +154,8 @@ const CustomBriefContent = () => {
             className="mt-6 text-white/50 text-sm"
           >
             {lang === "en"
-              ? "Business websites starting from $999 · E-commerce from $1,299"
-              : "企业网站起价$999 · 电商网站起价$1,299"}
+              ? `Business websites starting from ${formatPrice(PRICING.customBrief.businessWebsite.startingAt)} · E-commerce from ${formatPrice(PRICING.customBrief.ecommerceWebsite.startingAt)}`
+              : `企业网站起价${formatPrice(PRICING.customBrief.businessWebsite.startingAt)} · 电商网站起价${formatPrice(PRICING.customBrief.ecommerceWebsite.startingAt)}`}
           </motion.div>
         </div>
       </section>
