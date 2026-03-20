@@ -4,6 +4,7 @@ import { LanguageProvider } from "@/contexts/LanguageContext";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import CustomCursor from "@/components/CustomCursor";
+import { PRICING, formatPrice } from "@/lib/pricing";
 import { Check, Shield, Palette, Search, Zap, Share2, Lock, ChevronDown, User, Building2, Mail, AlertCircle } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
