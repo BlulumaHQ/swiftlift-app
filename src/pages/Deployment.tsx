@@ -24,8 +24,8 @@ interface Addon {
 const ADDONS: Addon[] = [
   {
     id: "performance",
-    name: "Performance Optimization",
-    price: 199,
+    name: PRICING.addons[0].name,
+    price: PRICING.addons[0].price,
     outcome: "Improve loading speed and website performance for a better user experience and stronger conversion.",
     why: "Speed improves conversion rates and search ranking.",
     included: [
@@ -39,8 +39,8 @@ const ADDONS: Addon[] = [
   },
   {
     id: "seo",
-    name: "SEO Optimization",
-    price: 299,
+    name: PRICING.addons[1].name,
+    price: PRICING.addons[1].price,
     outcome: "Improve your visibility on Google with stronger structure and search-friendly setup.",
     why: "Better indexing helps customers find you organically.",
     included: [
@@ -53,8 +53,8 @@ const ADDONS: Addon[] = [
   },
   {
     id: "social",
-    name: "Social Media Launch Kit",
-    price: 299,
+    name: PRICING.addons[2].name,
+    price: PRICING.addons[2].price,
     outcome: "Get ready-to-use social visuals and launch content to promote your new website.",
     why: "Consistency builds recognition and authority.",
     included: [
@@ -69,8 +69,8 @@ const ADDONS: Addon[] = [
   },
   {
     id: "brand",
-    name: "Brand Package",
-    price: 499,
+    name: PRICING.addons[3].name,
+    price: PRICING.addons[3].price,
     outcome: "Build a stronger first impression with a cleaner and more professional brand identity.",
     why: "A consistent brand increases customer confidence and conversion.",
     included: [
