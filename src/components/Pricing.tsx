@@ -115,7 +115,7 @@ const plans = [
     },
     cta: { en: "Request Strategy Consultation", zh: "申请策略咨询" },
     ctaSub: null,
-    ctaHref: "/#contact",
+    ctaHref: STRIPE_LINKS["growth-optimized"],
     isPremium: true,
   },
 ];
