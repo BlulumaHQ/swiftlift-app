@@ -9,6 +9,7 @@ import { toast } from "@/hooks/use-toast";
 import { motion } from "framer-motion";
 import { Check, Send } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
+import { PRICING, formatPrice, formatRange } from "@/lib/pricing";
 
 const FEATURES_EN = [
   "E-commerce / Online Store",
