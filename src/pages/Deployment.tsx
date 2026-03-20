@@ -88,12 +88,12 @@ const HOSTING_OPTIONS = [
   {
     value: "free" as const,
     label: "Included Hosting",
-    price: "$0",
+    price: formatPrice(PRICING.hosting.freeHosting.price),
     period: "",
     badge: null,
     description: "Hosted under SwiftLift infrastructure.",
     details: [
-      "Additional revisions beyond included scope are $25 per submission",
+      `Additional revisions beyond included scope are ${formatPrice(PRICING.fees.additionalRevision.price)} per submission`,
       "No priority response time",
       "No included content edits",
       "Site remains active unless manually removed",
@@ -102,7 +102,7 @@ const HOSTING_OPTIONS = [
   {
     value: "monthly" as const,
     label: "Managed Hosting",
-    price: "$12",
+    price: formatPrice(PRICING.hosting.managedMonthly.price),
     period: "/month",
     badge: null,
     description: "Dedicated hosting under your own domain.",
@@ -117,9 +117,9 @@ const HOSTING_OPTIONS = [
   {
     value: "yearly" as const,
     label: "Managed Hosting",
-    price: "$100",
+    price: formatPrice(PRICING.hosting.managedYearly.price),
     period: "/year",
-    badge: "Best Value — Save $44/yr",
+    badge: `Best Value — Save $${PRICING.hosting.managedMonthly.price * 12 - PRICING.hosting.managedYearly.price}/yr`,
     description: "Same benefits as monthly with annual savings.",
     details: [
       "SSL certificate included",
@@ -133,18 +133,18 @@ const HOSTING_OPTIONS = [
 
 const COMPARE_ROWS = [
   {
-    label: "Included Hosting (Free)",
-    note: "Best for budget • $25 per revision submission",
+    label: `Included Hosting (Free)`,
+    note: `Best for budget • ${formatPrice(PRICING.fees.additionalRevision.price)} per revision submission`,
     value: "free",
   },
   {
-    label: "Managed Monthly ($12/mo)",
+    label: `Managed Monthly (${formatPrice(PRICING.hosting.managedMonthly.price)}/mo)`,
     note: "Best for flexibility • cancel anytime",
     value: "monthly",
   },
   {
-    label: "Managed Yearly ($100/yr)",
-    note: "Best value • save $44 vs monthly",
+    label: `Managed Yearly (${formatPrice(PRICING.hosting.managedYearly.price)}/yr)`,
+    note: `Best value • save $${PRICING.hosting.managedMonthly.price * 12 - PRICING.hosting.managedYearly.price} vs monthly`,
     value: "yearly",
     badge: "Best Value",
   },
