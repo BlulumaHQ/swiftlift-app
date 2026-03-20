@@ -5,7 +5,7 @@ import Footer from "@/components/Footer";
 import CustomCursor from "@/components/CustomCursor";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import { PRICING, formatPriceByType } from "@/lib/pricing";
+import { PRICING, formatPriceByType, STRIPE_LINKS } from "@/lib/pricing";
 import {
   Star, Globe, FileText, Calendar, MessageSquare, HelpCircle,
   MapPin, BarChart3, Image, ShoppingCart, Users, Workflow,
