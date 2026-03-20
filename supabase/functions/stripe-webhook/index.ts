@@ -93,7 +93,10 @@ serve(async (req) => {
       event = JSON.parse(body) as Stripe.Event;
     }
 
+    console.log("[STRIPE-WEBHOOK] Event received:", event.type);
+
     if (event.type === "checkout.session.completed") {
+      console.log("[STRIPE-WEBHOOK] Checkout session completed — preparing admin notification");
       const session = event.data.object as Stripe.Checkout.Session;
       const meta = session.metadata || {};
 
