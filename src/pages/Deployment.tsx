@@ -265,9 +265,9 @@ const DeploymentContent = () => {
   const hostingLabel = hostingPlan === "free"
     ? "Included (Free)"
     : hostingPlan === "monthly"
-    ? "Managed – $12/mo"
+    ? `Managed – ${formatPrice(PRICING.hosting.managedMonthly.price)}/mo`
     : hostingPlan === "yearly"
-    ? "Managed – $100/yr"
+    ? `Managed – ${formatPrice(PRICING.hosting.managedYearly.price)}/yr`
     : "Not selected";
 
   const OrderSummary = ({ compact = false }: { compact?: boolean }) => (
