@@ -6,12 +6,25 @@ const corsHeaders = {
   "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type, x-supabase-client-platform, x-supabase-client-platform-version, x-supabase-client-runtime, x-supabase-client-runtime-version",
 };
 
+const DEFAULT_ADMIN_EMAIL = "support@swiftlift.app";
+
+function getAdminEmail(): string {
+  const envEmail = Deno.env.get("ADMIN_EMAIL");
+  if (envEmail && envEmail.includes("@")) {
+    return envEmail;
+  }
+  console.warn(`[STRIPE-WEBHOOK] ADMIN_EMAIL env missing or invalid ("${envEmail}"), using fallback: ${DEFAULT_ADMIN_EMAIL}`);
+  return DEFAULT_ADMIN_EMAIL;
+}
+
 async function sendAdminEmail(data: Record<string, string>) {
   const RESEND_API_KEY = Deno.env.get("RESEND_API_KEY");
-  const ADMIN_EMAIL = Deno.env.get("ADMIN_EMAIL");
+  const ADMIN_EMAIL = getAdminEmail();
 
-  if (!RESEND_API_KEY || !ADMIN_EMAIL) {
-    console.error("Missing RESEND_API_KEY or ADMIN_EMAIL");
+  console.log("[STRIPE-WEBHOOK] Admin notification recipient:", ADMIN_EMAIL);
+
+  if (!RESEND_API_KEY) {
+    console.error("[STRIPE-WEBHOOK] Missing RESEND_API_KEY — cannot send admin email");
     return;
   }
 
@@ -80,7 +93,10 @@ serve(async (req) => {
       event = JSON.parse(body) as Stripe.Event;
     }
 
+    console.log("[STRIPE-WEBHOOK] Event received:", event.type);
+
     if (event.type === "checkout.session.completed") {
+      console.log("[STRIPE-WEBHOOK] Checkout session completed — preparing admin notification");
       const session = event.data.object as Stripe.Checkout.Session;
       const meta = session.metadata || {};
 
