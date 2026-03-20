@@ -405,36 +405,30 @@ export const translations = {
       },
       {
         title: { en: "Managed Hosting & Maintenance", zh: "託管主機與維護" },
-        price: "$84/yr",
-        altPrice: "or $10/mo",
+        price: "$100/yr",
+        altPrice: "or $12/mo",
         paragraph: { en: "We handle everything. You focus on your business.", zh: "我們處理一切。您專注於業務。" },
         button: { en: "Choose Managed Hosting", zh: "選擇託管主機" },
         features: {
-          en: ["Managed hosting environment", "SSL & deployment handled", "Domain setup assistance", "1–2 minor updates per month", "Basic monitoring"],
-          zh: ["託管式主機環境", "SSL和部署處理", "網域設置協助", "每月1-2次小更新", "基礎監控"],
+          en: ["Managed hosting environment", "SSL & deployment handled", "Domain setup assistance", "3 minor content edits per year", "Basic monitoring"],
+          zh: ["託管式主機環境", "SSL和部署處理", "網域設置協助", "每年3次小更新", "基礎監控"],
         },
       },
-    ],
-    stepsHeadline: { en: "What Happens Next", zh: "接下來會發生什麼" },
-    steps: [
-      { title: { en: "Confirm Hosting Option", zh: "確認託管方案" }, desc: { en: "Choose free or managed hosting.", zh: "選擇免費或託管主機。" } },
-      { title: { en: "Deployment & Setup", zh: "部署與設置" }, desc: { en: "We deploy and configure everything.", zh: "我們部署並配置一切。" } },
-      { title: { en: "Website Goes Live", zh: "網站正式上線" }, desc: { en: "Your website goes live within days.", zh: "您的網站在數天內正式上線。" } },
     ],
     upgradesHeadline: { en: "Optional Upgrades", zh: "可選升級" },
     exclusiveRate: { en: "Website Client Exclusive Rate", zh: "網站客戶專享價" },
     upgrades: [
       {
         title: { en: "Brand Identity Package", zh: "品牌形象套餐" },
-        price: "$700",
+        price: "$499",
         features: {
-          en: ["3 logo concepts", "3 revision rounds", "Primary + secondary logo", "Basic brand guideline"],
-          zh: ["3個標誌方案", "3輪修改", "主標誌 + 輔助標誌", "基礎品牌指南"],
+          en: ["Logo refinement system", "Color palette definition", "Typography hierarchy", "Brand usage guide (PDF)"],
+          zh: ["標誌優化系統", "色彩調色板定義", "排版層次結構", "品牌使用指南（PDF）"],
         },
       },
       {
         title: { en: "Advanced SEO Setup", zh: "高級SEO設置" },
-        price: "$250",
+        price: "$299",
         features: {
           en: ["On-page SEO structure", "Meta titles & descriptions", "Schema setup", "Basic keyword mapping", "Sitemap optimization"],
           zh: ["頁面SEO結構", "Meta標題和描述", "Schema設置", "基礎關鍵詞映射", "站點地圖優化"],
@@ -442,7 +436,7 @@ export const translations = {
       },
       {
         title: { en: "Performance Optimization", zh: "性能優化" },
-        price: "$180",
+        price: "$199",
         features: {
           en: ["Image optimization", "Code minification", "Load performance tuning", "Core Web Vitals improvements"],
           zh: ["圖片優化", "代碼壓縮", "載入性能調優", "核心網頁指標改進"],
