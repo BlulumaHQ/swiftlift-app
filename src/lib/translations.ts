@@ -118,8 +118,8 @@ export const translations = {
       {
         title: { en: "Starter", zh: "入門版" },
         subtitle: { en: "1–2 Pages", zh: "1–2 頁" },
-        price: "$350",
-        originalPrice: "$800",
+        price: "$299",
+        originalPrice: null,
         features: {
           en: ["1–2 Pages", "Clean Modern Design", "Mobile Responsive", "Contact Form Setup", "Brand Color Integration", "Fast Performance Loading"],
           zh: ["1–2 頁", "簡潔現代設計", "移動端自適應", "聯繫表單配置", "品牌配色融合", "高性能載入"],
@@ -128,10 +128,10 @@ export const translations = {
       {
         title: { en: "Growth", zh: "成長版" },
         subtitle: { en: "3–7 Pages", zh: "3–7 頁" },
-        price: "$550",
-        originalPrice: "$1,200",
+        price: "$499",
+        originalPrice: null,
         badge: { en: "Most Popular", zh: "最受歡迎" },
-        subtext: { en: "Save $650 — Launch Pricing", zh: "節省$650 — 上線優惠" },
+        subtext: null,
         features: {
           en: ["3–7 Pages", "Modern Design", "Mobile Responsive", "Contact Form + Map + Social", "Brand Color Integration", "Fast Performance Loading"],
           zh: ["3–7 頁", "現代設計", "移動端自適應", "聯繫表單 + 地圖 + 社交", "品牌配色融合", "高性能載入"],
@@ -139,13 +139,13 @@ export const translations = {
       },
       {
         title: { en: "Custom", zh: "定制版" },
-        subtitle: { en: "Up to 20 Pages", zh: "最多20頁" },
-        price: "$1,500+",
-        originalPrice: "$2,500",
+        subtitle: { en: "Custom Solutions", zh: "定制方案" },
+        price: "$4,999+",
+        originalPrice: null,
         bottomNote: { en: "Complex needs? Request a custom quote.", zh: "複雜需求？申請定制報價。" },
         features: {
-          en: ["Up to 20 Pages", "Custom Design", "Mobile Responsive", "Advanced Integrations", "Deep Brand Strategy", "Fast Performance Loading"],
-          zh: ["最多20頁", "定制設計", "移動端自適應", "高級集成功能", "深度品牌策略", "高性能載入"],
+          en: ["Custom Page Count", "Custom Design", "Mobile Responsive", "Advanced Integrations", "Deep Brand Strategy", "Fast Performance Loading"],
+          zh: ["自訂頁面數", "定制設計", "移動端自適應", "高級集成功能", "深度品牌策略", "高性能載入"],
         },
       },
     ],
