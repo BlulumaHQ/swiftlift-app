@@ -7,6 +7,7 @@ import ScrollReveal from "@/components/ScrollReveal";
 import MagneticButton from "@/components/MagneticButton";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
+import { PRICING, formatPrice } from "@/lib/pricing";
 import {
   Check, Zap, Search, Palette, Share2, Shield, Target,
   Rocket, Star, MessageCircle, Package
