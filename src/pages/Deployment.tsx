@@ -209,11 +209,11 @@ const DeploymentContent = () => {
     let recurring = 0;
     let recurringLabel = "";
     if (hostingPlan === "monthly") {
-      recurring = 12;
-      recurringLabel = "$12/month";
+      recurring = PRICING.hosting.managedMonthly.price;
+      recurringLabel = `${formatPrice(PRICING.hosting.managedMonthly.price)}/month`;
     } else if (hostingPlan === "yearly") {
-      recurring = 100;
-      recurringLabel = "$100/year";
+      recurring = PRICING.hosting.managedYearly.price;
+      recurringLabel = `${formatPrice(PRICING.hosting.managedYearly.price)}/year`;
     }
     const todayTotal = oneTime + recurring;
     return { oneTime, recurring, recurringLabel, todayTotal };
