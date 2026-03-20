@@ -1,18 +1,22 @@
 import React from "react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { translations, t } from "@/lib/translations";
+import { PRICING, formatPrice, formatStartingAtPlus } from "@/lib/pricing";
 import ScrollReveal from "./ScrollReveal";
 import { Check, Star } from "lucide-react";
 import { motion } from "framer-motion";
 import MagneticButton from "./MagneticButton";
+
+const mp = PRICING.websitePackages.multiPage;
+const cs = PRICING.websitePackages.customSolutions;
 
 const plans = [
   {
     tier: "launch",
     title: { en: "Starter", zh: "入门版" },
     subtitle: { en: "LAUNCH", zh: "启动" },
-    originalPrice: "$800",
-    price: "$350",
+    originalPrice: null,
+    price: formatPrice(mp[0].price),
     promo: null,
     badge: null,
     description: {
@@ -46,9 +50,9 @@ const plans = [
     tier: "growth",
     title: { en: "Growth", zh: "成长版" },
     subtitle: { en: "GROWTH", zh: "成长" },
-    originalPrice: "$1,200",
-    price: "$550",
-    promo: { en: "Save $650 — Launch Pricing", zh: "节省$650 — 上线优惠" },
+    originalPrice: null,
+    price: formatPrice(mp[1].price),
+    promo: null,
     badge: { en: "Most Popular", zh: "最受欢迎" },
     description: {
       en: "Designed to turn visitors into qualified inquiries\nwith structured layout.",
@@ -82,7 +86,7 @@ const plans = [
     title: { en: "Strategy-Level Website", zh: "策略级网站" },
     subtitle: { en: "CONVERSION ARCHITECTURE", zh: "转化架构" },
     originalPrice: null,
-    price: "$2,500+",
+    price: formatStartingAtPlus(cs[2].price),
     promo: null,
     badge: null,
     description: {

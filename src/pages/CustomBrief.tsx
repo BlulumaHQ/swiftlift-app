@@ -194,13 +194,13 @@ const CustomBriefContent = () => {
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
                   <div>
                     <p className="font-semibold text-foreground">{lang === "en" ? "Business Website" : "企业网站"}</p>
-                    <p className="text-muted-foreground mt-0.5">{lang === "en" ? "Starting from $999" : "起价$999"}</p>
-                    <p className="text-xs text-muted-foreground">{lang === "en" ? "Most projects: $999 – $2,499" : "大多数项目：$999 – $2,499"}</p>
+                    <p className="text-muted-foreground mt-0.5">{lang === "en" ? `Starting from ${formatPrice(PRICING.customBrief.businessWebsite.startingAt)}` : `起价${formatPrice(PRICING.customBrief.businessWebsite.startingAt)}`}</p>
+                    <p className="text-xs text-muted-foreground">{lang === "en" ? `Most projects: ${formatRange(PRICING.customBrief.businessWebsite.typicalRangeMin, PRICING.customBrief.businessWebsite.typicalRangeMax)}` : `大多数项目：${formatRange(PRICING.customBrief.businessWebsite.typicalRangeMin, PRICING.customBrief.businessWebsite.typicalRangeMax)}`}</p>
                   </div>
                   <div>
                     <p className="font-semibold text-foreground">{lang === "en" ? "E-commerce Website" : "电商网站"}</p>
-                    <p className="text-muted-foreground mt-0.5">{lang === "en" ? "Starting from $1,299" : "起价$1,299"}</p>
-                    <p className="text-xs text-muted-foreground">{lang === "en" ? "Most projects: $1,299 – $3,299" : "大多数项目：$1,299 – $3,299"}</p>
+                    <p className="text-muted-foreground mt-0.5">{lang === "en" ? `Starting from ${formatPrice(PRICING.customBrief.ecommerceWebsite.startingAt)}` : `起价${formatPrice(PRICING.customBrief.ecommerceWebsite.startingAt)}`}</p>
+                    <p className="text-xs text-muted-foreground">{lang === "en" ? `Most projects: ${formatRange(PRICING.customBrief.ecommerceWebsite.typicalRangeMin, PRICING.customBrief.ecommerceWebsite.typicalRangeMax)}` : `大多数项目：${formatRange(PRICING.customBrief.ecommerceWebsite.typicalRangeMin, PRICING.customBrief.ecommerceWebsite.typicalRangeMax)}`}</p>
                   </div>
                 </div>
               </div>

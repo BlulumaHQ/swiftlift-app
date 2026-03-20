@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState, useCallback, useMemo } from "react";
 import { useSearchParams, Link } from "react-router-dom";
+import { PRICING, formatPrice } from "@/lib/pricing";
 import { LanguageProvider, useLanguage } from "@/contexts/LanguageContext";
 import { translations, t } from "@/lib/translations";
 import Header from "@/components/Header";

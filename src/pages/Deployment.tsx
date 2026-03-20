@@ -326,7 +326,7 @@ const DeploymentContent = () => {
 
       <div className="mt-4 text-[11px] text-muted-foreground leading-relaxed space-y-1">
         <p>Hosting subscriptions begin immediately upon payment.</p>
-        <p>If cancelled, your website remains active for 30 days before suspension. Reactivation fee: $50.</p>
+        <p>If cancelled, your website remains active for 30 days before suspension. Reactivation fee: {formatPrice(PRICING.fees.reactivationFee.price)}.</p>
       </div>
 
       <motion.button

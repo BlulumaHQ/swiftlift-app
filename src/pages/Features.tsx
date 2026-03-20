@@ -5,6 +5,7 @@ import Footer from "@/components/Footer";
 import CustomCursor from "@/components/CustomCursor";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
+import { PRICING, formatPriceByType } from "@/lib/pricing";
 import {
   Star, Globe, FileText, Calendar, MessageSquare, HelpCircle,
   MapPin, BarChart3, Image, ShoppingCart, Users, Workflow,
@@ -21,27 +22,79 @@ interface FeatureItem {
   price: string;
 }
 
-const fixedPriceAddons: FeatureItem[] = [
-  { icon: Star, title: { en: "Review / Testimonial Section", zh: "評價展示區塊" }, desc: { en: "Display customer reviews with star ratings and brand styling.", zh: "展示客戶評價，包含星級評分和品牌風格。" }, price: "$99" },
-  { icon: HelpCircle, title: { en: "FAQ Section", zh: "常見問題區塊" }, desc: { en: "Organized accordion-style FAQ block with smooth animations.", zh: "帶動畫效果的手風琴式FAQ區塊。" }, price: "$79" },
-  { icon: FileText, title: { en: "Advanced Contact Form", zh: "進階聯繫表單" }, desc: { en: "Custom fields, validation, and email routing for inquiries.", zh: "自訂欄位、驗證和郵件路由功能。" }, price: "$149" },
-  { icon: Calendar, title: { en: "Booking Request Form", zh: "預約請求表單" }, desc: { en: "Structured appointment or booking request form with confirmation.", zh: "結構化預約表單，含確認功能。" }, price: "$149" },
-  { icon: MessageSquare, title: { en: "Multi-Step Quote Form", zh: "多步驟報價表單" }, desc: { en: "Step-by-step form with conditional logic for service quoting.", zh: "帶條件邏輯的分步式報價表單。" }, price: "$199" },
-  { icon: Globe, title: { en: "Basic Bilingual Setup", zh: "基礎雙語設置" }, desc: { en: "Add a second language with toggle switching across your site.", zh: "添加第二語言，支持全站語言切換。" }, price: "$199" },
-  { icon: FileText, title: { en: "Blog Setup", zh: "部落格設置" }, desc: { en: "Clean blog layout with categories, tags, and post templates.", zh: "簡潔的部落格版面，含分類、標籤和文章模板。" }, price: "$199" },
-  { icon: Image, title: { en: "Gallery Section", zh: "圖庫區塊" }, desc: { en: "Responsive photo gallery with lightbox and category filtering.", zh: "響應式圖庫，含燈箱效果和分類篩選。" }, price: "$129" },
-  { icon: MapPin, title: { en: "Google Map / Hours / Service Area", zh: "Google地圖/營業時間/服務區域" }, desc: { en: "Embedded map, business hours display, and service area block.", zh: "嵌入式地圖、營業時間顯示和服務區域區塊。" }, price: "$99" },
-  { icon: BarChart3, title: { en: "Analytics / Pixel / Tag Setup", zh: "分析/像素/標籤設置" }, desc: { en: "Google Analytics, Facebook Pixel, and Tag Manager configuration.", zh: "Google Analytics、Facebook Pixel和Tag Manager配置。" }, price: "$99" },
-];
+const featureIcons: Record<string, any> = {
+  "review-testimonial-section": Star,
+  "faq-section": HelpCircle,
+  "advanced-contact-form": FileText,
+  "booking-request-form": Calendar,
+  "multi-step-quote-form": MessageSquare,
+  "basic-bilingual-setup": Globe,
+  "blog-setup": FileText,
+  "gallery-section": Image,
+  "google-map-hours-service-area": MapPin,
+  "analytics-pixel-tag-setup": BarChart3,
+  "ecommerce-integration": ShoppingCart,
+  "membership-client-portal": Users,
+  "crm-integration": Workflow,
+  "inventory-directory-database": Database,
+  "custom-automation": Bot,
+  "payment-integration": CreditCard,
+};
 
-const customQuoteFeatures: FeatureItem[] = [
-  { icon: ShoppingCart, title: { en: "E-Commerce Integration", zh: "電子商務集成" }, desc: { en: "Product catalog, cart, checkout — full online store setup.", zh: "產品目錄、購物車、結帳——完整線上商店設置。" }, price: "Starting at $499" },
-  { icon: Users, title: { en: "Membership / Client Portal", zh: "會員/客戶門戶" }, desc: { en: "Protected login areas with gated content for members or clients.", zh: "為會員或客戶提供的受保護登入區域。" }, price: "Starting at $399" },
-  { icon: Workflow, title: { en: "CRM Integration", zh: "CRM集成" }, desc: { en: "Connect your website forms to HubSpot, Salesforce, or other CRMs.", zh: "將網站表單連接到HubSpot、Salesforce或其他CRM。" }, price: "Custom Quote" },
-  { icon: Database, title: { en: "Inventory / Directory / Database", zh: "庫存/目錄/資料庫" }, desc: { en: "Filterable listings, searchable directories, or product databases.", zh: "可篩選列表、可搜索目錄或產品資料庫。" }, price: "Starting at $499" },
-  { icon: Bot, title: { en: "Custom Automation", zh: "自定義自動化" }, desc: { en: "Automated workflows, notifications, and smart form routing.", zh: "自動化工作流程、通知和智能表單路由。" }, price: "Custom Quote" },
-  { icon: CreditCard, title: { en: "Payment Integration", zh: "支付集成" }, desc: { en: "Accept one-time or recurring payments securely on your website.", zh: "在您的網站上安全接受一次性或定期付款。" }, price: "Starting at $299" },
-];
+const featureDescs: Record<string, LangObj> = {
+  "review-testimonial-section": { en: "Display customer reviews with star ratings and brand styling.", zh: "展示客戶評價，包含星級評分和品牌風格。" },
+  "faq-section": { en: "Organized accordion-style FAQ block with smooth animations.", zh: "帶動畫效果的手風琴式FAQ區塊。" },
+  "advanced-contact-form": { en: "Custom fields, validation, and email routing for inquiries.", zh: "自訂欄位、驗證和郵件路由功能。" },
+  "booking-request-form": { en: "Structured appointment or booking request form with confirmation.", zh: "結構化預約表單，含確認功能。" },
+  "multi-step-quote-form": { en: "Step-by-step form with conditional logic for service quoting.", zh: "帶條件邏輯的分步式報價表單。" },
+  "basic-bilingual-setup": { en: "Add a second language with toggle switching across your site.", zh: "添加第二語言，支持全站語言切換。" },
+  "blog-setup": { en: "Clean blog layout with categories, tags, and post templates.", zh: "簡潔的部落格版面，含分類、標籤和文章模板。" },
+  "gallery-section": { en: "Responsive photo gallery with lightbox and category filtering.", zh: "響應式圖庫，含燈箱效果和分類篩選。" },
+  "google-map-hours-service-area": { en: "Embedded map, business hours display, and service area block.", zh: "嵌入式地圖、營業時間顯示和服務區域區塊。" },
+  "analytics-pixel-tag-setup": { en: "Google Analytics, Facebook Pixel, and Tag Manager configuration.", zh: "Google Analytics、Facebook Pixel和Tag Manager配置。" },
+  "ecommerce-integration": { en: "Product catalog, cart, checkout — full online store setup.", zh: "產品目錄、購物車、結帳——完整線上商店設置。" },
+  "membership-client-portal": { en: "Protected login areas with gated content for members or clients.", zh: "為會員或客戶提供的受保護登入區域。" },
+  "crm-integration": { en: "Connect your website forms to HubSpot, Salesforce, or other CRMs.", zh: "將網站表單連接到HubSpot、Salesforce或其他CRM。" },
+  "inventory-directory-database": { en: "Filterable listings, searchable directories, or product databases.", zh: "可篩選列表、可搜索目錄或產品資料庫。" },
+  "custom-automation": { en: "Automated workflows, notifications, and smart form routing.", zh: "自動化工作流程、通知和智能表單路由。" },
+  "payment-integration": { en: "Accept one-time or recurring payments securely on your website.", zh: "在您的網站上安全接受一次性或定期付款。" },
+};
+
+const featureTitles: Record<string, LangObj> = {
+  "review-testimonial-section": { en: "Review / Testimonial Section", zh: "評價展示區塊" },
+  "faq-section": { en: "FAQ Section", zh: "常見問題區塊" },
+  "advanced-contact-form": { en: "Advanced Contact Form", zh: "進階聯繫表單" },
+  "booking-request-form": { en: "Booking Request Form", zh: "預約請求表單" },
+  "multi-step-quote-form": { en: "Multi-Step Quote Form", zh: "多步驟報價表單" },
+  "basic-bilingual-setup": { en: "Basic Bilingual Setup", zh: "基礎雙語設置" },
+  "blog-setup": { en: "Blog Setup", zh: "部落格設置" },
+  "gallery-section": { en: "Gallery Section", zh: "圖庫區塊" },
+  "google-map-hours-service-area": { en: "Google Map / Hours / Service Area", zh: "Google地圖/營業時間/服務區域" },
+  "analytics-pixel-tag-setup": { en: "Analytics / Pixel / Tag Setup", zh: "分析/像素/標籤設置" },
+  "ecommerce-integration": { en: "E-Commerce Integration", zh: "電子商務集成" },
+  "membership-client-portal": { en: "Membership / Client Portal", zh: "會員/客戶門戶" },
+  "crm-integration": { en: "CRM Integration", zh: "CRM集成" },
+  "inventory-directory-database": { en: "Inventory / Directory / Database", zh: "庫存/目錄/資料庫" },
+  "custom-automation": { en: "Custom Automation", zh: "自定義自動化" },
+  "payment-integration": { en: "Payment Integration", zh: "支付集成" },
+};
+
+const fixedPriceFeatures = PRICING.features.filter(f => f.type === "one_time");
+const customQuoteFeaturesList = PRICING.features.filter(f => f.type !== "one_time");
+
+const fixedPriceAddons: FeatureItem[] = fixedPriceFeatures.map(f => ({
+  icon: featureIcons[f.key] || Star,
+  title: featureTitles[f.key] || { en: f.name, zh: f.name },
+  desc: featureDescs[f.key] || { en: "", zh: "" },
+  price: formatPriceByType(f),
+}));
+
+const customQuoteFeatures: FeatureItem[] = customQuoteFeaturesList.map(f => ({
+  icon: featureIcons[f.key] || Star,
+  title: featureTitles[f.key] || { en: f.name, zh: f.name },
+  desc: featureDescs[f.key] || { en: "", zh: "" },
+  price: formatPriceByType(f),
+}));
 
 const FeatureCard = ({ item, lang }: { item: FeatureItem; lang: "en" | "zh" }) => {
   const Icon = item.icon;
