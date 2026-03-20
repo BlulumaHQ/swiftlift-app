@@ -1,7 +1,7 @@
 import React from "react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { translations, t } from "@/lib/translations";
-import { PRICING, formatPrice, formatStartingAtPlus } from "@/lib/pricing";
+import { PRICING, formatPrice, formatStartingAtPlus, STRIPE_LINKS } from "@/lib/pricing";
 import ScrollReveal from "./ScrollReveal";
 import { Check, Star } from "lucide-react";
 import { motion } from "framer-motion";
