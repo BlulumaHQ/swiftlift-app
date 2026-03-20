@@ -5,7 +5,7 @@ import Footer from "@/components/Footer";
 import CustomCursor from "@/components/CustomCursor";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import { PRICING, formatPriceByType } from "@/lib/pricing";
+import { PRICING, formatPriceByType, STRIPE_LINKS } from "@/lib/pricing";
 import {
   Star, Globe, FileText, Calendar, MessageSquare, HelpCircle,
   MapPin, BarChart3, Image, ShoppingCart, Users, Workflow,
@@ -20,6 +20,7 @@ interface FeatureItem {
   title: LangObj;
   desc: LangObj;
   price: string;
+  key: string;
 }
 
 const featureIcons: Record<string, any> = {
@@ -87,6 +88,7 @@ const fixedPriceAddons: FeatureItem[] = fixedPriceFeatures.map(f => ({
   title: featureTitles[f.key] || { en: f.name, zh: f.name },
   desc: featureDescs[f.key] || { en: "", zh: "" },
   price: formatPriceByType(f),
+  key: f.key,
 }));
 
 const customQuoteFeatures: FeatureItem[] = customQuoteFeaturesList.map(f => ({
@@ -94,11 +96,13 @@ const customQuoteFeatures: FeatureItem[] = customQuoteFeaturesList.map(f => ({
   title: featureTitles[f.key] || { en: f.name, zh: f.name },
   desc: featureDescs[f.key] || { en: "", zh: "" },
   price: formatPriceByType(f),
+  key: f.key,
 }));
 
 const FeatureCard = ({ item, lang }: { item: FeatureItem; lang: "en" | "zh" }) => {
   const Icon = item.icon;
   const isCustom = item.price.includes("Starting") || item.price.includes("Custom");
+  const stripeLink = STRIPE_LINKS[item.key];
   return (
     <div className="rounded-2xl border border-border bg-background p-6 shadow-sm flex flex-col h-full">
       <div className="w-12 h-12 rounded-xl flex items-center justify-center mb-4" style={{ background: "hsl(275 51% 46% / 0.1)" }}>
@@ -111,6 +115,25 @@ const FeatureCard = ({ item, lang }: { item: FeatureItem; lang: "en" | "zh" }) =
           {item.price}
         </span>
       </div>
+      {stripeLink && (
+        <a
+          href={stripeLink}
+          target="_blank"
+          rel="noopener noreferrer"
+          className="mt-3 w-full inline-flex items-center justify-center rounded-full px-5 py-2.5 text-sm font-semibold text-white transition-all hover:scale-[1.02] active:scale-[0.97]"
+          style={{ backgroundColor: "#7F37AE" }}
+        >
+          {isCustom ? (lang === "en" ? "Get Started" : "開始") : (lang === "en" ? "Add to My Website" : "添加到我的網站")}
+        </a>
+      )}
+      {!stripeLink && isCustom && (
+        <a
+          href="/#contact"
+          className="mt-3 w-full inline-flex items-center justify-center rounded-full px-5 py-2.5 text-sm font-semibold border-2 border-foreground/20 text-foreground hover:bg-foreground hover:text-background transition-all active:scale-[0.97]"
+        >
+          {lang === "en" ? "Request Quote" : "請求報價"}
+        </a>
+      )}
     </div>
   );
 };

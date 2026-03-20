@@ -1,7 +1,7 @@
 import React from "react";
 import { useLanguage } from "@/contexts/LanguageContext";
 import { translations, t } from "@/lib/translations";
-import { PRICING, formatPrice, formatStartingAtPlus } from "@/lib/pricing";
+import { PRICING, formatPrice, formatStartingAtPlus, STRIPE_LINKS } from "@/lib/pricing";
 import ScrollReveal from "./ScrollReveal";
 import { Check, Star } from "lucide-react";
 import { motion } from "framer-motion";
@@ -43,7 +43,7 @@ const plans = [
     },
     cta: { en: "Claim My FREE Previews", zh: "获取FREE预览" },
     ctaSub: { en: "No credit card required. No obligation.", zh: "无需信用卡。无任何义务。" },
-    ctaHref: "/#contact",
+    ctaHref: STRIPE_LINKS["preview-access"],
     isPremium: false,
   },
   {
@@ -78,7 +78,7 @@ const plans = [
     },
     cta: { en: "Claim My FREE Previews", zh: "获取FREE预览" },
     ctaSub: { en: "No credit card required. No obligation.", zh: "无需信用卡。无任何义务。" },
-    ctaHref: "/#contact",
+    ctaHref: STRIPE_LINKS["launch-ready"],
     isPremium: false,
   },
   {
@@ -115,7 +115,7 @@ const plans = [
     },
     cta: { en: "Request Strategy Consultation", zh: "申请策略咨询" },
     ctaSub: null,
-    ctaHref: "/#contact",
+    ctaHref: STRIPE_LINKS["growth-optimized"],
     isPremium: true,
   },
 ];
@@ -219,10 +219,11 @@ const Pricing = () => {
 
                   {/* CTA area — pushed to bottom */}
                   <div className="mt-6 flex flex-col items-center">
-                    <MagneticButton
-                      as="a"
+                    <a
                       href={plan.ctaHref}
-                      className={`w-full inline-flex items-center justify-center rounded-full px-6 py-3 text-sm font-semibold transition-all ${
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className={`w-full inline-flex items-center justify-center rounded-full px-6 py-3 text-sm font-semibold transition-all active:scale-[0.97] ${
                         isHero
                           ? "btn-brand text-base py-3.5"
                           : plan.isPremium
@@ -231,7 +232,7 @@ const Pricing = () => {
                       }`}
                     >
                       {t(plan.cta, lang)}
-                    </MagneticButton>
+                    </a>
                     {plan.ctaSub && (
                       <p className="mt-2 text-xs text-muted-foreground">
                         {t(plan.ctaSub, lang)}

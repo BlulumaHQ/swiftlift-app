@@ -7,7 +7,7 @@ import ScrollReveal from "@/components/ScrollReveal";
 import MagneticButton from "@/components/MagneticButton";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
-import { PRICING, formatPrice } from "@/lib/pricing";
+import { PRICING, formatPrice, STRIPE_LINKS } from "@/lib/pricing";
 import {
   Check, Zap, Search, Palette, Share2, Shield, Target,
   Rocket, Star, MessageCircle, Package
@@ -224,13 +224,15 @@ const AddonsContent = () => {
                     </ul>
 
                     <div className="mt-6">
-                      <Link
-                        to="/#contact"
-                        className="w-full inline-flex items-center justify-center rounded-full px-6 py-3 text-sm font-semibold text-white transition-all hover:scale-[1.02]"
+                      <a
+                        href={STRIPE_LINKS[PRICING.addons[i].key]}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="w-full inline-flex items-center justify-center rounded-full px-6 py-3 text-sm font-semibold text-white transition-all hover:scale-[1.02] active:scale-[0.97]"
                         style={{ backgroundColor: "#7F37AE" }}
                       >
                         {lang === "en" ? "Add to My Website" : "添加到我的網站"}
-                      </Link>
+                      </a>
                     </div>
                   </div>
                 </ScrollReveal>
@@ -298,7 +300,7 @@ const AddonsContent = () => {
                     <div className="mt-5">
                       <Link
                         to="/#contact"
-                        className="w-full inline-flex items-center justify-center rounded-full px-6 py-3 text-sm font-semibold text-white transition-all hover:scale-[1.02]"
+                        className="w-full inline-flex items-center justify-center rounded-full px-6 py-3 text-sm font-semibold text-white transition-all hover:scale-[1.02] active:scale-[0.97]"
                         style={{ backgroundColor: "#7F37AE" }}
                       >
                         {lang === "en" ? "Get This Bundle" : "獲取此套餐"}
