@@ -118,8 +118,8 @@ export const translations = {
       {
         title: { en: "Starter", zh: "入門版" },
         subtitle: { en: "1–2 Pages", zh: "1–2 頁" },
-        price: "$350",
-        originalPrice: "$800",
+        price: "$299",
+        originalPrice: null,
         features: {
           en: ["1–2 Pages", "Clean Modern Design", "Mobile Responsive", "Contact Form Setup", "Brand Color Integration", "Fast Performance Loading"],
           zh: ["1–2 頁", "簡潔現代設計", "移動端自適應", "聯繫表單配置", "品牌配色融合", "高性能載入"],
@@ -128,10 +128,10 @@ export const translations = {
       {
         title: { en: "Growth", zh: "成長版" },
         subtitle: { en: "3–7 Pages", zh: "3–7 頁" },
-        price: "$550",
-        originalPrice: "$1,200",
+        price: "$499",
+        originalPrice: null,
         badge: { en: "Most Popular", zh: "最受歡迎" },
-        subtext: { en: "Save $650 — Launch Pricing", zh: "節省$650 — 上線優惠" },
+        subtext: null,
         features: {
           en: ["3–7 Pages", "Modern Design", "Mobile Responsive", "Contact Form + Map + Social", "Brand Color Integration", "Fast Performance Loading"],
           zh: ["3–7 頁", "現代設計", "移動端自適應", "聯繫表單 + 地圖 + 社交", "品牌配色融合", "高性能載入"],
@@ -139,13 +139,13 @@ export const translations = {
       },
       {
         title: { en: "Custom", zh: "定制版" },
-        subtitle: { en: "Up to 20 Pages", zh: "最多20頁" },
-        price: "$1,500+",
-        originalPrice: "$2,500",
+        subtitle: { en: "Custom Solutions", zh: "定制方案" },
+        price: "$4,999+",
+        originalPrice: null,
         bottomNote: { en: "Complex needs? Request a custom quote.", zh: "複雜需求？申請定制報價。" },
         features: {
-          en: ["Up to 20 Pages", "Custom Design", "Mobile Responsive", "Advanced Integrations", "Deep Brand Strategy", "Fast Performance Loading"],
-          zh: ["最多20頁", "定制設計", "移動端自適應", "高級集成功能", "深度品牌策略", "高性能載入"],
+          en: ["Custom Page Count", "Custom Design", "Mobile Responsive", "Advanced Integrations", "Deep Brand Strategy", "Fast Performance Loading"],
+          zh: ["自訂頁面數", "定制設計", "移動端自適應", "高級集成功能", "深度品牌策略", "高性能載入"],
         },
       },
     ],
@@ -347,18 +347,18 @@ export const translations = {
       {
         title: { en: "Brand Identity Package", zh: "品牌形象套餐" },
         desc: { en: "Strengthen your visual identity with a professional brand system aligned with your new website.", zh: "透過與新網站相配的專業品牌體系來增強您的視覺形象。" },
-        price: "$700",
-        standalone: { en: "(Standalone projects start from $1200)", zh: "（獨立項目起價$1200）" },
+        price: "$499",
+        standalone: null,
         features: {
-          en: ["3 logo concepts", "3 revision rounds", "Primary + secondary logo", "Basic brand guideline"],
-          zh: ["3個標誌方案", "3輪修改", "主標誌 + 輔助標誌", "基礎品牌指南"],
+          en: ["Logo refinement system", "Color palette definition", "Typography hierarchy", "Brand usage guide (PDF)"],
+          zh: ["標誌優化系統", "色彩調色板定義", "排版層次結構", "品牌使用指南（PDF）"],
         },
       },
       {
         title: { en: "Advanced SEO Setup", zh: "高級SEO設置" },
         desc: { en: "Improve visibility and search readiness beyond the basic foundation.", zh: "超越基礎提升搜索可見度和搜索準備度。" },
-        price: "$250",
-        standalone: { en: "(Standalone SEO setup starts from $500)", zh: "（獨立SEO設置起價$500）" },
+        price: "$299",
+        standalone: null,
         features: {
           en: ["On-page SEO structure", "Meta titles & descriptions", "Schema setup", "Basic keyword mapping", "Sitemap optimization"],
           zh: ["頁面SEO結構", "Meta標題和描述", "Schema設置", "基礎關鍵詞映射", "站點地圖優化"],
@@ -367,17 +367,17 @@ export const translations = {
       {
         title: { en: "Hosting & Management", zh: "託管與管理" },
         desc: { en: "Let us handle the technical side while you focus on growing your business.", zh: "讓我們處理技術細節，您專注於發展業務。" },
-        price: "$84/yr",
+        price: "$100/yr",
         standalone: null,
         features: {
-          en: ["Managed Netlify hosting", "Domain setup assistance", "SSL configuration", "1–2 minor updates/month", "Basic monitoring support"],
-          zh: ["託管式Netlify主機", "網域設置協助", "SSL配置", "每月1-2次小更新", "基礎監控支持"],
+          en: ["Managed hosting environment", "SSL configuration", "Domain setup assistance", "3 minor content edits per year", "Basic monitoring support"],
+          zh: ["託管式主機環境", "SSL配置", "網域設置協助", "每年3次小更新", "基礎監控支持"],
         },
       },
       {
         title: { en: "Performance Optimization", zh: "性能優化" },
         desc: { en: "Enhance speed and user experience for stronger engagement.", zh: "提升速度和使用者體驗以增強互動性。" },
-        price: "$180",
+        price: "$199",
         standalone: null,
         features: {
           en: ["Image optimization", "Code minification", "Load performance tuning", "Core Web Vitals improvements"],
@@ -405,36 +405,30 @@ export const translations = {
       },
       {
         title: { en: "Managed Hosting & Maintenance", zh: "託管主機與維護" },
-        price: "$84/yr",
-        altPrice: "or $10/mo",
+        price: "$100/yr",
+        altPrice: "or $12/mo",
         paragraph: { en: "We handle everything. You focus on your business.", zh: "我們處理一切。您專注於業務。" },
         button: { en: "Choose Managed Hosting", zh: "選擇託管主機" },
         features: {
-          en: ["Managed hosting environment", "SSL & deployment handled", "Domain setup assistance", "1–2 minor updates per month", "Basic monitoring"],
-          zh: ["託管式主機環境", "SSL和部署處理", "網域設置協助", "每月1-2次小更新", "基礎監控"],
+          en: ["Managed hosting environment", "SSL & deployment handled", "Domain setup assistance", "3 minor content edits per year", "Basic monitoring"],
+          zh: ["託管式主機環境", "SSL和部署處理", "網域設置協助", "每年3次小更新", "基礎監控"],
         },
       },
-    ],
-    stepsHeadline: { en: "What Happens Next", zh: "接下來會發生什麼" },
-    steps: [
-      { title: { en: "Confirm Hosting Option", zh: "確認託管方案" }, desc: { en: "Choose free or managed hosting.", zh: "選擇免費或託管主機。" } },
-      { title: { en: "Deployment & Setup", zh: "部署與設置" }, desc: { en: "We deploy and configure everything.", zh: "我們部署並配置一切。" } },
-      { title: { en: "Website Goes Live", zh: "網站正式上線" }, desc: { en: "Your website goes live within days.", zh: "您的網站在數天內正式上線。" } },
     ],
     upgradesHeadline: { en: "Optional Upgrades", zh: "可選升級" },
     exclusiveRate: { en: "Website Client Exclusive Rate", zh: "網站客戶專享價" },
     upgrades: [
       {
         title: { en: "Brand Identity Package", zh: "品牌形象套餐" },
-        price: "$700",
+        price: "$499",
         features: {
-          en: ["3 logo concepts", "3 revision rounds", "Primary + secondary logo", "Basic brand guideline"],
-          zh: ["3個標誌方案", "3輪修改", "主標誌 + 輔助標誌", "基礎品牌指南"],
+          en: ["Logo refinement system", "Color palette definition", "Typography hierarchy", "Brand usage guide (PDF)"],
+          zh: ["標誌優化系統", "色彩調色板定義", "排版層次結構", "品牌使用指南（PDF）"],
         },
       },
       {
         title: { en: "Advanced SEO Setup", zh: "高級SEO設置" },
-        price: "$250",
+        price: "$299",
         features: {
           en: ["On-page SEO structure", "Meta titles & descriptions", "Schema setup", "Basic keyword mapping", "Sitemap optimization"],
           zh: ["頁面SEO結構", "Meta標題和描述", "Schema設置", "基礎關鍵詞映射", "站點地圖優化"],
@@ -442,7 +436,7 @@ export const translations = {
       },
       {
         title: { en: "Performance Optimization", zh: "性能優化" },
-        price: "$180",
+        price: "$199",
         features: {
           en: ["Image optimization", "Code minification", "Load performance tuning", "Core Web Vitals improvements"],
           zh: ["圖片優化", "代碼壓縮", "載入性能調優", "核心網頁指標改進"],

@@ -7,6 +7,7 @@ import ScrollReveal from "@/components/ScrollReveal";
 import MagneticButton from "@/components/MagneticButton";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
+import { PRICING, formatPrice } from "@/lib/pricing";
 import {
   Check, Zap, Search, Palette, Share2, Shield, Target,
   Rocket, Star, MessageCircle, Package
@@ -42,7 +43,7 @@ const upgrades: Addon[] = [
     title: { en: "Performance Optimization", zh: "性能優化" },
     desc: { en: "Make your website load faster and perform better across all devices.", zh: "讓您的網站在所有設備上加載更快、性能更佳。" },
     why: { en: "Speed directly impacts conversion. Every second of delay costs you customers.", zh: "速度直接影響轉化率。每一秒的延遲都會讓您失去客戶。" },
-    price: "$199",
+    price: formatPrice(PRICING.addons[0].price),
     features: {
       en: ["Image compression & optimization", "Asset minification & caching", "Performance tuning adjustments", "Core Web Vitals improvement"],
       zh: ["圖片壓縮和優化", "資源最小化和緩存", "性能調優", "核心網頁指標改進"],
@@ -54,7 +55,7 @@ const upgrades: Addon[] = [
     title: { en: "SEO Optimization", zh: "SEO優化" },
     desc: { en: "Get found on Google with proper structure and search-friendly setup.", zh: "通過正確的結構和搜索友好設置讓Google找到您。" },
     why: { en: "Better indexing means more organic traffic — customers finding you without ads.", zh: "更好的索引意味著更多的自然流量——客戶無需廣告即可找到您。" },
-    price: "$299",
+    price: formatPrice(PRICING.addons[1].price),
     features: {
       en: ["Meta title & description setup", "Sitemap generation & submission", "Search console configuration", "Schema markup implementation"],
       zh: ["Meta標題和描述設置", "站點地圖生成和提交", "搜索控制台配置", "Schema標記實現"],
@@ -65,7 +66,7 @@ const upgrades: Addon[] = [
     title: { en: "Social Media Launch Kit", zh: "社交媒體啟動套件" },
     desc: { en: "Launch your new website with professional social content ready to post.", zh: "用專業的社交內容發布您的新網站。" },
     why: { en: "A coordinated launch across platforms multiplies your website's impact.", zh: "跨平台的協調發布會成倍增加您網站的影響力。" },
-    price: "$299",
+    price: formatPrice(PRICING.addons[2].price),
     features: {
       en: ["Profile image formatting (up to 3 platforms)", "3 cover/banner designs", "3 launch post templates", "1 reusable branded template", "5 highlight icons"],
       zh: ["個人資料圖片格式化（最多3個平台）", "3個封面/橫幅設計", "3個發布帖子模板", "1個可重複使用的品牌模板", "5個亮點圖標"],
@@ -77,7 +78,7 @@ const upgrades: Addon[] = [
     title: { en: "Brand Identity Package", zh: "品牌形象套餐" },
     desc: { en: "Build a stronger first impression with a refined brand identity system.", zh: "通過精緻的品牌識別系統建立更強的第一印象。" },
     why: { en: "A consistent brand builds customer confidence and increases conversion across every touchpoint.", zh: "一致的品牌建立客戶信心，並在每個接觸點提高轉化率。" },
-    price: "$499",
+    price: formatPrice(PRICING.addons[3].price),
     features: {
       en: ["Logo refinement system", "Color palette definition", "Typography hierarchy", "Brand usage guide (PDF)"],
       zh: ["標誌優化系統", "色彩調色板定義", "排版層次結構", "品牌使用指南（PDF）"],

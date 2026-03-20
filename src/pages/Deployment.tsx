@@ -4,6 +4,7 @@ import { LanguageProvider } from "@/contexts/LanguageContext";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import CustomCursor from "@/components/CustomCursor";
+import { PRICING, formatPrice } from "@/lib/pricing";
 import { Check, Shield, Palette, Search, Zap, Share2, Lock, ChevronDown, User, Building2, Mail, AlertCircle } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -23,8 +24,8 @@ interface Addon {
 const ADDONS: Addon[] = [
   {
     id: "performance",
-    name: "Performance Optimization",
-    price: 199,
+    name: PRICING.addons[0].name,
+    price: PRICING.addons[0].price,
     outcome: "Improve loading speed and website performance for a better user experience and stronger conversion.",
     why: "Speed improves conversion rates and search ranking.",
     included: [
@@ -38,8 +39,8 @@ const ADDONS: Addon[] = [
   },
   {
     id: "seo",
-    name: "SEO Optimization",
-    price: 299,
+    name: PRICING.addons[1].name,
+    price: PRICING.addons[1].price,
     outcome: "Improve your visibility on Google with stronger structure and search-friendly setup.",
     why: "Better indexing helps customers find you organically.",
     included: [
@@ -52,8 +53,8 @@ const ADDONS: Addon[] = [
   },
   {
     id: "social",
-    name: "Social Media Launch Kit",
-    price: 299,
+    name: PRICING.addons[2].name,
+    price: PRICING.addons[2].price,
     outcome: "Get ready-to-use social visuals and launch content to promote your new website.",
     why: "Consistency builds recognition and authority.",
     included: [
@@ -68,8 +69,8 @@ const ADDONS: Addon[] = [
   },
   {
     id: "brand",
-    name: "Brand Package",
-    price: 499,
+    name: PRICING.addons[3].name,
+    price: PRICING.addons[3].price,
     outcome: "Build a stronger first impression with a cleaner and more professional brand identity.",
     why: "A consistent brand increases customer confidence and conversion.",
     included: [
@@ -87,12 +88,12 @@ const HOSTING_OPTIONS = [
   {
     value: "free" as const,
     label: "Included Hosting",
-    price: "$0",
+    price: formatPrice(PRICING.hosting.freeHosting.price),
     period: "",
     badge: null,
     description: "Hosted under SwiftLift infrastructure.",
     details: [
-      "Additional revisions beyond included scope are $25 per submission",
+      `Additional revisions beyond included scope are ${formatPrice(PRICING.fees.additionalRevision.price)} per submission`,
       "No priority response time",
       "No included content edits",
       "Site remains active unless manually removed",
@@ -101,7 +102,7 @@ const HOSTING_OPTIONS = [
   {
     value: "monthly" as const,
     label: "Managed Hosting",
-    price: "$12",
+    price: formatPrice(PRICING.hosting.managedMonthly.price),
     period: "/month",
     badge: null,
     description: "Dedicated hosting under your own domain.",
@@ -116,9 +117,9 @@ const HOSTING_OPTIONS = [
   {
     value: "yearly" as const,
     label: "Managed Hosting",
-    price: "$100",
+    price: formatPrice(PRICING.hosting.managedYearly.price),
     period: "/year",
-    badge: "Best Value — Save $44/yr",
+    badge: `Best Value — Save $${PRICING.hosting.managedMonthly.price * 12 - PRICING.hosting.managedYearly.price}/yr`,
     description: "Same benefits as monthly with annual savings.",
     details: [
       "SSL certificate included",
@@ -132,18 +133,18 @@ const HOSTING_OPTIONS = [
 
 const COMPARE_ROWS = [
   {
-    label: "Included Hosting (Free)",
-    note: "Best for budget • $25 per revision submission",
+    label: `Included Hosting (Free)`,
+    note: `Best for budget • ${formatPrice(PRICING.fees.additionalRevision.price)} per revision submission`,
     value: "free",
   },
   {
-    label: "Managed Monthly ($12/mo)",
+    label: `Managed Monthly (${formatPrice(PRICING.hosting.managedMonthly.price)}/mo)`,
     note: "Best for flexibility • cancel anytime",
     value: "monthly",
   },
   {
-    label: "Managed Yearly ($100/yr)",
-    note: "Best value • save $44 vs monthly",
+    label: `Managed Yearly (${formatPrice(PRICING.hosting.managedYearly.price)}/yr)`,
+    note: `Best value • save $${PRICING.hosting.managedMonthly.price * 12 - PRICING.hosting.managedYearly.price} vs monthly`,
     value: "yearly",
     badge: "Best Value",
   },
@@ -208,11 +209,11 @@ const DeploymentContent = () => {
     let recurring = 0;
     let recurringLabel = "";
     if (hostingPlan === "monthly") {
-      recurring = 12;
-      recurringLabel = "$12/month";
+      recurring = PRICING.hosting.managedMonthly.price;
+      recurringLabel = `${formatPrice(PRICING.hosting.managedMonthly.price)}/month`;
     } else if (hostingPlan === "yearly") {
-      recurring = 100;
-      recurringLabel = "$100/year";
+      recurring = PRICING.hosting.managedYearly.price;
+      recurringLabel = `${formatPrice(PRICING.hosting.managedYearly.price)}/year`;
     }
     const todayTotal = oneTime + recurring;
     return { oneTime, recurring, recurringLabel, todayTotal };
@@ -264,9 +265,9 @@ const DeploymentContent = () => {
   const hostingLabel = hostingPlan === "free"
     ? "Included (Free)"
     : hostingPlan === "monthly"
-    ? "Managed – $12/mo"
+    ? `Managed – ${formatPrice(PRICING.hosting.managedMonthly.price)}/mo`
     : hostingPlan === "yearly"
-    ? "Managed – $100/yr"
+    ? `Managed – ${formatPrice(PRICING.hosting.managedYearly.price)}/yr`
     : "Not selected";
 
   const OrderSummary = ({ compact = false }: { compact?: boolean }) => (
@@ -325,7 +326,7 @@ const DeploymentContent = () => {
 
       <div className="mt-4 text-[11px] text-muted-foreground leading-relaxed space-y-1">
         <p>Hosting subscriptions begin immediately upon payment.</p>
-        <p>If cancelled, your website remains active for 30 days before suspension. Reactivation fee: $50.</p>
+        <p>If cancelled, your website remains active for 30 days before suspension. Reactivation fee: {formatPrice(PRICING.fees.reactivationFee.price)}.</p>
       </div>
 
       <motion.button

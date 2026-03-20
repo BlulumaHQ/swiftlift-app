@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState, useCallback, useMemo } from "react";
 import { useSearchParams, Link } from "react-router-dom";
+import { PRICING, formatPrice } from "@/lib/pricing";
 import { LanguageProvider, useLanguage } from "@/contexts/LanguageContext";
 import { translations, t } from "@/lib/translations";
 import Header from "@/components/Header";
@@ -464,7 +465,7 @@ const IndexContent = () => {
   const multiPagePlans = [
     {
       name: lang === "en" ? "Preview Access" : "預覽版",
-      price: "$299",
+      price: formatPrice(PRICING.websitePackages.multiPage[0].price),
       features: lang === "en"
         ? ["Live website preview", "Clean professional layout", "Delivered with no risk", "Up to 7 pages", "Mobile responsive design", "SEO-friendly structure"]
         : ["即時網站預覽", "簡潔專業版面", "零風險交付", "最多7頁", "移動端響應式設計", "SEO友好結構"],
@@ -472,7 +473,7 @@ const IndexContent = () => {
     },
     {
       name: lang === "en" ? "Launch Ready" : "上線版",
-      price: "$499",
+      price: formatPrice(PRICING.websitePackages.multiPage[1].price),
       badge: lang === "en" ? "Most Popular" : "最受歡迎",
       features: lang === "en"
         ? ["Fully polished website", "Bug fixes and final content refinement", "Ready for real business use", "Up to 7 pages", "Mobile responsive design", "SEO-friendly structure"]
@@ -481,7 +482,7 @@ const IndexContent = () => {
     },
     {
       name: lang === "en" ? "Growth Optimized" : "成長版",
-      price: "$799",
+      price: formatPrice(PRICING.websitePackages.multiPage[2].price),
       features: lang === "en"
         ? ["Conversion-focused layout", "Optimized structure and stronger content flow", "Designed to generate more leads", "Up to 7 pages", "Mobile responsive design", "SEO-friendly structure"]
         : ["轉化導向版面", "優化結構和更強的內容流程", "設計以產生更多潛在客戶", "最多7頁", "移動端響應式設計", "SEO友好結構"],
@@ -490,9 +491,9 @@ const IndexContent = () => {
   ];
 
   const singlePagePlans = [
-    { name: lang === "en" ? "Preview" : "預覽版", price: "$199" },
-    { name: lang === "en" ? "Launch" : "上線版", price: "$349" },
-    { name: lang === "en" ? "Growth" : "成長版", price: "$549" },
+    { name: lang === "en" ? "Preview" : "預覽版", price: formatPrice(PRICING.websitePackages.singlePage[0].price) },
+    { name: lang === "en" ? "Launch" : "上線版", price: formatPrice(PRICING.websitePackages.singlePage[1].price) },
+    { name: lang === "en" ? "Growth" : "成長版", price: formatPrice(PRICING.websitePackages.singlePage[2].price) },
   ];
 
   return (

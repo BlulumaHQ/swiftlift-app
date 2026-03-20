@@ -1,6 +1,7 @@
 import { useState, useEffect, useMemo } from "react";
 import { useSearchParams } from "react-router-dom";
 import { supabase } from "@/integrations/supabase/client";
+import { PRICING, formatPrice } from "@/lib/pricing";
 import { LanguageProvider } from "@/contexts/LanguageContext";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -30,8 +31,8 @@ const GROWTH_INCLUDED = [
 type Tier = "starter" | "growth";
 
 const TIER_CONFIG: Record<Tier, { label: string; price: number; priceLabel: string; included: string[]; delivery: string }> = {
-  starter: { label: "Starter Build Package", price: 350, priceLabel: "$350", included: STARTER_INCLUDED, delivery: "3–5 business days after receiving all content." },
-  growth: { label: "Growth Build Package", price: 550, priceLabel: "$550", included: GROWTH_INCLUDED, delivery: "5–7 business days after receiving all content." },
+  starter: { label: "Starter Build Package", price: PRICING.websitePackages.multiPage[0].price, priceLabel: formatPrice(PRICING.websitePackages.multiPage[0].price), included: STARTER_INCLUDED, delivery: "3–5 business days after receiving all content." },
+  growth: { label: "Growth Build Package", price: PRICING.websitePackages.multiPage[1].price, priceLabel: formatPrice(PRICING.websitePackages.multiPage[1].price), included: GROWTH_INCLUDED, delivery: "5–7 business days after receiving all content." },
 };
 
 const PayBuildContent = () => {
