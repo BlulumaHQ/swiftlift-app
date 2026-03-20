@@ -88,6 +88,7 @@ const fixedPriceAddons: FeatureItem[] = fixedPriceFeatures.map(f => ({
   title: featureTitles[f.key] || { en: f.name, zh: f.name },
   desc: featureDescs[f.key] || { en: "", zh: "" },
   price: formatPriceByType(f),
+  key: f.key,
 }));
 
 const customQuoteFeatures: FeatureItem[] = customQuoteFeaturesList.map(f => ({
@@ -95,6 +96,7 @@ const customQuoteFeatures: FeatureItem[] = customQuoteFeaturesList.map(f => ({
   title: featureTitles[f.key] || { en: f.name, zh: f.name },
   desc: featureDescs[f.key] || { en: "", zh: "" },
   price: formatPriceByType(f),
+  key: f.key,
 }));
 
 const FeatureCard = ({ item, lang }: { item: FeatureItem; lang: "en" | "zh" }) => {
