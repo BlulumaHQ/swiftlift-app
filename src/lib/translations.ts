@@ -347,18 +347,18 @@ export const translations = {
       {
         title: { en: "Brand Identity Package", zh: "品牌形象套餐" },
         desc: { en: "Strengthen your visual identity with a professional brand system aligned with your new website.", zh: "透過與新網站相配的專業品牌體系來增強您的視覺形象。" },
-        price: "$700",
-        standalone: { en: "(Standalone projects start from $1200)", zh: "（獨立項目起價$1200）" },
+        price: "$499",
+        standalone: null,
         features: {
-          en: ["3 logo concepts", "3 revision rounds", "Primary + secondary logo", "Basic brand guideline"],
-          zh: ["3個標誌方案", "3輪修改", "主標誌 + 輔助標誌", "基礎品牌指南"],
+          en: ["Logo refinement system", "Color palette definition", "Typography hierarchy", "Brand usage guide (PDF)"],
+          zh: ["標誌優化系統", "色彩調色板定義", "排版層次結構", "品牌使用指南（PDF）"],
         },
       },
       {
         title: { en: "Advanced SEO Setup", zh: "高級SEO設置" },
         desc: { en: "Improve visibility and search readiness beyond the basic foundation.", zh: "超越基礎提升搜索可見度和搜索準備度。" },
-        price: "$250",
-        standalone: { en: "(Standalone SEO setup starts from $500)", zh: "（獨立SEO設置起價$500）" },
+        price: "$299",
+        standalone: null,
         features: {
           en: ["On-page SEO structure", "Meta titles & descriptions", "Schema setup", "Basic keyword mapping", "Sitemap optimization"],
           zh: ["頁面SEO結構", "Meta標題和描述", "Schema設置", "基礎關鍵詞映射", "站點地圖優化"],
@@ -367,17 +367,17 @@ export const translations = {
       {
         title: { en: "Hosting & Management", zh: "託管與管理" },
         desc: { en: "Let us handle the technical side while you focus on growing your business.", zh: "讓我們處理技術細節，您專注於發展業務。" },
-        price: "$84/yr",
+        price: "$100/yr",
         standalone: null,
         features: {
-          en: ["Managed Netlify hosting", "Domain setup assistance", "SSL configuration", "1–2 minor updates/month", "Basic monitoring support"],
-          zh: ["託管式Netlify主機", "網域設置協助", "SSL配置", "每月1-2次小更新", "基礎監控支持"],
+          en: ["Managed hosting environment", "SSL configuration", "Domain setup assistance", "3 minor content edits per year", "Basic monitoring support"],
+          zh: ["託管式主機環境", "SSL配置", "網域設置協助", "每年3次小更新", "基礎監控支持"],
         },
       },
       {
         title: { en: "Performance Optimization", zh: "性能優化" },
         desc: { en: "Enhance speed and user experience for stronger engagement.", zh: "提升速度和使用者體驗以增強互動性。" },
-        price: "$180",
+        price: "$199",
         standalone: null,
         features: {
           en: ["Image optimization", "Code minification", "Load performance tuning", "Core Web Vitals improvements"],
