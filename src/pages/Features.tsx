@@ -20,6 +20,7 @@ interface FeatureItem {
   title: LangObj;
   desc: LangObj;
   price: string;
+  key: string;
 }
 
 const featureIcons: Record<string, any> = {
