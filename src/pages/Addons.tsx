@@ -300,7 +300,7 @@ const AddonsContent = () => {
                     <div className="mt-5">
                       <Link
                         to="/#contact"
-                        className="w-full inline-flex items-center justify-center rounded-full px-6 py-3 text-sm font-semibold text-white transition-all hover:scale-[1.02]"
+                        className="w-full inline-flex items-center justify-center rounded-full px-6 py-3 text-sm font-semibold text-white transition-all hover:scale-[1.02] active:scale-[0.97]"
                         style={{ backgroundColor: "#7F37AE" }}
                       >
                         {lang === "en" ? "Get This Bundle" : "獲取此套餐"}
