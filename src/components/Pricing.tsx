@@ -43,7 +43,7 @@ const plans = [
     },
     cta: { en: "Claim My FREE Previews", zh: "获取FREE预览" },
     ctaSub: { en: "No credit card required. No obligation.", zh: "无需信用卡。无任何义务。" },
-    ctaHref: "/#contact",
+    ctaHref: STRIPE_LINKS["preview-access"],
     isPremium: false,
   },
   {
