@@ -456,10 +456,10 @@ const IndexContent = () => {
   ];
 
   const faqItems = [
-    { q: lang === "en" ? "Is the preview really free?" : "預覽真的免費嗎？", a: lang === "en" ? "Yes. We create your preview directions first so you can review the concept before deciding whether to move forward." : "是的。我們先創建您的預覽方向，讓您在決定是否繼續之前審查概念。" },
-    { q: lang === "en" ? "How long does it take to receive my previews?" : "收到預覽需要多長時間？", a: lang === "en" ? "Most preview requests are prepared within 24 to 48 hours depending on project volume and urgency." : "大多數預覽請求會根據項目量和緊急程度在24至48小時內準備好。" },
-    { q: lang === "en" ? "What if I need changes after choosing a version?" : "選擇版本後需要修改怎麼辦？", a: lang === "en" ? "Once you move forward with a paid package, we refine the chosen direction and prepare it for launch." : "一旦您選擇付費套餐繼續，我們將完善所選方向並準備上線。" },
-    { q: lang === "en" ? "What if I don't have a website yet?" : "如果我還沒有網站怎麼辦？", a: lang === "en" ? "SwiftLift is currently optimized for businesses with an existing website. If you need a brand new site, you can explore our custom build options." : "SwiftLift 目前針對已有網站的企業進行了優化。如果您需要全新網站，可以探索我們的定制建設選項。" },
+    { q: lang === "en" ? "Is the preview really free?" : "預覽真的免費嗎？", a: lang === "en" ? "Yes. We build two working website previews first. You only pay if you decide to move forward." : "是的。我們先建兩個可運行的網站預覽。只有在您決定繼續時才需付款。" },
+    { q: lang === "en" ? "How long does it take?" : "需要多長時間？", a: lang === "en" ? "You'll receive your two previews within 48 hours. Once you choose, we launch within 3 days." : "48小時內收到預覽。選定後3天內上線。" },
+    { q: lang === "en" ? "What if I need changes after choosing?" : "選擇後需要修改怎麼辦？", a: lang === "en" ? "Each package includes revisions. Additional revisions are $25 per submission." : "每個套餐包含修改。額外修改每次$25。" },
+    { q: lang === "en" ? "Do I need an existing website?" : "需要現有網站嗎？", a: lang === "en" ? "SwiftLift is built for businesses with existing websites. For new sites, explore our custom build options." : "SwiftLift 針對已有網站的企業。全新網站請探索定制選項。" },
   ];
 
   const multiPagePlans = [
