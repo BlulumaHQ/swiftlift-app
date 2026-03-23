@@ -515,11 +515,11 @@ const IndexContent = () => {
         />
 
         <div className="relative z-10 max-w-6xl mx-auto px-6">
-          <div className="grid grid-cols-1 lg:grid-cols-[1fr_1fr] gap-10 lg:gap-14 items-start">
+          <div className="grid grid-cols-1 lg:grid-cols-[3fr_2fr] gap-10 lg:gap-14 items-start">
             {/* Left: Copy */}
             <div className="text-white pt-2 lg:pt-6">
-              <h1 className="text-[2.4rem] md:text-[clamp(2.8rem,5.5vw,4.2rem)] font-black leading-[1.08] font-display tracking-tight whitespace-pre-line">
-                {lang === "en" ? "No Calls. No Waiting.\nJust 2 Live Website Previews." : "無需電話。無需等待。\n直接獲得2個即時網站預覽。"}
+              <h1 className="text-[2.4rem] md:text-[clamp(2.8rem,5.5vw,4.2rem)] font-black leading-[1.08] font-display tracking-tight">
+                {lang === "en" ? (<>No Calls.<br />No Waiting.<br />Just 2 Live<br />Website&nbsp;Previews.</>) : (<>無需電話。<br />無需等待。<br />直接獲得2個<br />即時網站預覽。</>)}
               </h1>
 
               <p className="mt-5 text-base md:text-lg text-white/80 leading-relaxed max-w-lg">
