@@ -603,7 +603,7 @@ const IndexContent = () => {
             {[
               { title: lang === "en" ? "Enter Your Website" : "輸入您的網站", desc: lang === "en" ? "Share your current URL. Takes 30 seconds." : "分享您的網站URL。僅需30秒。" },
               { title: lang === "en" ? "Receive 2 Live Previews" : "收到2個即時預覽", desc: lang === "en" ? "We build two fully working website directions within 48 hours." : "48小時內建好兩個可運行的網站方向。" },
-              { title: lang === "en" ? "Choose & Launch" : "選擇並上線", desc: lang === "en" ? "Pick your favorite. We launch it in 3 days." : "選擇您喜歡的。3天內上線。" },
+              { title: lang === "en" ? "Choose & Launch" : "選擇並上線", desc: lang === "en" ? "Pick your favorite. We handle everything — hosting, setup, and launch." : "選擇您喜歡的。我們處理一切——託管、設置和上線。" },
             ].map((s, i) => (
               <div key={i} className="flex flex-col items-center text-center">
                 <span className="w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold text-white" style={{ background: "hsl(275 51% 46%)" }}>
