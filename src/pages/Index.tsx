@@ -31,8 +31,12 @@ declare global {
 }
 
 /* ── Inline Success Section ── */
-const SuccessSection = ({ email, isDark }: { email: string; isDark?: boolean }) => {
+const SuccessSection = ({ email, clientId, isDark }: { email: string; clientId?: string; isDark?: boolean }) => {
   const { lang } = useLanguage();
+  const [copied, setCopied] = useState(false);
+  const [copiedClientId, setCopiedClientId] = useState(false);
+  const [cloudLink, setCloudLink] = useState("");
+  const projectId = clientId || useMemo(() => getOrCreateProjectId(), []);
   const [copied, setCopied] = useState(false);
   const [cloudLink, setCloudLink] = useState("");
   const projectId = useMemo(() => getOrCreateProjectId(), []);
