@@ -517,26 +517,26 @@ const IndexContent = () => {
           <div className="grid grid-cols-1 lg:grid-cols-[1fr_1fr] gap-10 lg:gap-14 items-start">
             {/* Left: Copy */}
             <div className="text-white pt-2 lg:pt-6">
-              <h1 className="text-[2.4rem] md:text-[clamp(2.8rem,5.5vw,4.2rem)] font-black leading-[1.08] font-display tracking-tight">
-                {lang === "en" ? "See Your New Website\nBefore You Pay" : "先看您的\n新網站\n再付款"}
+              <h1 className="text-[2.4rem] md:text-[clamp(2.8rem,5.5vw,4.2rem)] font-black leading-[1.08] font-display tracking-tight whitespace-pre-line">
+                {lang === "en" ? "No Calls. No Waiting.\nJust 2 Live Website Previews." : "無需電話。無需等待。\n直接獲得2個即時網站預覽。"}
               </h1>
 
               <p className="mt-5 text-base md:text-lg text-white/80 leading-relaxed max-w-lg">
                 {lang === "en"
-                  ? "Get 2 free website previews for your business before making any decision."
-                  : "在做任何決定之前，獲取2個免費網站預覽。"}
+                  ? "Get 2 fully working websites before you pay anything."
+                  : "在支付任何費用之前，獲得2個完全可運行的網站。"}
               </p>
               <p className="mt-2 text-sm md:text-base text-white/60 leading-relaxed max-w-lg">
                 {lang === "en"
-                  ? "Compare two different design directions and choose what actually works for your customers."
-                  : "比較兩個不同的設計方向，選擇真正適合您客戶的方案。"}
+                  ? "If you like it → we launch in 3 days. If not → you pay nothing."
+                  : "滿意 → 3天內上線。不滿意 → 您不用付費。"}
               </p>
 
               <ul className="mt-8 space-y-3">
                 {[
-                  lang === "en" ? "2 preview versions to compare" : "2個預覽版本可比較",
+                  lang === "en" ? "2 live website previews to compare" : "2個即時網站預覽可比較",
                   lang === "en" ? "No upfront payment required" : "無需預付款",
-                  lang === "en" ? "Upgrade only when you're ready" : "準備好了再升級",
+                  lang === "en" ? "Launch in 3 days if you love it" : "滿意的話3天內上線",
                 ].map((item, i) => (
                   <li key={i} className="flex items-center gap-3 text-sm md:text-base text-white/85">
                     <Check size={16} className="flex-shrink-0" style={{ color: "hsl(275 51% 46%)" }} />
@@ -544,6 +544,10 @@ const IndexContent = () => {
                   </li>
                 ))}
               </ul>
+
+              <p className="mt-6 text-xs text-white/40">
+                {lang === "en" ? "Limited preview slots available today" : "今日預覽名額有限"}
+              </p>
             </div>
 
             {/* Right: Intake Form — stronger visual weight */}
