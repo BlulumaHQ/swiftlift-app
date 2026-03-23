@@ -76,7 +76,7 @@ const plans = [
         "性能优化",
       ],
     },
-    cta: { en: "Claim My FREE Previews", zh: "获取FREE预览" },
+    cta: { en: "Get My 2 Free Previews", zh: "獲取我的2個免費預覽" },
     ctaSub: { en: "No credit card required. No obligation.", zh: "无需信用卡。无任何义务。" },
     ctaHref: STRIPE_LINKS["launch-ready"],
     isPremium: false,
