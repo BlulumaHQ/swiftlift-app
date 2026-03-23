@@ -791,7 +791,7 @@ const IndexContent = () => {
             {lang === "en" ? "Simple, Transparent Pricing" : "簡單透明的定價"}
           </h2>
           <p className="mt-2 text-muted-foreground text-sm text-center">
-            {lang === "en" ? "Only upgrade once you've seen the preview and feel confident." : "只有在看過預覽並有信心後才升級。"}
+            {lang === "en" ? "You only pay after you've seen your previews and feel confident." : "只有在看過預覽並有信心後才付款。"}
           </p>
 
           {/* Single page note */}
