@@ -29,6 +29,7 @@ const IntakeForm = () => {
   const intake = translations.intake;
   const fields = intake.fields;
   const [submitted, setSubmitted] = useState(false);
+  const [submittedClientId, setSubmittedClientId] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState("");
   const [searchParams, setSearchParams] = useSearchParams();
