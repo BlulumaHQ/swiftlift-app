@@ -11,6 +11,7 @@ import { Check, ChevronDown, ArrowRight, ArrowDown, Plus, Star, ChevronLeft, Che
 import { motion, AnimatePresence } from "framer-motion";
 import { supabase } from "@/integrations/supabase/client";
 import { getOrCreateProjectId } from "@/lib/projectId";
+import { externalSupabase, generateClientId } from "@/lib/externalSupabase";
 
 import portfolioTrade from "@/assets/portfolio-trade.jpg";
 import portfolioWellness from "@/assets/portfolio-wellness-new.jpg";
