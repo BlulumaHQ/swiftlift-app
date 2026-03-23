@@ -39,7 +39,7 @@ function getRevisionRules(plan: PlanTier) {
     case "C":
       return {
         included:
-          "Includes unlimited revisions during the active production phase.\nProduction phase ends upon final approval and website launch.\nPost-launch updates are billed at $25 per request.",
+          "Includes unlimited revisions during the active production phase.\nProduction phase ends upon final approval and website launch.\nPost-launch updates are billed at $45 per request.",
         showExtra: false,
       };
     default:
