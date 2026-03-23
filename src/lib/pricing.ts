@@ -202,7 +202,7 @@ export const PRICING = {
     managedYearly: {
       key: "managed-yearly",
       name: "Managed Yearly",
-      price: 100,
+      price: 135,
       interval: "year",
       type: "subscription",
     },
