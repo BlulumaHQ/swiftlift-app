@@ -365,7 +365,7 @@ export const translations = {
       {
         title: { en: "Hosting & Management", zh: "託管與管理" },
         desc: { en: "We handle everything. You focus on your business.", zh: "我們處理一切。您專注於業務。" },
-        price: "$100/yr",
+        price: "$135/yr",
         standalone: null,
         features: {
           en: ["Managed hosting environment", "SSL configuration", "Domain setup assistance", "3 minor content edits per year", "Basic monitoring support"],
