@@ -41,7 +41,7 @@ serve(async (req) => {
           price_data: {
             currency: "usd",
             product_data: { name: "Additional Revision Request" },
-            unit_amount: 2500,
+            unit_amount: 4500,
           },
           quantity: 1,
         },

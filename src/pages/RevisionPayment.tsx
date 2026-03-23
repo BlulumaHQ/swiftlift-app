@@ -100,7 +100,7 @@ const RevisionPaymentContent = () => {
             transition={{ duration: 0.5, delay: 0.1 }}
             className="mt-3 text-white/80 text-sm md:text-base leading-relaxed max-w-xl mx-auto"
           >
-            Additional revision request — $25 per submission
+            Additional revision request — $45 per submission
           </motion.p>
         </div>
       </section>
@@ -162,7 +162,7 @@ const RevisionPaymentContent = () => {
           <div className="rounded-2xl border-2 border-border bg-background p-5 shadow-sm">
             <div className="flex items-center justify-between mb-2">
               <h3 className="text-base font-bold text-foreground font-display">Revision Fee</h3>
-              <span className="text-2xl font-black text-foreground font-display">$25 <span className="text-sm font-medium text-muted-foreground">USD</span></span>
+              <span className="text-2xl font-black text-foreground font-display">$45 <span className="text-sm font-medium text-muted-foreground">USD</span></span>
             </div>
             <p className="text-xs text-muted-foreground">
               This covers one additional consolidated revision submission.
@@ -181,7 +181,7 @@ const RevisionPaymentContent = () => {
             style={{ backgroundColor: "hsl(275 51% 46%)" }}
           >
             <CreditCard size={18} />
-            {isSubmitting ? "Redirecting…" : "Pay $25 & Continue"}
+            {isSubmitting ? "Redirecting…" : "Pay $45 & Continue"}
           </button>
 
           <p className="text-xs text-center text-muted-foreground">

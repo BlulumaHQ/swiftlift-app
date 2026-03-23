@@ -195,14 +195,14 @@ export const PRICING = {
     managedMonthly: {
       key: "managed-monthly",
       name: "Managed Monthly",
-      price: 12,
+      price: 15,
       interval: "month",
       type: "subscription",
     },
     managedYearly: {
       key: "managed-yearly",
       name: "Managed Yearly",
-      price: 100,
+      price: 135,
       interval: "year",
       type: "subscription",
     },
@@ -217,7 +217,7 @@ export const PRICING = {
     additionalRevision: {
       key: "additional-revision",
       name: "Additional Revision",
-      price: 25,
+      price: 45,
       unit: "submission",
       type: "one_time_per_unit",
     },
