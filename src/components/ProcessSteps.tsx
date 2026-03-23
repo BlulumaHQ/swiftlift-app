@@ -5,8 +5,8 @@ import { FilePlus2, Monitor, ClipboardCheck, Blocks, Rocket, ArrowRight, ArrowDo
 import { motion, useInView } from "framer-motion";
 import { useRef, useState } from "react";
 
-const icons = [FilePlus2, Monitor, ClipboardCheck, Blocks, Rocket];
-const numbers = ["01", "02", "03", "04", "05"];
+const icons = [FilePlus2, Monitor, Rocket];
+const numbers = ["01", "02", "03"];
 
 const ProcessSteps = () => {
   const { lang } = useLanguage();
