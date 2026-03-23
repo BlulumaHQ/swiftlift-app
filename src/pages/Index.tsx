@@ -757,9 +757,8 @@ const IndexContent = () => {
       {/* ═══ 5. WHY SWIFTLIFT ═══ */}
       <section className="py-16 md:py-24" style={{ background: "hsl(var(--surface-sunken))" }}>
         <div className="max-w-5xl mx-auto px-6">
-           <h2 className="text-[clamp(1.8rem,4vw,2.8rem)] font-black text-foreground font-display text-center">
+          <h2 className="text-[clamp(1.8rem,4vw,2.8rem)] font-black text-foreground font-display text-center">
             {lang === "en" ? "Why SwiftLift?" : "為什麼選擇 SwiftLift？"}
-          </h2>
           </h2>
           <div className="mt-10 grid grid-cols-1 sm:grid-cols-2 gap-5">
             {whyCards.map((card, i) => {
