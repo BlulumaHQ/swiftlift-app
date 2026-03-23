@@ -60,7 +60,7 @@ const SupportContent = () => {
             transition={{ duration: 0.5 }}
             className="text-[clamp(2rem,4.5vw,3rem)] font-black text-white font-display leading-tight"
           >
-            {lang === "en" ? "Support" : "支持"}
+            {lang === "en" ? "Get Help from SwiftLift" : "獲取SwiftLift幫助"}
           </motion.h1>
           <motion.p
             initial={{ opacity: 0, y: 20 }}
