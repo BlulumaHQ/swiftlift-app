@@ -11,6 +11,7 @@ import { Check, ChevronDown, ArrowRight, ArrowDown, Plus, Star, ChevronLeft, Che
 import { motion, AnimatePresence } from "framer-motion";
 import { supabase } from "@/integrations/supabase/client";
 import { getOrCreateProjectId } from "@/lib/projectId";
+import { externalSupabase, generateClientId } from "@/lib/externalSupabase";
 
 import portfolioTrade from "@/assets/portfolio-trade.jpg";
 import portfolioWellness from "@/assets/portfolio-wellness-new.jpg";
@@ -30,11 +31,13 @@ declare global {
 }
 
 /* ── Inline Success Section ── */
-const SuccessSection = ({ email, isDark }: { email: string; isDark?: boolean }) => {
+const SuccessSection = ({ email, clientId, isDark }: { email: string; clientId?: string; isDark?: boolean }) => {
   const { lang } = useLanguage();
   const [copied, setCopied] = useState(false);
+  const [copiedClientId, setCopiedClientId] = useState(false);
   const [cloudLink, setCloudLink] = useState("");
-  const projectId = useMemo(() => getOrCreateProjectId(), []);
+  const fallbackProjectId = useMemo(() => getOrCreateProjectId(), []);
+  const projectId = clientId || fallbackProjectId;
 
   return (
     <motion.div
@@ -185,6 +188,7 @@ const MultiStepIntake = ({ variant = "hero" }: { variant?: "hero" | "cta" }) => 
   const [processingStep, setProcessingStep] = useState(0);
   const [submitted, setSubmitted] = useState(false);
   const [submittedEmail, setSubmittedEmail] = useState("");
+  const [submittedClientId, setSubmittedClientId] = useState("");
   const [submitError, setSubmitError] = useState("");
 
   const isDark = variant === "cta";
@@ -257,29 +261,62 @@ const MultiStepIntake = ({ variant = "hero" }: { variant?: "hero" | "cta" }) => 
     }
 
     try {
-      // Send emails via Resend edge function (ONLY email system)
-      const { error } = await supabase.functions.invoke("send-intake-confirmation", {
-        body: {
-          client_name: businessName,
-          business_name: businessName,
-          client_email: email,
-          website: url,
-          service: timeline ? `Timeline: ${timeline}` : "Preview Request",
-          message: websiteYouLike ? `Inspiration: ${websiteYouLike}` : "",
-          form_type: "preview",
+      const clientId = generateClientId();
+
+      // Insert into external Supabase "leads" table
+      const { error: leadsError } = await externalSupabase.from("leads").insert({
+        client_id: clientId,
+        name: businessName,
+        email,
+        company_name: businessName,
+        website_url: url,
+        timeline: timeline || null,
+        notes: websiteYouLike ? `Inspiration: ${websiteYouLike}` : null,
+      });
+      if (leadsError) throw new Error(leadsError.message);
+
+      // Insert into external Supabase "form_submissions" table
+      const { error: formError } = await externalSupabase.from("form_submissions").insert({
+        client_id: clientId,
+        payload: {
+          name: businessName,
+          email,
+          company_name: businessName,
+          website_url: url,
+          timeline,
+          website_you_like: websiteYouLike || null,
+          submitted_at: new Date().toISOString(),
         },
       });
+      if (formError) throw new Error(formError.message);
 
-      if (error) throw new Error(error.message || "Email sending failed");
+      // Also send confirmation email via existing edge function
+      try {
+        await supabase.functions.invoke("send-intake-confirmation", {
+          body: {
+            client_name: businessName,
+            business_name: businessName,
+            client_email: email,
+            website: url,
+            service: timeline ? `Timeline: ${timeline}` : "Preview Request",
+            message: websiteYouLike ? `Inspiration: ${websiteYouLike}` : "",
+            form_type: "preview",
+          },
+        });
+      } catch (emailErr) {
+        // Email is non-critical — don't block submission
+        console.warn("Email send failed (non-critical):", emailErr);
+      }
 
-      // Facebook Lead tracking — only after confirmed success
+      // Facebook Lead tracking
       if (typeof window.fbq !== "undefined") {
         window.fbq("track", "Lead");
       }
 
-      // Store email and show inline success
+      // Store and show success
       try { sessionStorage.setItem("swiftlift_email", email); } catch {}
       setSubmittedEmail(email);
+      setSubmittedClientId(clientId);
       setSubmitted(true);
       setShowProcessing(false);
     } catch (err) {
@@ -299,7 +336,7 @@ const MultiStepIntake = ({ variant = "hero" }: { variant?: "hero" | "cta" }) => 
 
   // Show inline success state
   if (submitted) {
-    return <SuccessSection email={submittedEmail} isDark={isDark} />;
+    return <SuccessSection email={submittedEmail} clientId={submittedClientId} isDark={isDark} />;
   }
 
   if (showProcessing) {
