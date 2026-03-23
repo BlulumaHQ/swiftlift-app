@@ -336,7 +336,7 @@ const MultiStepIntake = ({ variant = "hero" }: { variant?: "hero" | "cta" }) => 
 
   // Show inline success state
   if (submitted) {
-    return <SuccessSection email={submittedEmail} isDark={isDark} />;
+    return <SuccessSection email={submittedEmail} clientId={submittedClientId} isDark={isDark} />;
   }
 
   if (showProcessing) {
