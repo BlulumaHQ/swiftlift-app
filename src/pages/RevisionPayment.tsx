@@ -181,7 +181,7 @@ const RevisionPaymentContent = () => {
             style={{ backgroundColor: "hsl(275 51% 46%)" }}
           >
             <CreditCard size={18} />
-            {isSubmitting ? "Redirecting…" : "Pay $25 & Continue"}
+            {isSubmitting ? "Redirecting…" : "Pay $45 & Continue"}
           </button>
 
           <p className="text-xs text-center text-muted-foreground">

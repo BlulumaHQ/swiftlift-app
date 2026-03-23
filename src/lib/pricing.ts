@@ -217,7 +217,7 @@ export const PRICING = {
     additionalRevision: {
       key: "additional-revision",
       name: "Additional Revision",
-      price: 25,
+      price: 45,
       unit: "submission",
       type: "one_time_per_unit",
     },
