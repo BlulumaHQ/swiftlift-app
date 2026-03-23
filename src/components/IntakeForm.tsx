@@ -83,25 +83,64 @@ const IntakeForm = () => {
     const website = websiteRaw ? normalizeUrl(websiteRaw) : "";
 
     try {
-      const { error } = await supabase.functions.invoke("send-intake-confirmation", {
-        body: {
-          client_name: formData.get("name") as string,
-          business_name: formData.get("subject") as string,
-          client_email: formData.get("email") as string,
-          website,
-          service: formData.get("timeline") || "Preview Request",
-          message: formData.get("message") || "",
-          form_type: "preview",
+      const name = formData.get("name") as string;
+      const businessName = formData.get("subject") as string;
+      const email = formData.get("email") as string;
+      const timeline = (formData.get("timeline") as string) || "";
+      const message = (formData.get("message") as string) || "";
+
+      const clientId = generateClientId();
+
+      // Insert into external Supabase "leads" table
+      const { error: leadsError } = await externalSupabase.from("leads").insert({
+        client_id: clientId,
+        name,
+        email,
+        company_name: businessName,
+        website_url: website,
+        timeline: timeline || null,
+        notes: message || null,
+      });
+      if (leadsError) throw new Error(leadsError.message);
+
+      // Insert into external Supabase "form_submissions" table
+      const { error: formError } = await externalSupabase.from("form_submissions").insert({
+        client_id: clientId,
+        payload: {
+          name,
+          email,
+          company_name: businessName,
+          website_url: website,
+          timeline,
+          message,
+          submitted_at: new Date().toISOString(),
         },
       });
+      if (formError) throw new Error(formError.message);
 
-      if (error) throw new Error(error.message || "Email sending failed");
+      // Also send confirmation email (non-critical)
+      try {
+        await supabase.functions.invoke("send-intake-confirmation", {
+          body: {
+            client_name: name,
+            business_name: businessName,
+            client_email: email,
+            website,
+            service: timeline || "Preview Request",
+            message,
+            form_type: "preview",
+          },
+        });
+      } catch (emailErr) {
+        console.warn("Email send failed (non-critical):", emailErr);
+      }
 
       // Facebook Lead tracking
       if (typeof window.fbq !== "undefined") {
         window.fbq("track", "Lead");
       }
 
+      setSubmittedClientId(clientId);
       setSubmitted(true);
     } catch (err) {
       console.error("Submission error:", err);
