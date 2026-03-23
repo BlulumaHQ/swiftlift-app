@@ -113,7 +113,7 @@ const plans = [
         "增长就绪基础设施",
       ],
     },
-    cta: { en: "Request Strategy Consultation", zh: "申请策略咨询" },
+    cta: { en: "Get My 2 Free Previews", zh: "獲取我的2個免費預覽" },
     ctaSub: null,
     ctaHref: STRIPE_LINKS["growth-optimized"],
     isPremium: true,
