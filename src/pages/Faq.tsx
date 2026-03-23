@@ -16,12 +16,16 @@ const faqItems = [
     a: { en: "Once you select your preferred preview direction, you choose your package and submit payment. We then expand that concept into your full website build based on your selected tier.\n\nAll builds follow SwiftLift's structured system for speed, clarity, and consistency.", zh: "选定您心仪的预览方向后，选择套餐并提交付款。我们随后会根据您选择的套餐等级，将该方案扩展为完整的网站建设。\n\n所有建设均遵循SwiftLift的结构化系统，确保速度、清晰度和一致性。" },
   },
   {
+    q: { en: "What happens to my current hosting or website?", zh: "我目前的托管或网站会怎样？" },
+    a: { en: "We take care of everything for you.\n\nIf your website is on Wix, Squarespace, or WordPress, we rebuild and launch your new site seamlessly.\n\nNo need to cancel anything upfront. Your existing website stays live until you're ready to switch.\n\nWe guide you step by step to ensure a smooth transition.", zh: "我们会为您处理一切。\n\n如果您的网站在Wix、Squarespace或WordPress上，我们会无缝地重建并启动您的新网站。\n\n无需提前取消任何东西。您的现有网站会保持上线状态，直到您准备好切换。\n\n我们会一步步引导您，确保顺利过渡。" },
+  },
+  {
     q: { en: "Can I use my own domain name?", zh: "可以使用自己的域名吗？" },
     a: { en: "Yes. You may use your existing domain or purchase a new one. You remain the owner of your domain at all times.\n\nWe provide simple instructions to connect your domain during deployment.", zh: "可以。您可以使用现有域名或购买新域名。域名始终归您所有。\n\n我们会提供简单的说明，帮助您在部署过程中连接域名。" },
   },
   {
     q: { en: "Do I need hosting?", zh: "我需要托管吗？" },
-    a: { en: "We provide a free Netlify hosting option or an optional managed hosting upgrade. Hosting subscriptions begin upon activation.\n\nYou may also choose to host independently if preferred.", zh: "我们提供免费的Netlify托管方案或可选的托管主机升级。托管订阅在激活后开始。\n\n如果您愿意，也可以选择自行托管。" },
+    a: { en: "We provide a free hosting option or an optional managed hosting upgrade. Hosting subscriptions begin upon activation.\n\nYou may also choose to host independently if preferred.", zh: "我们提供免费的托管方案或可选的托管主机升级。托管订阅在激活后开始。\n\n如果您愿意，也可以选择自行托管。" },
   },
   {
     q: { en: "What about refunds?", zh: "关于退款政策？" },

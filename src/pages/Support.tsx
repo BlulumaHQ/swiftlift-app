@@ -69,8 +69,8 @@ const SupportContent = () => {
             className="mt-4 text-white/80 text-base md:text-lg leading-relaxed max-w-xl mx-auto"
           >
             {lang === "en"
-              ? "Send us a message and we'll get back to you as soon as possible."
-              : "给我们发送消息，我们会尽快回复您。"}
+              ? "Have a question or need assistance? Send us a message and we'll get back to you as soon as possible."
+              : "有問題或需要幫助？給我們發送消息，我們會盡快回覆您。"}
           </motion.p>
         </div>
       </section>
