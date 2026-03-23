@@ -589,7 +589,7 @@ const IndexContent = () => {
                   <h3 className="mt-3 text-sm font-bold text-foreground font-display">{s.title}</h3>
                   <p className="mt-2 text-xs text-muted-foreground leading-relaxed">{s.desc}</p>
                 </div>
-                {i < 3 && (
+                {i < 2 && (
                   <div className="flex items-center px-3 pt-4">
                     <ArrowRight size={20} className="text-muted-foreground/25" strokeWidth={1.5} />
                   </div>
