@@ -195,7 +195,7 @@ export const PRICING = {
     managedMonthly: {
       key: "managed-monthly",
       name: "Managed Monthly",
-      price: 12,
+      price: 15,
       interval: "month",
       type: "subscription",
     },
