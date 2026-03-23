@@ -82,7 +82,7 @@ const ProcessSteps = () => {
                     <p className="mt-2 text-sm text-white/60 leading-relaxed max-w-[160px] relative whitespace-pre-line" style={{ zIndex: 10 }}>{t(step.desc, lang)}</p>
                   </div>
                 </ScrollReveal>
-                {i < 4 && (
+                {i < process.steps.length - 1 && (
                   <div className="flex-shrink-0 -mx-1" style={{ zIndex: 10 }}>
                     <ArrowRight size={22} style={{ color: "hsl(214 58% 60%)" }} />
                   </div>
