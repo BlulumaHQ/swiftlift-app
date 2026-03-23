@@ -458,7 +458,8 @@ const IndexContent = () => {
   const faqItems = [
     { q: lang === "en" ? "Is the preview really free?" : "預覽真的免費嗎？", a: lang === "en" ? "Yes. We build two working website previews first. You only pay if you decide to move forward." : "是的。我們先建兩個可運行的網站預覽。只有在您決定繼續時才需付款。" },
     { q: lang === "en" ? "How long does it take?" : "需要多長時間？", a: lang === "en" ? "You'll receive your two previews within 48 hours. Once you choose, we launch within 3 days." : "48小時內收到預覽。選定後3天內上線。" },
-    { q: lang === "en" ? "What if I need changes after choosing?" : "選擇後需要修改怎麼辦？", a: lang === "en" ? "Each package includes revisions. Additional revisions are $25 per submission." : "每個套餐包含修改。額外修改每次$25。" },
+    { q: lang === "en" ? "What happens to my current website?" : "我目前的網站會怎樣？", a: lang === "en" ? "We handle everything. Your current website stays live until you're ready to switch. We guide the entire transition step by step." : "我們處理一切。您的現有網站在您準備好切換之前保持上線。我們會一步步引導整個過渡。" },
+    { q: lang === "en" ? "What if I need changes after choosing?" : "選擇後需要修改怎麼辦？", a: lang === "en" ? "Each package includes revisions. Additional revisions are $45 per submission." : "每個套餐包含修改。額外修改每次$45。" },
     { q: lang === "en" ? "Do I need an existing website?" : "需要現有網站嗎？", a: lang === "en" ? "SwiftLift is built for businesses with existing websites. For new sites, explore our custom build options." : "SwiftLift 針對已有網站的企業。全新網站請探索定制選項。" },
   ];
 
@@ -579,7 +580,7 @@ const IndexContent = () => {
             {[
               { title: lang === "en" ? "Enter Your Website" : "輸入您的網站", desc: lang === "en" ? "Share your current URL. Takes 30 seconds." : "分享您的網站URL。僅需30秒。" },
               { title: lang === "en" ? "Receive 2 Live Previews" : "收到2個即時預覽", desc: lang === "en" ? "We build two fully working website directions within 48 hours." : "48小時內我們建好兩個完全可運行的網站方向。" },
-              { title: lang === "en" ? "Choose & Launch" : "選擇並上線", desc: lang === "en" ? "Pick your favorite. We launch it in 3 days." : "選擇您喜歡的。3天內上線。" },
+              { title: lang === "en" ? "Choose & Launch" : "選擇並上線", desc: lang === "en" ? "Pick your favorite. We handle everything — hosting, setup, and launch." : "選擇您喜歡的。我們處理一切——託管、設置和上線。" },
             ].map((s, i) => (
               <div key={i} className="flex items-start">
                 <div className="flex flex-col items-center text-center max-w-[200px]">
@@ -603,7 +604,7 @@ const IndexContent = () => {
             {[
               { title: lang === "en" ? "Enter Your Website" : "輸入您的網站", desc: lang === "en" ? "Share your current URL. Takes 30 seconds." : "分享您的網站URL。僅需30秒。" },
               { title: lang === "en" ? "Receive 2 Live Previews" : "收到2個即時預覽", desc: lang === "en" ? "We build two fully working website directions within 48 hours." : "48小時內建好兩個可運行的網站方向。" },
-              { title: lang === "en" ? "Choose & Launch" : "選擇並上線", desc: lang === "en" ? "Pick your favorite. We launch it in 3 days." : "選擇您喜歡的。3天內上線。" },
+              { title: lang === "en" ? "Choose & Launch" : "選擇並上線", desc: lang === "en" ? "Pick your favorite. We handle everything — hosting, setup, and launch." : "選擇您喜歡的。我們處理一切——託管、設置和上線。" },
             ].map((s, i) => (
               <div key={i} className="flex flex-col items-center text-center">
                 <span className="w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold text-white" style={{ background: "hsl(275 51% 46%)" }}>
@@ -614,6 +615,10 @@ const IndexContent = () => {
               </div>
             ))}
           </div>
+
+          <p className="mt-8 text-xs text-muted-foreground text-center">
+            {lang === "en" ? "Your existing website stays untouched until you're ready to switch." : "您的現有網站在您準備好切換之前保持不變。"}
+          </p>
         </div>
       </section>
 
@@ -636,6 +641,25 @@ const IndexContent = () => {
           >
             {lang === "en" ? "Get My 2 Free Previews" : "獲取我的2個免費預覽"}
           </button>
+        </div>
+      </section>
+
+      {/* ═══ 3.5. WE HANDLE EVERYTHING ═══ */}
+      <section className="py-16 md:py-24 bg-background">
+        <div className="max-w-3xl mx-auto px-6 text-center">
+          <h2 className="text-[clamp(1.8rem,4vw,2.8rem)] font-black text-foreground font-display">
+            {lang === "en" ? "We Handle Everything" : "我們處理一切"}
+          </h2>
+          <p className="mt-4 text-base text-muted-foreground max-w-lg mx-auto leading-relaxed">
+            {lang === "en"
+              ? "We take care of hosting, setup, and launch for you. No technical work required."
+              : "我們為您處理託管、設置和上線。無需任何技術工作。"}
+          </p>
+          <p className="mt-3 text-sm text-muted-foreground max-w-lg mx-auto leading-relaxed">
+            {lang === "en"
+              ? "You don't need to move anything yourself — we guide the entire transition step by step. Your current website stays live until you're ready."
+              : "您無需自行遷移任何內容——我們會一步步引導整個過渡過程。您的現有網站在您準備好之前會保持上線狀態。"}
+          </p>
         </div>
       </section>
 
