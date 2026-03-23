@@ -639,6 +639,25 @@ const IndexContent = () => {
         </div>
       </section>
 
+      {/* ═══ 3.5. WE HANDLE EVERYTHING ═══ */}
+      <section className="py-16 md:py-24 bg-background">
+        <div className="max-w-3xl mx-auto px-6 text-center">
+          <h2 className="text-[clamp(1.8rem,4vw,2.8rem)] font-black text-foreground font-display">
+            {lang === "en" ? "We Handle Everything" : "我們處理一切"}
+          </h2>
+          <p className="mt-4 text-base text-muted-foreground max-w-lg mx-auto leading-relaxed">
+            {lang === "en"
+              ? "We take care of hosting, setup, and launch for you. No technical work required."
+              : "我們為您處理託管、設置和上線。無需任何技術工作。"}
+          </p>
+          <p className="mt-3 text-sm text-muted-foreground max-w-lg mx-auto leading-relaxed">
+            {lang === "en"
+              ? "You don't need to move anything yourself — we guide the entire transition step by step. Your current website stays live until you're ready."
+              : "您無需自行遷移任何內容——我們會一步步引導整個過渡過程。您的現有網站在您準備好之前會保持上線狀態。"}
+          </p>
+        </div>
+      </section>
+
       {/* ═══ 4. REAL BUSINESS TRANSFORMATIONS — 2-col carousel ═══ */}
       <section id="portfolio" className="py-16 md:py-24 bg-background">
         <div className="max-w-6xl mx-auto px-6">
