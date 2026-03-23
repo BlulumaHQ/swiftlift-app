@@ -643,10 +643,10 @@ const IndexContent = () => {
       <section id="portfolio" className="py-16 md:py-24 bg-background">
         <div className="max-w-6xl mx-auto px-6">
           <h2 className="text-[clamp(1.8rem,4vw,2.8rem)] font-black text-foreground font-display text-center">
-            {lang === "en" ? "Real Businesses. Reimagined with SwiftLift." : "真實企業。SwiftLift 重新構想。"}
+            {lang === "en" ? "Real Website Transformations" : "真實網站改造"}
           </h2>
           <p className="mt-2 text-muted-foreground text-sm text-center">
-            {lang === "en" ? "See how an outdated website can become two stronger directions before you decide." : "看看過時的網站如何在您決定之前變成兩個更強的方向。"}
+            {lang === "en" ? "Built from real businesses like yours. Each preview is a real, working website — not a mockup." : "為像您一樣的真實企業而建。每個預覽都是真正可運行的網站——不是模型。"}
           </p>
 
           <div
