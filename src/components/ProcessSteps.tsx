@@ -115,7 +115,7 @@ const ProcessSteps = () => {
                     <p className="mt-2 text-sm text-white/60 leading-relaxed whitespace-pre-line">{t(step.desc, lang)}</p>
                   </div>
                 </ScrollReveal>
-                {i < 4 && (
+                {i < process.steps.length - 1 && (
                   <div className="py-3">
                     <ArrowDown size={20} style={{ color: "hsl(214 58% 60%)" }} />
                   </div>
