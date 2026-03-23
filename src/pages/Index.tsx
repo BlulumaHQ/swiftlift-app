@@ -614,6 +614,10 @@ const IndexContent = () => {
               </div>
             ))}
           </div>
+
+          <p className="mt-8 text-xs text-muted-foreground text-center">
+            {lang === "en" ? "Your existing website stays untouched until you're ready to switch." : "您的現有網站在您準備好切換之前保持不變。"}
+          </p>
         </div>
       </section>
 
