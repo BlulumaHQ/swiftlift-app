@@ -31,8 +31,8 @@ export const translations = {
   },
   problemSolution: {
     headline: {
-      en: "Why Businesses Are Switching\nto SwiftLift",
-      zh: "為什麼企業正在\n轉向 SwiftLift",
+      en: "Skip the\nAgency Process",
+      zh: "跳過\n機構流程",
     },
     body: {
       en: "Other agencies want to talk first. We just build it for you.",
@@ -42,9 +42,8 @@ export const translations = {
     outdatedItems: [
       { en: "Book a demo", zh: "預約演示" },
       { en: "Wait days or weeks", zh: "等待數天或數週" },
-      { en: "Endless revisions", zh: "無止境的修改" },
+      { en: "Endless back-and-forth", zh: "無止境的來回溝通" },
       { en: "Unclear pricing", zh: "定價不透明" },
-      { en: "Long commitments", zh: "長期綁定" },
     ],
     rebuildTitle: { en: "SwiftLift", zh: "SwiftLift" },
     rebuildItems: [
@@ -52,7 +51,6 @@ export const translations = {
       { en: "No calls or meetings", zh: "無需電話或會議" },
       { en: "Launch in 3 days", zh: "3天內上線" },
       { en: "Transparent pricing", zh: "透明定價" },
-      { en: "Zero upfront risk", zh: "零前期風險" },
     ],
   },
   why: {
@@ -84,7 +82,7 @@ export const translations = {
       },
       {
         title: { en: "You Choose & Launch", zh: "您選擇並上線" },
-        desc: { en: "Pick your favorite. We launch in 3 days.", zh: "選定方案。3天內上線。" },
+        desc: { en: "Pick your favorite. We handle everything — hosting, setup, and launch.", zh: "選定方案。我們處理一切 — 託管、設置和上線。" },
       },
     ],
   },
@@ -540,7 +538,7 @@ export const translations = {
     steps: [
       { title: { en: "Enter Your Website", zh: "輸入您的網站" }, desc: { en: "Share your current URL. Takes 30 seconds.", zh: "分享您的網站URL。僅需30秒。" } },
       { title: { en: "Receive 2 Live Previews", zh: "收到2個即時預覽" }, desc: { en: "We build two fully working website directions within 48 hours.", zh: "48小時內我們建好兩個完全可運行的網站方向。" } },
-      { title: { en: "Choose & Launch", zh: "選擇並上線" }, desc: { en: "Pick your favorite. We launch it in 3 days.", zh: "選擇您喜歡的。3天內上線。" } },
+      { title: { en: "Choose & Launch", zh: "選擇並上線" }, desc: { en: "Pick your favorite. We handle everything — hosting, setup, and launch.", zh: "選擇您喜歡的。我們處理一切 — 託管、設置和上線。" } },
     ],
     portfolioTitle: { en: "Real Website Transformations", zh: "真實網站改造" },
     portfolioSub: { en: "Built from real businesses like yours. Each preview is a real, working website — not a mockup.", zh: "為像您一樣的真實企業而建。每個預覽都是真正可運行的網站——不是模型。" },
@@ -596,7 +594,7 @@ export const translations = {
     faqItems: [
       { q: { en: "Is the preview really free?", zh: "預覽真的免費嗎？" }, a: { en: "Yes. We build two working website previews first.\nYou only pay if you decide to move forward.", zh: "是的。我們先建兩個可運行的網站預覽。\n只有在您決定繼續時才需付款。" } },
       { q: { en: "How long does it take to launch?", zh: "上線需要多長時間？" }, a: { en: "Once you approve a preview,\nyour website goes live within 3 days.", zh: "一旦您批准預覽，\n您的網站將在3天內上線。" } },
-      { q: { en: "What if I need changes?", zh: "如果我需要修改怎麼辦？" }, a: { en: "Each package includes a defined revision structure.\nAdditional revisions are $25 per submission.", zh: "每個套餐都包含明確的修改結構。\n額外修改每次$25。" } },
+      { q: { en: "What if I need changes?", zh: "如果我需要修改怎麼辦？" }, a: { en: "Each package includes a defined revision structure.\nAdditional revisions are $45 per submission.", zh: "每個套餐都包含明確的修改結構。\n額外修改每次$45。" } },
       { q: { en: "Do I need an existing website?", zh: "需要現有網站嗎？" }, a: { en: "SwiftLift is built for businesses with existing websites.\nFor new sites, explore our custom build options.", zh: "SwiftLift 針對已有網站的企業。\n全新網站請探索我們的定制建設選項。" } },
     ],
     viewFullFaq: { en: "View Full FAQ →", zh: "查看完整FAQ →" },
