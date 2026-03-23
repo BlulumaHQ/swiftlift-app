@@ -458,7 +458,7 @@ const IndexContent = () => {
   const faqItems = [
     { q: lang === "en" ? "Is the preview really free?" : "預覽真的免費嗎？", a: lang === "en" ? "Yes. We build two working website previews first. You only pay if you decide to move forward." : "是的。我們先建兩個可運行的網站預覽。只有在您決定繼續時才需付款。" },
     { q: lang === "en" ? "How long does it take?" : "需要多長時間？", a: lang === "en" ? "You'll receive your two previews within 48 hours. Once you choose, we launch within 3 days." : "48小時內收到預覽。選定後3天內上線。" },
-    { q: lang === "en" ? "What if I need changes after choosing?" : "選擇後需要修改怎麼辦？", a: lang === "en" ? "Each package includes revisions. Additional revisions are $25 per submission." : "每個套餐包含修改。額外修改每次$25。" },
+    { q: lang === "en" ? "What if I need changes after choosing?" : "選擇後需要修改怎麼辦？", a: lang === "en" ? "Each package includes revisions. Additional revisions are $45 per submission." : "每個套餐包含修改。額外修改每次$45。" },
     { q: lang === "en" ? "Do I need an existing website?" : "需要現有網站嗎？", a: lang === "en" ? "SwiftLift is built for businesses with existing websites. For new sites, explore our custom build options." : "SwiftLift 針對已有網站的企業。全新網站請探索定制選項。" },
   ];
 
