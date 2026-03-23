@@ -449,10 +449,10 @@ const IndexContent = () => {
   };
 
   const whyCards = [
-    { icon: Shield, title: lang === "en" ? "No Risk" : "零風險", desc: lang === "en" ? "See your previews first. Move forward only if it feels right." : "先看預覽。感覺對了再繼續。" },
-    { icon: Zap, title: lang === "en" ? "Fast Turnaround" : "快速交付", desc: lang === "en" ? "Get a stronger website direction without waiting through a long agency process." : "無需漫長等待即可獲得更強的網站方向。" },
-    { icon: Target, title: lang === "en" ? "Built for Results" : "注重成效", desc: lang === "en" ? "We redesign with clearer messaging, better structure, and stronger conversion intent." : "我們以更清晰的訊息、更好的結構和更強的轉化意圖進行重新設計。" },
-    { icon: Users, title: lang === "en" ? "Done for You" : "為您完成", desc: lang === "en" ? "You share your website. We handle the strategy, design direction, and heavy lifting." : "您分享您的網站。我們處理策略、設計方向和繁重工作。" },
+    { icon: Shield, title: lang === "en" ? "No Risk" : "零風險", desc: lang === "en" ? "See your previews first. Pay only if you like it." : "先看預覽。滿意才付款。" },
+    { icon: Zap, title: lang === "en" ? "Fast Turnaround" : "快速交付", desc: lang === "en" ? "Get your new website in just 3 days. No long agency process." : "僅需3天即可獲得新網站。無需漫長的機構流程。" },
+    { icon: Target, title: lang === "en" ? "Built for Results" : "注重成效", desc: lang === "en" ? "Two design directions: clean professional or conversion-focused. You pick." : "兩個設計方向：簡潔專業或轉化導向。您來選。" },
+    { icon: Users, title: lang === "en" ? "Done for You" : "為您完成", desc: lang === "en" ? "No calls. No meetings. You share your website. We build the previews." : "無需電話。無需會議。您分享網站。我們建預覽。" },
   ];
 
   const faqItems = [
