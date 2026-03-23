@@ -553,10 +553,10 @@ const IndexContent = () => {
             {/* Right: Intake Form — stronger visual weight */}
             <div className="bg-background rounded-2xl p-7 md:p-10 border border-border/50 shadow-[0_25px_60px_-12px_rgba(0,0,0,0.35)] lg:mt-2">
               <h3 className="text-base font-bold text-foreground font-display mb-1">
-                {lang === "en" ? "Start Your Free Preview" : "開始您的免費預覽"}
+                {lang === "en" ? "Get Your 2 Free Website Previews" : "獲取您的2個免費網站預覽"}
               </h3>
               <p className="text-xs text-muted-foreground mb-5">
-                {lang === "en" ? "Enter your current website to get started." : "輸入您目前的網站以開始。"}
+                {lang === "en" ? "Takes less than 30 seconds. No commitment." : "不到30秒。無需承諾。"}
               </p>
               <MultiStepIntake variant="hero" />
             </div>
