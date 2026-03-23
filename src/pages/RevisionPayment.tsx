@@ -100,7 +100,7 @@ const RevisionPaymentContent = () => {
             transition={{ duration: 0.5, delay: 0.1 }}
             className="mt-3 text-white/80 text-sm md:text-base leading-relaxed max-w-xl mx-auto"
           >
-            Additional revision request — $25 per submission
+            Additional revision request — $45 per submission
           </motion.p>
         </div>
       </section>
