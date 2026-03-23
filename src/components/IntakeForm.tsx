@@ -250,6 +250,14 @@ const IntakeForm = () => {
                   ? "Thank you — we received your request."
                   : "感謝您——我們已收到您的請求。"}
               </h3>
+              {submittedClientId && (
+                <div className="mt-4 inline-flex items-center gap-2 rounded-full border border-border bg-secondary/50 px-5 py-2.5">
+                  <span className="text-sm font-medium text-muted-foreground">
+                    {lang === "en" ? "Client ID:" : "客戶編號："}
+                  </span>
+                  <span className="font-bold text-base tracking-wide font-mono text-foreground">{submittedClientId}</span>
+                </div>
+              )}
               <p className="mt-3 text-muted-foreground">
                 {lang === "en"
                   ? "You can expect your preview concepts within 48 hours."
