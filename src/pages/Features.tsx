@@ -111,7 +111,7 @@ const FeatureCard = ({ item, lang }: { item: FeatureItem; lang: "en" | "zh" }) =
       <h3 className="text-lg font-bold text-foreground font-display">{T(item.title, lang)}</h3>
       <p className="mt-2 text-sm text-muted-foreground leading-relaxed flex-1">{T(item.desc, lang)}</p>
       <div className="mt-4 flex items-center justify-between">
-        <span className={`text-lg font-black font-display ${isCustom ? "text-muted-foreground text-base" : "text-foreground"}`}>
+        <span className={`font-black font-display ${isCustom ? "text-base text-muted-foreground" : "text-xl text-primary"}`}>
           {item.price}
         </span>
       </div>
