@@ -175,7 +175,7 @@ const RevisionSubmitContent = () => {
                     </p>
                     <p className="flex items-start gap-2">
                       <span className="mt-0.5 w-1.5 h-1.5 rounded-full bg-primary flex-shrink-0" />
-                      Additional submissions beyond your included revisions are $25 per request.
+                      Additional submissions beyond your included revisions are $45 per request.
                     </p>
                   </>
                 )}
