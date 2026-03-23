@@ -621,13 +621,13 @@ const IndexContent = () => {
       <section className="py-20 md:py-28" style={{ background: "hsl(var(--surface-sunken))" }}>
         <div className="max-w-3xl mx-auto px-6 text-center">
           <h2 className="text-[clamp(1.8rem,4.5vw,3.2rem)] font-black text-foreground font-display leading-tight">
-            {lang === "en" ? "Let SwiftLift Do the Heavy Lifting for You" : "讓 SwiftLift 為您承擔繁重工作"}
+            {lang === "en" ? "Try It Risk-Free" : "零風險體驗"}
           </h2>
           <p className="mt-4 text-lg md:text-xl text-foreground/80 font-medium">
-            {lang === "en" ? "Create a Website That Your Customers Will Actually Love." : "創建一個您的客戶真正喜歡的網站。"}
+            {lang === "en" ? "You only pay if you like what you see." : "滿意才付款。"}
           </p>
           <p className="mt-4 text-sm text-muted-foreground max-w-lg mx-auto leading-relaxed">
-            {lang === "en" ? "No guesswork. No wasted money. Just real results you can see before you commit." : "不用猜測。不浪費錢。只有在承諾之前就能看到的真實成果。"}
+            {lang === "en" ? "We build first. You decide after. No calls. No meetings. No commitment until you're confident." : "我們先建。您後決定。無需電話。無需會議。有信心了再承諾。"}
           </p>
           <button
             onClick={scrollToIntake}
