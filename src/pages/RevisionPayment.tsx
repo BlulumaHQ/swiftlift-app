@@ -162,7 +162,7 @@ const RevisionPaymentContent = () => {
           <div className="rounded-2xl border-2 border-border bg-background p-5 shadow-sm">
             <div className="flex items-center justify-between mb-2">
               <h3 className="text-base font-bold text-foreground font-display">Revision Fee</h3>
-              <span className="text-2xl font-black text-foreground font-display">$25 <span className="text-sm font-medium text-muted-foreground">USD</span></span>
+              <span className="text-2xl font-black text-foreground font-display">$45 <span className="text-sm font-medium text-muted-foreground">USD</span></span>
             </div>
             <p className="text-xs text-muted-foreground">
               This covers one additional consolidated revision submission.
