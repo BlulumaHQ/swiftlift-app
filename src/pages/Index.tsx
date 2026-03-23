@@ -188,6 +188,7 @@ const MultiStepIntake = ({ variant = "hero" }: { variant?: "hero" | "cta" }) => 
   const [processingStep, setProcessingStep] = useState(0);
   const [submitted, setSubmitted] = useState(false);
   const [submittedEmail, setSubmittedEmail] = useState("");
+  const [submittedClientId, setSubmittedClientId] = useState("");
   const [submitError, setSubmitError] = useState("");
 
   const isDark = variant === "cta";
