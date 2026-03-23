@@ -3,187 +3,246 @@ import { LanguageProvider, useLanguage } from "@/contexts/LanguageContext";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import CustomCursor from "@/components/CustomCursor";
+import ScrollReveal from "@/components/ScrollReveal";
 import { motion } from "framer-motion";
-import { Link } from "react-router-dom";
-import { Server, Shield, Globe, Key } from "lucide-react";
-
-const ClaimPreviewsCTA = () => {
-  const { lang } = useLanguage();
-  return (
-    <div className="flex flex-col items-center gap-3">
-      <a
-        href="/#contact"
-        className="inline-flex items-center justify-center gap-2 rounded-full px-8 py-3.5 text-base font-semibold text-white transition-all hover:scale-105"
-        style={{ backgroundColor: "#7F37AE" }}
-      >
-        {lang === "en" ? "Claim FREE Previews" : "领取免费预览"}
-      </a>
-      <Link
-        to="/deployment"
-        className="text-sm text-muted-foreground hover:text-foreground transition-colors underline underline-offset-2"
-      >
-        {lang === "en" ? "Already a client? Go to Deployment" : "已经是客户？前往部署页面"}
-      </Link>
-    </div>
-  );
-};
+import { Check, ShieldCheck, Headphones, Zap, MonitorSmartphone, RefreshCw } from "lucide-react";
 
 const HostingGuideContent = () => {
   const { lang } = useLanguage();
 
   useEffect(() => {
-    document.title = "Hosting Guide — SwiftLift";
-  }, []);
-
-  const domainSteps = lang === "en"
-    ? [
-        { step: "1", title: "Purchase a Domain", desc: "If you don't already have one, purchase a domain from a registrar like Namecheap, GoDaddy, or Google Domains." },
-        { step: "2", title: "Access DNS Settings", desc: "Log in to your domain registrar and navigate to the DNS settings for your domain." },
-        { step: "3", title: "Point to Hosting", desc: "Update your nameservers or add an A record pointing to your hosting provider (Netlify)." },
-        { step: "4", title: "SSL Auto-Provisioned", desc: "Once DNS propagates (usually within a few hours), your SSL certificate will be automatically activated." },
-      ]
-    : [
-        { step: "1", title: "购买域名", desc: "如果您还没有域名，可以从Namecheap、GoDaddy或Google Domains等注册商购买。" },
-        { step: "2", title: "访问DNS设置", desc: "登录您的域名注册商，导航到域名的DNS设置。" },
-        { step: "3", title: "指向托管", desc: "更新您的域名服务器或添加A记录，指向您的托管提供商（Netlify）。" },
-        { step: "4", title: "SSL自动配置", desc: "DNS传播完成后（通常几小时内），您的SSL证书将自动激活。" },
-      ];
-
-  const ownershipItems = lang === "en"
-    ? [
-        "You own your domain — SwiftLift does not purchase or control your domain on your behalf.",
-        "You control your hosting account — credentials and access remain yours.",
-        "SwiftLift assists with initial setup — we help configure DNS and deploy your site.",
-        "Third-party platform terms apply — hosting providers, domain registrars, and other services have their own terms of service.",
-      ]
-    : [
-        "您拥有您的域名 — SwiftLift不会代您购买或控制您的域名。",
-        "您控制您的托管账户 — 凭据和访问权限归您所有。",
-        "SwiftLift协助初始设置 — 我们帮助配置DNS并部署您的网站。",
-        "第三方平台条款适用 — 托管提供商、域名注册商和其他服务有各自的服务条款。",
-      ];
+    document.title = lang === "en" ? "Managed Hosting — SwiftLift" : "托管主机 — SwiftLift";
+  }, [lang]);
 
   return (
     <main>
-      {/* Hero */}
-      <section className="relative overflow-hidden pt-28 pb-14 md:pt-36 md:pb-20 section-brand-dark">
-        <div className="absolute inset-0 dot-grid opacity-40" />
+      {/* SECTION 1 — HERO */}
+      <section className="relative overflow-hidden pt-32 pb-20 md:pt-44 md:pb-28 section-brand-dark">
+        <div className="absolute inset-0 dot-grid opacity-30" />
         <div className="relative z-10 max-w-3xl mx-auto px-6 text-center">
           <motion.h1
-            initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}
-            className="text-[clamp(2rem,4.5vw,3rem)] font-black text-white font-display leading-tight"
+            initial={{ opacity: 0, y: 24 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6 }}
+            className="text-[clamp(2.2rem,5vw,3.4rem)] font-black text-white font-display leading-[1.15] tracking-tight"
           >
-            {lang === "en" ? "Hosting & Deployment Guide" : "托管与部署指南"}
+            {lang === "en" ? "Stop Worrying About Hosting Forever" : "从此不再为托管烦恼"}
           </motion.h1>
           <motion.p
-            initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.1 }}
-            className="mt-4 text-white/80 text-base md:text-lg leading-relaxed max-w-xl mx-auto"
+            initial={{ opacity: 0, y: 20 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.6, delay: 0.12 }}
+            className="mt-5 text-white/75 text-base md:text-lg leading-relaxed max-w-xl mx-auto"
           >
-            {lang === "en" ? "Understand how your SwiftLift website is launched and managed." : "了解您的SwiftLift网站是如何发布和管理的。"}
+            {lang === "en"
+              ? "We handle everything behind the scenes — so you never have to deal with servers, updates, or technical issues."
+              : "我们在幕后处理一切 — 您无需面对服务器、更新或技术问题。"}
           </motion.p>
-          <div className="mt-8">
-            <ClaimPreviewsCTA />
-          </div>
+          <motion.div
+            initial={{ opacity: 0, y: 16 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: 0.25 }}
+            className="mt-10"
+          >
+            <a
+              href="/#contact"
+              className="inline-flex items-center justify-center rounded-full px-8 py-3.5 text-base font-semibold text-white btn-brand"
+              style={{ backgroundColor: "hsl(275 51% 46%)" }}
+            >
+              {lang === "en" ? "Get My 2 Free Previews" : "获取我的2个免费预览"}
+            </a>
+          </motion.div>
         </div>
       </section>
 
-      {/* Section 1 — Free Hosting */}
-      <section className="py-14 md:py-20 bg-background">
-        <div className="max-w-3xl mx-auto px-6">
-          <div className="flex items-center gap-3 mb-6">
-            <div className="w-12 h-12 rounded-xl flex items-center justify-center" style={{ background: "hsl(275 51% 46% / 0.1)" }}>
-              <Server size={24} style={{ color: "hsl(275 51% 46%)" }} />
+      {/* SECTION 2 — THE PROBLEM */}
+      <section className="py-20 md:py-28 bg-background">
+        <div className="max-w-2xl mx-auto px-6 text-center">
+          <ScrollReveal>
+            <h2 className="text-2xl md:text-3xl font-black text-foreground font-display tracking-tight">
+              {lang === "en" ? "Hosting Shouldn't Be Your Problem" : "托管不应该是您的问题"}
+            </h2>
+            <span className="section-underline section-underline--light mx-auto" />
+          </ScrollReveal>
+          <ScrollReveal delay={0.1}>
+            <div className="mt-10 space-y-5 text-muted-foreground text-base md:text-lg leading-relaxed text-left max-w-lg mx-auto">
+              <p>{lang === "en"
+                ? "Most business owners don't want to deal with hosting. And they shouldn't have to."
+                : "大多数企业主不想处理托管问题。他们也不应该处理。"}</p>
+              <p>{lang === "en"
+                ? "Confusing dashboards, plugin updates, security patches, random downtime — it all adds up to hours wasted on things that shouldn't break in the first place."
+                : "复杂的控制面板、插件更新、安全补丁、随机宕机 — 这些加起来浪费了大量时间在本不应该出问题的事情上。"}</p>
+              <p>{lang === "en"
+                ? "You started a business to serve your customers — not to babysit a server."
+                : "您创业是为了服务客户 — 而不是照看服务器。"}</p>
             </div>
-            <h2 className="text-2xl font-black text-foreground font-display">{lang === "en" ? "Free Hosting Option" : "免费托管方案"}</h2>
-          </div>
-          <div className="rounded-2xl border border-border bg-background p-6 shadow-sm space-y-4">
-            <p className="text-muted-foreground leading-relaxed">
-              {lang === "en" ? "Your SwiftLift website can be hosted for free using Netlify's infrastructure. Here's what's included:" : "您的SwiftLift网站可以使用Netlify的基础设施免费托管。包含以下内容："}
-            </p>
-            <ul className="space-y-3 text-sm text-muted-foreground">
-              <li className="flex items-start gap-3"><Shield size={16} className="mt-0.5 flex-shrink-0" style={{ color: "hsl(275 51% 46%)" }} />{lang === "en" ? "Secure SSL certificate — your site runs on HTTPS automatically" : "安全SSL证书 — 您的网站自动运行在HTTPS上"}</li>
-              <li className="flex items-start gap-3"><Globe size={16} className="mt-0.5 flex-shrink-0" style={{ color: "hsl(275 51% 46%)" }} />{lang === "en" ? "Fast global CDN — your site loads quickly for visitors worldwide" : "全球CDN加速 — 您的网站在全球范围内快速加载"}</li>
-              <li className="flex items-start gap-3"><Server size={16} className="mt-0.5 flex-shrink-0" style={{ color: "hsl(275 51% 46%)" }} />{lang === "en" ? "No ongoing hosting fees — free tier covers most small business websites" : "无持续托管费用 — 免费版本满足大多数小企业网站需求"}</li>
-            </ul>
-          </div>
+          </ScrollReveal>
         </div>
       </section>
 
-      {/* Section 2 — Managed Hosting */}
-      <section className="py-14 md:py-20" style={{ background: "hsl(var(--surface-sunken))" }}>
+      {/* SECTION 3 — THE SOLUTION */}
+      <section className="py-20 md:py-28" style={{ background: "hsl(var(--surface-sunken))" }}>
         <div className="max-w-3xl mx-auto px-6">
-          <div className="flex items-center gap-3 mb-6">
-            <div className="w-12 h-12 rounded-xl flex items-center justify-center" style={{ background: "hsl(275 51% 46% / 0.1)" }}>
-              <Shield size={24} style={{ color: "hsl(275 51% 46%)" }} />
+          <ScrollReveal>
+            <div className="text-center">
+              <h2 className="text-2xl md:text-3xl font-black text-foreground font-display tracking-tight">
+                {lang === "en" ? "We Take Care of Everything" : "我们负责一切"}
+              </h2>
+              <span className="section-underline section-underline--light mx-auto" />
             </div>
-            <h2 className="text-2xl font-black text-foreground font-display">{lang === "en" ? "Managed Hosting Option" : "托管主机方案"}</h2>
-          </div>
-          <div className="rounded-2xl border border-border bg-background p-6 shadow-sm space-y-4">
-            <p className="text-muted-foreground leading-relaxed">
-              {lang === "en" ? "For clients who want hands-off maintenance, our managed hosting upgrade includes:" : "对于希望免除维护烦恼的客户，我们的托管主机升级包括："}
-            </p>
-            <ul className="space-y-3 text-sm text-muted-foreground">
-              <li className="flex items-start gap-3"><Shield size={16} className="mt-0.5 flex-shrink-0" style={{ color: "hsl(275 51% 46%)" }} />{lang === "en" ? "Annual managed hosting with technical monitoring" : "年度托管主机及技术监控"}</li>
-              <li className="flex items-start gap-3"><Server size={16} className="mt-0.5 flex-shrink-0" style={{ color: "hsl(275 51% 46%)" }} />{lang === "en" ? "Priority update support and deployment management" : "优先更新支持和部署管理"}</li>
-              <li className="flex items-start gap-3"><Globe size={16} className="mt-0.5 flex-shrink-0" style={{ color: "hsl(275 51% 46%)" }} />{lang === "en" ? "3 minor content edits per year included" : "每年包含3次小型内容编辑"}</li>
-            </ul>
-          </div>
-        </div>
-      </section>
+          </ScrollReveal>
 
-      {/* Section 3 — Domain Setup */}
-      <section className="py-14 md:py-20 bg-background">
-        <div className="max-w-3xl mx-auto px-6">
-          <div className="flex items-center gap-3 mb-6">
-            <div className="w-12 h-12 rounded-xl flex items-center justify-center" style={{ background: "hsl(275 51% 46% / 0.1)" }}>
-              <Globe size={24} style={{ color: "hsl(275 51% 46%)" }} />
-            </div>
-            <h2 className="text-2xl font-black text-foreground font-display">{lang === "en" ? "Domain Setup Instructions" : "域名设置说明"}</h2>
-          </div>
-          <div className="rounded-2xl border border-border bg-background p-6 shadow-sm">
-            <p className="text-muted-foreground mb-6 leading-relaxed">
-              {lang === "en" ? "Connecting your domain to your new website is straightforward. Here are the basic steps:" : "将您的域名连接到新网站非常简单。以下是基本步骤："}
-            </p>
-            <div className="space-y-4">
-              {domainSteps.map((s) => (
-                <div key={s.step} className="flex gap-4 items-start">
-                  <span className="inline-flex items-center justify-center w-8 h-8 rounded-full text-sm font-bold text-white flex-shrink-0" style={{ backgroundColor: "#7F37AE" }}>{s.step}</span>
+          <div className="mt-14 grid grid-cols-1 md:grid-cols-2 gap-6">
+            {(lang === "en"
+              ? [
+                  { icon: ShieldCheck, title: "Secure hosting environment", desc: "Your website runs on fast, reliable infrastructure with SSL built in." },
+                  { icon: RefreshCw, title: "Ongoing maintenance & updates", desc: "We keep everything running smoothly so you don't have to." },
+                  { icon: Zap, title: "Performance optimization", desc: "Fast load times. No bloat. Optimized for every device." },
+                  { icon: Headphones, title: "Monitoring & uptime support", desc: "We watch your site around the clock and fix issues before you notice." },
+                  { icon: MonitorSmartphone, title: "No setup required", desc: "We handle everything from migration to launch. Zero effort on your end." },
+                ]
+              : [
+                  { icon: ShieldCheck, title: "安全托管环境", desc: "您的网站运行在快速、可靠的基础设施上，内置SSL。" },
+                  { icon: RefreshCw, title: "持续维护和更新", desc: "我们确保一切顺利运行，您无需操心。" },
+                  { icon: Zap, title: "性能优化", desc: "快速加载。无冗余。针对每台设备优化。" },
+                  { icon: Headphones, title: "监控和正常运行支持", desc: "我们全天候监控您的网站，在您发现之前修复问题。" },
+                  { icon: MonitorSmartphone, title: "无需设置", desc: "我们处理从迁移到发布的一切。您零操作。" },
+                ]
+            ).map((item, i) => (
+              <ScrollReveal key={i} delay={i * 0.06}>
+                <div className="flex items-start gap-4 rounded-2xl border border-border bg-background p-6 shadow-sm">
+                  <div className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0" style={{ background: "hsl(275 51% 46% / 0.1)" }}>
+                    <item.icon size={20} style={{ color: "hsl(275 51% 46%)" }} />
+                  </div>
                   <div>
-                    <h3 className="font-bold text-foreground text-sm">{s.title}</h3>
-                    <p className="text-sm text-muted-foreground mt-0.5">{s.desc}</p>
+                    <h3 className="font-bold text-foreground text-sm">{item.title}</h3>
+                    <p className="text-sm text-muted-foreground mt-1 leading-relaxed">{item.desc}</p>
                   </div>
                 </div>
-              ))}
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Section 4 — Ownership */}
-      <section className="py-14 md:py-20" style={{ background: "hsl(var(--surface-sunken))" }}>
-        <div className="max-w-3xl mx-auto px-6">
-          <div className="flex items-center gap-3 mb-6">
-            <div className="w-12 h-12 rounded-xl flex items-center justify-center" style={{ background: "hsl(275 51% 46% / 0.1)" }}>
-              <Key size={24} style={{ color: "hsl(275 51% 46%)" }} />
-            </div>
-            <h2 className="text-2xl font-black text-foreground font-display">{lang === "en" ? "Ownership & Responsibility" : "所有权与责任"}</h2>
-          </div>
-          <div className="rounded-2xl border border-border bg-background p-6 shadow-sm space-y-3">
-            {ownershipItems.map((text, i) => (
-              <p key={i} className="text-sm text-muted-foreground flex items-start gap-3">
-                <Shield size={14} className="mt-0.5 flex-shrink-0" style={{ color: "hsl(275 51% 46%)" }} />
-                {text}
-              </p>
+              </ScrollReveal>
             ))}
           </div>
         </div>
       </section>
 
-      {/* Bottom CTA */}
-      <section className="py-16 md:py-24 section-brand-dark">
+      {/* SECTION 4 — HOW IT WORKS */}
+      <section className="py-20 md:py-28 bg-background">
         <div className="max-w-2xl mx-auto px-6 text-center">
-          <h2 className="text-2xl md:text-3xl font-black text-white font-display mb-6">{lang === "en" ? "Ready to Launch?" : "准备好发布了吗？"}</h2>
-          <ClaimPreviewsCTA />
+          <ScrollReveal>
+            <h2 className="text-2xl md:text-3xl font-black text-foreground font-display tracking-tight">
+              {lang === "en" ? "Simple and Automatic" : "简单且自动"}
+            </h2>
+            <span className="section-underline section-underline--light mx-auto" />
+          </ScrollReveal>
+
+          <div className="mt-14 space-y-10">
+            {(lang === "en"
+              ? [
+                  { step: "1", text: "We build your website" },
+                  { step: "2", text: "We host and maintain everything" },
+                  { step: "3", text: "You focus on your business" },
+                ]
+              : [
+                  { step: "1", text: "我们构建您的网站" },
+                  { step: "2", text: "我们托管并维护一切" },
+                  { step: "3", text: "您专注于您的业务" },
+                ]
+            ).map((s, i) => (
+              <ScrollReveal key={i} delay={i * 0.1}>
+                <div className="flex items-center gap-5 max-w-sm mx-auto">
+                  <span
+                    className="inline-flex items-center justify-center w-11 h-11 rounded-full text-base font-black text-white flex-shrink-0"
+                    style={{ backgroundColor: "hsl(275 51% 46%)" }}
+                  >
+                    {s.step}
+                  </span>
+                  <p className="text-foreground font-semibold text-base md:text-lg text-left">{s.text}</p>
+                </div>
+              </ScrollReveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* SECTION 5 — PRICING (SUBTLE) */}
+      <section className="py-20 md:py-28" style={{ background: "hsl(var(--surface-sunken))" }}>
+        <div className="max-w-md mx-auto px-6 text-center">
+          <ScrollReveal>
+            <h2 className="text-2xl md:text-3xl font-black text-foreground font-display tracking-tight">
+              {lang === "en" ? "Simple, Transparent Pricing" : "简单透明的定价"}
+            </h2>
+            <span className="section-underline section-underline--light mx-auto" />
+          </ScrollReveal>
+
+          <ScrollReveal delay={0.1}>
+            <div className="mt-12 rounded-2xl border border-border bg-background p-8 shadow-sm">
+              <p className="text-sm font-semibold text-muted-foreground uppercase tracking-wider">
+                {lang === "en" ? "Managed Hosting" : "托管主机"}
+              </p>
+              <p className="mt-4 text-4xl font-black text-foreground font-display">$15<span className="text-lg font-medium text-muted-foreground">/mo</span></p>
+              <p className="mt-2 text-muted-foreground text-sm">
+                {lang === "en" ? "or" : "或"} <span className="font-semibold text-foreground">$135/year</span>
+              </p>
+              <p className="mt-6 text-xs text-muted-foreground leading-relaxed">
+                {lang === "en"
+                  ? "Most clients choose yearly and never think about hosting again."
+                  : "大多数客户选择年付，从此不再为托管烦恼。"}
+              </p>
+            </div>
+          </ScrollReveal>
+        </div>
+      </section>
+
+      {/* SECTION 6 — TRUST / REASSURANCE */}
+      <section className="py-20 md:py-28 bg-background">
+        <div className="max-w-2xl mx-auto px-6 text-center">
+          <ScrollReveal>
+            <h2 className="text-2xl md:text-3xl font-black text-foreground font-display tracking-tight">
+              {lang === "en" ? "No Hidden Costs. No Surprises." : "无隐藏费用。无意外。"}
+            </h2>
+            <span className="section-underline section-underline--light mx-auto" />
+          </ScrollReveal>
+
+          <ScrollReveal delay={0.1}>
+            <div className="mt-12 space-y-5 max-w-sm mx-auto">
+              {(lang === "en"
+                ? ["No setup fees", "No technical maintenance required", "No unexpected charges"]
+                : ["无设置费用", "无需技术维护", "无意外收费"]
+              ).map((item, i) => (
+                <div key={i} className="flex items-center gap-3">
+                  <Check size={20} className="flex-shrink-0" style={{ color: "hsl(275 51% 46%)" }} />
+                  <p className="text-foreground font-medium text-base">{item}</p>
+                </div>
+              ))}
+            </div>
+          </ScrollReveal>
+        </div>
+      </section>
+
+      {/* SECTION 7 — FINAL CTA */}
+      <section className="py-20 md:py-28 section-brand-dark">
+        <div className="max-w-2xl mx-auto px-6 text-center">
+          <ScrollReveal>
+            <h2 className="text-2xl md:text-3xl font-black text-white font-display tracking-tight">
+              {lang === "en" ? "Let SwiftLift Handle Everything" : "让SwiftLift处理一切"}
+            </h2>
+            <p className="mt-4 text-white/70 text-base leading-relaxed">
+              {lang === "en"
+                ? "We'll take care of everything — from design to hosting."
+                : "我们负责一切 — 从设计到托管。"}
+            </p>
+          </ScrollReveal>
+          <ScrollReveal delay={0.1}>
+            <div className="mt-10">
+              <a
+                href="/#contact"
+                className="inline-flex items-center justify-center rounded-full px-8 py-3.5 text-base font-semibold text-white transition-all hover:scale-105"
+                style={{ backgroundColor: "hsl(275 51% 46%)" }}
+              >
+                {lang === "en" ? "Get My 2 Free Previews" : "获取我的2个免费预览"}
+              </a>
+            </div>
+          </ScrollReveal>
         </div>
       </section>
     </main>
