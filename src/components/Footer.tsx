@@ -45,8 +45,8 @@ const Footer = () => {
             </Link>
             <p className="mt-3 text-sm text-blue-200/70 leading-relaxed max-w-xs">
               {lang === "en"
-                ? "SwiftLift creates faster, cleaner, conversion-focused website upgrades for small businesses."
-                : "SwiftLift 為小企業創建更快、更簡潔、以轉化為核心的網站升級。"}
+                ? "Faster than agencies. Easier than freelancers. Safer than traditional services."
+                : "比機構更快。比自由職業者更簡單。比傳統服務更安全。"}
             </p>
             <a href="mailto:support@swiftlift.app" className="mt-3 inline-flex items-center gap-1.5 text-sm text-blue-300 hover:text-white transition-colors">
               <Mail size={14} />
@@ -139,8 +139,8 @@ const Footer = () => {
             </Link>
             <p className="mt-3 text-sm text-blue-200/70 leading-relaxed max-w-xs mx-auto">
               {lang === "en"
-                ? "SwiftLift creates faster, cleaner, conversion-focused website upgrades for small businesses."
-                : "SwiftLift 為小企業創建更快、更簡潔、以轉化為核心的網站升級。"}
+                ? "Faster than agencies. Easier than freelancers. Safer than traditional services."
+                : "比機構更快。比自由職業者更簡單。比傳統服務更安全。"}
             </p>
             <a href="mailto:support@swiftlift.app" className="mt-3 inline-flex items-center gap-1.5 text-sm text-blue-300 hover:text-white transition-colors">
               <Mail size={14} />

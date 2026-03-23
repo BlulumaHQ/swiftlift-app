@@ -9,95 +9,87 @@ export const translations = {
   },
   hero: {
     headline: {
-      en: "Launch or\nRebuild\nYour Website.",
-      zh: "全新上線或\n煥新重建\n您的網站。",
+      en: "No Calls.\nNo Waiting.\nJust Previews.",
+      zh: "無需電話。\n無需等待。\n直接預覽。",
     },
     subheadline: {
-      en: "Whether you need a brand new website or a full facelift of your outdated one, SwiftLift rebuilds modern, high-performance sites quickly and clearly.",
-      zh: "無論您需要全新網站還是對過時網站的全面煥新，SwiftLift都能快速、清晰地重建現代化高性能站點。",
+      en: "Get 2 fully working websites before you pay anything.",
+      zh: "在支付任何費用之前，獲得2個完全可運行的網站。",
     },
     cta: {
-      en: "Claim My FREE Previews",
-      zh: "獲取免費預覽",
+      en: "Get My 2 Free Previews",
+      zh: "獲取我的2個免費預覽",
     },
     ctaSub: {
-      en: "Preview delivered within 48 hours.\nLive site ready within days.",
-      zh: "48小時內交付預覽。\n數天內網站正式上線。",
+      en: "Takes less than 30 seconds.\nNo commitment.",
+      zh: "不到30秒即可完成。\n無需承諾。",
     },
     launchPricing: {
-      en: "Launch pricing — limited availability",
-      zh: "上線優惠 — 限量供應",
+      en: "Limited preview slots available today",
+      zh: "今日預覽名額有限",
     },
   },
   problemSolution: {
     headline: {
-      en: "Your Website Should Work For You —\nNot Against You",
-      zh: "您的網站應該為您工作 ——\n而不是拖您後腿",
+      en: "Why Businesses Are Switching\nto SwiftLift",
+      zh: "為什麼企業正在\n轉向 SwiftLift",
     },
     body: {
-      en: "Professional websites help businesses grow, convert better, and build lasting trust with every visitor.",
-      zh: "專業的網站幫助企業成長，提升轉化率，並與每位訪客建立持久信任。",
+      en: "Other agencies want to talk first. We just build it for you.",
+      zh: "其他公司要先開會。我們直接為您建好。",
     },
-    outdatedTitle: { en: "Outdated Website", zh: "過時的網站" },
+    outdatedTitle: { en: "Traditional Agencies", zh: "傳統機構" },
     outdatedItems: [
-      { en: "Slow performance", zh: "性能緩慢" },
-      { en: "Poor design credibility", zh: "設計缺乏可信度" },
-      { en: "Weak conversion", zh: "轉化率低" },
-      { en: "Hard to update content", zh: "內容難以更新" },
-      { en: "Not mobile-optimized", zh: "未針對移動端優化" },
+      { en: "Book a demo", zh: "預約演示" },
+      { en: "Wait days or weeks", zh: "等待數天或數週" },
+      { en: "Endless revisions", zh: "無止境的修改" },
+      { en: "Unclear pricing", zh: "定價不透明" },
+      { en: "Long commitments", zh: "長期綁定" },
     ],
-    rebuildTitle: { en: "SwiftLift Rebuild", zh: "SwiftLift 重建" },
+    rebuildTitle: { en: "SwiftLift", zh: "SwiftLift" },
     rebuildItems: [
-      { en: "Fast loading", zh: "快速載入" },
-      { en: "Modern trust design", zh: "現代可信設計" },
-      { en: "Optimized for conversion", zh: "優化轉化率" },
-      { en: "Easy-to-update structure", zh: "易於更新的結構" },
-      { en: "Mobile-first responsive", zh: "移動優先響應式" },
+      { en: "Instant live previews", zh: "即時預覽" },
+      { en: "No calls or meetings", zh: "無需電話或會議" },
+      { en: "Launch in 3 days", zh: "3天內上線" },
+      { en: "Transparent pricing", zh: "透明定價" },
+      { en: "Zero upfront risk", zh: "零前期風險" },
     ],
   },
   why: {
     headline: {
-      en: "We Build Two Professional Website Concepts —\nYou Choose Your Favorite",
-      zh: "我們打造兩個專業網站方案 —\n您選擇最喜歡的",
+      en: "Try It Risk-Free",
+      zh: "零風險體驗",
     },
     body: {
-      en: "Two FREE real preview versions delivered within 48 hours.",
-      zh: "兩個免費真實預覽版本，48小時內交付。",
+      en: "You only pay if you like what you see. We build first. You decide after.",
+      zh: "滿意才付款。我們先建。您後決定。",
     },
     stats: [
       { label: { en: "Preview Delivered", zh: "預覽交付" }, value: { en: "48h", zh: "48h" } },
-      { label: { en: "Two Real Sites", zh: "兩個真實網站" }, value: { en: "2 Sites", zh: "2 站點" } },
-      { label: { en: "Live Within Days", zh: "數天上線" }, value: { en: "3 Days", zh: "3 天" } },
-      { label: { en: "Zero Upfront", zh: "零前期費用" }, value: { en: "$0", zh: "$0" } },
+      { label: { en: "Live Previews", zh: "即時預覽" }, value: { en: "2 Sites", zh: "2 站點" } },
+      { label: { en: "Launch Time", zh: "上線時間" }, value: { en: "3 Days", zh: "3 天" } },
+      { label: { en: "Upfront Cost", zh: "前期費用" }, value: { en: "$0", zh: "$0" } },
     ],
   },
   process: {
     headline: { en: "How It Works", zh: "服務流程" },
     steps: [
       {
-        title: { en: "Submit", zh: "提交" },
-        desc: { en: "Share your company name, logo, and vision. Two minutes.", zh: "分享您的公司名稱、Logo和品牌願景。僅需兩分鐘。" },
+        title: { en: "Enter Your Website", zh: "輸入您的網站" },
+        desc: { en: "Share your current site URL. Takes 30 seconds.", zh: "分享您的網站URL。僅需30秒。" },
       },
       {
-        title: { en: "Concept", zh: "概念" },
-        desc: { en: "Receive two live homepage designs within 48 hours.", zh: "48小時內收到兩個即時主頁設計。" },
+        title: { en: "We Build 2 Previews", zh: "我們建2個預覽" },
+        desc: { en: "Receive two live website directions within 48 hours.", zh: "48小時內收到兩個即時網站方向。" },
       },
       {
-        title: { en: "Refine", zh: "優化" },
-        desc: { en: "Pick your favorite. We then polish copy and assets.", zh: "選定方案，我們隨後完善文案和素材。" },
-      },
-      {
-        title: { en: "Build", zh: "搭建" },
-        desc: { en: "Our team builds your complete multi-page site.", zh: "團隊構建完整的多頁面網站。" },
-      },
-      {
-        title: { en: "Launch", zh: "上線" },
-        desc: { en: "Your refined website goes live\nready to support your growth.", zh: "您的精緻網站正式上線\n助力您的業務增長。" },
+        title: { en: "You Choose & Launch", zh: "您選擇並上線" },
+        desc: { en: "Pick your favorite. We launch in 3 days.", zh: "選定方案。3天內上線。" },
       },
     ],
   },
   portfolio: {
-    headline: { en: "Concept Gallery", zh: "概念展示" },
+    headline: { en: "Real Website Transformations", zh: "真實網站改造" },
     items: [
       { title: { en: "Import/Export Trading Company", zh: "進出口貿易公司" }, desc: { en: "Products, about, contact", zh: "產品、關於、聯繫" } },
       { title: { en: "Modern Wellness Clinic", zh: "現代健康診所" }, desc: { en: "Services, booking, team", zh: "服務、預約、團隊" } },
@@ -112,7 +104,7 @@ export const translations = {
   },
   pricing: {
     headline: { en: "Simple,\nTransparent Pricing", zh: "簡單\n透明的價格" },
-    buttonText: { en: "Claim My FREE Previews", zh: "獲取免費預覽" },
+    buttonText: { en: "Get My 2 Free Previews", zh: "獲取我的2個免費預覽" },
     buttonSub: { en: "No credit card required. No obligation.", zh: "無需信用卡。無任何義務。" },
     cards: [
       {
@@ -159,48 +151,48 @@ export const translations = {
     items: [
       {
         quote: {
-          en: "I was skeptical about the FREE previews, but they blew me away. Paid for the full build on the spot.",
-          zh: "我對免費預覽持懷疑態度，但它們讓我大吃一驚。當場就付了全款。",
+          en: "No demo calls. No back-and-forth. Just two working previews in my inbox within 48 hours. Paid on the spot.",
+          zh: "沒有演示電話。沒有來回溝通。48小時內就收到兩個可用的預覽。當場付款。",
         },
         name: { en: "Sarah Chen", zh: "Sarah Chen" },
         role: { en: "Small Business Owner", zh: "小企業主" },
       },
       {
         quote: {
-          en: "Two working homepages in 48 hours. I picked one, paid, and was live within days.",
-          zh: "48小時內收到兩個完整主頁。選了一個，付款，數天內就上線了。",
+          en: "Two working websites in 48 hours. I picked one, paid, and was live within days. Fastest website project I've ever done.",
+          zh: "48小時內收到兩個完整網站。選了一個，付款，數天內就上線了。最快的網站項目。",
         },
         name: { en: "Marcus Webb", zh: "Marcus Webb" },
         role: { en: "Wellness Clinic Owner", zh: "健康診所老闆" },
       },
       {
         quote: {
-          en: "Best investment I've made for my business. The previews sold me instantly.",
-          zh: "我為業務做的最好的投資。預覽瞬間就打動了我。",
+          en: "I was tired of agencies wanting to 'hop on a call' first. SwiftLift just built it. The previews sold themselves.",
+          zh: "我厭倦了代理機構總想先「打個電話」。SwiftLift 直接做了。預覽本身就說明了一切。",
         },
         name: { en: "David Park", zh: "David Park" },
         role: { en: "Local Service Provider", zh: "本地服務商" },
       },
       {
         quote: {
-          en: "Professional quality at a fraction of what agencies charge. Couldn't be happier with the results.",
-          zh: "以代理機構收費的一小部分獲得專業品質。對結果非常滿意。",
+          en: "Simpler than any freelancer. Faster than any agency. And I got to see the result before paying a cent.",
+          zh: "比任何自由職業者更簡單。比任何機構更快。而且在付一分錢之前就看到了結果。",
         },
         name: { en: "Thomas Lin", zh: "Thomas Lin" },
         role: { en: "Business Owner", zh: "企業主" },
       },
       {
         quote: {
-          en: "The whole process was seamless. From preview to launch in under a week — exactly what my business needed.",
-          zh: "整個過程非常順暢。從預覽到上線不到一週——正是我的企業所需要的。",
+          en: "From submitting my URL to choosing my favorite version — the whole thing took less than a week. No meetings. No stress.",
+          zh: "從提交網址到選擇喜歡的版本——整個過程不到一週。沒有會議。沒有壓力。",
         },
         name: { en: "Jessica Moore", zh: "Jessica Moore" },
         role: { en: "Restaurant Owner", zh: "餐廳老闆" },
       },
       {
         quote: {
-          en: "I've worked with agencies before but never got this quality this fast. SwiftLift delivered beyond expectations.",
-          zh: "我以前和代理機構合作過，但從未如此快速地獲得如此高的品質。SwiftLift超出了預期。",
+          en: "I've worked with agencies before. Weeks of calls, revisions, confusion. SwiftLift? Two live previews, pick one, done.",
+          zh: "我之前和代理合作過。幾週的電話、修改、混亂。SwiftLift？兩個即時預覽，選一個，搞定。",
         },
         name: { en: "Kevin Zhang", zh: "Kevin Zhang" },
         role: { en: "E-commerce Founder", zh: "電商創始人" },
@@ -215,28 +207,36 @@ export const translations = {
     },
     items: [
       {
-        q: { en: "How do the FREE previews work?", zh: "免費預覽是如何運作的？" },
-        a: { en: "Submit your company name, logo, and business details. Within 48 hours, you'll receive two fully designed, live homepage preview links — viewable on desktop and mobile.\n\nThese are functional previews built specifically around your business structure. There is no payment required to receive them.", zh: "提交您的公司名稱、標誌和業務資訊。48小時內，您將收到兩個專為您的業務量身設計的即時首頁預覽連結——可在桌面和移動裝置上查看。\n\n這些是圍繞您的業務結構專門構建的功能預覽。無需支付任何費用即可獲取。" },
+        q: { en: "Is the preview really free?", zh: "預覽真的免費嗎？" },
+        a: { en: "Yes. We create two fully working website previews at no cost. You only pay if you decide to move forward.\n\nThere's no credit card required and no obligation. If you don't like either preview, you walk away — no questions asked.", zh: "是的。我們免費創建兩個完全可運行的網站預覽。只有在您決定繼續時才需付款。\n\n無需信用卡，無任何義務。如果您不喜歡任何預覽，可以直接離開——不問原因。" },
       },
       {
-        q: { en: "What happens after I choose a concept?", zh: "選擇方案後會發生什麼？" },
-        a: { en: "Once you select your preferred preview direction, you choose your package and submit payment. We then expand that concept into your full website build based on your selected tier.\n\nAll builds follow SwiftLift's structured system for speed, clarity, and consistency.", zh: "選定您心儀的預覽方向後，選擇套餐並提交付款。我們隨後會根據您選擇的套餐等級，將該方案擴展為完整的網站建設。\n\n所有建設均遵循SwiftLift的結構化系統，確保速度、清晰度和一致性。" },
+        q: { en: "How long does it take?", zh: "需要多長時間？" },
+        a: { en: "You'll receive your two website previews within 48 hours of submitting your request.\n\nOnce you choose a version, your final website goes live within 3 days.", zh: "提交請求後48小時內您將收到兩個網站預覽。\n\n選定版本後，最終網站3天內上線。" },
       },
       {
-        q: { en: "Can I use my own domain name?", zh: "可以使用自己的網域嗎？" },
-        a: { en: "Yes. You may use your existing domain or purchase a new one. You remain the owner of your domain at all times.\n\nWe provide simple instructions to connect your domain during deployment.", zh: "可以。您可以使用現有網域或購買新網域。網域始終歸您所有。\n\n我們會提供簡單的說明，幫助您在部署過程中連接網域。" },
+        q: { en: "What happens after I choose a version?", zh: "選擇方案後會發生什麼？" },
+        a: { en: "You select your preferred direction, choose a package, and submit payment. We then finalize your website and launch it within 3 days.\n\nNo long process. No endless revisions. Just a clean, fast launch.", zh: "選定您心儀的方向，選擇套餐並提交付款。我們隨後完成您的網站並在3天內上線。\n\n沒有漫長的流程。沒有無止境的修改。只有乾淨、快速的上線。" },
+      },
+      {
+        q: { en: "Can I use my own domain?", zh: "可以使用自己的網域嗎？" },
+        a: { en: "Yes. You can use your existing domain or purchase a new one. You remain the owner at all times.\n\nWe provide simple instructions to connect your domain during deployment.", zh: "可以。您可以使用現有網域或購買新網域。網域始終歸您所有。\n\n我們會提供簡單的說明，幫助您在部署過程中連接網域。" },
+      },
+      {
+        q: { en: "Do I need to have an existing website?", zh: "需要有現有網站嗎？" },
+        a: { en: "SwiftLift is built for businesses with an existing website that needs upgrading. If you need a brand new site, explore our custom build options.", zh: "SwiftLift 針對需要升級現有網站的企業而建。如果您需要全新網站，請探索我們的定制建設選項。" },
       },
     ],
   },
   about: {
     text: {
-      en: "SwiftLift creates refined, conversion-focused websites built for clarity, speed, and growth.",
-      zh: "SwiftLift打造精緻的、以轉化為核心的網站，注重清晰、速度和增長。",
+      en: "SwiftLift delivers instant website previews — no calls, no meetings, no risk.",
+      zh: "SwiftLift 提供即時網站預覽——無電話、無會議、無風險。",
     },
   },
   intake: {
-    headline: { en: "Start Your Transformation", zh: "開啟您的品牌蛻變" },
-    subheadline: { en: "Fill out the form below and we'll send you 2 FREE design previews within 48 hours.", zh: "填寫下方表格，我們將在48小時內發送2個免費設計預覽。" },
+    headline: { en: "Get Your 2 Free Website Previews", zh: "獲取您的2個免費網站預覽" },
+    subheadline: { en: "No calls. No commitment. Just results.", zh: "無需電話。無需承諾。只看結果。" },
     fields: {
       description: { en: "Business Description", zh: "業務描述" },
       descriptionPlaceholder: { en: "Tell us about your business — what you do, your target audience, and any style preferences", zh: "請介紹您的業務——您做什麼、目標受眾以及任何風格偏好" },
@@ -264,16 +264,16 @@ export const translations = {
         zh: ["1週內", "1個月內", "3個月內", "探索中", "還不確定"],
       },
     },
-    submit: { en: "Generate My FREE Previews", zh: "生成我的免費預覽" },
+    submit: { en: "Get My 2 Free Previews", zh: "獲取我的2個免費預覽" },
   },
   footer: {
-    tagline: { en: "SwiftLift creates refined, conversion-focused websites built for clarity, speed, and growth.", zh: "SwiftLift打造精緻的、以轉化為核心的網站，注重清晰、速度和增長。" },
+    tagline: { en: "SwiftLift delivers instant website previews — no calls, no meetings, no risk.", zh: "SwiftLift 提供即時網站預覽——無電話、無會議、無風險。" },
     privacy: { en: "Privacy", zh: "隱私政策" },
     terms: { en: "Terms", zh: "服務條款" },
     copyright: { en: "SwiftLift Copyright © 2026 All Rights Reserved.", zh: "SwiftLift 版權所有 © 2026。" },
     designBy: { en: "Web Design by", zh: "網站設計" },
     guarantee: { en: "100% Satisfaction Guarantee", zh: "100% 滿意保證" },
-    guaranteeSub: { en: "Professional Quality Assurance", zh: "專業品質保證" },
+    guaranteeSub: { en: "Preview first. Pay only if you love it.", zh: "先預覽。滿意才付款。" },
     navigation: { en: "Navigation", zh: "導航" },
     resources: { en: "Resources", zh: "資源" },
     legal: { en: "Legal", zh: "法律" },
@@ -327,7 +327,7 @@ export const translations = {
       { title: { en: "Launch", zh: "上線" }, desc: { en: "Your website goes live within days.", zh: "您的網站在數天內正式上線。" } },
     ],
     faqs: [
-      { q: { en: "When does my site go live?", zh: "我的網站什麼時候上線？" }, a: { en: "Most builds go live within a few days after payment and final content confirmation.", zh: "大多數網站在付款和最終內容確認後的幾天內上線。" } },
+      { q: { en: "When does my site go live?", zh: "我的網站什麼時候上線？" }, a: { en: "Most builds go live within 3 days after payment and final content confirmation.", zh: "大多數網站在付款和最終內容確認後3天內上線。" } },
       { q: { en: "Can I request changes?", zh: "可以請求修改嗎？" }, a: { en: "Yes. Revision rounds are included depending on your package.", zh: "可以。修改輪次根據您的套餐而定。" } },
       { q: { en: "Can I use my own domain?", zh: "可以使用自己的網域嗎？" }, a: { en: "Yes. We connect your domain during deployment.", zh: "可以。我們會在部署期間連接您的網域。" } },
       { q: { en: "Do I own the website?", zh: "我擁有網站的所有權嗎？" }, a: { en: "Yes. You own your domain and website assets.", zh: "是的。您擁有網域和網站資產的所有權。" } },
@@ -336,12 +336,12 @@ export const translations = {
   },
   addons: {
     heroHeadline: { en: "Enhance Your\nWebsite Investment", zh: "增強您的\n網站投資價值" },
-    heroSub: { en: "Add professional upgrades to strengthen your brand, visibility, and long-term performance.", zh: "添加專業升級以增強您的品牌、知名度和長期表現。" },
+    heroSub: { en: "Optional upgrades to strengthen your brand, visibility, and performance.", zh: "可選升級以增強您的品牌、知名度和表現。" },
     heroCta: { en: "Contact Support", zh: "聯繫支持" },
     heroCtaSecondary: { en: "Return to Dashboard", zh: "返回首頁" },
     exclusiveRate: { en: "Website Client Exclusive Rate", zh: "網站客戶專享價" },
     trustHeadline: { en: "Need Help Deciding?", zh: "需要幫助選擇？" },
-    trustSub: { en: "Our team can guide you based on your business goals and growth plans.", zh: "我們的團隊可以根據您的業務目標和增長計劃為您提供指導。" },
+    trustSub: { en: "Our team can guide you based on your business goals.", zh: "我們的團隊可以根據您的業務目標為您提供指導。" },
     trustCta: { en: "Schedule Consultation", zh: "預約諮詢" },
     cards: [
       {
@@ -366,7 +366,7 @@ export const translations = {
       },
       {
         title: { en: "Hosting & Management", zh: "託管與管理" },
-        desc: { en: "Let us handle the technical side while you focus on growing your business.", zh: "讓我們處理技術細節，您專注於發展業務。" },
+        desc: { en: "We handle everything. You focus on your business.", zh: "我們處理一切。您專注於業務。" },
         price: "$100/yr",
         standalone: null,
         features: {
@@ -493,23 +493,23 @@ export const translations = {
   /* ── Homepage (Index.tsx) inline content ── */
   home: {
     heroTitle: {
-      en: "See Your\nNew Website\nBefore You Pay",
-      zh: "先看您的\n新網站\n再付款",
+      en: "No Calls. No Waiting.\nJust 2 Live Website Previews.",
+      zh: "無需電話。無需等待。\n直接獲得2個即時網站預覽。",
     },
     heroSub: {
-      en: "We redesign your website into a modern, high-performing experience — with two versions you can compare before making any decision.",
-      zh: "我們將您的網站重新設計為現代化的高性能體驗——提供兩個版本供您比較，然後再做決定。",
+      en: "Get 2 fully working websites before you pay anything.",
+      zh: "在支付任何費用之前，獲得2個完全可運行的網站。",
     },
     heroSubShort: {
-      en: "Start with a preview. Upgrade when you're ready.",
-      zh: "從預覽開始。準備好了再升級。",
+      en: "If you like it → we launch in 3 days. If not → you pay nothing.",
+      zh: "滿意 → 3天內上線。不滿意 → 您不用付費。",
     },
     heroBullets: [
+      { en: "2 live website previews to compare", zh: "2個即時網站預覽可比較" },
       { en: "No upfront payment required", zh: "無需預付款" },
-      { en: "2 preview versions to compare", zh: "2個預覽版本可比較" },
-      { en: "Upgrade when you're ready", zh: "準備好了再升級" },
+      { en: "Launch in 3 days if you love it", zh: "滿意的話3天內上線" },
     ],
-    formNote: { en: "Takes less than 60 seconds.", zh: "不到60秒即可完成。" },
+    formNote: { en: "Takes less than 30 seconds. No commitment.", zh: "不到30秒即可完成。無需承諾。" },
     formBusinessName: { en: "Business Name", zh: "企業名稱" },
     formBusinessNamePlaceholder: { en: "Your business name", zh: "您的企業名稱" },
     formCurrentWebsite: { en: "Current Website", zh: "目前網站" },
@@ -523,7 +523,7 @@ export const translations = {
       { en: "Within a month", zh: "1個月內" },
       { en: "Just exploring", zh: "只是探索" },
     ],
-    formSubmit: { en: "Get Your Free Website Preview", zh: "獲取免費網站預覽" },
+    formSubmit: { en: "Get My 2 Free Previews", zh: "獲取我的2個免費預覽" },
     formSending: { en: "Sending...", zh: "發送中..." },
     formDisclaimer: { en: "No credit card required. No obligation.\nNo spam. No sales calls.", zh: "無需信用卡。無任何義務。\n不會發送垃圾郵件。不會撥打銷售電話。" },
     formDisclaimerShort: { en: "No credit card required. No obligation.", zh: "無需信用卡。無任何義務。" },
@@ -531,20 +531,19 @@ export const translations = {
     /* Value Proposition */
     valuePropTitle: { en: "Why SwiftLift", zh: "為什麼選擇 SwiftLift" },
     valueProps: [
-      { title: { en: "No Risk", zh: "零風險" }, desc: { en: "Preview first. Pay only if you like it.", zh: "先預覽。滿意才付款。" } },
+      { title: { en: "No Risk", zh: "零風險" }, desc: { en: "See your previews first. Pay only if you like it.", zh: "先看預覽。滿意才付款。" } },
       { title: { en: "Fast Turnaround", zh: "快速交付" }, desc: { en: "Get your new website in just 3 days.", zh: "僅需3天即可獲得新網站。" } },
       { title: { en: "Built for Results", zh: "注重成效" }, desc: { en: "Choose between a clean professional layout or a conversion-focused design.", zh: "選擇簡潔專業版面或轉化導向設計。" } },
     ],
     howItWorks: { en: "How It Works", zh: "如何運作" },
-    howItWorksSub: { en: "A simple, predictable process.", zh: "簡單、可預測的流程。" },
+    howItWorksSub: { en: "No calls. No meetings. No back-and-forth.", zh: "無需電話。無需會議。無需來回溝通。" },
     steps: [
-      { title: { en: "We Redesign Your Website", zh: "我們重新設計您的網站" }, desc: { en: "We create a modern, high-performing version of your site.", zh: "我們創建您網站的現代化高性能版本。" } },
-      { title: { en: "You Receive 2 Versions", zh: "您收到2個版本" }, desc: { en: "Compare two live preview concepts side by side.", zh: "並排比較兩個即時預覽方案。" } },
-      { title: { en: "Choose Your Preferred Version", zh: "選擇您偏好的版本" }, desc: { en: "Pick the direction that fits your business best.", zh: "選擇最適合您業務的方向。" } },
-      { title: { en: "Upgrade to Launch", zh: "升級上線" }, desc: { en: "Pay to finalize and launch your new website.", zh: "付款完成並發佈您的新網站。" } },
+      { title: { en: "Enter Your Website", zh: "輸入您的網站" }, desc: { en: "Share your current URL. Takes 30 seconds.", zh: "分享您的網站URL。僅需30秒。" } },
+      { title: { en: "Receive 2 Live Previews", zh: "收到2個即時預覽" }, desc: { en: "We build two fully working website directions within 48 hours.", zh: "48小時內我們建好兩個完全可運行的網站方向。" } },
+      { title: { en: "Choose & Launch", zh: "選擇並上線" }, desc: { en: "Pick your favorite. We launch it in 3 days.", zh: "選擇您喜歡的。3天內上線。" } },
     ],
-    portfolioTitle: { en: "Real Businesses. Built with SwiftLift.", zh: "真實企業。SwiftLift 打造。" },
-    portfolioSub: { en: "Compare Version A and Version B side by side.", zh: "並排比較版本A和版本B。" },
+    portfolioTitle: { en: "Real Website Transformations", zh: "真實網站改造" },
+    portfolioSub: { en: "Built from real businesses like yours. Each preview is a real, working website — not a mockup.", zh: "為像您一樣的真實企業而建。每個預覽都是真正可運行的網站——不是模型。" },
     portfolioItems: [
       { name: { en: "Global Trade Co.", zh: "環球貿易公司" }, desc: { en: "From outdated directory to modern export platform.", zh: "從過時目錄到現代化出口平台。" } },
       { name: { en: "Serenity Wellness", zh: "寧靜健康" }, desc: { en: "Transformed a basic page into a booking-ready clinic site.", zh: "將基礎頁面轉變為可預約的診所網站。" } },
@@ -565,24 +564,24 @@ export const translations = {
     builtWith: { en: "Built with the SwiftLift System.", zh: "使用 SwiftLift 系統構建。" },
     versionA: { en: "Version A — Clean Professional", zh: "版本A — 簡潔專業" },
     versionB: { en: "Version B — Conversion-Focused", zh: "版本B — 轉化導向" },
-    pricingTitle: { en: "Simple Pricing. Start Small. Scale Anytime.", zh: "簡單定價。從小開始。隨時擴展。" },
-    pricingSub: { en: "Start with a preview. Upgrade when you're ready. No pressure.", zh: "從預覽開始。準備好了再升級。無壓力。" },
+    pricingTitle: { en: "Simple, Transparent Pricing", zh: "簡單透明的定價" },
+    pricingSub: { en: "You only pay after you've seen your previews and feel confident.", zh: "只有在看過預覽並有信心後才付款。" },
     mostPopular: { en: "Most Popular", zh: "最受歡迎" },
     /* Multi-page plans (primary) */
     multiPageLabel: { en: "Multi-Page Website", zh: "多頁面網站" },
     multiPageSub: { en: "Best for businesses that need a complete website presence", zh: "最適合需要完整網站形象的企業" },
     plans: [
-      { name: { en: "Preview Access", zh: "預覽版" }, price: "$299", features: { en: ["Live website preview", "Clean professional layout", "Delivered as-is", "Up to 7 pages", "Mobile responsive", "SEO-friendly structure"], zh: ["即時網站預覽", "簡潔專業版面", "按原樣交付", "最多7頁", "行動裝置響應式", "SEO友好結構"] }, note: { en: "No revisions included. Minor edits available.", zh: "不含修改。可進行小幅編輯。" }, cta: { en: "Get Your Free Website Preview", zh: "獲取免費網站預覽" } },
-      { name: { en: "Launch Ready", zh: "上線版" }, price: "$499", features: { en: ["Fully polished website", "Bug fixes and content refinement", "Ready for real business use", "Up to 7 pages", "Mobile responsive", "SEO-friendly structure"], zh: ["完全打磨的網站", "修復和內容優化", "適合實際商業使用", "最多7頁", "行動裝置響應式", "SEO友好結構"] }, note: { en: "", zh: "" }, cta: { en: "Get Your Free Website Preview", zh: "獲取免費網站預覽" } },
-      { name: { en: "Growth Optimized", zh: "成長版" }, price: "$799", features: { en: ["Conversion-focused layout", "Optimized structure and content flow", "Designed to generate more leads", "Up to 7 pages", "Mobile responsive", "SEO-friendly structure"], zh: ["轉化導向版面", "優化結構和內容流程", "設計以產生更多潛在客戶", "最多7頁", "行動裝置響應式", "SEO友好結構"] }, note: { en: "", zh: "" }, cta: { en: "Get Your Free Website Preview", zh: "獲取免費網站預覽" } },
+      { name: { en: "Preview Access", zh: "預覽版" }, price: "$299", features: { en: ["Live website preview", "Clean professional layout", "Delivered as-is", "Up to 7 pages", "Mobile responsive", "SEO-friendly structure"], zh: ["即時網站預覽", "簡潔專業版面", "按原樣交付", "最多7頁", "行動裝置響應式", "SEO友好結構"] }, note: { en: "No revisions included. Minor edits available.", zh: "不含修改。可進行小幅編輯。" }, cta: { en: "Get My 2 Free Previews", zh: "獲取我的2個免費預覽" } },
+      { name: { en: "Launch Ready", zh: "上線版" }, price: "$499", features: { en: ["Fully polished website", "Bug fixes and content refinement", "Ready for real business use", "Up to 7 pages", "Mobile responsive", "SEO-friendly structure"], zh: ["完全打磨的網站", "修復和內容優化", "適合實際商業使用", "最多7頁", "行動裝置響應式", "SEO友好結構"] }, note: { en: "", zh: "" }, cta: { en: "Get My 2 Free Previews", zh: "獲取我的2個免費預覽" } },
+      { name: { en: "Growth Optimized", zh: "成長版" }, price: "$799", features: { en: ["Conversion-focused layout", "Optimized structure and content flow", "Designed to generate more leads", "Up to 7 pages", "Mobile responsive", "SEO-friendly structure"], zh: ["轉化導向版面", "優化結構和內容流程", "設計以產生更多潛在客戶", "最多7頁", "行動裝置響應式", "SEO友好結構"] }, note: { en: "", zh: "" }, cta: { en: "Get My 2 Free Previews", zh: "獲取我的2個免費預覽" } },
     ],
     /* Single-page plans (secondary) */
     singlePageLabel: { en: "Single Page Website", zh: "單頁面網站" },
     singlePageSub: { en: "Best for simple businesses or quick online presence", zh: "最適合簡單企業或快速建立線上形象" },
     singlePagePlans: [
-      { name: { en: "Preview", zh: "預覽版" }, price: "$199", cta: { en: "Get Your Free Website Preview", zh: "獲取免費網站預覽" } },
-      { name: { en: "Launch", zh: "上線版" }, price: "$349", cta: { en: "Get Your Free Website Preview", zh: "獲取免費網站預覽" } },
-      { name: { en: "Growth", zh: "成長版" }, price: "$549", cta: { en: "Get Your Free Website Preview", zh: "獲取免費網站預覽" } },
+      { name: { en: "Preview", zh: "預覽版" }, price: "$199", cta: { en: "Get My 2 Free Previews", zh: "獲取我的2個免費預覽" } },
+      { name: { en: "Launch", zh: "上線版" }, price: "$349", cta: { en: "Get My 2 Free Previews", zh: "獲取我的2個免費預覽" } },
+      { name: { en: "Growth", zh: "成長版" }, price: "$549", cta: { en: "Get My 2 Free Previews", zh: "獲取我的2個免費預覽" } },
     ],
     /* Custom plans */
     customLabel: { en: "Custom Website Solutions", zh: "定制網站方案" },
@@ -595,15 +594,16 @@ export const translations = {
     customCta: { en: "Request Custom Quote", zh: "申請定制報價" },
     faqTitle: { en: "Still Have Questions?", zh: "還有疑問？" },
     faqItems: [
-      { q: { en: "Is the preview really free?", zh: "預覽真的免費嗎？" }, a: { en: "Yes. We build two website previews first.\nYou only pay if you decide to move forward.", zh: "是的。我們先建兩個網站預覽。\n只有在您決定繼續時才需付款。" } },
+      { q: { en: "Is the preview really free?", zh: "預覽真的免費嗎？" }, a: { en: "Yes. We build two working website previews first.\nYou only pay if you decide to move forward.", zh: "是的。我們先建兩個可運行的網站預覽。\n只有在您決定繼續時才需付款。" } },
       { q: { en: "How long does it take to launch?", zh: "上線需要多長時間？" }, a: { en: "Once you approve a preview,\nyour website goes live within 3 days.", zh: "一旦您批准預覽，\n您的網站將在3天內上線。" } },
-      { q: { en: "What if I need changes?", zh: "如果我需要修改怎麼辦？" }, a: { en: "Each package includes a defined revision structure.\nAdditional revisions are a fixed $25 per submission.", zh: "每個套餐都包含明確的修改結構。\n額外修改固定每次$25。" } },
+      { q: { en: "What if I need changes?", zh: "如果我需要修改怎麼辦？" }, a: { en: "Each package includes a defined revision structure.\nAdditional revisions are $25 per submission.", zh: "每個套餐都包含明確的修改結構。\n額外修改每次$25。" } },
+      { q: { en: "Do I need an existing website?", zh: "需要現有網站嗎？" }, a: { en: "SwiftLift is built for businesses with existing websites.\nFor new sites, explore our custom build options.", zh: "SwiftLift 針對已有網站的企業。\n全新網站請探索我們的定制建設選項。" } },
     ],
     viewFullFaq: { en: "View Full FAQ →", zh: "查看完整FAQ →" },
-    ctaTitle: { en: "Get Your Free Website Preview", zh: "獲取免費網站預覽" },
-    ctaSub: { en: "See your new website before making any payment.", zh: "在付款前查看您的新網站。" },
-    ctaButton: { en: "Start My Preview", zh: "開始我的預覽" },
-    footerTagline: { en: "Designed for small businesses that want real results — without upfront risk.", zh: "為想要真實成效的小企業設計——無需承擔前期風險。" },
+    ctaTitle: { en: "No Calls. No Waiting. No Risk.", zh: "無需電話。無需等待。無風險。" },
+    ctaSub: { en: "Get 2 free design previews and decide with confidence — before spending a dollar.", zh: "獲取2個免費設計預覽，在花一分錢之前自信決策。" },
+    ctaButton: { en: "Get My 2 Free Previews", zh: "獲取我的2個免費預覽" },
+    footerTagline: { en: "Faster than agencies. Easier than freelancers. Safer than traditional services.", zh: "比機構更快。比自由職業者更簡單。比傳統服務更安全。" },
   },
 } as const;
 

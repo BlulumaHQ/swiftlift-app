@@ -449,17 +449,17 @@ const IndexContent = () => {
   };
 
   const whyCards = [
-    { icon: Shield, title: lang === "en" ? "No Risk" : "零風險", desc: lang === "en" ? "See your previews first. Move forward only if it feels right." : "先看預覽。感覺對了再繼續。" },
-    { icon: Zap, title: lang === "en" ? "Fast Turnaround" : "快速交付", desc: lang === "en" ? "Get a stronger website direction without waiting through a long agency process." : "無需漫長等待即可獲得更強的網站方向。" },
-    { icon: Target, title: lang === "en" ? "Built for Results" : "注重成效", desc: lang === "en" ? "We redesign with clearer messaging, better structure, and stronger conversion intent." : "我們以更清晰的訊息、更好的結構和更強的轉化意圖進行重新設計。" },
-    { icon: Users, title: lang === "en" ? "Done for You" : "為您完成", desc: lang === "en" ? "You share your website. We handle the strategy, design direction, and heavy lifting." : "您分享您的網站。我們處理策略、設計方向和繁重工作。" },
+    { icon: Shield, title: lang === "en" ? "No Risk" : "零風險", desc: lang === "en" ? "See your previews first. Pay only if you like it." : "先看預覽。滿意才付款。" },
+    { icon: Zap, title: lang === "en" ? "Fast Turnaround" : "快速交付", desc: lang === "en" ? "Get your new website in just 3 days. No long agency process." : "僅需3天即可獲得新網站。無需漫長的機構流程。" },
+    { icon: Target, title: lang === "en" ? "Built for Results" : "注重成效", desc: lang === "en" ? "Two design directions: clean professional or conversion-focused. You pick." : "兩個設計方向：簡潔專業或轉化導向。您來選。" },
+    { icon: Users, title: lang === "en" ? "Done for You" : "為您完成", desc: lang === "en" ? "No calls. No meetings. You share your website. We build the previews." : "無需電話。無需會議。您分享網站。我們建預覽。" },
   ];
 
   const faqItems = [
-    { q: lang === "en" ? "Is the preview really free?" : "預覽真的免費嗎？", a: lang === "en" ? "Yes. We create your preview directions first so you can review the concept before deciding whether to move forward." : "是的。我們先創建您的預覽方向，讓您在決定是否繼續之前審查概念。" },
-    { q: lang === "en" ? "How long does it take to receive my previews?" : "收到預覽需要多長時間？", a: lang === "en" ? "Most preview requests are prepared within 24 to 48 hours depending on project volume and urgency." : "大多數預覽請求會根據項目量和緊急程度在24至48小時內準備好。" },
-    { q: lang === "en" ? "What if I need changes after choosing a version?" : "選擇版本後需要修改怎麼辦？", a: lang === "en" ? "Once you move forward with a paid package, we refine the chosen direction and prepare it for launch." : "一旦您選擇付費套餐繼續，我們將完善所選方向並準備上線。" },
-    { q: lang === "en" ? "What if I don't have a website yet?" : "如果我還沒有網站怎麼辦？", a: lang === "en" ? "SwiftLift is currently optimized for businesses with an existing website. If you need a brand new site, you can explore our custom build options." : "SwiftLift 目前針對已有網站的企業進行了優化。如果您需要全新網站，可以探索我們的定制建設選項。" },
+    { q: lang === "en" ? "Is the preview really free?" : "預覽真的免費嗎？", a: lang === "en" ? "Yes. We build two working website previews first. You only pay if you decide to move forward." : "是的。我們先建兩個可運行的網站預覽。只有在您決定繼續時才需付款。" },
+    { q: lang === "en" ? "How long does it take?" : "需要多長時間？", a: lang === "en" ? "You'll receive your two previews within 48 hours. Once you choose, we launch within 3 days." : "48小時內收到預覽。選定後3天內上線。" },
+    { q: lang === "en" ? "What if I need changes after choosing?" : "選擇後需要修改怎麼辦？", a: lang === "en" ? "Each package includes revisions. Additional revisions are $25 per submission." : "每個套餐包含修改。額外修改每次$25。" },
+    { q: lang === "en" ? "Do I need an existing website?" : "需要現有網站嗎？", a: lang === "en" ? "SwiftLift is built for businesses with existing websites. For new sites, explore our custom build options." : "SwiftLift 針對已有網站的企業。全新網站請探索定制選項。" },
   ];
 
   const multiPagePlans = [
@@ -517,26 +517,26 @@ const IndexContent = () => {
           <div className="grid grid-cols-1 lg:grid-cols-[1fr_1fr] gap-10 lg:gap-14 items-start">
             {/* Left: Copy */}
             <div className="text-white pt-2 lg:pt-6">
-              <h1 className="text-[2.4rem] md:text-[clamp(2.8rem,5.5vw,4.2rem)] font-black leading-[1.08] font-display tracking-tight">
-                {lang === "en" ? "See Your New Website\nBefore You Pay" : "先看您的\n新網站\n再付款"}
+              <h1 className="text-[2.4rem] md:text-[clamp(2.8rem,5.5vw,4.2rem)] font-black leading-[1.08] font-display tracking-tight whitespace-pre-line">
+                {lang === "en" ? "No Calls. No Waiting.\nJust 2 Live Website Previews." : "無需電話。無需等待。\n直接獲得2個即時網站預覽。"}
               </h1>
 
               <p className="mt-5 text-base md:text-lg text-white/80 leading-relaxed max-w-lg">
                 {lang === "en"
-                  ? "Get 2 free website previews for your business before making any decision."
-                  : "在做任何決定之前，獲取2個免費網站預覽。"}
+                  ? "Get 2 fully working websites before you pay anything."
+                  : "在支付任何費用之前，獲得2個完全可運行的網站。"}
               </p>
               <p className="mt-2 text-sm md:text-base text-white/60 leading-relaxed max-w-lg">
                 {lang === "en"
-                  ? "Compare two different design directions and choose what actually works for your customers."
-                  : "比較兩個不同的設計方向，選擇真正適合您客戶的方案。"}
+                  ? "If you like it → we launch in 3 days. If not → you pay nothing."
+                  : "滿意 → 3天內上線。不滿意 → 您不用付費。"}
               </p>
 
               <ul className="mt-8 space-y-3">
                 {[
-                  lang === "en" ? "2 preview versions to compare" : "2個預覽版本可比較",
+                  lang === "en" ? "2 live website previews to compare" : "2個即時網站預覽可比較",
                   lang === "en" ? "No upfront payment required" : "無需預付款",
-                  lang === "en" ? "Upgrade only when you're ready" : "準備好了再升級",
+                  lang === "en" ? "Launch in 3 days if you love it" : "滿意的話3天內上線",
                 ].map((item, i) => (
                   <li key={i} className="flex items-center gap-3 text-sm md:text-base text-white/85">
                     <Check size={16} className="flex-shrink-0" style={{ color: "hsl(275 51% 46%)" }} />
@@ -544,15 +544,19 @@ const IndexContent = () => {
                   </li>
                 ))}
               </ul>
+
+              <p className="mt-6 text-xs text-white/40">
+                {lang === "en" ? "Limited preview slots available today" : "今日預覽名額有限"}
+              </p>
             </div>
 
             {/* Right: Intake Form — stronger visual weight */}
             <div className="bg-background rounded-2xl p-7 md:p-10 border border-border/50 shadow-[0_25px_60px_-12px_rgba(0,0,0,0.35)] lg:mt-2">
               <h3 className="text-base font-bold text-foreground font-display mb-1">
-                {lang === "en" ? "Start Your Free Preview" : "開始您的免費預覽"}
+                {lang === "en" ? "Get Your 2 Free Website Previews" : "獲取您的2個免費網站預覽"}
               </h3>
               <p className="text-xs text-muted-foreground mb-5">
-                {lang === "en" ? "Enter your current website to get started." : "輸入您目前的網站以開始。"}
+                {lang === "en" ? "Takes less than 30 seconds. No commitment." : "不到30秒。無需承諾。"}
               </p>
               <MultiStepIntake variant="hero" />
             </div>
@@ -567,16 +571,15 @@ const IndexContent = () => {
             {lang === "en" ? "How It Works" : "如何運作"}
           </h2>
           <p className="mt-2 text-muted-foreground text-sm">
-            {lang === "en" ? "A simple, low-risk way to upgrade your website." : "一種簡單、低風險的網站升級方式。"}
+            {lang === "en" ? "No calls. No meetings. No back-and-forth." : "無需電話。無需會議。無需來回溝通。"}
           </p>
 
           {/* Desktop */}
           <div className="mt-14 hidden md:flex items-start justify-center gap-0">
             {[
-              { title: lang === "en" ? "Submit Your Current Website" : "提交您的當前網站", desc: lang === "en" ? "Enter your website URL to start your free preview request." : "輸入您的網站URL以開始免費預覽請求。" },
-              { title: lang === "en" ? "Receive 2 Preview Directions" : "收到2個預覽方向", desc: lang === "en" ? "We create two homepage concepts so you can compare different directions before making any decision." : "我們創建兩個主頁概念，讓您在做任何決定前比較不同方向。" },
-              { title: lang === "en" ? "Choose What Fits Best" : "選擇最適合的", desc: lang === "en" ? "Pick the version that feels right for your business, your audience, and your goals." : "選擇最適合您的業務、受眾和目標的版本。" },
-              { title: lang === "en" ? "Upgrade When You're Ready" : "準備好了再升級", desc: lang === "en" ? "Move forward only when you're confident in the direction." : "只有在對方向有信心時才繼續。" },
+              { title: lang === "en" ? "Enter Your Website" : "輸入您的網站", desc: lang === "en" ? "Share your current URL. Takes 30 seconds." : "分享您的網站URL。僅需30秒。" },
+              { title: lang === "en" ? "Receive 2 Live Previews" : "收到2個即時預覽", desc: lang === "en" ? "We build two fully working website directions within 48 hours." : "48小時內我們建好兩個完全可運行的網站方向。" },
+              { title: lang === "en" ? "Choose & Launch" : "選擇並上線", desc: lang === "en" ? "Pick your favorite. We launch it in 3 days." : "選擇您喜歡的。3天內上線。" },
             ].map((s, i) => (
               <div key={i} className="flex items-start">
                 <div className="flex flex-col items-center text-center max-w-[200px]">
@@ -586,7 +589,7 @@ const IndexContent = () => {
                   <h3 className="mt-3 text-sm font-bold text-foreground font-display">{s.title}</h3>
                   <p className="mt-2 text-xs text-muted-foreground leading-relaxed">{s.desc}</p>
                 </div>
-                {i < 3 && (
+                {i < 2 && (
                   <div className="flex items-center px-3 pt-4">
                     <ArrowRight size={20} className="text-muted-foreground/25" strokeWidth={1.5} />
                   </div>
@@ -598,10 +601,9 @@ const IndexContent = () => {
           {/* Mobile */}
           <div className="mt-10 md:hidden space-y-6">
             {[
-              { title: lang === "en" ? "Submit Your Current Website" : "提交您的當前網站", desc: lang === "en" ? "Enter your website URL to start your free preview request." : "輸入您的網站URL以開始免費預覽請求。" },
-              { title: lang === "en" ? "Receive 2 Preview Directions" : "收到2個預覽方向", desc: lang === "en" ? "We create two homepage concepts so you can compare different directions." : "我們創建兩個主頁概念供您比較。" },
-              { title: lang === "en" ? "Choose What Fits Best" : "選擇最適合的", desc: lang === "en" ? "Pick the version that feels right for your business." : "選擇最適合您業務的版本。" },
-              { title: lang === "en" ? "Upgrade When You're Ready" : "準備好了再升級", desc: lang === "en" ? "Move forward only when you're confident." : "有信心時再繼續。" },
+              { title: lang === "en" ? "Enter Your Website" : "輸入您的網站", desc: lang === "en" ? "Share your current URL. Takes 30 seconds." : "分享您的網站URL。僅需30秒。" },
+              { title: lang === "en" ? "Receive 2 Live Previews" : "收到2個即時預覽", desc: lang === "en" ? "We build two fully working website directions within 48 hours." : "48小時內建好兩個可運行的網站方向。" },
+              { title: lang === "en" ? "Choose & Launch" : "選擇並上線", desc: lang === "en" ? "Pick your favorite. We launch it in 3 days." : "選擇您喜歡的。3天內上線。" },
             ].map((s, i) => (
               <div key={i} className="flex flex-col items-center text-center">
                 <span className="w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold text-white" style={{ background: "hsl(275 51% 46%)" }}>
@@ -619,13 +621,13 @@ const IndexContent = () => {
       <section className="py-20 md:py-28" style={{ background: "hsl(var(--surface-sunken))" }}>
         <div className="max-w-3xl mx-auto px-6 text-center">
           <h2 className="text-[clamp(1.8rem,4.5vw,3.2rem)] font-black text-foreground font-display leading-tight">
-            {lang === "en" ? "Let SwiftLift Do the Heavy Lifting for You" : "讓 SwiftLift 為您承擔繁重工作"}
+            {lang === "en" ? "Try It Risk-Free" : "零風險體驗"}
           </h2>
           <p className="mt-4 text-lg md:text-xl text-foreground/80 font-medium">
-            {lang === "en" ? "Create a Website That Your Customers Will Actually Love." : "創建一個您的客戶真正喜歡的網站。"}
+            {lang === "en" ? "You only pay if you like what you see." : "滿意才付款。"}
           </p>
           <p className="mt-4 text-sm text-muted-foreground max-w-lg mx-auto leading-relaxed">
-            {lang === "en" ? "No guesswork. No wasted money. Just real results you can see before you commit." : "不用猜測。不浪費錢。只有在承諾之前就能看到的真實成果。"}
+            {lang === "en" ? "We build first. You decide after. No calls. No meetings. No commitment until you're confident." : "我們先建。您後決定。無需電話。無需會議。有信心了再承諾。"}
           </p>
           <button
             onClick={scrollToIntake}
@@ -641,10 +643,10 @@ const IndexContent = () => {
       <section id="portfolio" className="py-16 md:py-24 bg-background">
         <div className="max-w-6xl mx-auto px-6">
           <h2 className="text-[clamp(1.8rem,4vw,2.8rem)] font-black text-foreground font-display text-center">
-            {lang === "en" ? "Real Businesses. Reimagined with SwiftLift." : "真實企業。SwiftLift 重新構想。"}
+            {lang === "en" ? "Real Website Transformations" : "真實網站改造"}
           </h2>
           <p className="mt-2 text-muted-foreground text-sm text-center">
-            {lang === "en" ? "See how an outdated website can become two stronger directions before you decide." : "看看過時的網站如何在您決定之前變成兩個更強的方向。"}
+            {lang === "en" ? "Built from real businesses like yours. Each preview is a real, working website — not a mockup." : "為像您一樣的真實企業而建。每個預覽都是真正可運行的網站——不是模型。"}
           </p>
 
           <div
@@ -788,7 +790,7 @@ const IndexContent = () => {
             {lang === "en" ? "Simple, Transparent Pricing" : "簡單透明的定價"}
           </h2>
           <p className="mt-2 text-muted-foreground text-sm text-center">
-            {lang === "en" ? "Only upgrade once you've seen the preview and feel confident." : "只有在看過預覽並有信心後才升級。"}
+            {lang === "en" ? "You only pay after you've seen your previews and feel confident." : "只有在看過預覽並有信心後才付款。"}
           </p>
 
           {/* Single page note */}
@@ -924,7 +926,7 @@ const IndexContent = () => {
         <div className="absolute inset-0 pointer-events-none" style={{ background: "radial-gradient(ellipse 60% 50% at 50% 40%, hsl(209 70% 30% / 0.25), transparent)" }} />
         <div className="relative max-w-2xl mx-auto px-6 text-center">
           <h2 className="text-[clamp(1.7rem,4.5vw,2.8rem)] font-black text-white font-display leading-tight">
-            {lang === "en" ? "See What Your Website Could Become" : "看看您的網站可以變成什麼樣"}
+            {lang === "en" ? "No Calls. No Waiting. No Risk." : "無需電話。無需等待。無風險。"}
           </h2>
           <p className="mt-4 text-white/55 text-base max-w-md mx-auto leading-relaxed">
             {lang === "en"
@@ -936,8 +938,8 @@ const IndexContent = () => {
           </div>
           <p className="mt-8 text-xs text-white/35 tracking-wide">
             {lang === "en"
-              ? "No upfront payment · No obligation · Built for real business results"
-              : "無預付款 · 無義務 · 為真實商業成果而構建"}
+              ? "No upfront payment · No obligation · Faster than agencies · Easier than freelancers"
+              : "無預付款 · 無義務 · 比機構更快 · 比自由職業者更簡單"}
           </p>
         </div>
       </section>

@@ -5,8 +5,8 @@ import { FilePlus2, Monitor, ClipboardCheck, Blocks, Rocket, ArrowRight, ArrowDo
 import { motion, useInView } from "framer-motion";
 import { useRef, useState } from "react";
 
-const icons = [FilePlus2, Monitor, ClipboardCheck, Blocks, Rocket];
-const numbers = ["01", "02", "03", "04", "05"];
+const icons = [FilePlus2, Monitor, Rocket];
+const numbers = ["01", "02", "03"];
 
 const ProcessSteps = () => {
   const { lang } = useLanguage();
@@ -82,7 +82,7 @@ const ProcessSteps = () => {
                     <p className="mt-2 text-sm text-white/60 leading-relaxed max-w-[160px] relative whitespace-pre-line" style={{ zIndex: 10 }}>{t(step.desc, lang)}</p>
                   </div>
                 </ScrollReveal>
-                {i < 4 && (
+                {i < process.steps.length - 1 && (
                   <div className="flex-shrink-0 -mx-1" style={{ zIndex: 10 }}>
                     <ArrowRight size={22} style={{ color: "hsl(214 58% 60%)" }} />
                   </div>
@@ -115,7 +115,7 @@ const ProcessSteps = () => {
                     <p className="mt-2 text-sm text-white/60 leading-relaxed whitespace-pre-line">{t(step.desc, lang)}</p>
                   </div>
                 </ScrollReveal>
-                {i < 4 && (
+                {i < process.steps.length - 1 && (
                   <div className="py-3">
                     <ArrowDown size={20} style={{ color: "hsl(214 58% 60%)" }} />
                   </div>
