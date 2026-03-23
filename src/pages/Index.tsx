@@ -571,7 +571,7 @@ const IndexContent = () => {
             {lang === "en" ? "How It Works" : "如何運作"}
           </h2>
           <p className="mt-2 text-muted-foreground text-sm">
-            {lang === "en" ? "A simple, low-risk way to upgrade your website." : "一種簡單、低風險的網站升級方式。"}
+            {lang === "en" ? "No calls. No meetings. No back-and-forth." : "無需電話。無需會議。無需來回溝通。"}
           </p>
 
           {/* Desktop */}
