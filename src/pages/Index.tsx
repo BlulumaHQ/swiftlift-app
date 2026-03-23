@@ -577,10 +577,9 @@ const IndexContent = () => {
           {/* Desktop */}
           <div className="mt-14 hidden md:flex items-start justify-center gap-0">
             {[
-              { title: lang === "en" ? "Submit Your Current Website" : "提交您的當前網站", desc: lang === "en" ? "Enter your website URL to start your free preview request." : "輸入您的網站URL以開始免費預覽請求。" },
-              { title: lang === "en" ? "Receive 2 Preview Directions" : "收到2個預覽方向", desc: lang === "en" ? "We create two homepage concepts so you can compare different directions before making any decision." : "我們創建兩個主頁概念，讓您在做任何決定前比較不同方向。" },
-              { title: lang === "en" ? "Choose What Fits Best" : "選擇最適合的", desc: lang === "en" ? "Pick the version that feels right for your business, your audience, and your goals." : "選擇最適合您的業務、受眾和目標的版本。" },
-              { title: lang === "en" ? "Upgrade When You're Ready" : "準備好了再升級", desc: lang === "en" ? "Move forward only when you're confident in the direction." : "只有在對方向有信心時才繼續。" },
+              { title: lang === "en" ? "Enter Your Website" : "輸入您的網站", desc: lang === "en" ? "Share your current URL. Takes 30 seconds." : "分享您的網站URL。僅需30秒。" },
+              { title: lang === "en" ? "Receive 2 Live Previews" : "收到2個即時預覽", desc: lang === "en" ? "We build two fully working website directions within 48 hours." : "48小時內我們建好兩個完全可運行的網站方向。" },
+              { title: lang === "en" ? "Choose & Launch" : "選擇並上線", desc: lang === "en" ? "Pick your favorite. We launch it in 3 days." : "選擇您喜歡的。3天內上線。" },
             ].map((s, i) => (
               <div key={i} className="flex items-start">
                 <div className="flex flex-col items-center text-center max-w-[200px]">
