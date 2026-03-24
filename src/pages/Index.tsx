@@ -438,7 +438,7 @@ const MultiStepIntake = ({ variant = "hero" }: { variant?: "hero" | "cta" }) => 
           </select>
         </div>
         {submitError && (
-          <p className={`text-sm font-medium ${isDark ? "text-red-300" : "text-destructive"}`}>{submitError}</p>
+          <pre className={`text-xs font-mono whitespace-pre-wrap break-all p-3 rounded border ${isDark ? "text-red-300 bg-red-900/30 border-red-500/30" : "text-destructive bg-destructive/10 border-destructive/30"}`}>{submitError}</pre>
         )}
         <div className="flex gap-3 pt-2">
           <button
