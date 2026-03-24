@@ -114,7 +114,11 @@ const IntakeForm = () => {
         notes: message || null,
         source_app: "landing_page",
       });
-      if (leadsError) throw new Error(leadsError.message);
+      if (leadsError) {
+        console.error("Leads insert error:", leadsError);
+        throw new Error(leadsError.message);
+      }
+      console.log("Leads insert success:", leadsData);
 
       // Insert into Supabase "form_submissions" table
       const { error: formError } = await supabase.from("form_submissions" as any).insert({
