@@ -7,10 +7,9 @@ import ScrollReveal from "@/components/ScrollReveal";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import { PRICING, formatPriceByType, STRIPE_LINKS } from "@/lib/pricing";
-import CustomCursor from "@/components/CustomCursor";
-import { motion } from "framer-motion";
-import { Link } from "react-router-dom";
-import { PRICING, formatPriceByType, STRIPE_LINKS } from "@/lib/pricing";
+import {
+  Package, Sparkles
+} from "lucide-react";
 import {
   Star, Globe, FileText, Calendar, MessageSquare, HelpCircle,
   MapPin, BarChart3, Image, ShoppingCart, Users, Workflow,
