@@ -9,6 +9,19 @@ import { Info, X, Check } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { externalSupabase } from "@/lib/externalSupabase";
 
+type FormSubmissionsDebug = {
+  attempted: boolean;
+  payload: Record<string, unknown> | null;
+  response: Record<string, unknown> | null;
+  error: {
+    message: string | null;
+    details: string | null;
+    hint: string | null;
+    code: string | null;
+    full: unknown;
+  } | null;
+};
+
 /**
  * Generate a client ID in format: CL-YYYYMMDD-XXXX
  */
@@ -44,6 +57,7 @@ const IntakeForm = () => {
   const [submittedClientId, setSubmittedClientId] = useState("");
   const [submitting, setSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState("");
+  const [formSubmissionsDebug, setFormSubmissionsDebug] = useState<FormSubmissionsDebug | null>(null);
   const [searchParams, setSearchParams] = useSearchParams();
   const [showLeadConfirm, setShowLeadConfirm] = useState(false);
   const sectionRef = useRef<HTMLElement>(null);
@@ -87,6 +101,7 @@ const IntakeForm = () => {
     e.preventDefault();
     setSubmitting(true);
     setSubmitError("");
+    setFormSubmissionsDebug(null);
     const form = e.currentTarget;
     const formData = new FormData(form);
 
@@ -135,21 +150,32 @@ const IntakeForm = () => {
           website,
           inspiration,
         };
-        console.log("form_submissions payload:", {
+        const formSubmissionsInsertPayload = {
           client_id: clientId,
           payload: formSubmissionPayload,
           source_app: "landing_page",
+        };
+        console.log("form_submissions payload:", formSubmissionsInsertPayload);
+        setFormSubmissionsDebug({
+          attempted: true,
+          payload: formSubmissionsInsertPayload,
+          response: null,
+          error: null,
         });
 
-        const fsResponse = await externalSupabase.from("form_submissions").insert({
-          client_id: clientId,
-          payload: formSubmissionPayload,
-          source_app: "landing_page",
-        });
+        const fsResponse = await externalSupabase.from("form_submissions").insert(formSubmissionsInsertPayload);
 
         console.log("form_submissions response:", fsResponse);
 
         const { error: fsError } = fsResponse;
+
+        const debugResponse = {
+          data: fsResponse.data ?? null,
+          error: fsResponse.error ?? null,
+          count: fsResponse.count ?? null,
+          status: fsResponse.status ?? null,
+          statusText: fsResponse.statusText ?? null,
+        };
 
         if (fsError) {
           console.error("form_submissions insert error:", fsError);
@@ -160,11 +186,41 @@ const IntakeForm = () => {
             code: (fsError as any).code,
             fullError: fsError,
           });
+          setFormSubmissionsDebug({
+            attempted: true,
+            payload: formSubmissionsInsertPayload,
+            response: debugResponse,
+            error: {
+              message: fsError.message ?? null,
+              details: (fsError as { details?: string | null }).details ?? null,
+              hint: (fsError as { hint?: string | null }).hint ?? null,
+              code: (fsError as { code?: string | null }).code ?? null,
+              full: fsError,
+            },
+          });
         } else {
           console.log("form_submissions insert success:", fsResponse);
+          setFormSubmissionsDebug({
+            attempted: true,
+            payload: formSubmissionsInsertPayload,
+            response: debugResponse,
+            error: null,
+          });
         }
       } catch (fsErr) {
         console.error("form_submissions unexpected error:", fsErr);
+        setFormSubmissionsDebug((current) => ({
+          attempted: true,
+          payload: current?.payload ?? null,
+          response: current?.response ?? null,
+          error: {
+            message: fsErr instanceof Error ? fsErr.message : null,
+            details: null,
+            hint: null,
+            code: null,
+            full: fsErr,
+          },
+        }));
       }
 
       // Send confirmation email (non-critical)
@@ -290,36 +346,94 @@ const IntakeForm = () => {
 
         {submitted ? (
           <ScrollReveal>
-            <div className="mt-10 bg-background rounded-3xl p-12 text-center border border-border shadow-xl">
-              <div className="w-16 h-16 rounded-full mx-auto mb-4 flex items-center justify-center" style={{ background: "hsl(275 51% 46% / 0.1)" }}>
-                <Check size={32} style={{ color: "hsl(275 51% 46%)" }} />
+            <>
+              <div className="mt-10 bg-background rounded-3xl p-12 text-center border border-border shadow-xl">
+                <div className="w-16 h-16 rounded-full mx-auto mb-4 flex items-center justify-center" style={{ background: "hsl(275 51% 46% / 0.1)" }}>
+                  <Check size={32} style={{ color: "hsl(275 51% 46%)" }} />
+                </div>
+                <h3 className="text-2xl font-bold text-foreground font-display">
+                  {lang === "en"
+                    ? "Thank you — we received your request."
+                    : "感謝您——我們已收到您的請求。"}
+                </h3>
+                {submittedClientId && (
+                  <div className="mt-4 inline-flex items-center gap-2 rounded-full border border-border bg-secondary/50 px-5 py-2.5">
+                    <span className="text-sm font-medium text-muted-foreground">
+                      {lang === "en" ? "Client ID:" : "客戶編號："}
+                    </span>
+                    <span className="font-bold text-base tracking-wide font-mono text-foreground">{submittedClientId}</span>
+                  </div>
+                )}
+                <p className="mt-3 text-muted-foreground">
+                  {lang === "en"
+                    ? "You can expect your preview concepts within 48 hours."
+                    : "您可以在48小時內收到預覽方案。"}
+                </p>
+                <a
+                  href="/"
+                  className="mt-6 inline-flex items-center justify-center rounded-full px-8 py-3.5 text-base font-semibold text-white transition-colors"
+                  style={{ backgroundColor: "hsl(275 51% 46%)" }}
+                >
+                  {lang === "en" ? "Back to Home" : "返回首頁"}
+                </a>
               </div>
-              <h3 className="text-2xl font-bold text-foreground font-display">
-                {lang === "en"
-                  ? "Thank you — we received your request."
-                  : "感謝您——我們已收到您的請求。"}
-              </h3>
-              {submittedClientId && (
-                <div className="mt-4 inline-flex items-center gap-2 rounded-full border border-border bg-secondary/50 px-5 py-2.5">
-                  <span className="text-sm font-medium text-muted-foreground">
-                    {lang === "en" ? "Client ID:" : "客戶編號："}
-                  </span>
-                  <span className="font-bold text-base tracking-wide font-mono text-foreground">{submittedClientId}</span>
+
+              {formSubmissionsDebug && (
+                <div className="mt-4 rounded-3xl border border-border bg-background p-6 text-left shadow-xl">
+                  <h4 className="text-sm font-semibold text-foreground">form_submissions debug</h4>
+                  <div className="mt-4 space-y-4 text-sm text-foreground">
+                    <div>
+                      <p className="font-medium text-foreground">Attempted</p>
+                      <pre className="mt-1 whitespace-pre-wrap break-words rounded-2xl bg-secondary/40 p-3 font-mono text-xs text-foreground">
+                        {JSON.stringify(formSubmissionsDebug.attempted, null, 2)}
+                      </pre>
+                    </div>
+                    <div>
+                      <p className="font-medium text-foreground">Payload sent</p>
+                      <pre className="mt-1 whitespace-pre-wrap break-words rounded-2xl bg-secondary/40 p-3 font-mono text-xs text-foreground">
+                        {JSON.stringify(formSubmissionsDebug.payload, null, 2)}
+                      </pre>
+                    </div>
+                    <div>
+                      <p className="font-medium text-foreground">Supabase response</p>
+                      <pre className="mt-1 whitespace-pre-wrap break-words rounded-2xl bg-secondary/40 p-3 font-mono text-xs text-foreground">
+                        {JSON.stringify(formSubmissionsDebug.response, null, 2)}
+                      </pre>
+                    </div>
+                    <div>
+                      <p className="font-medium text-foreground">error.message</p>
+                      <pre className="mt-1 whitespace-pre-wrap break-words rounded-2xl bg-secondary/40 p-3 font-mono text-xs text-foreground">
+                        {JSON.stringify(formSubmissionsDebug.error?.message ?? null, null, 2)}
+                      </pre>
+                    </div>
+                    <div>
+                      <p className="font-medium text-foreground">error.details</p>
+                      <pre className="mt-1 whitespace-pre-wrap break-words rounded-2xl bg-secondary/40 p-3 font-mono text-xs text-foreground">
+                        {JSON.stringify(formSubmissionsDebug.error?.details ?? null, null, 2)}
+                      </pre>
+                    </div>
+                    <div>
+                      <p className="font-medium text-foreground">error.hint</p>
+                      <pre className="mt-1 whitespace-pre-wrap break-words rounded-2xl bg-secondary/40 p-3 font-mono text-xs text-foreground">
+                        {JSON.stringify(formSubmissionsDebug.error?.hint ?? null, null, 2)}
+                      </pre>
+                    </div>
+                    <div>
+                      <p className="font-medium text-foreground">error.code</p>
+                      <pre className="mt-1 whitespace-pre-wrap break-words rounded-2xl bg-secondary/40 p-3 font-mono text-xs text-foreground">
+                        {JSON.stringify(formSubmissionsDebug.error?.code ?? null, null, 2)}
+                      </pre>
+                    </div>
+                    <div>
+                      <p className="font-medium text-foreground">Full error object</p>
+                      <pre className="mt-1 whitespace-pre-wrap break-words rounded-2xl bg-secondary/40 p-3 font-mono text-xs text-foreground">
+                        {JSON.stringify(formSubmissionsDebug.error?.full ?? null, null, 2)}
+                      </pre>
+                    </div>
+                  </div>
                 </div>
               )}
-              <p className="mt-3 text-muted-foreground">
-                {lang === "en"
-                  ? "You can expect your preview concepts within 48 hours."
-                  : "您可以在48小時內收到預覽方案。"}
-              </p>
-              <a
-                href="/"
-                className="mt-6 inline-flex items-center justify-center rounded-full px-8 py-3.5 text-base font-semibold text-white transition-colors"
-                style={{ backgroundColor: "hsl(275 51% 46%)" }}
-              >
-                {lang === "en" ? "Back to Home" : "返回首頁"}
-              </a>
-            </div>
+            </>
           </ScrollReveal>
         ) : (
           <ScrollReveal delay={0.15}>
