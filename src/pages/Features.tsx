@@ -284,9 +284,18 @@ const FeaturesContent = () => {
                 desc: { en: "A lead-focused bundle built to help businesses collect better enquiries through stronger forms, structure, and user flow.", zh: "以潛在客戶為導向的套餐，幫助企業通過更強的表單、結構和用戶流程收集更好的查詢。" },
                 price: "$399",
                 savings: { en: "Save $101 compared to individual features", zh: "比單獨購買節省 $101" },
-                icon: Package,
+              icon: Package,
               },
-            ] as { key: string; title: LangObj; desc: LangObj; price: string; savings: LangObj; icon: any; badge?: string }[]).map((bundle, i) => (
+              {
+                key: "internal-payment-test",
+                title: { en: "Internal Payment Test", zh: "內部支付測試" },
+                desc: { en: "Temporary internal test product used to verify live Stripe checkout, webhook delivery, and payment logging.", zh: "臨時內部測試產品，用於驗證實時 Stripe 結帳、webhook 交付和付款記錄。" },
+                price: "$1",
+                savings: { en: "Internal use only — not a public offer", zh: "僅供內部使用——非公開優惠" },
+                icon: Package,
+                isTest: true,
+              },
+            ] as { key: string; title: LangObj; desc: LangObj; price: string; savings: LangObj; icon: any; badge?: string; isTest?: boolean }[]).map((bundle, i) => (
               <ScrollReveal key={bundle.key} delay={0.08 * i}>
                 <div className="rounded-2xl border border-border bg-background p-6 md:p-8 shadow-sm h-full flex flex-col relative card-elevated">
                   {bundle.badge && (
