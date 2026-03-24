@@ -331,7 +331,7 @@ const FeaturesContent = () => {
                       onMouseEnter={e => (e.currentTarget.style.backgroundColor = "hsl(275 51% 38%)")}
                       onMouseLeave={e => (e.currentTarget.style.backgroundColor = "hsl(275 51% 46%)")}
                     >
-                      {lang === "en" ? "Get This Bundle" : "獲取此套餐"}
+                      {(bundle as any).isTest ? (lang === "en" ? "Test Payment" : "測試支付") : (lang === "en" ? "Get This Bundle" : "獲取此套餐")}
                     </a>
                   </div>
                 </div>
