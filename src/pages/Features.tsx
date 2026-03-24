@@ -301,16 +301,19 @@ const FeaturesContent = () => {
                   </div>
                   <h3 className="text-xl font-bold text-foreground font-display">{T(bundle.title, lang)}</h3>
                   <p className="mt-2 text-sm text-muted-foreground leading-relaxed flex-1">{T(bundle.desc, lang)}</p>
-                  <div className="mt-4 flex items-baseline gap-2">
-                    <span className="text-3xl font-black font-display text-primary">{bundle.price}</span>
+                  <div className="mt-4">
+                    <span className="text-3xl font-black font-display text-primary block">{bundle.price}</span>
+                    <span className="text-xs text-muted-foreground mt-1 block">{T(bundle.savings, lang)}</span>
                   </div>
                   <div className="mt-6">
                     <a
                       href={STRIPE_LINKS[bundle.key]}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="w-full inline-flex items-center justify-center rounded-full px-6 py-3 text-sm font-semibold text-white transition-all hover:scale-[1.02] hover:opacity-90 active:scale-[0.97]"
+                      className="w-full inline-flex items-center justify-center rounded-full px-6 py-3 text-sm font-semibold text-white transition-colors duration-200 active:scale-[0.97]"
                       style={{ backgroundColor: "hsl(275 51% 46%)" }}
+                      onMouseEnter={e => (e.currentTarget.style.backgroundColor = "hsl(275 51% 38%)")}
+                      onMouseLeave={e => (e.currentTarget.style.backgroundColor = "hsl(275 51% 46%)")}
                     >
                       {lang === "en" ? "Get This Bundle" : "獲取此套餐"}
                     </a>
