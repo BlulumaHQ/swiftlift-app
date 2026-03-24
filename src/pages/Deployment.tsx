@@ -4,7 +4,7 @@ import { LanguageProvider } from "@/contexts/LanguageContext";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import CustomCursor from "@/components/CustomCursor";
-import { PRICING, formatPrice } from "@/lib/pricing";
+import { PRICING, formatPrice, STRIPE_LINKS } from "@/lib/pricing";
 import { Check, Shield, Palette, Search, Zap, Share2, Lock, ChevronDown, User, Building2, Mail, AlertCircle } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 
@@ -236,6 +236,18 @@ const DeploymentContent = () => {
         return;
       }
 
+      // Hosting-only (no add-ons) → open direct Stripe Payment Link
+      if (selectedAddons.size === 0) {
+        const linkKey = hostingPlan === "monthly" ? "managed-monthly" : "managed-yearly";
+        const url = STRIPE_LINKS[linkKey];
+        if (url) {
+          window.open(url, "_blank", "noopener,noreferrer");
+          setIsSubmitting(false);
+          return;
+        }
+      }
+
+      // Combined hosting + add-ons → use edge function checkout
       const { data, error } = await supabase.functions.invoke("create-deployment-checkout", {
         body: {
           hostingPlan,
