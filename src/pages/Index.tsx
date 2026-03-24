@@ -380,6 +380,32 @@ const MultiStepIntake = ({ variant = "hero" }: { variant?: "hero" | "cta" }) => 
       }
       console.log("Leads insert success:", leadsData);
 
+      // Step 6: Insert into form_submissions (non-blocking)
+      try {
+        const serializedPayload = JSON.parse(
+          JSON.stringify({
+            name: businessName || null,
+            email: email || null,
+            company_name: businessName || null,
+            website_url: url || null,
+            timeline: timeline || null,
+          }),
+        );
+        const fsInsert = {
+          client_id: clientId,
+          payload: serializedPayload,
+          source_app: "landing_page",
+        };
+        console.log("form_submissions final payload:", fsInsert);
+        const fsResponse = await externalSupabase.from("form_submissions").insert([fsInsert]);
+        console.log("form_submissions response:", fsResponse);
+        if (fsResponse.error) {
+          console.error("form_submissions error:", fsResponse.error);
+        }
+      } catch (fsErr) {
+        console.error("form_submissions unexpected error:", fsErr);
+      }
+
       // Send confirmation email via existing edge function (non-critical)
       try {
         await supabase.functions.invoke("send-intake-confirmation", {
