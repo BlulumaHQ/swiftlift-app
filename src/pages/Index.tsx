@@ -11,7 +11,15 @@ import { Check, ChevronDown, ArrowRight, ArrowDown, Plus, Star, ChevronLeft, Che
 import { motion, AnimatePresence } from "framer-motion";
 import { supabase } from "@/integrations/supabase/client";
 import { getOrCreateProjectId } from "@/lib/projectId";
-import { externalSupabase, generateClientId } from "@/lib/externalSupabase";
+
+function generateClientId(): string {
+  const now = new Date();
+  const yyyy = now.getFullYear();
+  const mm = String(now.getMonth() + 1).padStart(2, "0");
+  const dd = String(now.getDate()).padStart(2, "0");
+  const rand = String(Math.floor(1000 + Math.random() * 9000));
+  return `CL-${yyyy}${mm}${dd}-${rand}`;
+}
 
 import portfolioTrade from "@/assets/portfolio-trade.jpg";
 import portfolioWellness from "@/assets/portfolio-wellness-new.jpg";
