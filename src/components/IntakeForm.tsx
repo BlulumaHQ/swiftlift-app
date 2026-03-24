@@ -91,8 +91,10 @@ const IntakeForm = () => {
     const formData = new FormData(form);
 
     // Normalize website URL
-    const websiteRaw = (formData.get("website") as string) || "";
-    const website = websiteRaw ? normalizeUrl(websiteRaw) : "";
+      const websiteRaw = (formData.get("website") as string) || "";
+      const website = websiteRaw ? normalizeUrl(websiteRaw) : "";
+      const inspirationRaw = (formData.get("inspiration") as string) || "";
+      const inspiration = inspirationRaw ? normalizeUrl(inspirationRaw) : "";
 
     try {
       const name = formData.get("name") as string;
@@ -124,24 +126,30 @@ const IntakeForm = () => {
 
       // Step 6: Insert into form_submissions (non-blocking)
       try {
-        const formPayload = {
+        const formSubmissionPayload = {
           name,
+          subject: businessName,
           email,
-          company_name: businessName,
-          website_url: website,
-          timeline: timeline || null,
-          notes: message || null,
+          timeline,
+          message,
+          website,
+          inspiration,
         };
-        console.log("form_submissions payload:", formPayload);
+        console.log("form_submissions payload:", {
+          client_id: clientId,
+          payload: formSubmissionPayload,
+          source_app: "landing_page",
+        });
 
-        const { data: fsData, error: fsError } = await externalSupabase
-          .from("form_submissions")
-          .insert({
-            client_id: clientId,
-            payload: formPayload,
-            source_app: "landing_page",
-          })
-          .select();
+        const fsResponse = await externalSupabase.from("form_submissions").insert({
+          client_id: clientId,
+          payload: formSubmissionPayload,
+          source_app: "landing_page",
+        });
+
+        console.log("form_submissions response:", fsResponse);
+
+        const { error: fsError } = fsResponse;
 
         if (fsError) {
           console.error("form_submissions insert error:", fsError);
@@ -150,9 +158,10 @@ const IntakeForm = () => {
             details: (fsError as any).details,
             hint: (fsError as any).hint,
             code: (fsError as any).code,
+            fullError: fsError,
           });
         } else {
-          console.log("form_submissions insert success:", fsData);
+          console.log("form_submissions insert success:", fsResponse);
         }
       } catch (fsErr) {
         console.error("form_submissions unexpected error:", fsErr);
