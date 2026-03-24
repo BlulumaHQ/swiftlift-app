@@ -260,7 +260,7 @@ const FeaturesContent = () => {
                 price: "$899",
                 icon: Sparkles,
               },
-            ] as const).map((bundle, i) => (
+            ] as { key: string; title: LangObj; price: string; icon: any; badge?: string }[]).map((bundle, i) => (
               <ScrollReveal key={bundle.key} delay={0.08 * i}>
                 <div className="rounded-2xl border border-border bg-background p-6 md:p-8 shadow-sm h-full flex flex-col relative card-elevated">
                   {bundle.badge && (
