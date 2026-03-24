@@ -119,23 +119,27 @@ const FeatureCard = ({ item, lang }: { item: FeatureItem; lang: "en" | "zh" }) =
           {item.price}
         </span>
       </div>
-      {stripeLink && (
+      {stripeLink ? (
         <a
           href={stripeLink}
           target="_blank"
           rel="noopener noreferrer"
-          className="mt-3 w-full inline-flex items-center justify-center rounded-full px-5 py-2.5 text-sm font-semibold text-white transition-all hover:scale-[1.02] active:scale-[0.97]"
-          style={{ backgroundColor: "#7F37AE" }}
+          className="mt-3 w-full inline-flex items-center justify-center rounded-full px-5 py-2.5 text-sm font-semibold text-white transition-colors duration-200 hover:brightness-110 active:scale-[0.97]"
+          style={{ backgroundColor: "hsl(275 51% 46%)" }}
+          onMouseEnter={e => (e.currentTarget.style.backgroundColor = "hsl(275 51% 38%)")}
+          onMouseLeave={e => (e.currentTarget.style.backgroundColor = "hsl(275 51% 46%)")}
         >
           {isCustom ? (lang === "en" ? "Get Started" : "開始") : (lang === "en" ? "Add to My Website" : "添加到我的網站")}
         </a>
-      )}
-      {!stripeLink && isCustom && (
+      ) : (
         <a
           href="/#contact"
-          className="mt-3 w-full inline-flex items-center justify-center rounded-full px-5 py-2.5 text-sm font-semibold border-2 border-foreground/20 text-foreground hover:bg-foreground hover:text-background transition-all active:scale-[0.97]"
+          className="mt-3 w-full inline-flex items-center justify-center rounded-full px-5 py-2.5 text-sm font-semibold text-white transition-colors duration-200 active:scale-[0.97]"
+          style={{ backgroundColor: "hsl(275 51% 46%)" }}
+          onMouseEnter={e => (e.currentTarget.style.backgroundColor = "hsl(275 51% 38%)")}
+          onMouseLeave={e => (e.currentTarget.style.backgroundColor = "hsl(275 51% 46%)")}
         >
-          {lang === "en" ? "Request Quote" : "請求報價"}
+          {isCustom ? (lang === "en" ? "Request Quote" : "請求報價") : (lang === "en" ? "Add to My Website" : "添加到我的網站")}
         </a>
       )}
     </div>
@@ -246,6 +250,7 @@ const FeaturesContent = () => {
                 title: { en: "Website Essentials", zh: "網站基礎套餐" },
                 desc: { en: "A practical starter bundle for small businesses that need the most important website upgrades in one clean package.", zh: "適合需要最重要網站升級的小型企業的實用入門套餐。" },
                 price: "$199",
+                savings: { en: "Save $76 compared to individual features", zh: "比單獨購買節省 $76" },
                 icon: Package,
               },
               {
@@ -253,6 +258,7 @@ const FeaturesContent = () => {
                 title: { en: "Business Growth", zh: "商業成長套餐" },
                 desc: { en: "A stronger upgrade set focused on improving trust, lead quality, and conversion performance for growing businesses.", zh: "專注於提升信任度、潛在客戶質量和轉化表現的更強升級套餐。" },
                 price: "$699",
+                savings: { en: "Save $196 compared to individual features", zh: "比單獨購買節省 $196" },
                 icon: Sparkles,
                 badge: lang === "en" ? "MOST POPULAR" : "最受歡迎",
               },
@@ -261,6 +267,7 @@ const FeaturesContent = () => {
                 title: { en: "Premium Brand Launch", zh: "高級品牌啟動套餐" },
                 desc: { en: "A more polished launch bundle designed for businesses that want a stronger visual impression and a more complete online presence.", zh: "為希望擁有更強視覺印象和更完整線上形象的企業設計的精緻啟動套餐。" },
                 price: "$899",
+                savings: { en: "Save $251 compared to individual features", zh: "比單獨購買節省 $251" },
                 icon: Sparkles,
               },
               {
@@ -268,6 +275,7 @@ const FeaturesContent = () => {
                 title: { en: "Conversion Booster", zh: "轉化率提升套餐" },
                 desc: { en: "A focused bundle for improving engagement, inquiry flow, and conversion points across key pages of the website.", zh: "專注於改善網站關鍵頁面的互動、查詢流程和轉化點的套餐。" },
                 price: "$499",
+                savings: { en: "Save $126 compared to individual features", zh: "比單獨購買節省 $126" },
                 icon: Package,
               },
               {
@@ -275,9 +283,10 @@ const FeaturesContent = () => {
                 title: { en: "Advanced Inquiry", zh: "進階詢問套餐" },
                 desc: { en: "A lead-focused bundle built to help businesses collect better enquiries through stronger forms, structure, and user flow.", zh: "以潛在客戶為導向的套餐，幫助企業通過更強的表單、結構和用戶流程收集更好的查詢。" },
                 price: "$399",
+                savings: { en: "Save $101 compared to individual features", zh: "比單獨購買節省 $101" },
                 icon: Package,
               },
-            ] as { key: string; title: LangObj; desc: LangObj; price: string; icon: any; badge?: string }[]).map((bundle, i) => (
+            ] as { key: string; title: LangObj; desc: LangObj; price: string; savings: LangObj; icon: any; badge?: string }[]).map((bundle, i) => (
               <ScrollReveal key={bundle.key} delay={0.08 * i}>
                 <div className="rounded-2xl border border-border bg-background p-6 md:p-8 shadow-sm h-full flex flex-col relative card-elevated">
                   {bundle.badge && (
@@ -292,16 +301,19 @@ const FeaturesContent = () => {
                   </div>
                   <h3 className="text-xl font-bold text-foreground font-display">{T(bundle.title, lang)}</h3>
                   <p className="mt-2 text-sm text-muted-foreground leading-relaxed flex-1">{T(bundle.desc, lang)}</p>
-                  <div className="mt-4 flex items-baseline gap-2">
-                    <span className="text-3xl font-black font-display text-primary">{bundle.price}</span>
+                  <div className="mt-4">
+                    <span className="text-3xl font-black font-display text-primary block">{bundle.price}</span>
+                    <span className="text-xs text-muted-foreground mt-1 block">{T(bundle.savings, lang)}</span>
                   </div>
                   <div className="mt-6">
                     <a
                       href={STRIPE_LINKS[bundle.key]}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="w-full inline-flex items-center justify-center rounded-full px-6 py-3 text-sm font-semibold text-white transition-all hover:scale-[1.02] hover:opacity-90 active:scale-[0.97]"
+                      className="w-full inline-flex items-center justify-center rounded-full px-6 py-3 text-sm font-semibold text-white transition-colors duration-200 active:scale-[0.97]"
                       style={{ backgroundColor: "hsl(275 51% 46%)" }}
+                      onMouseEnter={e => (e.currentTarget.style.backgroundColor = "hsl(275 51% 38%)")}
+                      onMouseLeave={e => (e.currentTarget.style.backgroundColor = "hsl(275 51% 46%)")}
                     >
                       {lang === "en" ? "Get This Bundle" : "獲取此套餐"}
                     </a>
