@@ -134,7 +134,11 @@ const IntakeForm = () => {
         },
         source_app: "landing_page",
       });
-      if (formError) throw new Error(formError.message);
+      if (formError) {
+        console.error("Form submissions insert error:", formError);
+        throw new Error(formError.message);
+      }
+      console.log("Form submissions insert success:", formData);
 
       // Also send confirmation email (non-critical)
       try {
