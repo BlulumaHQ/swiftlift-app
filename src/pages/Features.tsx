@@ -218,6 +218,122 @@ const FeaturesContent = () => {
         </div>
       </section>
 
+      {/* Bundle & Save */}
+      <section className="py-16 md:py-24 bg-background">
+        <div className="max-w-6xl mx-auto px-6">
+          <ScrollReveal>
+            <div className="text-center mb-12">
+              <span className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest text-primary mb-3">
+                <Sparkles size={14} />
+                {lang === "en" ? "Bundle & Save" : "套餐優惠"}
+              </span>
+              <h2 className="text-[1.6rem] md:text-[2rem] font-black text-foreground font-display">
+                {lang === "en" ? "Combine Features & Save" : "組合功能並節省"}
+              </h2>
+              <p className="mt-3 text-muted-foreground max-w-lg mx-auto">
+                {lang === "en"
+                  ? "Pre-built feature bundles at a better price — designed for common business needs."
+                  : "預建功能套餐，價格更優惠——為常見業務需求而設計。"}
+              </p>
+            </div>
+          </ScrollReveal>
+
+          {/* Primary Bundles */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+            {([
+              {
+                key: "bundle-website-essentials",
+                title: { en: "Website Essentials", zh: "網站基礎套餐" },
+                price: "$199",
+                icon: Package,
+              },
+              {
+                key: "bundle-business-growth",
+                title: { en: "Business Growth", zh: "商業成長套餐" },
+                price: "$699",
+                icon: Sparkles,
+                badge: lang === "en" ? "MOST POPULAR" : "最受歡迎",
+              },
+              {
+                key: "bundle-premium-brand-launch",
+                title: { en: "Premium Brand Launch", zh: "高級品牌啟動套餐" },
+                price: "$899",
+                icon: Sparkles,
+              },
+            ] as const).map((bundle, i) => (
+              <ScrollReveal key={bundle.key} delay={0.08 * i}>
+                <div className="rounded-2xl border border-border bg-background p-6 md:p-8 shadow-sm h-full flex flex-col relative card-elevated">
+                  {bundle.badge && (
+                    <div className="absolute -top-3 left-6">
+                      <span className="text-xs font-bold px-4 py-1.5 rounded-full text-primary-foreground bg-primary">
+                        {bundle.badge}
+                      </span>
+                    </div>
+                  )}
+                  <div className="w-12 h-12 rounded-xl flex items-center justify-center mb-4 bg-primary/10">
+                    <bundle.icon size={24} className="text-primary" />
+                  </div>
+                  <h3 className="text-xl font-bold text-foreground font-display">{T(bundle.title, lang)}</h3>
+                  <div className="mt-4 flex items-baseline gap-2">
+                    <span className="text-3xl font-black font-display text-primary">{bundle.price}</span>
+                  </div>
+                  <div className="mt-6">
+                    <a
+                      href={STRIPE_LINKS[bundle.key]}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="w-full inline-flex items-center justify-center rounded-full px-6 py-3 text-sm font-semibold text-primary-foreground bg-primary transition-all hover:scale-[1.02] active:scale-[0.97]"
+                    >
+                      {lang === "en" ? "Get This Bundle" : "獲取此套餐"}
+                    </a>
+                  </div>
+                </div>
+              </ScrollReveal>
+            ))}
+          </div>
+
+          {/* Secondary Bundles */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-3xl mx-auto">
+            {([
+              {
+                key: "bundle-conversion-booster",
+                title: { en: "Conversion Booster", zh: "轉化率提升套餐" },
+                price: "$499",
+                icon: Package,
+              },
+              {
+                key: "bundle-advanced-inquiry",
+                title: { en: "Advanced Inquiry", zh: "進階詢問套餐" },
+                price: "$399",
+                icon: Package,
+              },
+            ] as const).map((bundle, i) => (
+              <ScrollReveal key={bundle.key} delay={0.08 * i}>
+                <div className="rounded-2xl border border-border bg-background p-6 shadow-sm h-full flex flex-col card-elevated">
+                  <div className="w-12 h-12 rounded-xl flex items-center justify-center mb-4 bg-primary/10">
+                    <bundle.icon size={24} className="text-primary" />
+                  </div>
+                  <h3 className="text-lg font-bold text-foreground font-display">{T(bundle.title, lang)}</h3>
+                  <div className="mt-4 flex items-baseline gap-2">
+                    <span className="text-2xl font-black font-display text-primary">{bundle.price}</span>
+                  </div>
+                  <div className="mt-5">
+                    <a
+                      href={STRIPE_LINKS[bundle.key]}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="w-full inline-flex items-center justify-center rounded-full px-6 py-3 text-sm font-semibold text-primary-foreground bg-primary transition-all hover:scale-[1.02] active:scale-[0.97]"
+                    >
+                      {lang === "en" ? "Get This Bundle" : "獲取此套餐"}
+                    </a>
+                  </div>
+                </div>
+              </ScrollReveal>
+            ))}
+          </div>
+        </div>
+      </section>
+
       {/* Bottom CTA */}
       <section className="py-16 md:py-24 section-brand-dark">
         <div className="max-w-2xl mx-auto px-6 text-center">
