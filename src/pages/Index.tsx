@@ -287,7 +287,13 @@ const MultiStepIntake = ({ variant = "hero" }: { variant?: "hero" | "cta" }) => 
       const { data: leadsData, error: leadsError } = await externalSupabase.from("leads").insert(leadsPayload).select();
       if (leadsError) {
         console.error("Leads insert error:", leadsError);
-        throw new Error(leadsError.message);
+        const debugMsg = [
+          `message: ${leadsError.message || "N/A"}`,
+          `details: ${leadsError.details || "N/A"}`,
+          `hint: ${leadsError.hint || "N/A"}`,
+          `code: ${leadsError.code || "N/A"}`,
+        ].join("\n");
+        throw new Error(debugMsg);
       }
       console.log("Leads insert success:", leadsData);
 
@@ -323,7 +329,8 @@ const MultiStepIntake = ({ variant = "hero" }: { variant?: "hero" | "cta" }) => 
     } catch (err) {
       console.error("Submission error:", err);
       setShowProcessing(false);
-      setSubmitError(lang === "en" ? "Something went wrong. Please try again." : "出了點問題。請重試。");
+      const errorMessage = err instanceof Error ? err.message : String(err);
+      setSubmitError(errorMessage);
     } finally {
       setSubmitting(false);
     }
@@ -431,7 +438,7 @@ const MultiStepIntake = ({ variant = "hero" }: { variant?: "hero" | "cta" }) => 
           </select>
         </div>
         {submitError && (
-          <p className={`text-sm font-medium ${isDark ? "text-red-300" : "text-destructive"}`}>{submitError}</p>
+          <pre className={`text-xs font-mono whitespace-pre-wrap break-all p-3 rounded border ${isDark ? "text-red-300 bg-red-900/30 border-red-500/30" : "text-destructive bg-destructive/10 border-destructive/30"}`}>{submitError}</pre>
         )}
         <div className="flex gap-3 pt-2">
           <button
