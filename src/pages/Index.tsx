@@ -187,6 +187,89 @@ const SuccessSection = ({ email, clientId, isDark }: { email: string; clientId?:
   );
 };
 
+/* ── Temporary Supabase Diagnostic ── */
+const SupabaseDiagnostic = ({ isDark }: { isDark?: boolean }) => {
+  const [testing, setTesting] = useState(false);
+  const [result, setResult] = useState<{
+    status: string;
+    error?: { message?: string; details?: string; hint?: string; code?: string };
+  } | null>(null);
+
+  const runTest = async () => {
+    setTesting(true);
+    setResult(null);
+    try {
+      const { data, error } = await externalSupabase.from("leads").select("id").limit(1);
+      if (error) {
+        setResult({
+          status: "FAILED",
+          error: {
+            message: error.message || "N/A",
+            details: error.details || "N/A",
+            hint: error.hint || "N/A",
+            code: error.code || "N/A",
+          },
+        });
+      } else {
+        setResult({ status: "OK — connected successfully" });
+      }
+    } catch (err: any) {
+      setResult({
+        status: "NETWORK ERROR",
+        error: {
+          message: err?.message || String(err),
+          details: "Fetch failed — possible CORS or DNS issue",
+          hint: "Check if the Supabase URL is reachable from this domain",
+          code: "NETWORK",
+        },
+      });
+    } finally {
+      setTesting(false);
+    }
+  };
+
+  const keyPrefix = EXTERNAL_SUPABASE_ANON_KEY.substring(0, 20) + "...";
+  const textCls = isDark ? "text-white/80" : "text-foreground/80";
+  const bgCls = isDark ? "bg-white/5 border-white/10" : "bg-muted/50 border-border";
+
+  return (
+    <div className={`mt-6 p-4 rounded-lg border text-xs font-mono ${bgCls}`}>
+      <p className={`font-bold mb-2 text-sm ${isDark ? "text-white" : "text-foreground"}`}>
+        🔧 Supabase Connectivity Diagnostic
+      </p>
+      <p className={textCls}>URL: {EXTERNAL_SUPABASE_URL}</p>
+      <p className={textCls}>Key: {keyPrefix}</p>
+      <p className={textCls}>Client initialized: {externalSupabase ? "✅ Yes" : "❌ No"}</p>
+
+      <button
+        type="button"
+        onClick={runTest}
+        disabled={testing}
+        className="mt-3 px-4 py-2 rounded-md text-xs font-bold text-white transition-all"
+        style={{ background: testing ? "#666" : "#2563eb" }}
+      >
+        {testing ? "Testing..." : "Test Supabase Connection"}
+      </button>
+
+      {result && (
+        <div className={`mt-3 p-3 rounded border ${result.status.startsWith("OK") ? "border-green-500/50 bg-green-900/20" : "border-red-500/50 bg-red-900/20"}`}>
+          <p className={result.status.startsWith("OK") ? "text-green-400 font-bold" : "text-red-400 font-bold"}>
+            Status: {result.status}
+          </p>
+          {result.error && (
+            <div className="mt-2 text-red-300 space-y-0.5">
+              <p>message: {result.error.message}</p>
+              <p>details: {result.error.details}</p>
+              <p>hint: {result.error.hint}</p>
+              <p>code: {result.error.code}</p>
+            </div>
+          )}
+        </div>
+      )}
+    </div>
+  );
+};
+
 /* ── Multi-Step Intake Form ── */
 const MultiStepIntake = ({ variant = "hero" }: { variant?: "hero" | "cta" }) => {
   const { lang } = useLanguage();
