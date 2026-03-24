@@ -291,6 +291,9 @@ export const STRIPE_LINKS: Record<string, string> = {
   "bundle-conversion-booster": "https://buy.stripe.com/4gM28q4OE3nDaPG3vDfw40u",
   "bundle-business-growth": "https://buy.stripe.com/fZu8wO0yof6l0b2eahfw40t",
   "bundle-premium-brand-launch": "https://buy.stripe.com/4gM3cugxmcYd3neaY5fw40s",
+
+  // Internal Testing
+  "internal-payment-test": "https://buy.stripe.com/00wdR82GwaQ55vm2rzfw40A",
 };
 
 // ── Formatting helpers ──

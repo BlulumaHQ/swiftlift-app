@@ -305,6 +305,13 @@ const FeaturesContent = () => {
                       </span>
                     </div>
                   )}
+                  {(bundle as any).isTest && (
+                    <div className="absolute -top-3 left-6">
+                      <span className="text-xs font-bold px-4 py-1.5 rounded-full bg-destructive/10 text-destructive border border-destructive/30">
+                        {lang === "en" ? "Internal Use Only" : "僅供內部使用"}
+                      </span>
+                    </div>
+                  )}
                   <div className="w-12 h-12 rounded-xl flex items-center justify-center mb-4 bg-primary/10">
                     <bundle.icon size={24} className="text-primary" />
                   </div>
