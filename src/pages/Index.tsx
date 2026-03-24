@@ -271,8 +271,8 @@ const MultiStepIntake = ({ variant = "hero" }: { variant?: "hero" | "cta" }) => 
     try {
       const clientId = generateClientId();
 
-      // Insert into external Supabase "leads" table
-      const { error: leadsError } = await externalSupabase.from("leads").insert({
+      // Insert into Supabase "leads" table
+      const { error: leadsError } = await supabase.from("leads" as any).insert({
         client_id: clientId,
         name: businessName,
         email,
@@ -280,11 +280,12 @@ const MultiStepIntake = ({ variant = "hero" }: { variant?: "hero" | "cta" }) => 
         website_url: url,
         timeline: timeline || null,
         notes: websiteYouLike ? `Inspiration: ${websiteYouLike}` : null,
+        source_app: "landing_page",
       });
       if (leadsError) throw new Error(leadsError.message);
 
-      // Insert into external Supabase "form_submissions" table
-      const { error: formError } = await externalSupabase.from("form_submissions").insert({
+      // Insert into Supabase "form_submissions" table
+      const { error: formError } = await supabase.from("form_submissions" as any).insert({
         client_id: clientId,
         payload: {
           name: businessName,
@@ -295,6 +296,7 @@ const MultiStepIntake = ({ variant = "hero" }: { variant?: "hero" | "cta" }) => 
           website_you_like: websiteYouLike || null,
           submitted_at: new Date().toISOString(),
         },
+        source_app: "landing_page",
       });
       if (formError) throw new Error(formError.message);
 
