@@ -458,6 +458,9 @@ const MultiStepIntake = ({ variant = "hero" }: { variant?: "hero" | "cta" }) => 
           </button>
         </div>
       </form>
+
+      {/* Temporary Debug: Supabase Connectivity Diagnostic */}
+      <SupabaseDiagnostic isDark={isDark} />
     </motion.div>
   );
 };
