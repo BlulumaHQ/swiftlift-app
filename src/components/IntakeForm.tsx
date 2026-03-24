@@ -7,7 +7,6 @@ import { useState, useEffect, useRef } from "react";
 import { useSearchParams } from "react-router-dom";
 import { Info, X, Check } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
-import { externalSupabase } from "@/lib/externalSupabase";
 
 /**
  * Generate a client ID in format: CL-YYYYMMDD-XXXX
