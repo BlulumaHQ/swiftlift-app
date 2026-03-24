@@ -329,7 +329,8 @@ const MultiStepIntake = ({ variant = "hero" }: { variant?: "hero" | "cta" }) => 
     } catch (err) {
       console.error("Submission error:", err);
       setShowProcessing(false);
-      setSubmitError(lang === "en" ? "Something went wrong. Please try again." : "出了點問題。請重試。");
+      const errorMessage = err instanceof Error ? err.message : String(err);
+      setSubmitError(errorMessage);
     } finally {
       setSubmitting(false);
     }
