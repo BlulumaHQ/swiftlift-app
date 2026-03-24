@@ -10,6 +10,7 @@ import Preloader from "@/components/Preloader";
 import { Check, ChevronDown, ArrowRight, ArrowDown, Plus, Star, ChevronLeft, ChevronRight as ChevronRightIcon, Quote, Shield, Zap, Target, Users, Loader2, CheckCircle2, Clock, Mail, Copy, Palette, Globe } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { supabase } from "@/integrations/supabase/client";
+import { externalSupabase } from "@/lib/externalSupabase";
 import { getOrCreateProjectId } from "@/lib/projectId";
 
 function generateClientId(): string {
@@ -272,7 +273,7 @@ const MultiStepIntake = ({ variant = "hero" }: { variant?: "hero" | "cta" }) => 
       const clientId = generateClientId();
 
       // Insert into Supabase "leads" table
-      const { error: leadsError } = await supabase.from("leads" as any).insert({
+      const { data: leadsData, error: leadsError } = await externalSupabase.from("leads").insert({
         client_id: clientId,
         name: businessName,
         email,
@@ -282,10 +283,14 @@ const MultiStepIntake = ({ variant = "hero" }: { variant?: "hero" | "cta" }) => 
         notes: websiteYouLike ? `Inspiration: ${websiteYouLike}` : null,
         source_app: "landing_page",
       });
-      if (leadsError) throw new Error(leadsError.message);
+      if (leadsError) {
+        console.error("Leads insert error:", leadsError);
+        throw new Error(leadsError.message);
+      }
+      console.log("Leads insert success:", leadsData);
 
       // Insert into Supabase "form_submissions" table
-      const { error: formError } = await supabase.from("form_submissions" as any).insert({
+      const { data: formInsertData, error: formError } = await externalSupabase.from("form_submissions").insert({
         client_id: clientId,
         payload: {
           name: businessName,
@@ -298,7 +303,11 @@ const MultiStepIntake = ({ variant = "hero" }: { variant?: "hero" | "cta" }) => 
         },
         source_app: "landing_page",
       });
-      if (formError) throw new Error(formError.message);
+      if (formError) {
+        console.error("Form submissions insert error:", formError);
+        throw new Error(formError.message);
+      }
+      console.log("Form submissions insert success:", formInsertData);
 
       // Also send confirmation email via existing edge function
       try {
