@@ -23,24 +23,14 @@ const RevisionPaymentContent = () => {
     document.title = "Revision Payment — SwiftLift";
   }, []);
 
-  const handlePay = async () => {
+  const handlePay = () => {
     if (!projectCode.trim()) {
       setShowRequired(true);
       return;
     }
-    setIsSubmitting(true);
-    try {
-      const { data, error } = await supabase.functions.invoke(
-        "create-revision-payment-checkout",
-        { body: { projectCode: projectCode.trim(), planTier: planParam || "unknown" } }
-      );
-      if (error) throw error;
-      if (data?.url) window.location.href = data.url;
-    } catch (err) {
-      console.error("Revision payment checkout error:", err);
-      alert("Something went wrong. Please try again.");
-    } finally {
-      setIsSubmitting(false);
+    const url = STRIPE_LINKS["additional-revision"];
+    if (url) {
+      window.open(url, "_blank", "noopener,noreferrer");
     }
   };
 
