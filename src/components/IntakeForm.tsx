@@ -141,21 +141,23 @@ const IntakeForm = () => {
 
       // Step 6: Insert into form_submissions (non-blocking)
       try {
-        const formSubmissionPayload = {
-          name,
-          subject: businessName,
-          email,
-          timeline,
-          message,
-          website,
-          inspiration,
-        };
+        const serializedPayload = JSON.parse(
+          JSON.stringify({
+            name: name || null,
+            email: email || null,
+            company_name: businessName || null,
+            website_url: website || null,
+            timeline: timeline || null,
+          }),
+        );
+
         const formSubmissionsInsertPayload = {
           client_id: clientId,
-          payload: formSubmissionPayload,
+          payload: serializedPayload,
           source_app: "landing_page",
         };
-        console.log("form_submissions payload:", formSubmissionsInsertPayload);
+
+        console.log("form_submissions final payload:", formSubmissionsInsertPayload);
         setFormSubmissionsDebug({
           attempted: true,
           payload: formSubmissionsInsertPayload,
@@ -163,11 +165,11 @@ const IntakeForm = () => {
           error: null,
         });
 
-        const fsResponse = await externalSupabase.from("form_submissions").insert(formSubmissionsInsertPayload);
+        const fsResponse = await externalSupabase
+          .from("form_submissions")
+          .insert([formSubmissionsInsertPayload]);
 
         console.log("form_submissions response:", fsResponse);
-
-        const { error: fsError } = fsResponse;
 
         const debugResponse = JSON.parse(
           JSON.stringify({
@@ -179,29 +181,21 @@ const IntakeForm = () => {
           }),
         );
 
-        if (fsError) {
-          console.error("form_submissions insert error:", fsError);
-          console.error("form_submissions error details:", {
-            message: fsError.message,
-            details: (fsError as any).details,
-            hint: (fsError as any).hint,
-            code: (fsError as any).code,
-            fullError: fsError,
-          });
+        if (fsResponse.error) {
+          console.error("form_submissions full error object:", fsResponse.error);
           setFormSubmissionsDebug({
             attempted: true,
             payload: formSubmissionsInsertPayload,
             response: debugResponse,
             error: {
-              message: fsError.message ?? null,
-              details: (fsError as { details?: string | null }).details ?? null,
-              hint: (fsError as { hint?: string | null }).hint ?? null,
-              code: (fsError as { code?: string | null }).code ?? null,
-              full: fsError,
+              message: fsResponse.error.message ?? null,
+              details: (fsResponse.error as { details?: string | null }).details ?? null,
+              hint: (fsResponse.error as { hint?: string | null }).hint ?? null,
+              code: (fsResponse.error as { code?: string | null }).code ?? null,
+              full: fsResponse.error,
             },
           });
         } else {
-          console.log("form_submissions insert success:", fsResponse);
           setFormSubmissionsDebug({
             attempted: true,
             payload: formSubmissionsInsertPayload,
@@ -210,7 +204,7 @@ const IntakeForm = () => {
           });
         }
       } catch (fsErr) {
-        console.error("form_submissions unexpected error:", fsErr);
+        console.error("form_submissions full error object:", fsErr);
         setFormSubmissionsDebug((current) => ({
           attempted: true,
           payload: current?.payload ?? null,
