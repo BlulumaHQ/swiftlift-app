@@ -122,6 +122,42 @@ const IntakeForm = () => {
       }
       console.log("Leads insert success:", leadsData);
 
+      // Step 6: Insert into form_submissions (non-blocking)
+      try {
+        const formPayload = {
+          name,
+          email,
+          company_name: businessName,
+          website_url: website,
+          timeline: timeline || null,
+          notes: message || null,
+        };
+        console.log("form_submissions payload:", formPayload);
+
+        const { data: fsData, error: fsError } = await externalSupabase
+          .from("form_submissions")
+          .insert({
+            client_id: clientId,
+            payload: formPayload,
+            source_app: "landing_page",
+          })
+          .select();
+
+        if (fsError) {
+          console.error("form_submissions insert error:", fsError);
+          console.error("form_submissions error details:", {
+            message: fsError.message,
+            details: (fsError as any).details,
+            hint: (fsError as any).hint,
+            code: (fsError as any).code,
+          });
+        } else {
+          console.log("form_submissions insert success:", fsData);
+        }
+      } catch (fsErr) {
+        console.error("form_submissions unexpected error:", fsErr);
+      }
+
       // Send confirmation email (non-critical)
       try {
         await supabase.functions.invoke("send-intake-confirmation", {
