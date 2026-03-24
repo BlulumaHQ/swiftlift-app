@@ -219,16 +219,7 @@ const Footer = () => {
 
         {/* Copyright bar */}
         <div className="mt-6 pt-6 border-t border-white/10 text-center text-xs text-blue-200/50">
-          {t(footer.copyright, lang)}{" "}
-          | Web Design by{" "}
-          <a
-            href="https://bluluma.com"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="text-blue-300 hover:underline"
-          >
-            Bluluma Design
-          </a>
+          © 2026 SwiftLift. All rights reserved. | Operated by Bluluma Design
         </div>
       </div>
     </footer>
