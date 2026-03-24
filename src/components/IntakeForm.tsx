@@ -121,7 +121,7 @@ const IntakeForm = () => {
       console.log("Leads insert success:", leadsData);
 
       // Insert into Supabase "form_submissions" table
-      const { error: formError } = await supabase.from("form_submissions" as any).insert({
+      const { data: formData, error: formError } = await externalSupabase.from("form_submissions").insert({
         client_id: clientId,
         payload: {
           name,
