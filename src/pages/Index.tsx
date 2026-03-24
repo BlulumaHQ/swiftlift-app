@@ -287,7 +287,13 @@ const MultiStepIntake = ({ variant = "hero" }: { variant?: "hero" | "cta" }) => 
       const { data: leadsData, error: leadsError } = await externalSupabase.from("leads").insert(leadsPayload).select();
       if (leadsError) {
         console.error("Leads insert error:", leadsError);
-        throw new Error(leadsError.message);
+        const debugMsg = [
+          `message: ${leadsError.message || "N/A"}`,
+          `details: ${leadsError.details || "N/A"}`,
+          `hint: ${leadsError.hint || "N/A"}`,
+          `code: ${leadsError.code || "N/A"}`,
+        ].join("\n");
+        throw new Error(debugMsg);
       }
       console.log("Leads insert success:", leadsData);
 
