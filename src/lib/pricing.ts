@@ -246,44 +246,51 @@ export const PRICING = {
 
 export const STRIPE_LINKS: Record<string, string> = {
   // Multi-Page Website Packages
-  "preview-access": "https://buy.stripe.com/test_aFa00ibbra6IedU4F4aMU00",
-  "launch-ready": "https://buy.stripe.com/test_28E5kC6VbceQ9XE1sSaMU01",
-  "growth-optimized": "https://buy.stripe.com/test_bJe00i2EVbaM6Ls3B0aMU02",
+  "preview-access": "https://buy.stripe.com/9B63cu2GwaQ56zq8PXfw40o",
+  "launch-ready": "https://buy.stripe.com/eVq00ich66zP8Hy2rzfw40q",
+  "growth-optimized": "https://buy.stripe.com/28EaEWch6e2he1Sc29fw40n",
 
   // Single-Page Website Packages
-  "preview": "https://buy.stripe.com/test_6oU5kC5R77YAgm27RgaMU03",
-  "launch": "https://buy.stripe.com/test_3cIaEWcfv1Ac9XE1sSaMU04",
-  "growth": "https://buy.stripe.com/test_fZuaEW0wN1Ac4DkdbAaMU05",
+  "preview": "https://buy.stripe.com/5kQ6oGbd27DT2ja7LTfw40m",
+  "launch": "https://buy.stripe.com/7sY6oGepe7DT3ne3vDfw40l",
+  "growth": "https://buy.stripe.com/dRm7sKgxm8HX2ja0jrfw40k",
 
   // Add-ons
-  "performance-optimization": "https://buy.stripe.com/test_bJe14mfrHdiU9XEc7waMU06",
-  "seo-optimization": "https://buy.stripe.com/test_5kQ3cufrHbaM0n4fjIaMU07",
-  "social-media-launch-kit": "https://buy.stripe.com/test_6oU5kC3IZ92E1r8c7waMU08",
-  "brand-identity-package": "https://buy.stripe.com/test_cNi14m1ARfr24Dk5J8aMU09",
+  "performance-optimization": "https://buy.stripe.com/8x2cN4fti3nD7Duc29fw40j",
+  "seo-optimization": "https://buy.stripe.com/5kQ4gy5SIgapga0eahfw40i",
+  "social-media-launch-kit": "https://buy.stripe.com/7sY9AS80Q6zP6zq2rzfw40r",
+  "brand-identity-package": "https://buy.stripe.com/28EaEWfti9M1bTK5DLfw40e",
 
   // Features
-  "review-testimonial-section": "https://buy.stripe.com/test_28EaEWbbrgv68TA8VkaMU0f",
-  "faq-section": "https://buy.stripe.com/test_bJe8wOa7n6Uw0n40oOaMU0g",
-  "advanced-contact-form": "https://buy.stripe.com/test_4gMfZg1AR5Qs8TA1sSaMU0h",
-  "booking-request-form": "https://buy.stripe.com/test_fZu6oGdjzbaM7PwdbAaMU0t",
-  "multi-step-quote-form": "https://buy.stripe.com/test_8x2bJ0enD5Qs1r8fjIaMU0i",
-  "basic-bilingual-setup": "https://buy.stripe.com/test_8x24gy0wN0w84DkdbAaMU0s",
-  "blog-setup": "https://buy.stripe.com/test_14A7sK93jdiU8TA1sSaMU0r",
-  "gallery-section": "https://buy.stripe.com/test_eVq9AS0wNa6Ib1I2wWaMU0q",
-  "google-map-hours-service-area": "https://buy.stripe.com/test_8x2aEW93j5Qsc5MgnMaMU0o",
-  "analytics-pixel-tag-setup": "https://buy.stripe.com/test_14A5kCgvL0w80n4b3saMU0m",
-  "ecommerce-integration": "https://buy.stripe.com/test_dRm00ifrH0w8edUc7waMU0n",
-  "membership-client-portal": "https://buy.stripe.com/test_6oUfZgdjza6I2vcgnMaMU0l",
-  "inventory-directory-database": "https://buy.stripe.com/test_14A9AS7Zf2Eg8TA3B0aMU0k",
-  "payment-integration": "https://buy.stripe.com/test_8x2bJ03IZgv69XE9ZoaMU0j",
+  "review-testimonial-section": "https://buy.stripe.com/aFa14m94U1fv9LC0jrfw40p",
+  "faq-section": "https://buy.stripe.com/8x2fZg0yof6l5vmd6dfw40c",
+  "advanced-contact-form": "https://buy.stripe.com/3cI6oGepe7DT1f6eahfw40b",
+  "booking-request-form": "https://buy.stripe.com/fZu3cua8YbU90b20jrfw408",
+  "multi-step-quote-form": "https://buy.stripe.com/3cI9ASgxm6zP2jac29fw40a",
+  "basic-bilingual-setup": "https://buy.stripe.com/4gMdR8bd2cYd1f6felfw406",
+  "blog-setup": "https://buy.stripe.com/bJecN42Gwf6lf5WaY5fw403",
+  "gallery-section": "https://buy.stripe.com/dRm7sK5SI1fv4rigipfw405",
+  "google-map-hours-service-area": "https://buy.stripe.com/dRmbJ0a8Ygap6zq8PXfw404",
+  "analytics-pixel-tag-setup": "https://buy.stripe.com/7sYdR8epe8HX0b2felfw407",
+  "ecommerce-integration": "https://buy.stripe.com/dRmcN40yogap7Dufelfw409",
+  "membership-client-portal": "https://buy.stripe.com/8x29ASgxm6zP4ri5DLfw401",
+  "inventory-directory-database": "https://buy.stripe.com/fZu28qepe7DT2jac29fw400",
+  "payment-integration": "https://buy.stripe.com/7sYaEW6WM4rHaPGd6dfw402",
 
   // Fees
-  "reactivation-fee": "https://buy.stripe.com/test_28E00ienD3Ikb1I4F4aMU0c",
-  "additional-revision": "https://buy.stripe.com/test_6oUaEWdjzdiU6Ls6NcaMU0d",
+  "reactivation-fee": "https://buy.stripe.com/00w14m2Gw1fv7Du1nvfw40d",
+  "additional-revision": "https://buy.stripe.com/6oU8wO6WM6zPaPGd6dfw40g",
 
   // Hosting
-  "managed-monthly": "https://buy.stripe.com/test_cNi5kC5R76Uwb1I4F4aMU0a",
-  "managed-yearly": "https://buy.stripe.com/test_4gM6oG0wNfr24Dk9ZoaMU0e",
+  "managed-monthly": "https://buy.stripe.com/fZubJ06WM4rH1f63vDfw40f",
+  "managed-yearly": "https://buy.stripe.com/3cI28q6WMgapga09U1fw40h",
+
+  // Bundles
+  "bundle-website-essentials": "https://buy.stripe.com/28E7sK0yo5vLe1S0jrfw40w",
+  "bundle-advanced-inquiry": "https://buy.stripe.com/fZucN45SI0braPG0jrfw40v",
+  "bundle-conversion-booster": "https://buy.stripe.com/4gM28q4OE3nDaPG3vDfw40u",
+  "bundle-business-growth": "https://buy.stripe.com/fZu8wO0yof6l0b2eahfw40t",
+  "bundle-premium-brand-launch": "https://buy.stripe.com/4gM3cugxmcYd3neaY5fw40s",
 };
 
 // ── Formatting helpers ──
