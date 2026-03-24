@@ -10,6 +10,7 @@ import Preloader from "@/components/Preloader";
 import { Check, ChevronDown, ArrowRight, ArrowDown, Plus, Star, ChevronLeft, ChevronRight as ChevronRightIcon, Quote, Shield, Zap, Target, Users, Loader2, CheckCircle2, Clock, Mail, Copy, Palette, Globe } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { supabase } from "@/integrations/supabase/client";
+import { externalSupabase } from "@/lib/externalSupabase";
 import { getOrCreateProjectId } from "@/lib/projectId";
 
 function generateClientId(): string {
@@ -283,7 +284,7 @@ const MultiStepIntake = ({ variant = "hero" }: { variant?: "hero" | "cta" }) => 
       };
       console.log("Leads payload:", leadsPayload);
 
-      const { data: leadsData, error: leadsError } = await supabase.from("leads").insert(leadsPayload).select();
+      const { data: leadsData, error: leadsError } = await externalSupabase.from("leads").insert(leadsPayload).select();
       if (leadsError) {
         console.error("Leads insert error:", leadsError);
         throw new Error(leadsError.message);

@@ -7,6 +7,7 @@ import { useState, useEffect, useRef } from "react";
 import { useSearchParams } from "react-router-dom";
 import { Info, X, Check } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
+import { externalSupabase } from "@/lib/externalSupabase";
 
 /**
  * Generate a client ID in format: CL-YYYYMMDD-XXXX
@@ -114,7 +115,7 @@ const IntakeForm = () => {
       };
       console.log("Leads payload:", leadsPayload);
 
-      const { data: leadsData, error: leadsError } = await supabase.from("leads").insert(leadsPayload).select();
+      const { data: leadsData, error: leadsError } = await externalSupabase.from("leads").insert(leadsPayload).select();
       if (leadsError) {
         console.error("Leads insert error:", leadsError);
         throw new Error(leadsError.message);
