@@ -7,7 +7,6 @@ import { useState, useEffect, useRef } from "react";
 import { useSearchParams } from "react-router-dom";
 import { Info, X, Check } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
-import { externalSupabase } from "@/lib/externalSupabase";
 
 /**
  * Generate a client ID in format: CL-YYYYMMDD-XXXX
@@ -103,8 +102,7 @@ const IntakeForm = () => {
 
       const clientId = generateClientId();
 
-      // Insert into Supabase "leads" table
-      const { data: leadsData, error: leadsError } = await externalSupabase.from("leads").insert({
+      const leadsPayload = {
         client_id: clientId,
         name,
         email,
@@ -113,34 +111,17 @@ const IntakeForm = () => {
         timeline: timeline || null,
         notes: message || null,
         source_app: "landing_page",
-      });
+      };
+      console.log("Leads payload:", leadsPayload);
+
+      const { data: leadsData, error: leadsError } = await supabase.from("leads").insert(leadsPayload).select();
       if (leadsError) {
         console.error("Leads insert error:", leadsError);
         throw new Error(leadsError.message);
       }
       console.log("Leads insert success:", leadsData);
 
-      // Insert into Supabase "form_submissions" table
-      const { data: formInsertData, error: formError } = await externalSupabase.from("form_submissions").insert({
-        client_id: clientId,
-        payload: {
-          name,
-          email,
-          company_name: businessName,
-          website_url: website,
-          timeline,
-          message,
-          submitted_at: new Date().toISOString(),
-        },
-        source_app: "landing_page",
-      });
-      if (formError) {
-        console.error("Form submissions insert error:", formError);
-        throw new Error(formError.message);
-      }
-      console.log("Form submissions insert success:", formInsertData);
-
-      // Also send confirmation email (non-critical)
+      // Send confirmation email (non-critical)
       try {
         await supabase.functions.invoke("send-intake-confirmation", {
           body: {
