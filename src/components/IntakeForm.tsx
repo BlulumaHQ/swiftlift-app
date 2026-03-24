@@ -121,7 +121,7 @@ const IntakeForm = () => {
       console.log("Leads insert success:", leadsData);
 
       // Insert into Supabase "form_submissions" table
-      const { data: formData, error: formError } = await externalSupabase.from("form_submissions").insert({
+      const { data: formInsertData, error: formError } = await externalSupabase.from("form_submissions").insert({
         client_id: clientId,
         payload: {
           name,
@@ -138,7 +138,7 @@ const IntakeForm = () => {
         console.error("Form submissions insert error:", formError);
         throw new Error(formError.message);
       }
-      console.log("Form submissions insert success:", formData);
+      console.log("Form submissions insert success:", formInsertData);
 
       // Also send confirmation email (non-critical)
       try {
