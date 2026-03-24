@@ -7,7 +7,18 @@ import { useState, useEffect, useRef } from "react";
 import { useSearchParams } from "react-router-dom";
 import { Info, X, Check } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
-import { externalSupabase, generateClientId } from "@/lib/externalSupabase";
+
+/**
+ * Generate a client ID in format: CL-YYYYMMDD-XXXX
+ */
+function generateClientId(): string {
+  const now = new Date();
+  const yyyy = now.getFullYear();
+  const mm = String(now.getMonth() + 1).padStart(2, "0");
+  const dd = String(now.getDate()).padStart(2, "0");
+  const rand = String(Math.floor(1000 + Math.random() * 9000));
+  return `CL-${yyyy}${mm}${dd}-${rand}`;
+}
 
 declare global {
   interface Window {
@@ -91,8 +102,8 @@ const IntakeForm = () => {
 
       const clientId = generateClientId();
 
-      // Insert into external Supabase "leads" table
-      const { error: leadsError } = await externalSupabase.from("leads").insert({
+      // Insert into Supabase "leads" table
+      const { error: leadsError } = await supabase.from("leads" as any).insert({
         client_id: clientId,
         name,
         email,
@@ -100,11 +111,12 @@ const IntakeForm = () => {
         website_url: website,
         timeline: timeline || null,
         notes: message || null,
+        source_app: "landing_page",
       });
       if (leadsError) throw new Error(leadsError.message);
 
-      // Insert into external Supabase "form_submissions" table
-      const { error: formError } = await externalSupabase.from("form_submissions").insert({
+      // Insert into Supabase "form_submissions" table
+      const { error: formError } = await supabase.from("form_submissions" as any).insert({
         client_id: clientId,
         payload: {
           name,
@@ -115,6 +127,7 @@ const IntakeForm = () => {
           message,
           submitted_at: new Date().toISOString(),
         },
+        source_app: "landing_page",
       });
       if (formError) throw new Error(formError.message);
 

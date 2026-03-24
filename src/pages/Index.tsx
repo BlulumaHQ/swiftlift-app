@@ -11,7 +11,15 @@ import { Check, ChevronDown, ArrowRight, ArrowDown, Plus, Star, ChevronLeft, Che
 import { motion, AnimatePresence } from "framer-motion";
 import { supabase } from "@/integrations/supabase/client";
 import { getOrCreateProjectId } from "@/lib/projectId";
-import { externalSupabase, generateClientId } from "@/lib/externalSupabase";
+
+function generateClientId(): string {
+  const now = new Date();
+  const yyyy = now.getFullYear();
+  const mm = String(now.getMonth() + 1).padStart(2, "0");
+  const dd = String(now.getDate()).padStart(2, "0");
+  const rand = String(Math.floor(1000 + Math.random() * 9000));
+  return `CL-${yyyy}${mm}${dd}-${rand}`;
+}
 
 import portfolioTrade from "@/assets/portfolio-trade.jpg";
 import portfolioWellness from "@/assets/portfolio-wellness-new.jpg";
@@ -263,8 +271,8 @@ const MultiStepIntake = ({ variant = "hero" }: { variant?: "hero" | "cta" }) => 
     try {
       const clientId = generateClientId();
 
-      // Insert into external Supabase "leads" table
-      const { error: leadsError } = await externalSupabase.from("leads").insert({
+      // Insert into Supabase "leads" table
+      const { error: leadsError } = await supabase.from("leads" as any).insert({
         client_id: clientId,
         name: businessName,
         email,
@@ -272,11 +280,12 @@ const MultiStepIntake = ({ variant = "hero" }: { variant?: "hero" | "cta" }) => 
         website_url: url,
         timeline: timeline || null,
         notes: websiteYouLike ? `Inspiration: ${websiteYouLike}` : null,
+        source_app: "landing_page",
       });
       if (leadsError) throw new Error(leadsError.message);
 
-      // Insert into external Supabase "form_submissions" table
-      const { error: formError } = await externalSupabase.from("form_submissions").insert({
+      // Insert into Supabase "form_submissions" table
+      const { error: formError } = await supabase.from("form_submissions" as any).insert({
         client_id: clientId,
         payload: {
           name: businessName,
@@ -287,6 +296,7 @@ const MultiStepIntake = ({ variant = "hero" }: { variant?: "hero" | "cta" }) => 
           website_you_like: websiteYouLike || null,
           submitted_at: new Date().toISOString(),
         },
+        source_app: "landing_page",
       });
       if (formError) throw new Error(formError.message);
 
