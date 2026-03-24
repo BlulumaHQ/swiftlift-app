@@ -7,7 +7,18 @@ import { useState, useEffect, useRef } from "react";
 import { useSearchParams } from "react-router-dom";
 import { Info, X, Check } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
-import { externalSupabase, generateClientId } from "@/lib/externalSupabase";
+
+/**
+ * Generate a client ID in format: CL-YYYYMMDD-XXXX
+ */
+function generateClientId(): string {
+  const now = new Date();
+  const yyyy = now.getFullYear();
+  const mm = String(now.getMonth() + 1).padStart(2, "0");
+  const dd = String(now.getDate()).padStart(2, "0");
+  const rand = String(Math.floor(1000 + Math.random() * 9000));
+  return `CL-${yyyy}${mm}${dd}-${rand}`;
+}
 
 declare global {
   interface Window {
