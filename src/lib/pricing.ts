@@ -279,11 +279,11 @@ export const STRIPE_LINKS: Record<string, string> = {
 
   // Fees
   "reactivation-fee": "https://buy.stripe.com/00w14m2Gw1fv7Du1nvfw40d",
-  "additional-revision": "https://buy.stripe.com/6oU8wO6WM6zPaPGd6dfw40g",
+  "additional-revision": "https://buy.stripe.com/4gM3cugxm1fv0b2c29fw40x",
 
   // Hosting
-  "managed-monthly": "https://buy.stripe.com/fZubJ06WM4rH1f63vDfw40f",
-  "managed-yearly": "https://buy.stripe.com/3cI28q6WMgapga09U1fw40h",
+  "managed-monthly": "https://buy.stripe.com/dRmeVcch62jz0b20jrfw40z",
+  "managed-yearly": "https://buy.stripe.com/fZubJ0bd2e2hbTKd6dfw40y",
 
   // Bundles
   "bundle-website-essentials": "https://buy.stripe.com/28E7sK0yo5vLe1S0jrfw40w",
