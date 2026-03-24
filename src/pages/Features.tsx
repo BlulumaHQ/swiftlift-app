@@ -238,18 +238,20 @@ const FeaturesContent = () => {
             </div>
           </ScrollReveal>
 
-          {/* Primary Bundles */}
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-8">
+          {/* All Bundles */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
             {([
               {
                 key: "bundle-website-essentials",
                 title: { en: "Website Essentials", zh: "網站基礎套餐" },
+                desc: { en: "A practical starter bundle for small businesses that need the most important website upgrades in one clean package.", zh: "適合需要最重要網站升級的小型企業的實用入門套餐。" },
                 price: "$199",
                 icon: Package,
               },
               {
                 key: "bundle-business-growth",
                 title: { en: "Business Growth", zh: "商業成長套餐" },
+                desc: { en: "A stronger upgrade set focused on improving trust, lead quality, and conversion performance for growing businesses.", zh: "專注於提升信任度、潛在客戶質量和轉化表現的更強升級套餐。" },
                 price: "$699",
                 icon: Sparkles,
                 badge: lang === "en" ? "MOST POPULAR" : "最受歡迎",
@@ -257,10 +259,25 @@ const FeaturesContent = () => {
               {
                 key: "bundle-premium-brand-launch",
                 title: { en: "Premium Brand Launch", zh: "高級品牌啟動套餐" },
+                desc: { en: "A more polished launch bundle designed for businesses that want a stronger visual impression and a more complete online presence.", zh: "為希望擁有更強視覺印象和更完整線上形象的企業設計的精緻啟動套餐。" },
                 price: "$899",
                 icon: Sparkles,
               },
-            ] as { key: string; title: LangObj; price: string; icon: any; badge?: string }[]).map((bundle, i) => (
+              {
+                key: "bundle-conversion-booster",
+                title: { en: "Conversion Booster", zh: "轉化率提升套餐" },
+                desc: { en: "A focused bundle for improving engagement, inquiry flow, and conversion points across key pages of the website.", zh: "專注於改善網站關鍵頁面的互動、查詢流程和轉化點的套餐。" },
+                price: "$499",
+                icon: Package,
+              },
+              {
+                key: "bundle-advanced-inquiry",
+                title: { en: "Advanced Inquiry", zh: "進階詢問套餐" },
+                desc: { en: "A lead-focused bundle built to help businesses collect better enquiries through stronger forms, structure, and user flow.", zh: "以潛在客戶為導向的套餐，幫助企業通過更強的表單、結構和用戶流程收集更好的查詢。" },
+                price: "$399",
+                icon: Package,
+              },
+            ] as { key: string; title: LangObj; desc: LangObj; price: string; icon: any; badge?: string }[]).map((bundle, i) => (
               <ScrollReveal key={bundle.key} delay={0.08 * i}>
                 <div className="rounded-2xl border border-border bg-background p-6 md:p-8 shadow-sm h-full flex flex-col relative card-elevated">
                   {bundle.badge && (
@@ -274,6 +291,7 @@ const FeaturesContent = () => {
                     <bundle.icon size={24} className="text-primary" />
                   </div>
                   <h3 className="text-xl font-bold text-foreground font-display">{T(bundle.title, lang)}</h3>
+                  <p className="mt-2 text-sm text-muted-foreground leading-relaxed flex-1">{T(bundle.desc, lang)}</p>
                   <div className="mt-4 flex items-baseline gap-2">
                     <span className="text-3xl font-black font-display text-primary">{bundle.price}</span>
                   </div>
@@ -282,47 +300,8 @@ const FeaturesContent = () => {
                       href={STRIPE_LINKS[bundle.key]}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="w-full inline-flex items-center justify-center rounded-full px-6 py-3 text-sm font-semibold text-primary-foreground bg-primary transition-all hover:scale-[1.02] active:scale-[0.97]"
-                    >
-                      {lang === "en" ? "Get This Bundle" : "獲取此套餐"}
-                    </a>
-                  </div>
-                </div>
-              </ScrollReveal>
-            ))}
-          </div>
-
-          {/* Secondary Bundles */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6 max-w-3xl mx-auto">
-            {([
-              {
-                key: "bundle-conversion-booster",
-                title: { en: "Conversion Booster", zh: "轉化率提升套餐" },
-                price: "$499",
-                icon: Package,
-              },
-              {
-                key: "bundle-advanced-inquiry",
-                title: { en: "Advanced Inquiry", zh: "進階詢問套餐" },
-                price: "$399",
-                icon: Package,
-              },
-            ] as { key: string; title: LangObj; price: string; icon: any }[]).map((bundle, i) => (
-              <ScrollReveal key={bundle.key} delay={0.08 * i}>
-                <div className="rounded-2xl border border-border bg-background p-6 shadow-sm h-full flex flex-col card-elevated">
-                  <div className="w-12 h-12 rounded-xl flex items-center justify-center mb-4 bg-primary/10">
-                    <bundle.icon size={24} className="text-primary" />
-                  </div>
-                  <h3 className="text-lg font-bold text-foreground font-display">{T(bundle.title, lang)}</h3>
-                  <div className="mt-4 flex items-baseline gap-2">
-                    <span className="text-2xl font-black font-display text-primary">{bundle.price}</span>
-                  </div>
-                  <div className="mt-5">
-                    <a
-                      href={STRIPE_LINKS[bundle.key]}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="w-full inline-flex items-center justify-center rounded-full px-6 py-3 text-sm font-semibold text-primary-foreground bg-primary transition-all hover:scale-[1.02] active:scale-[0.97]"
+                      className="w-full inline-flex items-center justify-center rounded-full px-6 py-3 text-sm font-semibold text-white transition-all hover:scale-[1.02] hover:opacity-90 active:scale-[0.97]"
+                      style={{ backgroundColor: "hsl(275 51% 46%)" }}
                     >
                       {lang === "en" ? "Get This Bundle" : "獲取此套餐"}
                     </a>
