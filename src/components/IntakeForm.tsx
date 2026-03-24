@@ -11,8 +11,8 @@ import { externalSupabase } from "@/lib/externalSupabase";
 
 type FormSubmissionsDebug = {
   attempted: boolean;
-  payload: Record<string, unknown> | null;
-  response: Record<string, unknown> | null;
+  payload: unknown;
+  response: unknown;
   error: {
     message: string | null;
     details: string | null;
@@ -169,13 +169,15 @@ const IntakeForm = () => {
 
         const { error: fsError } = fsResponse;
 
-        const debugResponse = {
-          data: fsResponse.data ?? null,
-          error: fsResponse.error ?? null,
-          count: fsResponse.count ?? null,
-          status: fsResponse.status ?? null,
-          statusText: fsResponse.statusText ?? null,
-        };
+        const debugResponse = JSON.parse(
+          JSON.stringify({
+            data: fsResponse.data ?? null,
+            error: fsResponse.error ?? null,
+            count: fsResponse.count ?? null,
+            status: fsResponse.status ?? null,
+            statusText: fsResponse.statusText ?? null,
+          }),
+        );
 
         if (fsError) {
           console.error("form_submissions insert error:", fsError);
@@ -383,7 +385,7 @@ const IntakeForm = () => {
                   <h4 className="text-sm font-semibold text-foreground">form_submissions debug</h4>
                   <div className="mt-4 space-y-4 text-sm text-foreground">
                     <div>
-                      <p className="font-medium text-foreground">Attempted</p>
+                      <p className="font-medium text-foreground">form_submissions insert attempted</p>
                       <pre className="mt-1 whitespace-pre-wrap break-words rounded-2xl bg-secondary/40 p-3 font-mono text-xs text-foreground">
                         {JSON.stringify(formSubmissionsDebug.attempted, null, 2)}
                       </pre>
