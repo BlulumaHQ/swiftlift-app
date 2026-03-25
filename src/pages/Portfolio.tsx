@@ -12,15 +12,6 @@ import swiftliftFeature from "@/assets/swiftlift-feature-01.webp";
 const portfolioConstruction = swiftliftFeature;
 const portfolioDental = swiftliftFeature;
 const portfolioTrade = swiftliftFeature;
-const portfolioRealestate = swiftliftReviewSlide;
-const portfolioWellness = swiftliftReviewSlide;
-const portfolioLaw = swiftliftReviewSlide;
-const portfolioRestaurant = swiftliftReviewSlide;
-const portfolioWholesale = swiftliftReviewSlide;
-const portfolioLogistics = swiftliftReviewSlide;
-const portfolioHomes = swiftliftReviewSlide;
-const portfolioLegal = swiftliftReviewSlide;
-const portfolioWellnessOld = swiftliftReviewSlide;
 
 /* ── Data ── */
 
