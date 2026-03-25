@@ -5,6 +5,7 @@ import MagneticButton from "./MagneticButton";
 import { motion } from "framer-motion";
 import { ArrowDown } from "lucide-react";
 import heroVideo from "@/assets/hero-video.mp4";
+import heroDesktopBg from "@/assets/hero-bg-desktop.webp";
 
 const wordVariants = {
   hidden: { opacity: 0, y: 40 },
@@ -28,14 +29,20 @@ const Hero = () => {
 
   return (
     <section className="relative min-h-screen flex items-center pt-16 overflow-hidden">
-      {/* Video background */}
+      {/* Desktop: static image background */}
+      <img
+        src={heroDesktopBg}
+        alt=""
+        className="absolute inset-0 w-full h-full object-cover z-0 hidden lg:block"
+      />
+      {/* Mobile/Tablet: video background */}
       <video
         autoPlay
         muted
         loop
         playsInline
         preload="auto"
-        className="absolute inset-0 w-full h-full object-cover z-0"
+        className="absolute inset-0 w-full h-full object-cover z-0 lg:hidden"
       >
         <source src={heroVideo} type="video/mp4" />
       </video>
