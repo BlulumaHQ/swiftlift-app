@@ -163,34 +163,30 @@ const FeaturedCaseCard = ({ c }: { c: FeaturedCase }) => (
   </div>
 );
 
-/* ── Grid Case Card — hover swaps to Version B + badge ── */
+/* ── Grid Case Card — button-hover swaps image + badge ── */
 const GridCaseCard = ({ c }: { c: GridCase }) => {
-  const [isHovered, setIsHovered] = useState(false);
+  const [showVersion, setShowVersion] = useState<"A" | "B">("A");
 
   return (
-    <div
-      className="rounded-xl border border-border bg-card overflow-hidden transition-all hover:shadow-lg hover:border-[hsl(var(--accent-purple))]/30 group flex flex-col"
-      onMouseEnter={() => setIsHovered(true)}
-      onMouseLeave={() => setIsHovered(false)}
-    >
+    <div className="rounded-xl border border-border bg-card overflow-hidden transition-all hover:shadow-lg hover:border-[hsl(var(--accent-purple))]/30 group flex flex-col">
       <div className="aspect-[16/10] overflow-hidden relative bg-muted">
         {/* Version A image (default) */}
         <img
           src={swiftliftReviewSlide}
           alt={`${c.company} — Version A`}
           className="absolute inset-0 w-full h-full object-cover transition-opacity duration-300"
-          style={{ opacity: isHovered ? 0 : 1 }}
+          style={{ opacity: showVersion === "A" ? 1 : 0 }}
         />
-        {/* Version B image (hover) */}
+        {/* Version B image */}
         <img
           src={swiftliftFeature}
           alt={`${c.company} — Version B`}
           className="absolute inset-0 w-full h-full object-cover transition-opacity duration-300"
-          style={{ opacity: isHovered ? 1 : 0 }}
+          style={{ opacity: showVersion === "B" ? 1 : 0 }}
         />
         {/* Version badge */}
-        <span className="absolute top-2.5 right-2.5 z-10 rounded-full bg-black/60 backdrop-blur-sm px-3 py-1 text-[10px] font-semibold uppercase tracking-wider text-white shadow-sm transition-all duration-300">
-          {isHovered ? "Version B" : "Version A"}
+        <span className="absolute top-2.5 right-2.5 z-10 rounded-full bg-[#0f1b3d]/70 backdrop-blur-sm px-3 py-1 text-[10px] font-semibold uppercase tracking-wider text-white shadow-sm transition-all duration-300">
+          {showVersion === "B" ? "Version B" : "Version A"}
         </span>
       </div>
 
@@ -208,6 +204,7 @@ const GridCaseCard = ({ c }: { c: GridCase }) => {
             rel="noopener noreferrer"
             className="flex items-center justify-center gap-1 rounded-lg px-2 py-2 text-[11px] font-semibold text-white transition-all hover:opacity-90"
             style={{ background: "#2DA8FF" }}
+            onMouseEnter={() => setShowVersion("A")}
           >
             Open Live Preview A <ExternalLink className="w-2.5 h-2.5" />
           </a>
@@ -217,6 +214,7 @@ const GridCaseCard = ({ c }: { c: GridCase }) => {
             rel="noopener noreferrer"
             className="flex items-center justify-center gap-1 rounded-lg px-2 py-2 text-[11px] font-semibold text-white transition-all hover:opacity-90"
             style={{ background: "#2DA8FF" }}
+            onMouseEnter={() => setShowVersion("B")}
           >
             Open Live Preview B <ExternalLink className="w-2.5 h-2.5" />
           </a>
