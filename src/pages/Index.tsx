@@ -28,6 +28,7 @@ import portfolioLaw from "@/assets/portfolio-law.jpg";
 import portfolioConstruction from "@/assets/portfolio-construction.jpg";
 import portfolioWholesale from "@/assets/portfolio-wholesale.jpg";
 import portfolioLogistics from "@/assets/portfolio-logistics.jpg";
+import heroDesktopBg from "@/assets/hero-bg-desktop.webp";
 
 const PRELOADER_KEY = "swiftlift_visited";
 
