@@ -580,6 +580,17 @@ const IndexContent = () => {
           background: "linear-gradient(180deg, hsl(209 66% 16%) 0%, hsl(209 66% 12%) 100%)",
         }}
       >
+        {/* Desktop hero background image */}
+        <img
+          src={heroDesktopBg}
+          alt=""
+          className="absolute inset-0 w-full h-full object-cover z-0 hidden lg:block"
+        />
+        {/* Desktop dark overlay for text readability */}
+        <div
+          className="absolute inset-0 z-[1] pointer-events-none hidden lg:block"
+          style={{ background: "rgba(10, 15, 30, 0.4)" }}
+        />
         <div
           className="absolute inset-0 pointer-events-none"
           style={{
