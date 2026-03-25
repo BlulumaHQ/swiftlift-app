@@ -5,6 +5,7 @@ import MagneticButton from "./MagneticButton";
 import { motion } from "framer-motion";
 import { ArrowDown } from "lucide-react";
 import heroVideo from "@/assets/hero-video.mp4";
+import heroDesktopBg from "@/assets/hero-bg-desktop.webp";
 
 const wordVariants = {
   hidden: { opacity: 0, y: 40 },
