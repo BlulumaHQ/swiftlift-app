@@ -89,21 +89,24 @@ interface GridCase {
   description: string;
   previewA: string;
   previewB: string;
-  image: string;
-  previewAImage: string;
-  previewBImage: string;
 }
 
 const gridCases: GridCase[] = [
-  { company: "Skyline Realty", industry: "Real Estate", description: "Modern real estate website with improved listing flow.", previewA: "skylinerealty-preview-a.swiftlift.app", previewB: "skylinerealty-preview-b.swiftlift.app", image: portfolioRealestate, previewAImage: portfolioRealestate, previewBImage: portfolioHomes },
-  { company: "Elite Fitness Studio", industry: "Fitness", description: "Clean layout designed to increase membership sign-ups.", previewA: "elitefitness-preview-a.swiftlift.app", previewB: "elitefitness-preview-b.swiftlift.app", image: portfolioWellness, previewAImage: portfolioWellness, previewBImage: portfolioWellnessOld },
-  { company: "GreenScape Landscaping", industry: "Landscaping", description: "Clear service structure for local landscaping business.", previewA: "greenscape-preview-a.swiftlift.app", previewB: "greenscape-preview-b.swiftlift.app", image: portfolioHomes, previewAImage: portfolioHomes, previewBImage: portfolioRealestate },
-  { company: "FreshBite Restaurant", industry: "Restaurant", description: "Menu-focused layout with improved mobile experience.", previewA: "freshbite-preview-a.swiftlift.app", previewB: "freshbite-preview-b.swiftlift.app", image: portfolioRestaurant, previewAImage: portfolioRestaurant, previewBImage: portfolioWholesale },
-  { company: "ClearView Accounting", industry: "Accounting", description: "Professional layout for financial services.", previewA: "clearview-preview-a.swiftlift.app", previewB: "clearview-preview-b.swiftlift.app", image: portfolioWholesale, previewAImage: portfolioWholesale, previewBImage: portfolioLogistics },
-  { company: "PureGlow Beauty", industry: "Beauty Salon", description: "Visual-focused design to showcase services and booking.", previewA: "pureglow-preview-a.swiftlift.app", previewB: "pureglow-preview-b.swiftlift.app", image: portfolioWellnessOld, previewAImage: portfolioWellnessOld, previewBImage: portfolioWellness },
-  { company: "Apex Law Group", industry: "Law Firm", description: "Trust-focused layout for legal services.", previewA: "apexlaw-preview-a.swiftlift.app", previewB: "apexlaw-preview-b.swiftlift.app", image: portfolioLaw, previewAImage: portfolioLaw, previewBImage: portfolioLegal },
-  { company: "ComfortAir HVAC", industry: "HVAC", description: "Service-driven structure for local HVAC business.", previewA: "comfortair-preview-a.swiftlift.app", previewB: "comfortair-preview-b.swiftlift.app", image: portfolioLogistics, previewAImage: portfolioLogistics, previewBImage: portfolioConstruction },
-  { company: "Spark Cleaning Services", industry: "Cleaning", description: "Simple, conversion-focused cleaning service website.", previewA: "sparkclean-preview-a.swiftlift.app", previewB: "sparkclean-preview-b.swiftlift.app", image: portfolioLegal, previewAImage: portfolioLegal, previewBImage: portfolioDental },
+  { company: "Chicago Boxing Club", industry: "Boxing Gym", description: "High-energy fitness site designed to improve trial sign-ups and class discovery.", previewA: "https://chicagoboxingclub-preveiw-01.lovable.app/", previewB: "https://chicagoboxingclub-preveiw-02.lovable.app/" },
+  { company: "Commercial Fence Corporation", industry: "Industrial", description: "Industrial service website with clearer structure, stronger credibility, and better quote flow.", previewA: "https://commercial-fence-corporation-preview-01.lovable.app/", previewB: "https://commercial-fence-corporation-preview-02.lovable.app/" },
+  { company: "One Park Home", industry: "Real Estate", description: "Luxury real estate presentation with a more polished property-first experience.", previewA: "https://one-park-home-preview-01.lovable.app/", previewB: "https://one-park-home-concept-preview.lovable.app/" },
+  { company: "Friendly Dental Centre", industry: "Dental Clinic", description: "Modern dental website focused on trust, clarity, and stronger appointment conversion.", previewA: "https://friendly-dental-centre-preview.lovable.app/", previewB: "https://friendly-dental-preview-02.lovable.app/" },
+  { company: "Mutt Puddles Dog Wash", industry: "Pet Grooming", description: "Friendly service-based design with better booking flow and a more approachable brand feel.", previewA: "https://mutt-puddles-dog-wash-preview-01.lovable.app/", previewB: "https://mutt-puddles-dog-wash-preview-02.lovable.app/" },
+  { company: "Studio 21 Salon Spa", industry: "Salon & Spa", description: "Beauty-focused redesign with cleaner service presentation and more premium visual balance.", previewA: "https://studio-21-salon-spa-a.netlify.app/", previewB: "https://studio-21-salon-spa-b.netlify.app/" },
+  { company: "Presotea", industry: "Beverage Brand", description: "Franchise-style beverage website with stronger menu visibility and cleaner brand execution.", previewA: "https://presotea.bluluma.com/", previewB: "https://presotea-b.netlify.app/" },
+  { company: "Styles Hair Salon", industry: "Hair Salon", description: "Service-based salon redesign built for cleaner browsing and better appointment intent.", previewA: "https://styles-hair-salon-a.netlify.app/", previewB: "https://styles-hair-salon-b.netlify.app/" },
+  { company: "Yang Health Therapeutic", industry: "Wellness", description: "Calm, trust-focused wellness design with improved service clarity and stronger credibility.", previewA: "https://yang-health-therapeutic.bluluma.com/", previewB: "https://yang-health-therapeutic-b.netlify.app/" },
+  { company: "Unity Tattoo", industry: "Tattoo Studio", description: "Visual-first redesign with stronger portfolio presentation and better inquiry flow.", previewA: "https://unity-tattoo.bluluma.com/", previewB: "https://unity-tattoo-b.netlify.app/" },
+  { company: "Nuera Nutra", industry: "Nutrition", description: "Supplement brand concept with cleaner product structure and more modern trust signals.", previewA: "https://nueranutra.bluluma.com/", previewB: "https://nueranutra-preveiw-02.netlify.app/" },
+  { company: "Phoenix Remodel", industry: "Home Remodeling", description: "Contractor website redesign with clearer service hierarchy and stronger lead intent.", previewA: "https://phoenix-remodel-a.netlify.app/", previewB: "https://phoenix-remodel-b.netlify.app/" },
+  { company: "Westside Medical Associates", industry: "Medical", description: "Professional healthcare presentation with better structure and more trustworthy messaging.", previewA: "https://westside-medical-associates-a.netlify.app/", previewB: "https://westside-medical-associates-b.netlify.app/" },
+  { company: "HSIN HSIN", industry: "Trade Show & Branding", description: "Brand-forward business website with stronger positioning and cleaner corporate presentation.", previewA: "https://hsinhsin.ca/", previewB: "https://hsin-hsin-b.netlify.app/" },
+  { company: "HH Nexus Capital", industry: "Capital / Finance", description: "Corporate finance website with improved professionalism, hierarchy, and investor-facing clarity.", previewA: "https://hh-nexus-capital-a.netlify.app/", previewB: "https://hh-nexus-capital-b.netlify.app/" },
 ];
 
 /* ── Featured Case Card — static image, no hover ── */
