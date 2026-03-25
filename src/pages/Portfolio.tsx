@@ -7,10 +7,11 @@ import CustomCursor from "@/components/CustomCursor";
 import { ArrowRight, ExternalLink, Quote, Star } from "lucide-react";
 
 import swiftliftReviewSlide from "@/assets/swiftlift-review-slide.webp";
+import swiftliftFeature from "@/assets/swiftlift-feature-01.webp";
 
-const portfolioConstruction = swiftliftReviewSlide;
-const portfolioDental = swiftliftReviewSlide;
-const portfolioTrade = swiftliftReviewSlide;
+const portfolioConstruction = swiftliftFeature;
+const portfolioDental = swiftliftFeature;
+const portfolioTrade = swiftliftFeature;
 const portfolioRealestate = swiftliftReviewSlide;
 const portfolioWellness = swiftliftReviewSlide;
 const portfolioLaw = swiftliftReviewSlide;
