@@ -47,11 +47,15 @@ const Hero = () => {
         <source src={heroVideo} type="video/mp4" />
       </video>
 
-      {/* Gradient overlay: dark top fading to transparent */}
-      <div className="absolute inset-0 z-[1] pointer-events-none" style={{
+      {/* Mobile/Tablet overlay: gradient */}
+      <div className="absolute inset-0 z-[1] pointer-events-none lg:hidden" style={{
         background: 'linear-gradient(to bottom, rgba(0,0,0,0.7) 0%, rgba(0,0,0,0.45) 30%, rgba(0,0,0,0.25) 60%, rgba(0,0,0,0.15) 100%)'
       }} />
-      <div className="video-overlay" />
+      {/* Desktop overlay: uniform dark navy for readability while keeping image visible */}
+      <div className="absolute inset-0 z-[1] pointer-events-none hidden lg:block" style={{
+        background: 'rgba(10, 15, 30, 0.4)'
+      }} />
+      <div className="video-overlay lg:hidden" />
 
       <div className="max-w-7xl mx-auto px-6 w-full py-20 md:py-32 relative z-10">
         <div className="flex flex-col items-center text-center max-w-4xl mx-auto">
