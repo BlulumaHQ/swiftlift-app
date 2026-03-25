@@ -6,18 +6,20 @@ import Footer from "@/components/Footer";
 import CustomCursor from "@/components/CustomCursor";
 import { ArrowRight, ExternalLink, Quote, Star } from "lucide-react";
 
-import portfolioConstruction from "@/assets/portfolio-construction.jpg";
-import portfolioDental from "@/assets/portfolio-dental.jpg";
-import portfolioTrade from "@/assets/portfolio-trade.jpg";
-import portfolioRealestate from "@/assets/portfolio-realestate.jpg";
-import portfolioWellness from "@/assets/portfolio-wellness-new.jpg";
-import portfolioLaw from "@/assets/portfolio-law.jpg";
-import portfolioRestaurant from "@/assets/portfolio-restaurant.jpg";
-import portfolioWholesale from "@/assets/portfolio-wholesale.jpg";
-import portfolioLogistics from "@/assets/portfolio-logistics.jpg";
-import portfolioHomes from "@/assets/portfolio-homes.jpg";
-import portfolioLegal from "@/assets/portfolio-legal.jpg";
-import portfolioWellnessOld from "@/assets/portfolio-wellness.jpg";
+import swiftliftReviewSlide from "@/assets/swiftlift-review-slide.webp";
+
+const portfolioConstruction = swiftliftReviewSlide;
+const portfolioDental = swiftliftReviewSlide;
+const portfolioTrade = swiftliftReviewSlide;
+const portfolioRealestate = swiftliftReviewSlide;
+const portfolioWellness = swiftliftReviewSlide;
+const portfolioLaw = swiftliftReviewSlide;
+const portfolioRestaurant = swiftliftReviewSlide;
+const portfolioWholesale = swiftliftReviewSlide;
+const portfolioLogistics = swiftliftReviewSlide;
+const portfolioHomes = swiftliftReviewSlide;
+const portfolioLegal = swiftliftReviewSlide;
+const portfolioWellnessOld = swiftliftReviewSlide;
 
 /* ── Data ── */
 
