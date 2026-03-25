@@ -22,17 +22,12 @@ function generateClientId(): string {
   return `CL-${yyyy}${mm}${dd}-${rand}`;
 }
 
-import portfolioTrade from "@/assets/portfolio-trade.jpg";
-import portfolioWellness from "@/assets/portfolio-wellness-new.jpg";
-import portfolioLaw from "@/assets/portfolio-law.jpg";
-import portfolioConstruction from "@/assets/portfolio-construction.jpg";
-import portfolioWholesale from "@/assets/portfolio-wholesale.jpg";
-import portfolioLogistics from "@/assets/portfolio-logistics.jpg";
 import heroDesktopBg from "@/assets/hero-bg-desktop.webp";
+import swiftliftReviewSlide from "@/assets/swiftlift-review-slide.webp";
 
 const PRELOADER_KEY = "swiftlift_visited";
 
-const portfolioImages = [portfolioTrade, portfolioWellness, portfolioLaw, portfolioConstruction, portfolioWholesale, portfolioLogistics];
+const portfolioImages = [swiftliftReviewSlide, swiftliftReviewSlide, swiftliftReviewSlide, swiftliftReviewSlide, swiftliftReviewSlide, swiftliftReviewSlide];
 
 declare global {
   interface Window {
