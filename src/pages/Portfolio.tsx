@@ -12,15 +12,6 @@ import swiftliftFeature from "@/assets/swiftlift-feature-01.webp";
 const portfolioConstruction = swiftliftFeature;
 const portfolioDental = swiftliftFeature;
 const portfolioTrade = swiftliftFeature;
-const portfolioRealestate = swiftliftReviewSlide;
-const portfolioWellness = swiftliftReviewSlide;
-const portfolioLaw = swiftliftReviewSlide;
-const portfolioRestaurant = swiftliftReviewSlide;
-const portfolioWholesale = swiftliftReviewSlide;
-const portfolioLogistics = swiftliftReviewSlide;
-const portfolioHomes = swiftliftReviewSlide;
-const portfolioLegal = swiftliftReviewSlide;
-const portfolioWellnessOld = swiftliftReviewSlide;
 
 /* ── Data ── */
 
@@ -89,21 +80,24 @@ interface GridCase {
   description: string;
   previewA: string;
   previewB: string;
-  image: string;
-  previewAImage: string;
-  previewBImage: string;
 }
 
 const gridCases: GridCase[] = [
-  { company: "Skyline Realty", industry: "Real Estate", description: "Modern real estate website with improved listing flow.", previewA: "skylinerealty-preview-a.swiftlift.app", previewB: "skylinerealty-preview-b.swiftlift.app", image: portfolioRealestate, previewAImage: portfolioRealestate, previewBImage: portfolioHomes },
-  { company: "Elite Fitness Studio", industry: "Fitness", description: "Clean layout designed to increase membership sign-ups.", previewA: "elitefitness-preview-a.swiftlift.app", previewB: "elitefitness-preview-b.swiftlift.app", image: portfolioWellness, previewAImage: portfolioWellness, previewBImage: portfolioWellnessOld },
-  { company: "GreenScape Landscaping", industry: "Landscaping", description: "Clear service structure for local landscaping business.", previewA: "greenscape-preview-a.swiftlift.app", previewB: "greenscape-preview-b.swiftlift.app", image: portfolioHomes, previewAImage: portfolioHomes, previewBImage: portfolioRealestate },
-  { company: "FreshBite Restaurant", industry: "Restaurant", description: "Menu-focused layout with improved mobile experience.", previewA: "freshbite-preview-a.swiftlift.app", previewB: "freshbite-preview-b.swiftlift.app", image: portfolioRestaurant, previewAImage: portfolioRestaurant, previewBImage: portfolioWholesale },
-  { company: "ClearView Accounting", industry: "Accounting", description: "Professional layout for financial services.", previewA: "clearview-preview-a.swiftlift.app", previewB: "clearview-preview-b.swiftlift.app", image: portfolioWholesale, previewAImage: portfolioWholesale, previewBImage: portfolioLogistics },
-  { company: "PureGlow Beauty", industry: "Beauty Salon", description: "Visual-focused design to showcase services and booking.", previewA: "pureglow-preview-a.swiftlift.app", previewB: "pureglow-preview-b.swiftlift.app", image: portfolioWellnessOld, previewAImage: portfolioWellnessOld, previewBImage: portfolioWellness },
-  { company: "Apex Law Group", industry: "Law Firm", description: "Trust-focused layout for legal services.", previewA: "apexlaw-preview-a.swiftlift.app", previewB: "apexlaw-preview-b.swiftlift.app", image: portfolioLaw, previewAImage: portfolioLaw, previewBImage: portfolioLegal },
-  { company: "ComfortAir HVAC", industry: "HVAC", description: "Service-driven structure for local HVAC business.", previewA: "comfortair-preview-a.swiftlift.app", previewB: "comfortair-preview-b.swiftlift.app", image: portfolioLogistics, previewAImage: portfolioLogistics, previewBImage: portfolioConstruction },
-  { company: "Spark Cleaning Services", industry: "Cleaning", description: "Simple, conversion-focused cleaning service website.", previewA: "sparkclean-preview-a.swiftlift.app", previewB: "sparkclean-preview-b.swiftlift.app", image: portfolioLegal, previewAImage: portfolioLegal, previewBImage: portfolioDental },
+  { company: "Chicago Boxing Club", industry: "Boxing Gym", description: "High-energy fitness site designed to improve trial sign-ups and class discovery.", previewA: "https://chicagoboxingclub-preveiw-01.lovable.app/", previewB: "https://chicagoboxingclub-preveiw-02.lovable.app/" },
+  { company: "Commercial Fence Corporation", industry: "Industrial", description: "Industrial service website with clearer structure, stronger credibility, and better quote flow.", previewA: "https://commercial-fence-corporation-preview-01.lovable.app/", previewB: "https://commercial-fence-corporation-preview-02.lovable.app/" },
+  { company: "One Park Home", industry: "Real Estate", description: "Luxury real estate presentation with a more polished property-first experience.", previewA: "https://one-park-home-preview-01.lovable.app/", previewB: "https://one-park-home-concept-preview.lovable.app/" },
+  { company: "Friendly Dental Centre", industry: "Dental Clinic", description: "Modern dental website focused on trust, clarity, and stronger appointment conversion.", previewA: "https://friendly-dental-centre-preview.lovable.app/", previewB: "https://friendly-dental-preview-02.lovable.app/" },
+  { company: "Mutt Puddles Dog Wash", industry: "Pet Grooming", description: "Friendly service-based design with better booking flow and a more approachable brand feel.", previewA: "https://mutt-puddles-dog-wash-preview-01.lovable.app/", previewB: "https://mutt-puddles-dog-wash-preview-02.lovable.app/" },
+  { company: "Studio 21 Salon Spa", industry: "Salon & Spa", description: "Beauty-focused redesign with cleaner service presentation and more premium visual balance.", previewA: "https://studio-21-salon-spa-a.netlify.app/", previewB: "https://studio-21-salon-spa-b.netlify.app/" },
+  { company: "Presotea", industry: "Beverage Brand", description: "Franchise-style beverage website with stronger menu visibility and cleaner brand execution.", previewA: "https://presotea.bluluma.com/", previewB: "https://presotea-b.netlify.app/" },
+  { company: "Styles Hair Salon", industry: "Hair Salon", description: "Service-based salon redesign built for cleaner browsing and better appointment intent.", previewA: "https://styles-hair-salon-a.netlify.app/", previewB: "https://styles-hair-salon-b.netlify.app/" },
+  { company: "Yang Health Therapeutic", industry: "Wellness", description: "Calm, trust-focused wellness design with improved service clarity and stronger credibility.", previewA: "https://yang-health-therapeutic.bluluma.com/", previewB: "https://yang-health-therapeutic-b.netlify.app/" },
+  { company: "Unity Tattoo", industry: "Tattoo Studio", description: "Visual-first redesign with stronger portfolio presentation and better inquiry flow.", previewA: "https://unity-tattoo.bluluma.com/", previewB: "https://unity-tattoo-b.netlify.app/" },
+  { company: "Nuera Nutra", industry: "Nutrition", description: "Supplement brand concept with cleaner product structure and more modern trust signals.", previewA: "https://nueranutra.bluluma.com/", previewB: "https://nueranutra-preveiw-02.netlify.app/" },
+  { company: "Phoenix Remodel", industry: "Home Remodeling", description: "Contractor website redesign with clearer service hierarchy and stronger lead intent.", previewA: "https://phoenix-remodel-a.netlify.app/", previewB: "https://phoenix-remodel-b.netlify.app/" },
+  { company: "Westside Medical Associates", industry: "Medical", description: "Professional healthcare presentation with better structure and more trustworthy messaging.", previewA: "https://westside-medical-associates-a.netlify.app/", previewB: "https://westside-medical-associates-b.netlify.app/" },
+  { company: "HSIN HSIN", industry: "Trade Show & Branding", description: "Brand-forward business website with stronger positioning and cleaner corporate presentation.", previewA: "https://hsinhsin.ca/", previewB: "https://hsin-hsin-b.netlify.app/" },
+  { company: "HH Nexus Capital", industry: "Capital / Finance", description: "Corporate finance website with improved professionalism, hierarchy, and investor-facing clarity.", previewA: "https://hh-nexus-capital-a.netlify.app/", previewB: "https://hh-nexus-capital-b.netlify.app/" },
 ];
 
 /* ── Featured Case Card — static image, no hover ── */
@@ -169,18 +163,35 @@ const FeaturedCaseCard = ({ c }: { c: FeaturedCase }) => (
   </div>
 );
 
-/* ── Grid Case Card — hover Preview A/B changes featured image ── */
+/* ── Grid Case Card — hover swaps to Version B + badge ── */
 const GridCaseCard = ({ c }: { c: GridCase }) => {
-  const [displayImage, setDisplayImage] = useState(c.image);
+  const [isHovered, setIsHovered] = useState(false);
 
   return (
-    <div className="rounded-xl border border-border bg-card overflow-hidden transition-all hover:shadow-lg hover:border-[hsl(var(--accent-purple))]/30 group flex flex-col">
-      <div className="aspect-[16/10] overflow-hidden">
+    <div
+      className="rounded-xl border border-border bg-card overflow-hidden transition-all hover:shadow-lg hover:border-[hsl(var(--accent-purple))]/30 group flex flex-col"
+      onMouseEnter={() => setIsHovered(true)}
+      onMouseLeave={() => setIsHovered(false)}
+    >
+      <div className="aspect-[16/10] overflow-hidden relative bg-muted">
+        {/* Version A image (default) */}
         <img
-          src={displayImage}
-          alt={c.company}
-          className="w-full h-full object-cover transition-all duration-300"
+          src={swiftliftReviewSlide}
+          alt={`${c.company} — Version A`}
+          className="absolute inset-0 w-full h-full object-cover transition-opacity duration-300"
+          style={{ opacity: isHovered ? 0 : 1 }}
         />
+        {/* Version B image (hover) */}
+        <img
+          src={swiftliftFeature}
+          alt={`${c.company} — Version B`}
+          className="absolute inset-0 w-full h-full object-cover transition-opacity duration-300"
+          style={{ opacity: isHovered ? 1 : 0 }}
+        />
+        {/* Version badge */}
+        <span className="absolute top-2.5 right-2.5 z-10 rounded-full bg-black/60 backdrop-blur-sm px-3 py-1 text-[10px] font-semibold uppercase tracking-wider text-white shadow-sm transition-all duration-300">
+          {isHovered ? "Version B" : "Version A"}
+        </span>
       </div>
 
       <div className="p-4 flex flex-col flex-1">
@@ -192,22 +203,18 @@ const GridCaseCard = ({ c }: { c: GridCase }) => {
 
         <div className="grid grid-cols-2 gap-2 mt-auto">
           <a
-            href={`https://${c.previewA}`}
+            href={c.previewA}
             target="_blank"
             rel="noopener noreferrer"
-            onMouseEnter={() => setDisplayImage(c.previewAImage)}
-            onMouseLeave={() => setDisplayImage(c.image)}
             className="flex items-center justify-center gap-1 rounded-lg px-2 py-2 text-[11px] font-semibold text-white transition-all hover:opacity-90"
             style={{ background: "#2DA8FF" }}
           >
             Open Live Preview A <ExternalLink className="w-2.5 h-2.5" />
           </a>
           <a
-            href={`https://${c.previewB}`}
+            href={c.previewB}
             target="_blank"
             rel="noopener noreferrer"
-            onMouseEnter={() => setDisplayImage(c.previewBImage)}
-            onMouseLeave={() => setDisplayImage(c.image)}
             className="flex items-center justify-center gap-1 rounded-lg px-2 py-2 text-[11px] font-semibold text-white transition-all hover:opacity-90"
             style={{ background: "#2DA8FF" }}
           >
