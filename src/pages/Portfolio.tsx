@@ -39,10 +39,6 @@ import portfolioWestsideB from "@/assets/portfolio-westside-medical-b.webp";
 import portfolioYangHealthA from "@/assets/portfolio-yang-health-a.webp";
 import portfolioYangHealthB from "@/assets/portfolio-yang-health-b.webp";
 
-const portfolioConstruction = swiftliftFeature;
-const portfolioDental = swiftliftFeature;
-const portfolioTrade = swiftliftFeature;
-
 /* ── Data ── */
 
 interface FeaturedCase {
@@ -56,12 +52,224 @@ interface FeaturedCase {
   selectedLabel: string;
   testimonial: string;
   testimonialAuthor: string;
-  image: string;
+  imageBefore: string;
+  imageA: string;
+  imageB: string;
 }
 
 const featuredCases: FeaturedCase[] = [
   {
     company: "Architect57",
+    industry: "Construction",
+    description: "A modern architecture firm redesign with two distinct directions: one clean professional layout and one stronger conversion-focused version.",
+    beforeSummary: "Outdated layout, weak hierarchy, and a website that did not reflect the studio's design quality.",
+    previewA: "architect-57-a.netlify.app",
+    previewB: "architect-57-b.netlify.app",
+    selectedVersion: "B",
+    selectedLabel: "Version B — Conversion-Focused",
+    testimonial:
+      "Before SwiftLift, our website felt outdated and did not reflect the quality of our architecture work. The preview process made it very easy to compare two different directions side by side. Version A felt cleaner, but Version B gave us a stronger overall presentation and a more compelling first impression. The final result feels much more aligned with our brand.",
+    testimonialAuthor: "Cary T., Architect",
+    imageBefore: swiftliftFeature,
+    imageA: swiftliftFeature,
+    imageB: swiftliftFeature,
+  },
+  {
+    company: "Gene's Sausage Shop",
+    industry: "Specialty Food",
+    description: "A specialty food business redesign with a cleaner structure, better visual storytelling, and a stronger product-first presentation.",
+    beforeSummary: "An older site with limited visual impact, dated styling, and a weaker presentation of products and brand quality.",
+    previewA: "genes-sausage-a.netlify.app",
+    previewB: "genes-sausage-b.netlify.app",
+    selectedVersion: "A",
+    selectedLabel: "Version A — Clean Professional",
+    testimonial:
+      "The old website no longer matched the quality of our products or brand. SwiftLift gave us two real website versions to compare, which made the decision process much easier. The new design feels much more polished, organized, and professional. It presents our business in a way that finally feels current.",
+    testimonialAuthor: "Sarah R., Owner",
+    imageBefore: swiftliftFeature,
+    imageA: swiftliftFeature,
+    imageB: swiftliftFeature,
+  },
+  {
+    company: "Art's Automotive",
+    industry: "Auto Repair",
+    description: "An automotive service website redesign focused on clearer communication, stronger trust signals, and a more modern customer experience.",
+    beforeSummary: "Text-heavy layout, dated design, and a site structure that made services harder to understand quickly.",
+    previewA: "arts-automotive-a.netlify.app",
+    previewB: "arts-automotive-b.netlify.app",
+    selectedVersion: "B",
+    selectedLabel: "Version B — Conversion-Focused",
+    testimonial:
+      "Our previous site looked old and did not communicate our services clearly. SwiftLift helped us compare two different website directions before making a decision. The updated version feels much more professional, easier to navigate, and better structured for customers who need information fast. It is a major improvement over what we had before.",
+    testimonialAuthor: "David L., Manager",
+    imageBefore: swiftliftFeature,
+    imageA: portfolioArtsA,
+    imageB: portfolioArtsB,
+  },
+];
+
+/* ── Featured Case Card — 3-state carousel: Before / A / B ── */
+type FeaturedState = "before" | "A" | "B";
+const FEATURED_STATES: FeaturedState[] = ["before", "A", "B"];
+const FEATURED_TIMINGS: Record<FeaturedState, number> = { before: 1000, A: 2800, B: 2800 };
+const FEATURED_LABELS: Record<FeaturedState, string> = { before: "Before", A: "Version A", B: "Version B" };
+const FEATURED_SWIPE_THRESHOLD = 30;
+const FEATURED_RESUME_DELAY = 5000;
+
+const FeaturedCaseCard = ({ c }: { c: FeaturedCase }) => {
+  const isMobile = useIsMobile();
+  const [activeState, setActiveState] = useState<FeaturedState>("A");
+  const [isHovered, setIsHovered] = useState(false);
+  const pausedUntil = useRef(0);
+  const touchStart = useRef<{ x: number; y: number } | null>(null);
+
+  const images: Record<FeaturedState, string> = {
+    before: c.imageBefore,
+    A: c.imageA,
+    B: c.imageB,
+  };
+
+  // Auto carousel with per-state timing
+  useEffect(() => {
+    if (isHovered) return;
+    const advance = () => {
+      if (Date.now() < pausedUntil.current) return;
+      setActiveState((prev) => {
+        const idx = FEATURED_STATES.indexOf(prev);
+        return FEATURED_STATES[(idx + 1) % 3];
+      });
+    };
+    const id = setInterval(advance, FEATURED_TIMINGS[activeState]);
+    return () => clearInterval(id);
+  }, [isHovered, activeState]);
+
+  // Mobile swipe
+  const handleTouchStart = useCallback((e: React.TouchEvent) => {
+    touchStart.current = { x: e.touches[0].clientX, y: e.touches[0].clientY };
+  }, []);
+  const handleTouchEnd = useCallback((e: React.TouchEvent) => {
+    if (!touchStart.current) return;
+    const dx = e.changedTouches[0].clientX - touchStart.current.x;
+    const dy = e.changedTouches[0].clientY - touchStart.current.y;
+    if (Math.abs(dx) > FEATURED_SWIPE_THRESHOLD && Math.abs(dx) > Math.abs(dy)) {
+      setActiveState((prev) => {
+        const idx = FEATURED_STATES.indexOf(prev);
+        return dx < 0 ? FEATURED_STATES[(idx + 1) % 3] : FEATURED_STATES[(idx + 2) % 3];
+      });
+      pausedUntil.current = Date.now() + FEATURED_RESUME_DELAY;
+    }
+    touchStart.current = null;
+  }, []);
+
+  const handleHoverState = (state: FeaturedState) => {
+    if (!isMobile) { setIsHovered(true); setActiveState(state); }
+  };
+  const handleHoverEnd = () => { if (!isMobile) setIsHovered(false); };
+
+  return (
+    <div className="rounded-2xl border border-border bg-card overflow-hidden shadow-sm flex flex-col h-full">
+      <div
+        className="aspect-[16/10] overflow-hidden relative bg-muted"
+        onTouchStart={isMobile ? handleTouchStart : undefined}
+        onTouchEnd={isMobile ? handleTouchEnd : undefined}
+      >
+        {FEATURED_STATES.map((state) => (
+          <img
+            key={state}
+            src={images[state]}
+            alt={`${c.company} — ${FEATURED_LABELS[state]}`}
+            className="absolute inset-0 w-full h-full object-cover"
+            style={{
+              opacity: activeState === state ? 1 : 0,
+              transform: activeState === state ? "scale(1)" : "scale(1.015)",
+              transition: "opacity 0.7s cubic-bezier(0.4, 0, 0.2, 1), transform 0.8s cubic-bezier(0.4, 0, 0.2, 1)",
+            }}
+          />
+        ))}
+        {/* Before overlay — subtle de-emphasis */}
+        <div
+          className="absolute inset-0 bg-foreground/[0.12] pointer-events-none"
+          style={{
+            opacity: activeState === "before" ? 1 : 0,
+            transition: "opacity 0.7s cubic-bezier(0.4, 0, 0.2, 1)",
+          }}
+        />
+        {/* State badge */}
+        <span className="absolute left-1/2 -translate-x-1/2 top-[14%] z-10 rounded-full bg-[#0a1e4a]/35 backdrop-blur-lg px-4 py-1.5 text-[10px] font-semibold uppercase tracking-widest text-white/90 shadow-md ring-1 ring-white/10 transition-all duration-300">
+          {FEATURED_LABELS[activeState]}
+        </span>
+      </div>
+
+      <div className="bg-[hsl(var(--surface-sunken))] px-5 py-4 border-b border-border">
+        <span className="text-[10px] font-semibold uppercase tracking-widest text-[hsl(var(--accent-purple))]">
+          {c.industry}
+        </span>
+        <h3 className="text-base font-bold text-foreground mt-1">{c.company}</h3>
+        <p className="mt-1 text-xs text-muted-foreground leading-relaxed">{c.description}</p>
+      </div>
+
+      <div className="p-5 space-y-4 flex-1 flex flex-col">
+        <div>
+          <p className="text-[10px] font-semibold uppercase tracking-widest text-muted-foreground mb-1">Before</p>
+          <p className="text-xs text-muted-foreground italic">{c.beforeSummary}</p>
+        </div>
+
+        <div className="grid grid-cols-3 gap-2">
+          <button
+            type="button"
+            className="flex items-center justify-center gap-1 rounded-lg px-2 py-2 text-[11px] font-semibold text-muted-foreground border border-border bg-muted/50 transition-all hover:bg-muted cursor-default"
+            onMouseEnter={() => handleHoverState("before")}
+            onMouseLeave={handleHoverEnd}
+          >
+            <Eye className="w-2.5 h-2.5" /> Before
+          </button>
+          <a
+            href={`https://${c.previewA}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center justify-center gap-1 rounded-lg px-2 py-2 text-[11px] font-semibold text-white transition-all hover:opacity-90"
+            style={{ background: "#2DA8FF" }}
+            onMouseEnter={() => handleHoverState("A")}
+            onMouseLeave={handleHoverEnd}
+          >
+            Preview A <ExternalLink className="w-2.5 h-2.5" />
+          </a>
+          <a
+            href={`https://${c.previewB}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center justify-center gap-1 rounded-lg px-2 py-2 text-[11px] font-semibold text-white transition-all hover:opacity-90"
+            style={{ background: "#2DA8FF" }}
+            onMouseEnter={() => handleHoverState("B")}
+            onMouseLeave={handleHoverEnd}
+          >
+            Preview B <ExternalLink className="w-2.5 h-2.5" />
+          </a>
+        </div>
+
+        <div className="rounded-lg border border-[hsl(var(--accent-purple))]/20 bg-[hsl(var(--accent-purple))]/[0.03] p-3">
+          <p className="text-[10px] font-semibold uppercase tracking-widest text-[hsl(var(--accent-purple))] mb-1">
+            Final Selected Version
+          </p>
+          <p className="text-xs font-bold text-foreground flex items-center gap-1">
+            <Star className="w-3 h-3 fill-current text-[hsl(var(--accent-purple))]" />
+            {c.selectedLabel}
+          </p>
+        </div>
+
+        <div className="flex gap-2 pt-1 mt-auto">
+          <Quote className="w-4 h-4 text-[hsl(var(--accent-purple))] shrink-0 mt-0.5" />
+          <div>
+            <p className="text-xs text-foreground leading-relaxed italic">"{c.testimonial}"</p>
+            <p className="mt-1.5 text-[11px] font-semibold text-muted-foreground">{c.testimonialAuthor}</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+/* ── Grid Case Card — desktop: hover swap | mobile: swipe + auto slideshow ── */
     industry: "Construction",
     description: "A modern architecture firm redesign with two distinct directions: one clean professional layout and one stronger conversion-focused version.",
     beforeSummary: "Outdated layout, weak hierarchy, and a website that did not reflect the studio's design quality.",
