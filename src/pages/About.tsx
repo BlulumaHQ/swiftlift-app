@@ -36,7 +36,7 @@ const AboutContent = () => {
       <Header />
 
       {/* HERO */}
-      <section className="relative pt-28 pb-16 sm:pt-36 sm:pb-24 overflow-hidden">
+      <section className="relative pt-28 pb-12 sm:pt-32 sm:pb-16 overflow-hidden">
         <div className="absolute inset-0 bg-gradient-to-br from-[hsl(var(--hero-bg))] via-[hsl(var(--hero-bg))] to-[hsl(var(--accent-purple)/0.15)]" />
         <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,hsl(var(--accent-purple)/0.08),transparent_70%)]" />
 
@@ -58,10 +58,10 @@ const AboutContent = () => {
                 </h1>
               </ScrollReveal>
               <ScrollReveal>
-                <p className="text-lg sm:text-xl text-blue-100/70 leading-relaxed max-w-lg">
+                <p className="text-base sm:text-lg font-medium text-blue-50/90 leading-[1.7] max-w-md">
                   Most businesses don't need another website. They need a better one — faster, cleaner, and built to convert.
                 </p>
-                <p className="mt-3 text-base text-blue-100/50">That's where we come in.</p>
+                <p className="mt-3 text-sm font-medium text-blue-100/70">That's where we come in.</p>
               </ScrollReveal>
               <ScrollReveal>
                 <div className="mt-8 flex flex-wrap gap-4">
@@ -77,7 +77,7 @@ const AboutContent = () => {
             <ScrollReveal>
               <div className="relative">
                 <div className="rounded-2xl overflow-hidden shadow-2xl shadow-[hsl(var(--accent-purple))]/10 border border-white/10">
-                  <img src={aboutHero} alt="Modern digital design workspace" className="w-full h-auto" width={1280} height={720} />
+                  <img src={aboutHero} alt="Modern digital design workspace" className="w-full h-auto object-cover aspect-[16/10]" />
                 </div>
                 <div className="absolute -bottom-4 -left-4 w-24 h-24 rounded-2xl bg-gradient-to-br from-[hsl(var(--accent-purple))] to-[hsl(210,100%,55%)] opacity-20 blur-2xl" />
               </div>
@@ -87,12 +87,12 @@ const AboutContent = () => {
       </section>
 
       {/* PROBLEM */}
-      <section className="py-20 sm:py-28 px-6 bg-background">
+      <section className="py-14 sm:py-20 px-6 bg-background">
         <div className="max-w-7xl mx-auto">
-          <div className="grid lg:grid-cols-2 gap-12 lg:gap-20 items-center">
+          <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 items-center">
             <ScrollReveal>
               <div className="rounded-2xl overflow-hidden border border-border shadow-lg">
-                <img src={aboutProblem} alt="Website performance visualization" className="w-full h-auto" loading="lazy" width={640} height={800} />
+                <img src={aboutProblem} alt="Website performance visualization" className="w-full h-auto object-cover aspect-[4/3]" loading="lazy" />
               </div>
             </ScrollReveal>
             <div>
