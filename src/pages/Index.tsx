@@ -733,12 +733,12 @@ const IndexContent = () => {
           </h2>
           <p className="mt-4 text-base text-muted-foreground max-w-lg mx-auto leading-relaxed">
             {lang === "en"
-              ? "We take care of hosting, setup, and launch for you. No technical work required."
+              ? <>We take care of hosting, setup, and launch for you.<br className="md:hidden" /> No technical work required.</>
               : "我們為您處理託管、設置和上線。無需任何技術工作。"}
           </p>
           <p className="mt-3 text-sm text-muted-foreground max-w-lg mx-auto leading-relaxed">
             {lang === "en"
-              ? "You don't need to move anything yourself — we guide the entire transition step by step. Your current website stays live until you're ready."
+              ? <>You don't need to move anything yourself —<br className="md:hidden" /> we guide the entire transition step by step.<br className="md:hidden" /> Your current website stays live until you're ready.</>
               : "您無需自行遷移任何內容——我們會一步步引導整個過渡過程。您的現有網站在您準備好之前會保持上線狀態。"}
           </p>
         </div>
@@ -751,7 +751,7 @@ const IndexContent = () => {
             {lang === "en" ? "Real Website Transformations" : "真實網站改造"}
           </h2>
           <p className="mt-2 text-muted-foreground text-sm text-center">
-            {lang === "en" ? "Built from real businesses like yours. Each preview is a real, working website — not a mockup." : "為像您一樣的真實企業而建。每個預覽都是真正可運行的網站——不是模型。"}
+            {lang === "en" ? <>Built from real businesses like yours.<br className="md:hidden" /> Each preview is a real, working website — not a mockup.</> : "為像您一樣的真實企業而建。每個預覽都是真正可運行的網站——不是模型。"}
           </p>
 
           <div
@@ -920,14 +920,18 @@ const IndexContent = () => {
           {/* Single page note */}
           <div className="mt-6 text-center">
             <p className="text-xs text-muted-foreground">
-              {lang === "en" ? "Need a single-page website? " : "需要單頁網站？ "}
+              {lang === "en" ? <>Need a single-page website?<br className="md:hidden" /> </> : "需要單頁網站？ "}
               <span className="font-semibold text-foreground">
-                {singlePagePlans.map((p, i) => (
-                  <span key={i}>
-                    {p.name}: {p.price}
-                    {i < singlePagePlans.length - 1 ? " · " : ""}
-                  </span>
-                ))}
+                {lang === "en" ? (
+                  <>Preview: {singlePagePlans[0]?.price} · Launch: {singlePagePlans[1]?.price} · Growth: {singlePagePlans[2]?.price}</>
+                ) : (
+                  singlePagePlans.map((p, i) => (
+                    <span key={i}>
+                      {p.name}: {p.price}
+                      {i < singlePagePlans.length - 1 ? " · " : ""}
+                    </span>
+                  ))
+                )}
               </span>
             </p>
           </div>
@@ -1054,7 +1058,7 @@ const IndexContent = () => {
           </h2>
           <p className="mt-4 text-white/55 text-base max-w-md mx-auto leading-relaxed">
             {lang === "en"
-              ? "Get 2 free design previews and decide with confidence — before spending a dollar."
+              ? <>Get 2 free design previews and decide<br className="md:hidden" /> with confidence — before spending a dollar.</>
               : "獲取2個免費設計預覽，在花一分錢之前自信決策。"}
           </p>
           <div className="mt-10 max-w-xl mx-auto text-left">
@@ -1062,7 +1066,7 @@ const IndexContent = () => {
           </div>
           <p className="mt-8 text-xs text-white/35 tracking-wide">
             {lang === "en"
-              ? "No upfront payment · No obligation · Faster than agencies · Easier than freelancers"
+              ? <>No upfront payment · No obligation<br className="md:hidden" /> Faster than agencies · Easier than freelancers</>
               : "無預付款 · 無義務 · 比機構更快 · 比自由職業者更簡單"}
           </p>
         </div>
