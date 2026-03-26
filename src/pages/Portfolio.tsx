@@ -9,8 +9,6 @@ import { ArrowRight, ExternalLink, Quote, Star } from "lucide-react";
 import swiftliftReviewSlide from "@/assets/swiftlift-review-slide.webp";
 import swiftliftFeature from "@/assets/swiftlift-feature-01.webp";
 
-import portfolioArtsA from "@/assets/portfolio-arts-automotive-a.webp";
-import portfolioArtsB from "@/assets/portfolio-arts-automotive-b.webp";
 import portfolioChicagoA from "@/assets/portfolio-chicago-boxing-a.webp";
 import portfolioChicagoB from "@/assets/portfolio-chicago-boxing-b.webp";
 import portfolioDentalA from "@/assets/portfolio-friendly-dental-a.webp";
