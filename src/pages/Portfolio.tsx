@@ -80,9 +80,9 @@ const featuredCases: FeaturedCase[] = [
     testimonial:
       "Before SwiftLift, our website felt outdated and did not reflect the quality of our architecture work. The preview process made it very easy to compare two different directions side by side. Version A felt cleaner, but Version B gave us a stronger overall presentation and a more compelling first impression. The final result feels much more aligned with our brand.",
     testimonialAuthor: "Cary T., Architect",
-    imageBefore: swiftliftFeature,
-    imageA: swiftliftFeature,
-    imageB: swiftliftFeature,
+    imageBefore: portfolioArchitect57Before,
+    imageA: portfolioArchitect57A,
+    imageB: portfolioArchitect57B,
   },
   {
     company: "Gene's Sausage Shop",
@@ -96,9 +96,9 @@ const featuredCases: FeaturedCase[] = [
     testimonial:
       "The old website no longer matched the quality of our products or brand. SwiftLift gave us two real website versions to compare, which made the decision process much easier. The new design feels much more polished, organized, and professional. It presents our business in a way that finally feels current.",
     testimonialAuthor: "Sarah R., Owner",
-    imageBefore: swiftliftFeature,
-    imageA: swiftliftFeature,
-    imageB: swiftliftFeature,
+    imageBefore: portfolioGenesBefore,
+    imageA: portfolioGenesA,
+    imageB: portfolioGenesB,
   },
   {
     company: "Art's Automotive",
@@ -112,9 +112,9 @@ const featuredCases: FeaturedCase[] = [
     testimonial:
       "Our previous site looked old and did not communicate our services clearly. SwiftLift helped us compare two different website directions before making a decision. The updated version feels much more professional, easier to navigate, and better structured for customers who need information fast. It is a major improvement over what we had before.",
     testimonialAuthor: "David L., Manager",
-    imageBefore: swiftliftFeature,
-    imageA: portfolioArtsA,
-    imageB: portfolioArtsB,
+    imageBefore: portfolioArtsBefore,
+    imageA: portfolioArtsAV2,
+    imageB: portfolioArtsBV2,
   },
 ];
 
