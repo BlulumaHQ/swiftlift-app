@@ -30,7 +30,7 @@ const Header = () => {
 
   const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
     e.preventDefault();
-    if (href === "/" || href === "/portfolio") {
+    if (href === "/" || href === "/portfolio" || href === "/about") {
       navigate(href);
       if (href === "/") window.scrollTo({ top: 0, behavior: "smooth" });
     } else if (href.startsWith("/#")) {
