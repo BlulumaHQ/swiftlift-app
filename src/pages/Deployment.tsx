@@ -352,9 +352,10 @@ const DeploymentContent = () => {
         <Lock size={16} />
         {isSubmitting ? "Processing…" : isFreeWithNoAddons ? "Submit & Activate" : "Proceed to Secure Checkout"}
       </motion.button>
+      <p className="mt-2 text-xs text-center text-muted-foreground/60">Secure checkout powered by Stripe</p>
 
       {!planSelected && (
-        <p className="mt-2 text-xs text-center text-muted-foreground">
+        <p className="mt-1 text-xs text-center text-muted-foreground">
           Select a hosting plan to continue.
         </p>
       )}

@@ -174,8 +174,8 @@ const RevisionPaymentContent = () => {
             {isSubmitting ? "Redirecting…" : "Pay $45 & Continue"}
           </button>
 
-          <p className="text-xs text-center text-muted-foreground">
-            Secure payment powered by Stripe. You'll be redirected to complete checkout.
+          <p className="text-xs text-center text-muted-foreground/60">
+            Secure checkout powered by Stripe
           </p>
 
           {/* Back to home */}
