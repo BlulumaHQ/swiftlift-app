@@ -1,6 +1,7 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef, useCallback } from "react";
 import { Link } from "react-router-dom";
 import { LanguageProvider } from "@/contexts/LanguageContext";
+import { useIsMobile } from "@/hooks/use-mobile";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import CustomCursor from "@/components/CustomCursor";
@@ -200,28 +201,65 @@ const FeaturedCaseCard = ({ c }: { c: FeaturedCase }) => (
   </div>
 );
 
-/* ── Grid Case Card — button-hover swaps image + badge ── */
+/* ── Grid Case Card — desktop: hover swap | mobile: swipe + auto slideshow ── */
+const SLIDESHOW_INTERVAL = 3000;
+const SWIPE_THRESHOLD = 30;
+const RESUME_DELAY = 5000;
+
 const GridCaseCard = ({ c }: { c: GridCase }) => {
+  const isMobile = useIsMobile();
   const [showVersion, setShowVersion] = useState<"A" | "B">("A");
   const imgA = c.imageA || swiftliftReviewSlide;
   const imgB = c.imageB || swiftliftFeature;
   const hasRealImages = !!(c.imageA && c.imageB);
 
+  // Mobile: auto slideshow
+  const pausedUntil = useRef(0);
+  useEffect(() => {
+    if (!isMobile) return;
+    const id = setInterval(() => {
+      if (Date.now() < pausedUntil.current) return;
+      setShowVersion((v) => (v === "A" ? "B" : "A"));
+    }, SLIDESHOW_INTERVAL);
+    return () => clearInterval(id);
+  }, [isMobile]);
+
+  // Mobile: swipe gesture
+  const touchStart = useRef<{ x: number; y: number } | null>(null);
+  const handleTouchStart = useCallback((e: React.TouchEvent) => {
+    touchStart.current = { x: e.touches[0].clientX, y: e.touches[0].clientY };
+  }, []);
+  const handleTouchEnd = useCallback((e: React.TouchEvent) => {
+    if (!touchStart.current) return;
+    const dx = e.changedTouches[0].clientX - touchStart.current.x;
+    const dy = e.changedTouches[0].clientY - touchStart.current.y;
+    // Only trigger if horizontal swipe is dominant
+    if (Math.abs(dx) > SWIPE_THRESHOLD && Math.abs(dx) > Math.abs(dy)) {
+      setShowVersion((v) => (v === "A" ? "B" : "A"));
+      pausedUntil.current = Date.now() + RESUME_DELAY;
+    }
+    touchStart.current = null;
+  }, []);
+
   return (
     <div className="rounded-xl border border-border bg-card overflow-hidden transition-all hover:shadow-lg hover:border-[hsl(var(--accent-purple))]/30 group flex flex-col">
-      <div className={`${hasRealImages ? "aspect-[3/4]" : "aspect-[16/10]"} overflow-hidden relative bg-muted`}>
+      <div
+        className={`${hasRealImages ? "aspect-[3/4]" : "aspect-[16/10]"} overflow-hidden relative bg-muted`}
+        onTouchStart={isMobile ? handleTouchStart : undefined}
+        onTouchEnd={isMobile ? handleTouchEnd : undefined}
+      >
         {/* Version A image (default) */}
         <img
           src={imgA}
           alt={`${c.company} — Version A`}
-          className="absolute inset-0 w-full h-full object-cover object-top transition-opacity duration-300"
+          className="absolute inset-0 w-full h-full object-cover object-top transition-opacity duration-500"
           style={{ opacity: showVersion === "A" ? 1 : 0 }}
         />
         {/* Version B image */}
         <img
           src={imgB}
           alt={`${c.company} — Version B`}
-          className="absolute inset-0 w-full h-full object-cover object-top transition-opacity duration-300"
+          className="absolute inset-0 w-full h-full object-cover object-top transition-opacity duration-500"
           style={{ opacity: showVersion === "B" ? 1 : 0 }}
         />
         {/* Version badge */}
@@ -244,7 +282,7 @@ const GridCaseCard = ({ c }: { c: GridCase }) => {
             rel="noopener noreferrer"
             className="flex items-center justify-center gap-1 rounded-lg px-2 py-2 text-[11px] font-semibold text-white transition-all hover:opacity-90"
             style={{ background: "#2DA8FF" }}
-            onMouseEnter={() => setShowVersion("A")}
+            onMouseEnter={!isMobile ? () => setShowVersion("A") : undefined}
           >
             Open Live Preview A <ExternalLink className="w-2.5 h-2.5" />
           </a>
@@ -254,7 +292,7 @@ const GridCaseCard = ({ c }: { c: GridCase }) => {
             rel="noopener noreferrer"
             className="flex items-center justify-center gap-1 rounded-lg px-2 py-2 text-[11px] font-semibold text-white transition-all hover:opacity-90"
             style={{ background: "#2DA8FF" }}
-            onMouseEnter={() => setShowVersion("B")}
+            onMouseEnter={!isMobile ? () => setShowVersion("B") : undefined}
           >
             Open Live Preview B <ExternalLink className="w-2.5 h-2.5" />
           </a>
