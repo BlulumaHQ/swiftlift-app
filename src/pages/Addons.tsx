@@ -233,6 +233,7 @@ const AddonsContent = () => {
                       >
                         {lang === "en" ? "Add to My Website" : "添加到我的網站"}
                       </a>
+                      <p className="mt-2 text-xs text-center text-muted-foreground/60">Secure checkout powered by Stripe</p>
                     </div>
                   </div>
                 </ScrollReveal>

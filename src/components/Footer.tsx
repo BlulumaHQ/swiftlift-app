@@ -94,9 +94,6 @@ const Footer = () => {
               <Link to="/support" className="text-sm text-blue-200/70 hover:text-white transition-colors">
                 {lang === "en" ? "Support" : "聯繫客服"}
               </Link>
-              <Link to="/work-with-us" className="text-sm text-blue-200/70 hover:text-white transition-colors">
-                {lang === "en" ? "Are You a Designer?" : "你是設計師嗎？"}
-              </Link>
             </div>
           </div>
 
@@ -111,6 +108,14 @@ const Footer = () => {
               </Link>
               <Link to="/terms" className="text-sm text-blue-200/70 hover:text-white transition-colors">
                 {t(footer.terms, lang)}
+              </Link>
+            </div>
+            <h4 className="text-sm font-semibold text-white mb-3 mt-5">
+              {lang === "en" ? "White Label" : "白標"}
+            </h4>
+            <div className="flex flex-col gap-2">
+              <Link to="/work-with-us" className="text-sm text-blue-200/70 hover:text-white transition-colors">
+                {lang === "en" ? "For Designers" : "設計師專區"}
               </Link>
             </div>
           </div>
@@ -180,12 +185,9 @@ const Footer = () => {
                 <Link to="/hosting-guide" className="text-sm text-blue-200/70 hover:text-white transition-colors">
                   {lang === "en" ? "Hosting Guide" : "託管指南"}
                 </Link>
-                <Link to="/support" className="text-sm text-blue-200/70 hover:text-white transition-colors">
-                  {lang === "en" ? "Support" : "聯繫客服"}
-                </Link>
-                <Link to="/work-with-us" className="text-sm text-blue-200/70 hover:text-white transition-colors">
-                  {lang === "en" ? "Are You a Designer?" : "你是設計師嗎？"}
-                </Link>
+              <Link to="/support" className="text-sm text-blue-200/70 hover:text-white transition-colors">
+                {lang === "en" ? "Support" : "聯繫客服"}
+              </Link>
               </div>
             </div>
             <div>
@@ -198,6 +200,14 @@ const Footer = () => {
                 </Link>
                 <Link to="/terms" className="text-sm text-blue-200/70 hover:text-white transition-colors">
                   {t(footer.terms, lang)}
+                </Link>
+              </div>
+              <h4 className="text-sm font-semibold text-white mb-3 mt-5">
+                {lang === "en" ? "White Label" : "白標"}
+              </h4>
+              <div className="flex flex-col gap-2">
+                <Link to="/work-with-us" className="text-sm text-blue-200/70 hover:text-white transition-colors">
+                  {lang === "en" ? "For Designers" : "設計師專區"}
                 </Link>
               </div>
             </div>
@@ -218,9 +228,10 @@ const Footer = () => {
         </div>
 
         {/* Copyright bar */}
-        <div className="mt-6 pt-6 border-t border-white/10 text-center text-xs text-blue-200/50">
-          © 2026 SwiftLift. All rights reserved. | Operated by{" "}
-          <a href="https://www.bluluma.com" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors underline">Bluluma Design</a>
+        <div className="mt-6 pt-6 border-t border-white/10 text-center text-xs text-blue-200/50 space-y-1">
+          <p>© 2026 SwiftLift. All rights reserved. | Operated by{" "}
+          <a href="https://www.bluluma.com" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors underline">Bluluma Design</a></p>
+          <p className="text-blue-200/35">Payments securely processed by Stripe.</p>
         </div>
       </div>
     </footer>

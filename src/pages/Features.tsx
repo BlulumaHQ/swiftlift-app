@@ -120,6 +120,7 @@ const FeatureCard = ({ item, lang }: { item: FeatureItem; lang: "en" | "zh" }) =
         </span>
       </div>
       {stripeLink ? (
+        <>
         <a
           href={stripeLink}
           target="_blank"
@@ -131,6 +132,8 @@ const FeatureCard = ({ item, lang }: { item: FeatureItem; lang: "en" | "zh" }) =
         >
           {isCustom ? (lang === "en" ? "Get Started" : "開始") : (lang === "en" ? "Add to My Website" : "添加到我的網站")}
         </a>
+        <p className="mt-1.5 text-[11px] text-center text-muted-foreground/60">Secure checkout powered by Stripe</p>
+        </>
       ) : (
         <a
           href="/#contact"
@@ -321,7 +324,7 @@ const FeaturesContent = () => {
                     <span className="text-3xl font-black font-display text-primary block">{bundle.price}</span>
                     <span className="text-xs text-muted-foreground mt-1 block">{T(bundle.savings, lang)}</span>
                   </div>
-                  <div className="mt-6">
+                    <div className="mt-6">
                     <a
                       href={STRIPE_LINKS[bundle.key]}
                       target="_blank"
@@ -333,6 +336,7 @@ const FeaturesContent = () => {
                     >
                       {(bundle as any).isTest ? (lang === "en" ? "Test Payment" : "測試支付") : (lang === "en" ? "Get This Bundle" : "獲取此套餐")}
                     </a>
+                    <p className="mt-2 text-xs text-center text-muted-foreground/60">Secure checkout powered by Stripe</p>
                   </div>
                 </div>
               </ScrollReveal>
