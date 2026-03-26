@@ -23,9 +23,9 @@ const Header = () => {
   const navItems = [
     { label: lang === "en" ? "Home" : "首页", href: "/" },
     { label: t(nav.process, lang), href: "/#process" },
-    { label: t(nav.portfolio, lang), href: "/portfolio" },
     { label: t(nav.pricing, lang), href: "/#pricing" },
-    { label: t(nav.contact, lang), href: "/#contact" },
+    { label: t(nav.portfolio, lang), href: "/portfolio" },
+    { label: lang === "en" ? "About" : "關於", href: "/about" },
   ];
 
   const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
