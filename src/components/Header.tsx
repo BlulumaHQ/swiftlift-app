@@ -71,6 +71,14 @@ const Header = () => {
               {item.label}
             </a>
           ))}
+          <a
+            href="/#contact"
+            onClick={(e) => handleNavClick(e, "/#contact")}
+            className="rounded-xl px-5 py-2 text-[0.85rem] font-bold text-white transition-all hover:opacity-90"
+            style={{ background: "hsl(var(--accent-purple))" }}
+          >
+            {lang === "en" ? "Get My 2 Free Previews" : "獲取我的2個免費預覽"}
+          </a>
         </nav>
 
         <div className="flex items-center gap-4">
