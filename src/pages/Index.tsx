@@ -601,12 +601,12 @@ const IndexContent = () => {
                 {lang === "en" ? (<>No Calls.<br />No Waiting.<br />Just 2 Live<br />Website&nbsp;Previews.</>) : (<>無需電話。<br />無需等待。<br />直接獲得2個<br />即時網站預覽。</>)}
               </h1>
 
-              <p className="mt-5 text-base md:text-lg text-white/80 leading-relaxed max-w-lg">
+              <p className="mt-5 text-lg md:text-xl font-medium text-white leading-[1.45] max-w-lg">
                 {lang === "en"
-                  ? "Get 2 fully working websites before you pay anything."
-                  : "在支付任何費用之前，獲得2個完全可運行的網站。"}
+                  ? "Enter your website URL below and we'll build 2 real websites for you."
+                  : "在下方輸入您的網站網址，我們將為您建立2個真實的網站。"}
               </p>
-              <p className="mt-2 text-sm md:text-base text-white/60 leading-relaxed max-w-lg">
+              <p className="mt-2 text-lg md:text-xl font-medium text-white leading-[1.45] max-w-lg">
                 {lang === "en"
                   ? "If you like it → we launch in 3 days. If not → you pay nothing."
                   : "滿意 → 3天內上線。不滿意 → 您不用付費。"}
