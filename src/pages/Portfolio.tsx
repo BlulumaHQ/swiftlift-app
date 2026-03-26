@@ -5,7 +5,8 @@ import { useIsMobile } from "@/hooks/use-mobile";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import CustomCursor from "@/components/CustomCursor";
-import { ArrowRight, ExternalLink, Quote, Star, Eye } from "lucide-react";
+import { ArrowRight, ExternalLink, Quote, Star, Eye, X } from "lucide-react";
+import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 
 import swiftliftReviewSlide from "@/assets/swiftlift-review-slide.webp";
 import swiftliftFeature from "@/assets/swiftlift-feature-01.webp";
@@ -130,6 +131,7 @@ const FeaturedCaseCard = ({ c }: { c: FeaturedCase }) => {
   const isMobile = useIsMobile();
   const [activeState, setActiveState] = useState<FeaturedState>("A");
   const [isHovered, setIsHovered] = useState(false);
+  const [beforeModalOpen, setBeforeModalOpen] = useState(false);
   const pausedUntil = useRef(0);
   const touchStart = useRef<{ x: number; y: number } | null>(null);
 
@@ -227,9 +229,10 @@ const FeaturedCaseCard = ({ c }: { c: FeaturedCase }) => {
         <div className="grid grid-cols-3 gap-2">
           <button
             type="button"
-            className="flex items-center justify-center gap-1 rounded-lg px-2 py-2 text-[11px] font-semibold text-muted-foreground border border-border bg-muted/50 transition-all hover:bg-muted cursor-default"
+            className="flex items-center justify-center gap-1 rounded-lg px-2 py-2 text-[11px] font-semibold text-muted-foreground border border-border bg-muted/50 transition-all hover:bg-muted cursor-pointer"
             onMouseEnter={() => handleHoverState("before")}
             onMouseLeave={handleHoverEnd}
+            onClick={() => setBeforeModalOpen(true)}
           >
             <Eye className="w-2.5 h-2.5" /> Before
           </button>
@@ -282,6 +285,27 @@ const FeaturedCaseCard = ({ c }: { c: FeaturedCase }) => {
           </div>
         </div>
       </div>
+
+      {/* Before Image Modal */}
+      <Dialog open={beforeModalOpen} onOpenChange={setBeforeModalOpen}>
+        <DialogContent className="max-w-4xl w-[90vw] p-0 border-none bg-transparent shadow-none [&>button]:hidden">
+          <DialogTitle className="sr-only">{c.company} — Before</DialogTitle>
+          <div className="relative">
+            <button
+              type="button"
+              onClick={() => setBeforeModalOpen(false)}
+              className="absolute -top-3 -right-3 z-50 w-8 h-8 rounded-full bg-background border border-border shadow-md flex items-center justify-center hover:bg-muted transition-colors"
+            >
+              <X className="w-4 h-4 text-foreground" />
+            </button>
+            <img
+              src={c.imageBefore}
+              alt={`${c.company} — Before`}
+              className="w-full h-auto max-h-[85vh] object-contain rounded-lg"
+            />
+          </div>
+        </DialogContent>
+      </Dialog>
     </div>
   );
 };
