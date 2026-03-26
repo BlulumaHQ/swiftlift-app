@@ -58,10 +58,10 @@ const AboutContent = () => {
                 </h1>
               </ScrollReveal>
               <ScrollReveal>
-                <p className="text-base sm:text-lg font-medium text-blue-50/90 leading-[1.7] max-w-md">
+                <p className="text-base text-muted-foreground leading-relaxed max-w-md">
                   Most businesses don't need another website. They need a better one — faster, cleaner, and built to convert.
                 </p>
-                <p className="mt-3 text-sm font-medium text-blue-100/70">That's where we come in.</p>
+                <p className="mt-3 text-sm text-muted-foreground leading-relaxed">That's where we come in.</p>
               </ScrollReveal>
               <ScrollReveal>
                 <div className="mt-8 flex flex-wrap gap-4">
@@ -77,7 +77,7 @@ const AboutContent = () => {
             <ScrollReveal>
               <div className="relative">
                 <div className="rounded-2xl overflow-hidden shadow-2xl shadow-[hsl(var(--accent-purple))]/10 border border-white/10">
-                  <img src={aboutHero} alt="Modern digital design workspace" className="w-full h-auto object-cover aspect-[16/10]" />
+                  <img src={aboutHero} alt="Modern digital design workspace" className="w-full h-auto object-cover aspect-[16/10]" width={1280} height={800} />
                 </div>
                 <div className="absolute -bottom-4 -left-4 w-24 h-24 rounded-2xl bg-gradient-to-br from-[hsl(var(--accent-purple))] to-[hsl(210,100%,55%)] opacity-20 blur-2xl" />
               </div>
@@ -92,7 +92,7 @@ const AboutContent = () => {
           <div className="grid lg:grid-cols-2 gap-10 lg:gap-16 items-center">
             <ScrollReveal>
               <div className="rounded-2xl overflow-hidden border border-border shadow-lg">
-                <img src={aboutProblem} alt="Website performance visualization" className="w-full h-auto object-cover aspect-[4/3]" loading="lazy" />
+                <img src={aboutProblem} alt="Website performance visualization" className="w-full h-auto object-cover aspect-[16/10]" loading="lazy" width={1280} height={800} />
               </div>
             </ScrollReveal>
             <div>
@@ -212,7 +212,7 @@ const AboutContent = () => {
               </ScrollReveal>
               <ScrollReveal>
                 <p className="mt-6 text-base text-muted-foreground leading-relaxed">
-                  SwiftLift is powered by <strong className="text-foreground">Bluluma Design</strong> — a design agency with over a decade of real-world experience helping small businesses build and improve their online presence.
+                  SwiftLift is powered by <a href="https://www.bluluma.com" target="_blank" rel="noopener noreferrer" className="text-foreground font-bold underline underline-offset-2 hover:text-[hsl(var(--accent-purple))] transition-colors">Bluluma Design</a> — a design agency with over a decade of real-world experience helping small businesses build and improve their online presence.
                 </p>
               </ScrollReveal>
               <ScrollReveal>
