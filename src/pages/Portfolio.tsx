@@ -179,7 +179,7 @@ const FeaturedCaseCard = ({ c }: { c: FeaturedCase }) => {
   return (
     <div className="rounded-2xl border border-border bg-card overflow-hidden shadow-sm flex flex-col h-full">
       <div
-        className="aspect-[16/10] overflow-hidden relative bg-muted"
+        className="aspect-[3/4] overflow-hidden relative bg-muted"
         onTouchStart={isMobile ? handleTouchStart : undefined}
         onTouchEnd={isMobile ? handleTouchEnd : undefined}
       >
@@ -271,7 +271,14 @@ const FeaturedCaseCard = ({ c }: { c: FeaturedCase }) => {
           <Quote className="w-4 h-4 text-[hsl(var(--accent-purple))] shrink-0 mt-0.5" />
           <div>
             <p className="text-xs text-foreground leading-relaxed italic">"{c.testimonial}"</p>
-            <p className="mt-1.5 text-[11px] font-semibold text-muted-foreground">{c.testimonialAuthor}</p>
+            <p className="mt-1.5 text-[11px] font-semibold text-muted-foreground inline-flex items-center gap-1.5">
+              {c.testimonialAuthor}
+              <span className="inline-flex gap-0.5">
+                {[...Array(5)].map((_, i) => (
+                  <Star key={i} className="w-3 h-3 fill-yellow-400 text-yellow-400" />
+                ))}
+              </span>
+            </p>
           </div>
         </div>
       </div>
