@@ -29,6 +29,14 @@ import portfolioPresoteaA from "@/assets/portfolio-presotea-a.webp";
 import portfolioPresoteaB from "@/assets/portfolio-presotea-b.webp";
 import portfolioStudio21A from "@/assets/portfolio-studio21-a.webp";
 import portfolioStudio21B from "@/assets/portfolio-studio21-b.webp";
+import portfolioStylesHairA from "@/assets/portfolio-styles-hair-a.webp";
+import portfolioStylesHairB from "@/assets/portfolio-styles-hair-b.webp";
+import portfolioUnityTattooA from "@/assets/portfolio-unity-tattoo-a.webp";
+import portfolioUnityTattooB from "@/assets/portfolio-unity-tattoo-b.webp";
+import portfolioWestsideA from "@/assets/portfolio-westside-medical-a.webp";
+import portfolioWestsideB from "@/assets/portfolio-westside-medical-b.webp";
+import portfolioYangHealthA from "@/assets/portfolio-yang-health-a.webp";
+import portfolioYangHealthB from "@/assets/portfolio-yang-health-b.webp";
 
 const portfolioConstruction = swiftliftFeature;
 const portfolioDental = swiftliftFeature;
