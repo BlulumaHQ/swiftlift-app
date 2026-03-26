@@ -269,8 +269,8 @@ const FeaturedCaseCard = ({ c }: { c: FeaturedCase }) => {
   );
 };
 
-    description: "A modern architecture firm redesign with two distinct directions: one clean professional layout and one stronger conversion-focused version.",
-    beforeSummary: "Outdated layout, weak hierarchy, and a website that did not reflect the studio's design quality.",
+
+
     previewA: "architect-57-a.netlify.app",
     previewB: "architect-57-b.netlify.app",
     selectedVersion: "B",
