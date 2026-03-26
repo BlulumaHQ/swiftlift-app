@@ -229,7 +229,7 @@ const Footer = () => {
 
         {/* Copyright bar */}
         <div className="mt-6 pt-6 border-t border-white/10 text-center text-xs text-blue-200/50 space-y-1">
-          <p>© 2026 SwiftLift. All rights reserved. | Operated by{" "}
+          <p>© 2026 SwiftLift. All rights reserved.<span className="hidden md:inline"> | </span><br className="md:hidden" />Operated by{" "}
           <a href="https://www.bluluma.com" target="_blank" rel="noopener noreferrer" className="hover:text-white transition-colors underline">Bluluma Design</a></p>
           <p className="text-blue-200/35">Payments securely processed by Stripe.</p>
         </div>
