@@ -225,7 +225,7 @@ const GridCaseCard = ({ c }: { c: GridCase }) => {
           style={{ opacity: showVersion === "B" ? 1 : 0 }}
         />
         {/* Version badge */}
-        <span className="absolute left-1/2 -translate-x-1/2 top-[12%] z-10 rounded-full bg-[#0a1e4a]/50 backdrop-blur-md px-4 py-1.5 text-[10px] font-semibold uppercase tracking-widest text-white/95 shadow-lg transition-all duration-300">
+        <span className="absolute left-1/2 -translate-x-1/2 top-[14%] z-10 rounded-full bg-[#0a1e4a]/35 backdrop-blur-lg px-4 py-1.5 text-[10px] font-semibold uppercase tracking-widest text-white/90 shadow-md ring-1 ring-white/10 transition-all duration-300">
           {showVersion === "B" ? "Version B" : "Version A"}
         </span>
       </div>
