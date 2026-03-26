@@ -180,22 +180,25 @@ const FeaturedCaseCard = ({ c }: { c: FeaturedCase }) => (
 /* ── Grid Case Card — button-hover swaps image + badge ── */
 const GridCaseCard = ({ c }: { c: GridCase }) => {
   const [showVersion, setShowVersion] = useState<"A" | "B">("A");
+  const imgA = c.imageA || swiftliftReviewSlide;
+  const imgB = c.imageB || swiftliftFeature;
+  const hasRealImages = !!(c.imageA && c.imageB);
 
   return (
     <div className="rounded-xl border border-border bg-card overflow-hidden transition-all hover:shadow-lg hover:border-[hsl(var(--accent-purple))]/30 group flex flex-col">
-      <div className="aspect-[16/10] overflow-hidden relative bg-muted">
+      <div className={`${hasRealImages ? "aspect-[3/4]" : "aspect-[16/10]"} overflow-hidden relative bg-muted`}>
         {/* Version A image (default) */}
         <img
-          src={swiftliftReviewSlide}
+          src={imgA}
           alt={`${c.company} — Version A`}
-          className="absolute inset-0 w-full h-full object-cover transition-opacity duration-300"
+          className="absolute inset-0 w-full h-full object-cover object-top transition-opacity duration-300"
           style={{ opacity: showVersion === "A" ? 1 : 0 }}
         />
         {/* Version B image */}
         <img
-          src={swiftliftFeature}
+          src={imgB}
           alt={`${c.company} — Version B`}
-          className="absolute inset-0 w-full h-full object-cover transition-opacity duration-300"
+          className="absolute inset-0 w-full h-full object-cover object-top transition-opacity duration-300"
           style={{ opacity: showVersion === "B" ? 1 : 0 }}
         />
         {/* Version badge */}
