@@ -73,6 +73,10 @@
 }
 
 @layer base {
+  html {
+    font-size: 17.5px; /* scaled up from 16px default — proportionally increases all rem-based sizes */
+  }
+
   * {
     @apply border-border;
   }
@@ -80,7 +84,7 @@
   body {
     @apply bg-background text-foreground font-sans antialiased;
     font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, Arial, sans-serif;
-    font-size: 17px;
+    font-size: 19px;
     line-height: 1.65;
     letter-spacing: 0.01em;
     cursor: none;
@@ -90,7 +94,7 @@
   html[lang="zh"] body,
   .lang-zh {
     font-family: 'Noto Sans SC', 'PingFang SC', 'Microsoft YaHei', system-ui, sans-serif;
-    font-size: 18px;
+    font-size: 20px;
     font-weight: 500;
     line-height: 1.9;
     letter-spacing: 0.06em;
