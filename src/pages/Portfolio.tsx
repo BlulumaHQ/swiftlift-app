@@ -9,8 +9,6 @@ import { ArrowRight, ExternalLink, Quote, Star } from "lucide-react";
 import swiftliftReviewSlide from "@/assets/swiftlift-review-slide.webp";
 import swiftliftFeature from "@/assets/swiftlift-feature-01.webp";
 
-import portfolioArtsA from "@/assets/portfolio-arts-automotive-a.webp";
-import portfolioArtsB from "@/assets/portfolio-arts-automotive-b.webp";
 import portfolioChicagoA from "@/assets/portfolio-chicago-boxing-a.webp";
 import portfolioChicagoB from "@/assets/portfolio-chicago-boxing-b.webp";
 import portfolioDentalA from "@/assets/portfolio-friendly-dental-a.webp";
@@ -113,12 +111,10 @@ interface GridCase {
   imageB?: string;
 }
 
-const gridCases: GridCase[] = [
+const gridCasesBase: GridCase[] = [
   { company: "Chicago Boxing Club", industry: "Boxing Gym", description: "High-energy fitness site designed to improve trial sign-ups and class discovery.", previewA: "https://chicagoboxingclub-preveiw-01.lovable.app/", previewB: "https://chicagoboxingclub-preveiw-02.lovable.app/", imageA: portfolioChicagoA, imageB: portfolioChicagoB },
-  { company: "Commercial Fence Corporation", industry: "Industrial", description: "Industrial service website with clearer structure, stronger credibility, and better quote flow.", previewA: "https://commercial-fence-corporation-preview-01.lovable.app/", previewB: "https://commercial-fence-corporation-preview-02.lovable.app/" },
   { company: "One Park Home", industry: "Real Estate", description: "Luxury real estate presentation with a more polished property-first experience.", previewA: "https://one-park-home-preview-01.lovable.app/", previewB: "https://one-park-home-concept-preview.lovable.app/", imageA: portfolioOneParkA, imageB: portfolioOneParkB },
   { company: "Friendly Dental Centre", industry: "Dental Clinic", description: "Modern dental website focused on trust, clarity, and stronger appointment conversion.", previewA: "https://friendly-dental-centre-preview.lovable.app/", previewB: "https://friendly-dental-preview-02.lovable.app/", imageA: portfolioDentalA, imageB: portfolioDentalB },
-  { company: "Mutt Puddles Dog Wash", industry: "Pet Grooming", description: "Friendly service-based design with better booking flow and a more approachable brand feel.", previewA: "https://mutt-puddles-dog-wash-preview-01.lovable.app/", previewB: "https://mutt-puddles-dog-wash-preview-02.lovable.app/" },
   { company: "Studio 21 Salon Spa", industry: "Salon & Spa", description: "Beauty-focused redesign with cleaner service presentation and more premium visual balance.", previewA: "https://studio-21-salon-spa-a.netlify.app/", previewB: "https://studio-21-salon-spa-b.netlify.app/", imageA: portfolioStudio21A, imageB: portfolioStudio21B },
   { company: "Presotea", industry: "Beverage Brand", description: "Franchise-style beverage website with stronger menu visibility and cleaner brand execution.", previewA: "https://presotea.bluluma.com/", previewB: "https://presotea-b.netlify.app/", imageA: portfolioPresoteaA, imageB: portfolioPresoteaB },
   { company: "Styles Hair Salon", industry: "Hair Salon", description: "Service-based salon redesign built for cleaner browsing and better appointment intent.", previewA: "https://styles-hair-salon-a.netlify.app/", previewB: "https://styles-hair-salon-b.netlify.app/", imageA: portfolioStylesHairA, imageB: portfolioStylesHairB },
@@ -129,8 +125,17 @@ const gridCases: GridCase[] = [
   { company: "Westside Medical Associates", industry: "Medical", description: "Professional healthcare presentation with better structure and more trustworthy messaging.", previewA: "https://westside-medical-associates-a.netlify.app/", previewB: "https://westside-medical-associates-b.netlify.app/", imageA: portfolioWestsideA, imageB: portfolioWestsideB },
   { company: "HSIN HSIN", industry: "Trade Show & Branding", description: "Brand-forward business website with stronger positioning and cleaner corporate presentation.", previewA: "https://hsinhsin.ca/", previewB: "https://hsin-hsin-b.netlify.app/", imageA: portfolioHsinA, imageB: portfolioHsinB },
   { company: "HH Nexus Capital", industry: "Capital / Finance", description: "Corporate finance website with improved professionalism, hierarchy, and investor-facing clarity.", previewA: "https://hh-nexus-capital-a.netlify.app/", previewB: "https://hh-nexus-capital-b.netlify.app/", imageA: portfolioHHNexusA, imageB: portfolioHHNexusB },
-  { company: "Art's Automotive", industry: "Auto Repair", description: "An automotive service website redesign focused on clearer communication and stronger trust signals.", previewA: "https://arts-automotive-a.netlify.app/", previewB: "https://arts-automotive-b.netlify.app/", imageA: portfolioArtsA, imageB: portfolioArtsB },
 ];
+
+/* Shuffle helper */
+function shuffleArray<T>(arr: T[]): T[] {
+  const a = [...arr];
+  for (let i = a.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [a[i], a[j]] = [a[j], a[i]];
+  }
+  return a;
+}
 
 /* ── Featured Case Card — static image, no hover ── */
 const FeaturedCaseCard = ({ c }: { c: FeaturedCase }) => (
@@ -261,6 +266,8 @@ const GridCaseCard = ({ c }: { c: GridCase }) => {
 
 /* ── Page ── */
 const PortfolioContent = () => {
+  const [gridCases] = useState(() => shuffleArray(gridCasesBase));
+
   useEffect(() => {
     document.title = "Portfolio — SwiftLift | Real Website Transformations";
   }, []);
