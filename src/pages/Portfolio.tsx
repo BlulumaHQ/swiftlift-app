@@ -269,8 +269,6 @@ const FeaturedCaseCard = ({ c }: { c: FeaturedCase }) => {
   );
 };
 
-/* ── Grid Case Card — desktop: hover swap | mobile: swipe + auto slideshow ── */
-    industry: "Construction",
     description: "A modern architecture firm redesign with two distinct directions: one clean professional layout and one stronger conversion-focused version.",
     beforeSummary: "Outdated layout, weak hierarchy, and a website that did not reflect the studio's design quality.",
     previewA: "architect-57-a.netlify.app",
