@@ -14,12 +14,12 @@ const Footer = () => {
     { label: lang === "en" ? "Home" : "首页", href: "/" },
     { label: t(translations.nav.pricing, lang), href: "/#pricing" },
     { label: t(translations.nav.portfolio, lang), href: "/portfolio" },
-    { label: t(translations.nav.contact, lang), href: "/#contact" },
+    { label: lang === "en" ? "About" : "關於", href: "/about" },
   ];
 
   const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
     e.preventDefault();
-    if (href === "/" || href === "/portfolio") {
+    if (href === "/" || href === "/portfolio" || href === "/about") {
       navigate(href);
       if (href === "/") window.scrollTo({ top: 0, behavior: "smooth" });
     } else if (href.startsWith("/#")) {

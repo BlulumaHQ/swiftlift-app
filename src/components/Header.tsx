@@ -23,14 +23,14 @@ const Header = () => {
   const navItems = [
     { label: lang === "en" ? "Home" : "首页", href: "/" },
     { label: t(nav.process, lang), href: "/#process" },
-    { label: t(nav.portfolio, lang), href: "/portfolio" },
     { label: t(nav.pricing, lang), href: "/#pricing" },
-    { label: t(nav.contact, lang), href: "/#contact" },
+    { label: t(nav.portfolio, lang), href: "/portfolio" },
+    { label: lang === "en" ? "About" : "關於", href: "/about" },
   ];
 
   const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement>, href: string) => {
     e.preventDefault();
-    if (href === "/" || href === "/portfolio") {
+    if (href === "/" || href === "/portfolio" || href === "/about") {
       navigate(href);
       if (href === "/") window.scrollTo({ top: 0, behavior: "smooth" });
     } else if (href.startsWith("/#")) {
@@ -71,6 +71,14 @@ const Header = () => {
               {item.label}
             </a>
           ))}
+          <a
+            href="/#contact"
+            onClick={(e) => handleNavClick(e, "/#contact")}
+            className="rounded-xl px-5 py-2 text-[0.85rem] font-bold text-white transition-all hover:opacity-90"
+            style={{ background: "hsl(var(--accent-purple))" }}
+          >
+            {lang === "en" ? "Get My 2 Free Previews" : "獲取我的2個免費預覽"}
+          </a>
         </nav>
 
         <div className="flex items-center gap-4">
