@@ -29,6 +29,14 @@ import portfolioPresoteaA from "@/assets/portfolio-presotea-a.webp";
 import portfolioPresoteaB from "@/assets/portfolio-presotea-b.webp";
 import portfolioStudio21A from "@/assets/portfolio-studio21-a.webp";
 import portfolioStudio21B from "@/assets/portfolio-studio21-b.webp";
+import portfolioStylesHairA from "@/assets/portfolio-styles-hair-a.webp";
+import portfolioStylesHairB from "@/assets/portfolio-styles-hair-b.webp";
+import portfolioUnityTattooA from "@/assets/portfolio-unity-tattoo-a.webp";
+import portfolioUnityTattooB from "@/assets/portfolio-unity-tattoo-b.webp";
+import portfolioWestsideA from "@/assets/portfolio-westside-medical-a.webp";
+import portfolioWestsideB from "@/assets/portfolio-westside-medical-b.webp";
+import portfolioYangHealthA from "@/assets/portfolio-yang-health-a.webp";
+import portfolioYangHealthB from "@/assets/portfolio-yang-health-b.webp";
 
 const portfolioConstruction = swiftliftFeature;
 const portfolioDental = swiftliftFeature;
@@ -113,12 +121,12 @@ const gridCases: GridCase[] = [
   { company: "Mutt Puddles Dog Wash", industry: "Pet Grooming", description: "Friendly service-based design with better booking flow and a more approachable brand feel.", previewA: "https://mutt-puddles-dog-wash-preview-01.lovable.app/", previewB: "https://mutt-puddles-dog-wash-preview-02.lovable.app/" },
   { company: "Studio 21 Salon Spa", industry: "Salon & Spa", description: "Beauty-focused redesign with cleaner service presentation and more premium visual balance.", previewA: "https://studio-21-salon-spa-a.netlify.app/", previewB: "https://studio-21-salon-spa-b.netlify.app/", imageA: portfolioStudio21A, imageB: portfolioStudio21B },
   { company: "Presotea", industry: "Beverage Brand", description: "Franchise-style beverage website with stronger menu visibility and cleaner brand execution.", previewA: "https://presotea.bluluma.com/", previewB: "https://presotea-b.netlify.app/", imageA: portfolioPresoteaA, imageB: portfolioPresoteaB },
-  { company: "Styles Hair Salon", industry: "Hair Salon", description: "Service-based salon redesign built for cleaner browsing and better appointment intent.", previewA: "https://styles-hair-salon-a.netlify.app/", previewB: "https://styles-hair-salon-b.netlify.app/" },
-  { company: "Yang Health Therapeutic", industry: "Wellness", description: "Calm, trust-focused wellness design with improved service clarity and stronger credibility.", previewA: "https://yang-health-therapeutic.bluluma.com/", previewB: "https://yang-health-therapeutic-b.netlify.app/" },
-  { company: "Unity Tattoo", industry: "Tattoo Studio", description: "Visual-first redesign with stronger portfolio presentation and better inquiry flow.", previewA: "https://unity-tattoo.bluluma.com/", previewB: "https://unity-tattoo-b.netlify.app/" },
+  { company: "Styles Hair Salon", industry: "Hair Salon", description: "Service-based salon redesign built for cleaner browsing and better appointment intent.", previewA: "https://styles-hair-salon-a.netlify.app/", previewB: "https://styles-hair-salon-b.netlify.app/", imageA: portfolioStylesHairA, imageB: portfolioStylesHairB },
+  { company: "Yang Health Therapeutic", industry: "Wellness", description: "Calm, trust-focused wellness design with improved service clarity and stronger credibility.", previewA: "https://yang-health-therapeutic.bluluma.com/", previewB: "https://yang-health-therapeutic-b.netlify.app/", imageA: portfolioYangHealthA, imageB: portfolioYangHealthB },
+  { company: "Unity Tattoo", industry: "Tattoo Studio", description: "Visual-first redesign with stronger portfolio presentation and better inquiry flow.", previewA: "https://unity-tattoo.bluluma.com/", previewB: "https://unity-tattoo-b.netlify.app/", imageA: portfolioUnityTattooA, imageB: portfolioUnityTattooB },
   { company: "Nuera Nutra", industry: "Nutrition", description: "Supplement brand concept with cleaner product structure and more modern trust signals.", previewA: "https://nueranutra.bluluma.com/", previewB: "https://nueranutra-preveiw-02.netlify.app/", imageA: portfolioNueraA, imageB: portfolioNueraB },
   { company: "Phoenix Remodel", industry: "Home Remodeling", description: "Contractor website redesign with clearer service hierarchy and stronger lead intent.", previewA: "https://phoenix-remodel-a.netlify.app/", previewB: "https://phoenix-remodel-b.netlify.app/", imageA: portfolioPhoenixA, imageB: portfolioPhoenixB },
-  { company: "Westside Medical Associates", industry: "Medical", description: "Professional healthcare presentation with better structure and more trustworthy messaging.", previewA: "https://westside-medical-associates-a.netlify.app/", previewB: "https://westside-medical-associates-b.netlify.app/" },
+  { company: "Westside Medical Associates", industry: "Medical", description: "Professional healthcare presentation with better structure and more trustworthy messaging.", previewA: "https://westside-medical-associates-a.netlify.app/", previewB: "https://westside-medical-associates-b.netlify.app/", imageA: portfolioWestsideA, imageB: portfolioWestsideB },
   { company: "HSIN HSIN", industry: "Trade Show & Branding", description: "Brand-forward business website with stronger positioning and cleaner corporate presentation.", previewA: "https://hsinhsin.ca/", previewB: "https://hsin-hsin-b.netlify.app/", imageA: portfolioHsinA, imageB: portfolioHsinB },
   { company: "HH Nexus Capital", industry: "Capital / Finance", description: "Corporate finance website with improved professionalism, hierarchy, and investor-facing clarity.", previewA: "https://hh-nexus-capital-a.netlify.app/", previewB: "https://hh-nexus-capital-b.netlify.app/", imageA: portfolioHHNexusA, imageB: portfolioHHNexusB },
   { company: "Art's Automotive", industry: "Auto Repair", description: "An automotive service website redesign focused on clearer communication and stronger trust signals.", previewA: "https://arts-automotive-a.netlify.app/", previewB: "https://arts-automotive-b.netlify.app/", imageA: portfolioArtsA, imageB: portfolioArtsB },
