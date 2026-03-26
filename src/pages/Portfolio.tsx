@@ -12,6 +12,16 @@ import swiftliftFeature from "@/assets/swiftlift-feature-01.webp";
 import portfolioArtsA from "@/assets/portfolio-arts-automotive-a.webp";
 import portfolioArtsB from "@/assets/portfolio-arts-automotive-b.webp";
 
+import portfolioArchitect57Before from "@/assets/portfolio-architect57-before.webp";
+import portfolioArchitect57A from "@/assets/portfolio-architect57-a.webp";
+import portfolioArchitect57B from "@/assets/portfolio-architect57-b.webp";
+import portfolioGenesBefore from "@/assets/portfolio-genes-before.webp";
+import portfolioGenesA from "@/assets/portfolio-genes-a.webp";
+import portfolioGenesB from "@/assets/portfolio-genes-b.webp";
+import portfolioArtsBefore from "@/assets/portfolio-arts-before.webp";
+import portfolioArtsAV2 from "@/assets/portfolio-arts-a-v2.webp";
+import portfolioArtsBV2 from "@/assets/portfolio-arts-b-v2.webp";
+
 import portfolioChicagoA from "@/assets/portfolio-chicago-boxing-a.webp";
 import portfolioChicagoB from "@/assets/portfolio-chicago-boxing-b.webp";
 import portfolioDentalA from "@/assets/portfolio-friendly-dental-a.webp";
