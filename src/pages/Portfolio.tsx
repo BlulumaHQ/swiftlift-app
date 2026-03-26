@@ -39,7 +39,7 @@ import portfolioWestsideB from "@/assets/portfolio-westside-medical-b.webp";
 import portfolioYangHealthA from "@/assets/portfolio-yang-health-a.webp";
 import portfolioYangHealthB from "@/assets/portfolio-yang-health-b.webp";
 
-/* ── Data ── */
+/* ── Featured Case Data ── */
 
 interface FeaturedCase {
   company: string;
@@ -269,46 +269,7 @@ const FeaturedCaseCard = ({ c }: { c: FeaturedCase }) => {
   );
 };
 
-
-
-    previewA: "architect-57-a.netlify.app",
-    previewB: "architect-57-b.netlify.app",
-    selectedVersion: "B",
-    selectedLabel: "Version B — Conversion-Focused",
-    testimonial:
-      "Before SwiftLift, our website felt outdated and did not reflect the quality of our architecture work. The preview process made it very easy to compare two different directions side by side. Version A felt cleaner, but Version B gave us a stronger overall presentation and a more compelling first impression. The final result feels much more aligned with our brand.",
-    testimonialAuthor: "Cary T., Architect",
-    image: portfolioConstruction,
-  },
-  {
-    company: "Gene's Sausage Shop",
-    industry: "Specialty Food",
-    description: "A specialty food business redesign with a cleaner structure, better visual storytelling, and a stronger product-first presentation.",
-    beforeSummary: "An older site with limited visual impact, dated styling, and a weaker presentation of products and brand quality.",
-    previewA: "genes-sausage-a.netlify.app",
-    previewB: "genes-sausage-b.netlify.app",
-    selectedVersion: "A",
-    selectedLabel: "Version A — Clean Professional",
-    testimonial:
-      "The old website no longer matched the quality of our products or brand. SwiftLift gave us two real website versions to compare, which made the decision process much easier. The new design feels much more polished, organized, and professional. It presents our business in a way that finally feels current.",
-    testimonialAuthor: "Sarah R., Owner",
-    image: portfolioDental,
-  },
-  {
-    company: "Art's Automotive",
-    industry: "Auto Repair",
-    description: "An automotive service website redesign focused on clearer communication, stronger trust signals, and a more modern customer experience.",
-    beforeSummary: "Text-heavy layout, dated design, and a site structure that made services harder to understand quickly.",
-    previewA: "arts-automotive-a.netlify.app",
-    previewB: "arts-automotive-b.netlify.app",
-    selectedVersion: "B",
-    selectedLabel: "Version B — Conversion-Focused",
-    testimonial:
-      "Our previous site looked old and did not communicate our services clearly. SwiftLift helped us compare two different website directions before making a decision. The updated version feels much more professional, easier to navigate, and better structured for customers who need information fast. It is a major improvement over what we had before.",
-    testimonialAuthor: "David L., Manager",
-    image: portfolioTrade,
-  },
-];
+/* ── Grid Case Data ── */
 
 interface GridCase {
   company: string;
@@ -346,69 +307,6 @@ function shuffleArray<T>(arr: T[]): T[] {
   return a;
 }
 
-/* ── Featured Case Card — static image, no hover ── */
-const FeaturedCaseCard = ({ c }: { c: FeaturedCase }) => (
-  <div className="rounded-2xl border border-border bg-card overflow-hidden shadow-sm flex flex-col h-full">
-    <div className="aspect-[16/10] overflow-hidden">
-      <img src={c.image} alt={c.company} className="w-full h-full object-cover" />
-    </div>
-
-    <div className="bg-[hsl(var(--surface-sunken))] px-5 py-4 border-b border-border">
-      <span className="text-[10px] font-semibold uppercase tracking-widest text-[hsl(var(--accent-purple))]">
-        {c.industry}
-      </span>
-      <h3 className="text-base font-bold text-foreground mt-1">{c.company}</h3>
-      <p className="mt-1 text-xs text-muted-foreground leading-relaxed">{c.description}</p>
-    </div>
-
-    <div className="p-5 space-y-4 flex-1 flex flex-col">
-      <div>
-        <p className="text-[10px] font-semibold uppercase tracking-widest text-muted-foreground mb-1">Before</p>
-        <p className="text-xs text-muted-foreground italic">{c.beforeSummary}</p>
-      </div>
-
-      <div className="grid grid-cols-2 gap-2">
-        <a
-          href={`https://${c.previewA}`}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="flex items-center justify-center gap-1 rounded-lg px-3 py-2 text-[11px] font-semibold text-white transition-all hover:opacity-90"
-          style={{ background: "#2DA8FF" }}
-        >
-          Open Live Preview A <ExternalLink className="w-2.5 h-2.5" />
-        </a>
-        <a
-          href={`https://${c.previewB}`}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="flex items-center justify-center gap-1 rounded-lg px-3 py-2 text-[11px] font-semibold text-white transition-all hover:opacity-90"
-          style={{ background: "#2DA8FF" }}
-        >
-          Open Live Preview B <ExternalLink className="w-2.5 h-2.5" />
-        </a>
-      </div>
-
-      <div className="rounded-lg border border-[hsl(var(--accent-purple))]/20 bg-[hsl(var(--accent-purple))]/[0.03] p-3">
-        <p className="text-[10px] font-semibold uppercase tracking-widest text-[hsl(var(--accent-purple))] mb-1">
-          Final Selected Version
-        </p>
-        <p className="text-xs font-bold text-foreground flex items-center gap-1">
-          <Star className="w-3 h-3 fill-current text-[hsl(var(--accent-purple))]" />
-          {c.selectedLabel}
-        </p>
-      </div>
-
-      <div className="flex gap-2 pt-1 mt-auto">
-        <Quote className="w-4 h-4 text-[hsl(var(--accent-purple))] shrink-0 mt-0.5" />
-        <div>
-          <p className="text-xs text-foreground leading-relaxed italic">"{c.testimonial}"</p>
-          <p className="mt-1.5 text-[11px] font-semibold text-muted-foreground">{c.testimonialAuthor}</p>
-        </div>
-      </div>
-    </div>
-  </div>
-);
-
 /* ── Grid Case Card — desktop: hover swap | mobile: swipe + auto slideshow ── */
 const SLIDESHOW_INTERVAL = 3000;
 const SWIPE_THRESHOLD = 30;
@@ -441,7 +339,6 @@ const GridCaseCard = ({ c }: { c: GridCase }) => {
     if (!touchStart.current) return;
     const dx = e.changedTouches[0].clientX - touchStart.current.x;
     const dy = e.changedTouches[0].clientY - touchStart.current.y;
-    // Only trigger if horizontal swipe is dominant
     if (Math.abs(dx) > SWIPE_THRESHOLD && Math.abs(dx) > Math.abs(dy)) {
       setShowVersion((v) => (v === "A" ? "B" : "A"));
       pausedUntil.current = Date.now() + RESUME_DELAY;
@@ -456,7 +353,6 @@ const GridCaseCard = ({ c }: { c: GridCase }) => {
         onTouchStart={isMobile ? handleTouchStart : undefined}
         onTouchEnd={isMobile ? handleTouchEnd : undefined}
       >
-        {/* Version A image (default) */}
         <img
           src={imgA}
           alt={`${c.company} — Version A`}
@@ -467,7 +363,6 @@ const GridCaseCard = ({ c }: { c: GridCase }) => {
             transition: "opacity 0.7s cubic-bezier(0.4, 0, 0.2, 1), transform 0.8s cubic-bezier(0.4, 0, 0.2, 1)",
           }}
         />
-        {/* Version B image */}
         <img
           src={imgB}
           alt={`${c.company} — Version B`}
@@ -478,7 +373,6 @@ const GridCaseCard = ({ c }: { c: GridCase }) => {
             transition: "opacity 0.7s cubic-bezier(0.4, 0, 0.2, 1), transform 0.8s cubic-bezier(0.4, 0, 0.2, 1)",
           }}
         />
-        {/* Version badge */}
         <span className="absolute left-1/2 -translate-x-1/2 top-[14%] z-10 rounded-full bg-[#0a1e4a]/35 backdrop-blur-lg px-4 py-1.5 text-[10px] font-semibold uppercase tracking-widest text-white/90 shadow-md ring-1 ring-white/10 transition-all duration-300">
           {showVersion === "B" ? "Version B" : "Version A"}
         </span>
@@ -549,7 +443,7 @@ const PortfolioContent = () => {
         </div>
       </section>
 
-      {/* SECTION 2 — FEATURED CASE STUDIES (static image only) */}
+      {/* SECTION 2 — FEATURED CASE STUDIES */}
       <section className="pb-14 sm:pb-18 px-4">
         <div className="max-w-7xl mx-auto">
           <h2 className="text-xl sm:text-2xl font-bold text-foreground text-center mb-2">
@@ -566,7 +460,7 @@ const PortfolioContent = () => {
         </div>
       </section>
 
-      {/* SECTION 3 — PORTFOLIO GRID (hover changes featured image) */}
+      {/* SECTION 3 — PORTFOLIO GRID */}
       <section className="pb-14 sm:pb-18 px-4 bg-[hsl(var(--surface-sunken))]">
         <div className="max-w-6xl mx-auto pt-12 sm:pt-16">
           <h2 className="text-xl sm:text-2xl font-bold text-foreground text-center mb-2">
