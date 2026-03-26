@@ -5,10 +5,12 @@ import { useIsMobile } from "@/hooks/use-mobile";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import CustomCursor from "@/components/CustomCursor";
-import { ArrowRight, ExternalLink, Quote, Star } from "lucide-react";
+import { ArrowRight, ExternalLink, Quote, Star, Eye } from "lucide-react";
 
 import swiftliftReviewSlide from "@/assets/swiftlift-review-slide.webp";
 import swiftliftFeature from "@/assets/swiftlift-feature-01.webp";
+import portfolioArtsA from "@/assets/portfolio-arts-automotive-a.webp";
+import portfolioArtsB from "@/assets/portfolio-arts-automotive-b.webp";
 
 import portfolioChicagoA from "@/assets/portfolio-chicago-boxing-a.webp";
 import portfolioChicagoB from "@/assets/portfolio-chicago-boxing-b.webp";
