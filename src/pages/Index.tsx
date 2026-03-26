@@ -23,11 +23,13 @@ function generateClientId(): string {
 }
 
 import heroDesktopBg from "@/assets/hero-bg-desktop.webp";
-import swiftliftReviewSlide from "@/assets/swiftlift-review-slide.webp";
+import reviewSlideGenes from "@/assets/swiftlift-review-slide-genes.webp";
+import reviewSlideMuttpuddles from "@/assets/swiftlift-review-slide-muttpuddles.webp";
+import reviewSlideChicagoboxing from "@/assets/swiftlift-review-slide-chicagoboxing.webp";
 
 const PRELOADER_KEY = "swiftlift_visited";
 
-const portfolioImages = [swiftliftReviewSlide, swiftliftReviewSlide, swiftliftReviewSlide, swiftliftReviewSlide, swiftliftReviewSlide, swiftliftReviewSlide];
+const portfolioImages = [reviewSlideGenes, reviewSlideMuttpuddles, reviewSlideChicagoboxing];
 
 declare global {
   interface Window {
@@ -801,14 +803,26 @@ const IndexContent = () => {
                     {/* CTA Buttons */}
                     <div className="mt-6 flex flex-wrap gap-3">
                       <a
-                        href="#"
+                        href={[
+                          "https://genes-sausage-a.netlify.app/",
+                          "https://mutt-puddles-dog-wash-preview-01.lovable.app/",
+                          "https://chicagoboxingclub-preveiw-01.lovable.app/",
+                        ][proofIdx]}
+                        target="_blank"
+                        rel="noopener noreferrer"
                         className="inline-flex items-center rounded-full px-5 py-2.5 text-sm font-semibold text-white transition-all hover:opacity-90"
                         style={{ background: "hsl(199 89% 58%)" }}
                       >
                         Open Live Preview A
                       </a>
                       <a
-                        href="#"
+                        href={[
+                          "https://genes-sausage-b.netlify.app/",
+                          "https://mutt-puddles-dog-wash-preview-02.lovable.app/",
+                          "https://chicagoboxingclub-preveiw-02.lovable.app/",
+                        ][proofIdx]}
+                        target="_blank"
+                        rel="noopener noreferrer"
                         className="inline-flex items-center rounded-full px-5 py-2.5 text-sm font-semibold text-white transition-all hover:opacity-90"
                         style={{ background: "hsl(199 89% 58%)" }}
                       >
