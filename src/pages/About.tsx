@@ -36,9 +36,12 @@ const AboutContent = () => {
       <Header />
 
       {/* HERO */}
-      <section className="relative pt-28 pb-12 sm:pt-32 sm:pb-16 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-br from-[hsl(var(--hero-bg))] via-[hsl(var(--hero-bg))] to-[hsl(var(--accent-purple)/0.15)]" />
-        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,hsl(var(--accent-purple)/0.08),transparent_70%)]" />
+      <section className="relative pt-28 pb-16 sm:pt-32 sm:pb-20 overflow-hidden">
+        {/* Dark gradient base matching homepage hero feel */}
+        <div className="absolute inset-0" style={{ background: 'linear-gradient(135deg, hsl(220 45% 6%) 0%, hsl(225 40% 10%) 50%, hsl(230 35% 14%) 100%)' }} />
+        {/* Accent glow */}
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_top_right,hsl(var(--accent-purple)/0.12),transparent_60%)]" />
+        <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_bottom_left,hsl(220_60%_20%/0.3),transparent_60%)]" />
 
         <div className="relative z-10 max-w-7xl mx-auto px-6">
           <div className="grid lg:grid-cols-2 gap-12 lg:gap-16 items-center">
@@ -58,10 +61,10 @@ const AboutContent = () => {
                 </h1>
               </ScrollReveal>
               <ScrollReveal>
-                <p className="text-base text-muted-foreground leading-relaxed max-w-md">
+                <p className="text-base font-medium text-white/85 leading-relaxed max-w-md">
                   Most businesses don't need another website. They need a better one — faster, cleaner, and built to convert.
                 </p>
-                <p className="mt-3 text-sm text-muted-foreground leading-relaxed">That's where we come in.</p>
+                <p className="mt-3 text-sm font-medium text-white/70 leading-relaxed">That's where we come in.</p>
               </ScrollReveal>
               <ScrollReveal>
                 <div className="mt-8 flex flex-wrap gap-4">
