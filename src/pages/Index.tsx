@@ -795,7 +795,14 @@ const IndexContent = () => {
                         "{t(home.testimonialItems[proofIdx].text, lang)}"
                       </p>
                       <div className="mt-4">
-                        <p className="text-sm font-bold text-foreground">{t(home.testimonialItems[proofIdx].name, lang)}</p>
+                        <p className="text-sm font-bold text-foreground inline-flex items-center gap-2">
+                          {t(home.testimonialItems[proofIdx].name, lang)}
+                          <span className="inline-flex gap-0.5">
+                            {[...Array(5)].map((_, i) => (
+                              <Star key={i} className="w-3.5 h-3.5 fill-yellow-400 text-yellow-400" />
+                            ))}
+                          </span>
+                        </p>
                         <p className="text-xs text-muted-foreground">{t(home.testimonialItems[proofIdx].company, lang)}</p>
                       </div>
                     </div>
