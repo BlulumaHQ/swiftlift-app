@@ -23,11 +23,13 @@ function generateClientId(): string {
 }
 
 import heroDesktopBg from "@/assets/hero-bg-desktop.webp";
-import swiftliftReviewSlide from "@/assets/swiftlift-review-slide.webp";
+import reviewSlideGenes from "@/assets/swiftlift-review-slide-genes.webp";
+import reviewSlideMuttpuddles from "@/assets/swiftlift-review-slide-muttpuddles.webp";
+import reviewSlideChicagoboxing from "@/assets/swiftlift-review-slide-chicagoboxing.webp";
 
 const PRELOADER_KEY = "swiftlift_visited";
 
-const portfolioImages = [swiftliftReviewSlide, swiftliftReviewSlide, swiftliftReviewSlide, swiftliftReviewSlide, swiftliftReviewSlide, swiftliftReviewSlide];
+const portfolioImages = [reviewSlideGenes, reviewSlideMuttpuddles, reviewSlideChicagoboxing];
 
 declare global {
   interface Window {
