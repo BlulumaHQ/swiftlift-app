@@ -252,15 +252,23 @@ const GridCaseCard = ({ c }: { c: GridCase }) => {
         <img
           src={imgA}
           alt={`${c.company} — Version A`}
-          className="absolute inset-0 w-full h-full object-cover object-top transition-opacity duration-500"
-          style={{ opacity: showVersion === "A" ? 1 : 0 }}
+          className="absolute inset-0 w-full h-full object-cover object-top"
+          style={{
+            opacity: showVersion === "A" ? 1 : 0,
+            transform: showVersion === "A" ? "scale(1)" : "scale(1.015)",
+            transition: "opacity 0.7s cubic-bezier(0.4, 0, 0.2, 1), transform 0.8s cubic-bezier(0.4, 0, 0.2, 1)",
+          }}
         />
         {/* Version B image */}
         <img
           src={imgB}
           alt={`${c.company} — Version B`}
-          className="absolute inset-0 w-full h-full object-cover object-top transition-opacity duration-500"
-          style={{ opacity: showVersion === "B" ? 1 : 0 }}
+          className="absolute inset-0 w-full h-full object-cover object-top"
+          style={{
+            opacity: showVersion === "B" ? 1 : 0,
+            transform: showVersion === "B" ? "scale(1)" : "scale(1.015)",
+            transition: "opacity 0.7s cubic-bezier(0.4, 0, 0.2, 1), transform 0.8s cubic-bezier(0.4, 0, 0.2, 1)",
+          }}
         />
         {/* Version badge */}
         <span className="absolute left-1/2 -translate-x-1/2 top-[14%] z-10 rounded-full bg-[#0a1e4a]/35 backdrop-blur-lg px-4 py-1.5 text-[10px] font-semibold uppercase tracking-widest text-white/90 shadow-md ring-1 ring-white/10 transition-all duration-300">
