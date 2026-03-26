@@ -19,6 +19,16 @@ import portfolioHHNexusA from "@/assets/portfolio-hh-nexus-a.webp";
 import portfolioHHNexusB from "@/assets/portfolio-hh-nexus-b.webp";
 import portfolioHsinA from "@/assets/portfolio-hsin-hsin-a.webp";
 import portfolioHsinB from "@/assets/portfolio-hsin-hsin-b.webp";
+import portfolioNueraA from "@/assets/portfolio-nueranutra-a.webp";
+import portfolioNueraB from "@/assets/portfolio-nueranutra-b.webp";
+import portfolioOneParkA from "@/assets/portfolio-one-park-a.webp";
+import portfolioOneParkB from "@/assets/portfolio-one-park-b.webp";
+import portfolioPhoenixA from "@/assets/portfolio-phoenix-remodel-a.webp";
+import portfolioPhoenixB from "@/assets/portfolio-phoenix-remodel-b.webp";
+import portfolioPresoteaA from "@/assets/portfolio-presotea-a.webp";
+import portfolioPresoteaB from "@/assets/portfolio-presotea-b.webp";
+import portfolioStudio21A from "@/assets/portfolio-studio21-a.webp";
+import portfolioStudio21B from "@/assets/portfolio-studio21-b.webp";
 
 const portfolioConstruction = swiftliftFeature;
 const portfolioDental = swiftliftFeature;
