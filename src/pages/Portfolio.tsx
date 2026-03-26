@@ -12,6 +12,16 @@ import swiftliftFeature from "@/assets/swiftlift-feature-01.webp";
 import portfolioArtsA from "@/assets/portfolio-arts-automotive-a.webp";
 import portfolioArtsB from "@/assets/portfolio-arts-automotive-b.webp";
 
+import portfolioArchitect57Before from "@/assets/portfolio-architect57-before.webp";
+import portfolioArchitect57A from "@/assets/portfolio-architect57-a.webp";
+import portfolioArchitect57B from "@/assets/portfolio-architect57-b.webp";
+import portfolioGenesBefore from "@/assets/portfolio-genes-before.webp";
+import portfolioGenesA from "@/assets/portfolio-genes-a.webp";
+import portfolioGenesB from "@/assets/portfolio-genes-b.webp";
+import portfolioArtsBefore from "@/assets/portfolio-arts-before.webp";
+import portfolioArtsAV2 from "@/assets/portfolio-arts-a-v2.webp";
+import portfolioArtsBV2 from "@/assets/portfolio-arts-b-v2.webp";
+
 import portfolioChicagoA from "@/assets/portfolio-chicago-boxing-a.webp";
 import portfolioChicagoB from "@/assets/portfolio-chicago-boxing-b.webp";
 import portfolioDentalA from "@/assets/portfolio-friendly-dental-a.webp";
@@ -70,9 +80,9 @@ const featuredCases: FeaturedCase[] = [
     testimonial:
       "Before SwiftLift, our website felt outdated and did not reflect the quality of our architecture work. The preview process made it very easy to compare two different directions side by side. Version A felt cleaner, but Version B gave us a stronger overall presentation and a more compelling first impression. The final result feels much more aligned with our brand.",
     testimonialAuthor: "Cary T., Architect",
-    imageBefore: swiftliftFeature,
-    imageA: swiftliftFeature,
-    imageB: swiftliftFeature,
+    imageBefore: portfolioArchitect57Before,
+    imageA: portfolioArchitect57A,
+    imageB: portfolioArchitect57B,
   },
   {
     company: "Gene's Sausage Shop",
@@ -86,9 +96,9 @@ const featuredCases: FeaturedCase[] = [
     testimonial:
       "The old website no longer matched the quality of our products or brand. SwiftLift gave us two real website versions to compare, which made the decision process much easier. The new design feels much more polished, organized, and professional. It presents our business in a way that finally feels current.",
     testimonialAuthor: "Sarah R., Owner",
-    imageBefore: swiftliftFeature,
-    imageA: swiftliftFeature,
-    imageB: swiftliftFeature,
+    imageBefore: portfolioGenesBefore,
+    imageA: portfolioGenesA,
+    imageB: portfolioGenesB,
   },
   {
     company: "Art's Automotive",
@@ -102,9 +112,9 @@ const featuredCases: FeaturedCase[] = [
     testimonial:
       "Our previous site looked old and did not communicate our services clearly. SwiftLift helped us compare two different website directions before making a decision. The updated version feels much more professional, easier to navigate, and better structured for customers who need information fast. It is a major improvement over what we had before.",
     testimonialAuthor: "David L., Manager",
-    imageBefore: swiftliftFeature,
-    imageA: portfolioArtsA,
-    imageB: portfolioArtsB,
+    imageBefore: portfolioArtsBefore,
+    imageA: portfolioArtsAV2,
+    imageB: portfolioArtsBV2,
   },
 ];
 
@@ -169,7 +179,7 @@ const FeaturedCaseCard = ({ c }: { c: FeaturedCase }) => {
   return (
     <div className="rounded-2xl border border-border bg-card overflow-hidden shadow-sm flex flex-col h-full">
       <div
-        className="aspect-[16/10] overflow-hidden relative bg-muted"
+        className="aspect-[3/4] overflow-hidden relative bg-muted"
         onTouchStart={isMobile ? handleTouchStart : undefined}
         onTouchEnd={isMobile ? handleTouchEnd : undefined}
       >
@@ -261,7 +271,14 @@ const FeaturedCaseCard = ({ c }: { c: FeaturedCase }) => {
           <Quote className="w-4 h-4 text-[hsl(var(--accent-purple))] shrink-0 mt-0.5" />
           <div>
             <p className="text-xs text-foreground leading-relaxed italic">"{c.testimonial}"</p>
-            <p className="mt-1.5 text-[11px] font-semibold text-muted-foreground">{c.testimonialAuthor}</p>
+            <p className="mt-1.5 text-[11px] font-semibold text-muted-foreground inline-flex items-center gap-1.5">
+              {c.testimonialAuthor}
+              <span className="inline-flex gap-0.5">
+                {[...Array(5)].map((_, i) => (
+                  <Star key={i} className="w-3 h-3 fill-yellow-400 text-yellow-400" />
+                ))}
+              </span>
+            </p>
           </div>
         </div>
       </div>
