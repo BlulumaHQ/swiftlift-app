@@ -513,7 +513,7 @@ const IndexContent = () => {
       price: formatPrice(PRICING.websitePackages.multiPage[2].price),
       features: lang === "en"
         ? ["Conversion-focused layout built to generate leads", "Completely different design strategy from Makeover", "Stronger content flow and business positioning", "Free hosting included — built to turn visitors into enquiries"]
-        : ["轉化導向版面", "潛客獲取優化", "更高性能結構"],
+        : ["轉換導向版面，專為產生詢問而設計", "與改造版完全不同的設計策略", "更強的內容架構與商業定位", "免費代管，將訪客轉換為詢問"],
       highlighted: false,
     },
     {
@@ -522,23 +522,23 @@ const IndexContent = () => {
       badge: lang === "en" ? "Most Popular" : "最受歡迎",
       features: lang === "en"
         ? ["Everything in Facelift Starter, fully polished", "Meta description, social graph & favicon setup", "Bug fixes and final refinements included", "Free hosting included — launch-ready in 3 days"]
-        : ["全面視覺升級", "改進版面和用戶體驗", "更強的商業定位"],
+        : ["包含入門版的所有內容，全面精修", "Meta描述、社群預覽圖與網站圖示設定", "Bug修正與最終細節調整", "免費代管，3天內上線"],
       highlighted: true,
     },
     {
-      name: lang === "en" ? "Facelift Starter" : "基礎版",
+      name: lang === "en" ? "Facelift Starter" : "入門改版",
       price: formatPrice(PRICING.websitePackages.multiPage[0].price),
       features: lang === "en"
         ? ["Clean, modern redesign of your existing site", "Mobile responsive & SEO-friendly structure", "Up to 7 pages", "Free hosting included — no monthly fees required"]
-        : ["簡潔現代重新設計", "快速交付", "核心頁面"],
+        : ["現有網站的簡潔現代重新設計", "手機響應式與SEO友善架構", "最多7頁", "免費代管，無需月費"],
       highlighted: false,
     },
   ];
 
   const singlePagePlans = [
-    { name: lang === "en" ? "Facelift Starter" : "基本上線", price: formatPrice(PRICING.websitePackages.singlePage[0].price) },
-    { name: lang === "en" ? "Website Makeover" : "網站改造", price: formatPrice(PRICING.websitePackages.singlePage[1].price) },
-    { name: lang === "en" ? "Growth Upgrade" : "成長升級", price: formatPrice(PRICING.websitePackages.singlePage[2].price) },
+    { name: lang === "en" ? "Facelift Starter" : "入門改版", price: formatPrice(PRICING.websitePackages.singlePage[0].price) },
+    { name: lang === "en" ? "Website Makeover" : "網站改造版", price: formatPrice(PRICING.websitePackages.singlePage[1].price) },
+    { name: lang === "en" ? "Growth Upgrade" : "成長優化版", price: formatPrice(PRICING.websitePackages.singlePage[2].price) },
   ];
 
   const reviewItems = [
@@ -617,32 +617,27 @@ const IndexContent = () => {
             {/* Left: Copy */}
             <div className="text-white pt-2 lg:pt-6">
               <h1 className="text-[1.85rem] md:text-[clamp(2.8rem,5.5vw,4.2rem)] lg:text-[clamp(2.8rem,4.5vw,3.6rem)] font-black leading-[1.08] lg:leading-[1.15] font-display tracking-tight">
-                {lang === "en" ? (<>Turn Your Outdated<br />Website Into a<br />Conversion&nbsp;Machine.</>) : (<>將您過時的網站<br />變成轉換機器。</>)}
+                {lang === "en" ? (<>Turn Your Outdated<br />Website Into a<br />Conversion&nbsp;Machine.</>) : (<>將您過時的網站，<br />變成轉換機器。</>)}
               </h1>
 
               <p className="mt-5 lg:mt-7 text-lg md:text-xl lg:text-[1.25rem] font-medium text-white leading-[1.5] lg:leading-[1.6] max-w-lg">
                 {lang === "en"
                   ? "We redesign your existing site and deliver 2 live previews in 48 hours — you only pay if you love it."
-                  : "我們重新設計您的現有網站，48小時內交付2個即時預覽——滿意才付款。"}
+                  : "我們重新設計您現有的網站，48小時內交付2個即時預覽——滿意才付款。"}
               </p>
 
               <div className="mt-6 space-y-2">
                 <p className="text-base md:text-lg text-white/90 font-semibold">
                   {lang === "en"
                     ? "Free to review. Packages start at $299."
-                    : "免費審核。套餐起價$299。"}
-                </p>
-                <p className="text-sm md:text-base text-white/70">
-                  {lang === "en"
-                    ? "No monthly hosting fees required."
-                    : "無需每月託管費用。"}
+                    : "免費審閱。方案起價 $299。無需代管月費。"}
                 </p>
               </div>
 
               <p className="mt-5 text-sm text-white/50">
                 {lang === "en"
                   ? "We specialize in website makeovers — we rebuild and upgrade your existing site into something better."
-                  : "我們專注於網站改造——將您現有的網站重建升級為更好的版本。"}
+                  : "我們專注於網站改版——將您現有的網站升級為更好的版本。"}
               </p>
 
               {/* Mobile: hide bullets for shorter scroll */}
@@ -796,7 +791,7 @@ const IndexContent = () => {
               )}
             </p>
             <p className="text-xs text-muted-foreground">
-              {lang === "en" ? "Custom projects — E-commerce, brand new websites — also available. " : "定制項目——電商、全新網站——也可提供。"}
+              {lang === "en" ? "Custom projects — E-commerce, brand new websites — also available. " : "客製化專案——電商、全新網站——也可提供。"}
               <Link to="/custom-brief" className="font-semibold hover:underline" style={{ color: "hsl(275 51% 46%)" }}>
                 {lang === "en" ? "Learn more →" : "了解更多 →"}
               </Link>
@@ -809,7 +804,7 @@ const IndexContent = () => {
       <section className="py-16 md:py-24 lg:py-28 bg-background">
         <div className="max-w-3xl mx-auto px-6 text-center">
           <h2 className="text-[clamp(1.8rem,4vw,2.8rem)] lg:text-[2rem] font-black text-foreground font-display">
-            {lang === "en" ? (<>We Work With What<br className="md:hidden" /> You Already Have</>) : "我們在您現有的基礎上改進"}
+            {lang === "en" ? (<>We Work With What<br className="md:hidden" /> You Already Have</>) : "我們在您現有的基礎上改版"}
           </h2>
           <p className="mt-3 text-base md:text-lg lg:text-base text-muted-foreground max-w-xl mx-auto leading-relaxed">
             {lang === "en"
@@ -821,19 +816,19 @@ const IndexContent = () => {
             {[
               {
                 en: "We rebuild your existing site into a better version",
-                zh: "我們將您現有的網站重建為更好的版本",
+                zh: "將您現有的網站重建為更好的版本",
               },
               {
                 en: "No complicated migration or technical hassle",
-                zh: "沒有複雜的遷移或技術麻煩",
+                zh: "無複雜的搬遷或技術問題",
               },
               {
                 en: "No hidden hosting fees — ever",
-                zh: "永遠沒有隱藏的託管費用",
+                zh: "永遠不收隱藏代管費用",
               },
               {
                 en: "We guide the full setup, launch, and transition",
-                zh: "我們指導完整的設置、上線和過渡",
+                zh: "全程協助設定、上線與切換",
               },
             ].map((item, i) => (
               <li key={i} className="flex items-start gap-3">
