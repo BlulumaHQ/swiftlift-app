@@ -478,7 +478,7 @@ const IndexContent = () => {
   const reviewAutoRef = useRef<ReturnType<typeof setInterval>>();
 
   useEffect(() => {
-    document.title = "SwiftLift — See Your Website Before You Pay";
+    document.title = "SwiftLift — Website Makeover & Upgrade Service";
   }, []);
 
   // Auto-slide reviews (mobile + desktop)
