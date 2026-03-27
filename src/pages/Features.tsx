@@ -226,25 +226,23 @@ const FeatureCard = ({ icon: Icon, title, desc, price, btnLabel, stripeLink, lan
       </div>
       <h3 className="text-[1.05rem] font-bold text-foreground leading-snug">{T(title, lang)}</h3>
       <p className="mt-2 text-sm text-muted-foreground leading-relaxed flex-1">{T(desc, lang)}</p>
-      <div className="mt-5">
+      <div className="mt-auto pt-5">
         <span className={`font-black ${isCustom ? "text-[0.95rem] text-muted-foreground" : "text-2xl text-foreground"}`}>
           {price}
         </span>
-      </div>
-      <a
-        href={href}
-        target={isExternal ? "_blank" : undefined}
-        rel={isExternal ? "noopener noreferrer" : undefined}
-        className="mt-4 w-full inline-flex items-center justify-center rounded-full px-5 py-2.5 text-sm font-semibold text-white transition-colors duration-200 active:scale-[0.97]"
-        style={{ backgroundColor: "hsl(275 51% 46%)" }}
-        onMouseEnter={e => (e.currentTarget.style.backgroundColor = "hsl(275 51% 38%)")}
-        onMouseLeave={e => (e.currentTarget.style.backgroundColor = "hsl(275 51% 46%)")}
-      >
-        {T(btnLabel, lang)}
-      </a>
-      {isExternal && (
+        <a
+          href={href}
+          target={isExternal ? "_blank" : undefined}
+          rel={isExternal ? "noopener noreferrer" : undefined}
+          className="mt-4 w-full inline-flex items-center justify-center rounded-full px-5 py-2.5 text-sm font-semibold text-white transition-colors duration-200 active:scale-[0.97]"
+          style={{ backgroundColor: "hsl(275 51% 46%)" }}
+          onMouseEnter={e => (e.currentTarget.style.backgroundColor = "hsl(275 51% 38%)")}
+          onMouseLeave={e => (e.currentTarget.style.backgroundColor = "hsl(275 51% 46%)")}
+        >
+          {T(btnLabel, lang)}
+        </a>
         <p className="mt-1.5 text-[11px] text-center text-muted-foreground/60">Secure checkout powered by Stripe</p>
-      )}
+      </div>
     </div>
   );
 };
