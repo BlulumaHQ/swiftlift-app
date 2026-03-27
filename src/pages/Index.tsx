@@ -503,28 +503,28 @@ const IndexContent = () => {
 
   const multiPagePlans = [
     {
-      name: lang === "en" ? "Preview Access" : "預覽版",
+      name: lang === "en" ? "Basic Launch" : "基礎版",
       price: formatPrice(PRICING.websitePackages.multiPage[0].price),
       features: lang === "en"
-        ? ["2 live website previews", "Clean professional layout", "Mobile responsive", "Up to 7 pages"]
-        : ["2個即時網站預覽", "簡潔專業版面", "移動端響應式", "最多7頁"],
+        ? ["Clean, modern redesign", "Fast turnaround", "Essential pages"]
+        : ["簡潔現代重新設計", "快速交付", "核心頁面"],
       highlighted: false,
     },
     {
-      name: lang === "en" ? "Launch Ready" : "上線版",
+      name: lang === "en" ? "Website Makeover" : "網站改造版",
       price: formatPrice(PRICING.websitePackages.multiPage[1].price),
       badge: lang === "en" ? "Most Popular" : "最受歡迎",
       features: lang === "en"
-        ? ["Everything in Preview Access", "Fully polished & refined", "Content optimization", "Ready for real business use"]
-        : ["包含預覽版所有功能", "完全打磨優化", "內容優化", "適合實際商業使用"],
+        ? ["Full visual upgrade", "Improved layout & UX", "Stronger business positioning"]
+        : ["全面視覺升級", "改進版面和用戶體驗", "更強的商業定位"],
       highlighted: true,
     },
     {
-      name: lang === "en" ? "Growth Optimized" : "成長版",
+      name: lang === "en" ? "Growth Upgrade" : "成長升級版",
       price: formatPrice(PRICING.websitePackages.multiPage[2].price),
       features: lang === "en"
-        ? ["Everything in Launch Ready", "Conversion-focused layout", "Optimized lead generation", "Strategic content flow"]
-        : ["包含上線版所有功能", "轉化導向版面", "優化潛客獲取", "策略性內容流程"],
+        ? ["Conversion-focused layout", "Lead generation optimization", "Higher performance structure"]
+        : ["轉化導向版面", "潛客獲取優化", "更高性能結構"],
       highlighted: false,
     },
   ];
@@ -538,45 +538,45 @@ const IndexContent = () => {
   const reviewItems = [
     {
       text: lang === "en"
-        ? "Our old website felt crowded and outdated. SwiftLift gave us two completely different directions to compare. Seeing both options side by side made the decision so much easier."
-        : "我們的舊網站感覺擁擠且過時。SwiftLift 給了我們兩個截然不同的方向進行比較。並排查看讓決策變得容易得多。",
-      name: lang === "en" ? "Michael Nowak" : "Michael Nowak",
-      company: lang === "en" ? "Gene's Sausage Shop" : "Gene's Sausage Shop",
+        ? "We got two versions within a day. Picked one and moved forward. Way easier than freelancers."
+        : "我們一天之內就收到了兩個版本。選了一個就開始了。比自由職業者容易得多。",
+      name: lang === "en" ? "David Chen" : "David Chen",
+      company: lang === "en" ? "Realtor" : "房地產經紀人",
     },
     {
       text: lang === "en"
-        ? "We wanted something more modern and trustworthy. SwiftLift gave us two real preview versions instead of just talking about ideas. Both looked significantly better than what we had."
-        : "我們想要更現代、更可信的東西。SwiftLift 給了我們兩個真實的預覽版本，而不僅僅是討論想法。",
-      name: lang === "en" ? "Sarah Bennett" : "Sarah Bennett",
-      company: lang === "en" ? "Mutt Puddles Dog Wash" : "Mutt Puddles Dog Wash",
+        ? "I already had a website but it felt outdated. They showed two upgraded versions and handled everything after that. Didn't need to deal with any tech stuff."
+        : "我已經有網站了，但感覺很過時。他們展示了兩個升級版本，之後處理了一切。不需要處理任何技術問題。",
+      name: lang === "en" ? "Melissa Wong" : "Melissa Wong",
+      company: lang === "en" ? "Clinic Owner" : "診所老闆",
     },
     {
       text: lang === "en"
-        ? "Our previous site looked old and didn't represent the energy of our gym. SwiftLift created two live previews that immediately felt more current and professional."
-        : "我們之前的網站看起來很舊。SwiftLift 創建了兩個即時預覽，讓人立刻感覺更現代和專業。",
-      name: lang === "en" ? "David Ramirez" : "David Ramirez",
-      company: lang === "en" ? "Chicago Boxing Club" : "Chicago Boxing Club",
+        ? "Honestly wasn't expecting much at first, but the two versions were actual working websites, not mockups. You can click through everything. We chose one, made a few adjustments, and it was ready to go. Much smoother than hiring freelancers."
+        : "老實說一開始沒抱太大期望，但兩個版本都是真正可運行的網站，不是模型。你可以點擊所有內容。我們選了一個，做了一些調整，就準備好了。比僱用自由職業者順暢得多。",
+      name: lang === "en" ? "Jason Liu" : "Jason Liu",
+      company: lang === "en" ? "Restaurant Owner" : "餐廳老闆",
     },
   ];
 
   const faqItems = [
     {
-      q: lang === "en" ? "Do I have to pay monthly fees?" : "需要每月付費嗎？",
+      q: lang === "en" ? "Do I have to pay monthly hosting fees?" : "需要每月支付託管費嗎？",
       a: lang === "en"
-        ? "No. You're not required to pay ongoing monthly fees. You are not locked into our hosting. Optional managed plans are available if you want support."
-        : "不需要。您不需要支付持續的月費。您不會被鎖定在我們的託管中。如果您需要支持，可以選擇託管計劃。",
+        ? "No. There are no required monthly hosting fees. You are not locked into our hosting."
+        : "不需要。沒有強制的每月託管費。您不會被鎖定在我們的託管中。",
     },
     {
       q: lang === "en" ? "What if I already have a website?" : "如果我已有網站怎麼辦？",
       a: lang === "en"
-        ? "We can rebuild, transfer, and launch your new site for you. No complicated migration process."
-        : "我們可以為您重建、轉移和上線新網站。沒有複雜的遷移過程。",
+        ? "That's exactly what we specialize in. We rebuild and upgrade your existing website into something better."
+        : "這正是我們的專長。我們將您現有的網站重建升級為更好的版本。",
     },
     {
       q: lang === "en" ? "Is this really free?" : "這真的免費嗎？",
       a: lang === "en"
-        ? "Yes. You receive 2 live previews before paying anything. You only pay if you decide to launch."
-        : "是的。您在付任何費用之前會收到2個即時預覽。只有在決定上線時才需付款。",
+        ? "Yes. You can review both website versions before paying. You only pay if you choose to use one of them."
+        : "是的。您可以在付款前審核兩個網站版本。只有在您選擇使用其中之一時才需付款。",
     },
   ];
 
