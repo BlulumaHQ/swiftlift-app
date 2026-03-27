@@ -509,11 +509,11 @@ const IndexContent = () => {
 
   const multiPagePlans = [
     {
-      name: lang === "en" ? "Basic Launch" : "基礎版",
-      price: formatPrice(PRICING.websitePackages.multiPage[0].price),
+      name: lang === "en" ? "Growth Upgrade" : "成長升級版",
+      price: formatPrice(PRICING.websitePackages.multiPage[2].price),
       features: lang === "en"
-        ? ["Clean, modern redesign", "Fast turnaround", "Essential pages"]
-        : ["簡潔現代重新設計", "快速交付", "核心頁面"],
+        ? ["Conversion-focused layout", "Lead generation optimization", "Higher performance structure"]
+        : ["轉化導向版面", "潛客獲取優化", "更高性能結構"],
       highlighted: false,
     },
     {
@@ -526,17 +526,17 @@ const IndexContent = () => {
       highlighted: true,
     },
     {
-      name: lang === "en" ? "Growth Upgrade" : "成長升級版",
-      price: formatPrice(PRICING.websitePackages.multiPage[2].price),
+      name: lang === "en" ? "Facelift Starter" : "基礎版",
+      price: formatPrice(PRICING.websitePackages.multiPage[0].price),
       features: lang === "en"
-        ? ["Conversion-focused layout", "Lead generation optimization", "Higher performance structure"]
-        : ["轉化導向版面", "潛客獲取優化", "更高性能結構"],
+        ? ["Clean, modern redesign", "Fast turnaround", "Essential pages"]
+        : ["簡潔現代重新設計", "快速交付", "核心頁面"],
       highlighted: false,
     },
   ];
 
   const singlePagePlans = [
-    { name: lang === "en" ? "Basic Launch" : "基本上線", price: formatPrice(PRICING.websitePackages.singlePage[0].price) },
+    { name: lang === "en" ? "Facelift Starter" : "基本上線", price: formatPrice(PRICING.websitePackages.singlePage[0].price) },
     { name: lang === "en" ? "Website Makeover" : "網站改造", price: formatPrice(PRICING.websitePackages.singlePage[1].price) },
     { name: lang === "en" ? "Growth Upgrade" : "成長升級", price: formatPrice(PRICING.websitePackages.singlePage[2].price) },
   ];
@@ -780,7 +780,7 @@ const IndexContent = () => {
             </p>
             <p className="text-sm font-semibold text-foreground">
               {lang === "en" ? (
-                <>Basic Launch — {singlePagePlans[0]?.price} · Website Makeover — {singlePagePlans[1]?.price} · Growth Upgrade — {singlePagePlans[2]?.price}</>
+                <>Facelift Starter — {singlePagePlans[0]?.price} · Website Makeover — {singlePagePlans[1]?.price} · Growth Upgrade — {singlePagePlans[2]?.price}</>
               ) : (
                 singlePagePlans.map((p, i) => (
                   <span key={i}>
@@ -804,27 +804,31 @@ const IndexContent = () => {
       <section className="py-16 md:py-24 lg:py-28 bg-background">
         <div className="max-w-3xl mx-auto px-6 text-center">
           <h2 className="text-[clamp(1.8rem,4vw,2.8rem)] lg:text-[2rem] font-black text-foreground font-display">
-            {lang === "en" ? "Turn Your Current Website Into Something Better" : "將您現有的網站變得更好"}
+            {lang === "en" ? (<>We Work With What<br className="md:hidden" /> You Already Have</>) : "我們在您現有的基礎上改進"}
           </h2>
           <p className="mt-3 text-base md:text-lg lg:text-base text-muted-foreground max-w-xl mx-auto leading-relaxed">
             {lang === "en"
-              ? "We specialize in website makeovers and upgrades — not starting from scratch."
-              : "我們專注於網站改造和升級——不是從頭開始。"}
+              ? "No need to start from scratch — we upgrade what's already there."
+              : "無需從頭開始——我們升級您已有的內容。"}
           </p>
 
           <ul className="mt-8 space-y-4 text-left max-w-xl mx-auto">
             {[
               {
-                en: "We take your existing website and rebuild it into a better version.",
-                zh: "我們將您現有的網站重建為更好的版本。",
+                en: "We rebuild your existing site into a better version",
+                zh: "我們將您現有的網站重建為更好的版本",
               },
               {
-                en: "No complicated migration or technical hassle.",
-                zh: "沒有複雜的遷移或技術麻煩。",
+                en: "No complicated migration or technical hassle",
+                zh: "沒有複雜的遷移或技術麻煩",
               },
               {
-                en: "We guide the setup, launch, and transition.",
-                zh: "我們指導設置、上線和過渡。",
+                en: "No hidden hosting fees — ever",
+                zh: "永遠沒有隱藏的託管費用",
+              },
+              {
+                en: "We guide the full setup, launch, and transition",
+                zh: "我們指導完整的設置、上線和過渡",
               },
             ].map((item, i) => (
               <li key={i} className="flex items-start gap-3">
@@ -835,24 +839,6 @@ const IndexContent = () => {
               </li>
             ))}
           </ul>
-
-          <div className="mt-10 rounded-2xl border border-border p-6 md:p-8 max-w-xl mx-auto" style={{ background: "hsl(var(--surface-sunken))" }}>
-            <p className="text-base text-foreground leading-relaxed font-medium">
-              {lang === "en"
-                ? "Your current website isn't broken — it's just not converting. We fix that."
-                : "您的現有網站沒有壞——只是沒有在轉換。我們來解決這個問題。"}
-            </p>
-            <p className="mt-3 text-base text-foreground leading-relaxed font-medium">
-              {lang === "en"
-                ? "You only pay for the website — no hosting fee required."
-                : "您只需為網站付費——無需託管費用。"}
-            </p>
-            <p className="mt-3 text-base text-muted-foreground leading-relaxed">
-              {lang === "en"
-                ? "You only pay if you choose to use one of the versions we created."
-                : "只有在您選擇使用我們創建的版本時才需付款。"}
-            </p>
-          </div>
         </div>
       </section>
 
