@@ -616,11 +616,11 @@ const IndexContent = () => {
           <div className="grid grid-cols-1 lg:grid-cols-[3fr_2fr] gap-10 lg:gap-14 items-start">
             {/* Left: Copy */}
             <div className="text-white pt-2 lg:pt-6">
-              <h1 className="text-[2.4rem] md:text-[clamp(2.8rem,5.5vw,4.2rem)] font-black leading-[1.08] font-display tracking-tight">
+              <h1 className="text-[2.4rem] md:text-[clamp(2.8rem,5.5vw,4.2rem)] lg:text-[clamp(2.8rem,4.5vw,3.6rem)] font-black leading-[1.08] lg:leading-[1.15] font-display tracking-tight">
                 {lang === "en" ? (<>No sales calls.<br />No meetings.<br />Just 2 live<br />website&nbsp;versions.</>) : (<>無需銷售電話。<br />無需會議。<br />直接獲得2個<br />即時網站版本。</>)}
               </h1>
 
-              <p className="mt-5 text-lg md:text-xl font-medium text-white leading-[1.5] max-w-lg">
+              <p className="mt-5 lg:mt-7 text-lg md:text-xl lg:text-[1.25rem] font-medium text-white leading-[1.5] lg:leading-[1.6] max-w-lg">
                 {lang === "en"
                   ? "We redesign and upgrade your website into two better versions — you choose the one you like."
                   : "我們將您的網站重新設計並升級為兩個更好的版本——您選擇喜歡的那個。"}
@@ -675,9 +675,9 @@ const IndexContent = () => {
       </section>
 
       {/* ═══ 2. HOW IT WORKS ═══ */}
-      <section id="process" className="py-16 md:py-24 bg-background">
+      <section id="process" className="py-16 md:py-24 lg:py-28 bg-background">
         <div className="max-w-5xl mx-auto px-6 text-center">
-          <h2 className="text-[clamp(1.8rem,4vw,2.8rem)] font-black text-foreground font-display">
+          <h2 className="text-[clamp(1.8rem,4vw,2.8rem)] lg:text-[2rem] font-black text-foreground font-display">
             {lang === "en" ? "How It Works" : "如何運作"}
           </h2>
 
@@ -727,9 +727,9 @@ const IndexContent = () => {
       </section>
 
       {/* ═══ 3. PRICING ═══ */}
-      <section id="pricing" className="py-16 md:py-24" style={{ background: "hsl(var(--surface-sunken))" }}>
+      <section id="pricing" className="py-16 md:py-24 lg:py-28" style={{ background: "hsl(var(--surface-sunken))" }}>
         <div className="max-w-5xl mx-auto px-6">
-          <h2 className="text-[clamp(1.8rem,4vw,2.8rem)] font-black text-foreground font-display text-center">
+          <h2 className="text-[clamp(1.8rem,4vw,2.8rem)] lg:text-[2rem] font-black text-foreground font-display text-center">
             {lang === "en" ? "Simple, Transparent Pricing" : "簡單透明的定價"}
           </h2>
           <p className="mt-2 text-muted-foreground text-sm text-center max-w-lg mx-auto">
@@ -753,7 +753,7 @@ const IndexContent = () => {
                   </span>
                 )}
                 <h3 className="font-bold text-foreground font-display text-lg">{plan.name}</h3>
-                <p className="text-3xl md:text-4xl font-black text-foreground font-display mt-2">{plan.price}</p>
+                <p className="text-3xl md:text-4xl lg:text-3xl font-black text-foreground font-display mt-2">{plan.price}</p>
                 <ul className="mt-5 space-y-2.5 flex-1">
                   {plan.features.map((f, fi) => (
                     <li key={fi} className="flex items-start gap-2.5 text-sm text-muted-foreground">
@@ -801,12 +801,12 @@ const IndexContent = () => {
       </section>
 
       {/* ═══ 4. TURN YOUR CURRENT WEBSITE INTO SOMETHING BETTER ═══ */}
-      <section className="py-16 md:py-24 bg-background">
+      <section className="py-16 md:py-24 lg:py-28 bg-background">
         <div className="max-w-3xl mx-auto px-6 text-center">
-          <h2 className="text-[clamp(1.8rem,4vw,2.8rem)] font-black text-foreground font-display">
+          <h2 className="text-[clamp(1.8rem,4vw,2.8rem)] lg:text-[2rem] font-black text-foreground font-display">
             {lang === "en" ? "Turn Your Current Website Into Something Better" : "將您現有的網站變得更好"}
           </h2>
-          <p className="mt-3 text-base md:text-lg text-muted-foreground max-w-xl mx-auto leading-relaxed">
+          <p className="mt-3 text-base md:text-lg lg:text-base text-muted-foreground max-w-xl mx-auto leading-relaxed">
             {lang === "en"
               ? "We specialize in website makeovers and upgrades — not starting from scratch."
               : "我們專注於網站改造和升級——不是從頭開始。"}
@@ -852,9 +852,9 @@ const IndexContent = () => {
       </section>
 
       {/* ═══ 5. REVIEWS ═══ */}
-      <section className="py-16 md:py-24" style={{ background: "hsl(var(--surface-sunken))" }}>
+      <section className="py-16 md:py-24 lg:py-28" style={{ background: "hsl(var(--surface-sunken))" }}>
         <div className="max-w-4xl mx-auto px-6">
-          <h2 className="text-[clamp(1.8rem,4vw,2.8rem)] font-black text-foreground font-display text-center mb-10">
+          <h2 className="text-[clamp(1.8rem,4vw,2.8rem)] lg:text-[2rem] font-black text-foreground font-display text-center mb-10">
             {lang === "en" ? "What Our Clients Say" : "客戶評價"}
           </h2>
 
@@ -872,7 +872,7 @@ const IndexContent = () => {
                 transition={{ duration: 0.35 }}
                 className="rounded-2xl border border-border bg-background p-8 md:p-10 shadow-sm"
               >
-                <p className="text-lg md:text-xl text-foreground leading-relaxed font-medium">
+                <p className="text-lg md:text-xl lg:text-lg text-foreground leading-relaxed font-medium">
                   "{reviewItems[reviewIdx].text}"
                 </p>
                 <div className="mt-6 flex items-center gap-3">
@@ -911,9 +911,9 @@ const IndexContent = () => {
       </section>
 
       {/* ═══ 6. FEATURED PORTFOLIO ═══ */}
-      <section className="py-16 md:py-24 bg-background">
+      <section className="py-16 md:py-24 lg:py-28 bg-background">
         <div className="max-w-6xl mx-auto px-6">
-          <h2 className="text-[clamp(1.8rem,4vw,2.8rem)] font-black text-foreground font-display text-center">
+          <h2 className="text-[clamp(1.8rem,4vw,2.8rem)] lg:text-[2rem] font-black text-foreground font-display text-center">
             {lang === "en" ? "Real Website Transformations" : "真實網站改造"}
           </h2>
           <p className="mt-2 text-muted-foreground text-sm text-center">
@@ -1019,9 +1019,9 @@ const IndexContent = () => {
       </section>
 
       {/* ═══ 7. FAQ ═══ */}
-      <section className="py-16 md:py-24" style={{ background: "hsl(var(--surface-sunken))" }}>
+      <section className="py-16 md:py-24 lg:py-28" style={{ background: "hsl(var(--surface-sunken))" }}>
         <div className="max-w-3xl mx-auto px-6">
-          <h2 className="text-[clamp(1.8rem,4vw,2.8rem)] font-black text-foreground font-display text-center">
+          <h2 className="text-[clamp(1.8rem,4vw,2.8rem)] lg:text-[2rem] font-black text-foreground font-display text-center">
             {lang === "en" ? "Still Have Questions?" : "還有疑問？"}
           </h2>
           <div className="mt-10 space-y-3">
@@ -1085,10 +1085,10 @@ const IndexContent = () => {
       >
         <div className="absolute inset-0 pointer-events-none" style={{ background: "radial-gradient(ellipse 60% 50% at 50% 40%, hsl(209 70% 30% / 0.25), transparent)" }} />
         <div className="relative max-w-2xl mx-auto px-6 text-center">
-          <h2 className="text-[clamp(1.7rem,4.5vw,2.8rem)] font-black text-white font-display leading-tight">
+          <h2 className="text-[clamp(1.7rem,4.5vw,2.8rem)] lg:text-[2rem] font-black text-white font-display leading-tight">
             {lang === "en" ? "No Calls. No Waiting. No Risk." : "無需電話。無需等待。無風險。"}
           </h2>
-          <p className="mt-4 text-white/60 text-base md:text-lg max-w-md mx-auto leading-relaxed">
+          <p className="mt-4 text-white/60 text-base md:text-lg lg:text-base max-w-md mx-auto leading-relaxed">
             {lang === "en"
               ? "Get 2 free website versions and decide with confidence — before spending a dollar."
               : "獲取2個免費網站版本，在花一分錢之前自信決策。"}
