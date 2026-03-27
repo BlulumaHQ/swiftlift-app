@@ -928,14 +928,29 @@ const IndexContent = () => {
                 </div>
                 <div className="p-5">
                   <p className="text-xs text-muted-foreground uppercase tracking-wider font-medium">{t(item.desc, lang)}</p>
-                  <h3 className="mt-1 text-base font-bold text-foreground font-display">{t(item.name, lang)}</h3>
-                    <Link
-                      to="/portfolio"
-                      className="mt-3 inline-flex items-center text-sm font-semibold hover:underline transition-all"
-                      style={{ color: "hsl(275 51% 46%)" }}
+                  <h3 className="mt-1 text-base font-bold text-foreground font-display">
+                    {lang === "en" ? "Website Transformation" : "網站改造"}
+                  </h3>
+                  <div className="mt-3 flex gap-2">
+                    <a
+                      href={portfolioLinks[i].a}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center text-xs font-semibold px-3 py-1.5 rounded-full border transition-all hover:opacity-80"
+                      style={{ borderColor: "hsl(275 51% 46%)", color: "hsl(275 51% 46%)" }}
                     >
-                      {lang === "en" ? "View Website Transformation →" : "查看網站改造 →"}
-                    </Link>
+                      Version A
+                    </a>
+                    <a
+                      href={portfolioLinks[i].b}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center text-xs font-semibold px-3 py-1.5 rounded-full border transition-all hover:opacity-80"
+                      style={{ borderColor: "hsl(275 51% 46%)", color: "hsl(275 51% 46%)" }}
+                    >
+                      Version B
+                    </a>
+                  </div>
                 </div>
               </div>
             ))}
