@@ -11,7 +11,7 @@ const Footer = () => {
   const navigate = useNavigate();
 
   const navItems = [
-    { label: lang === "en" ? "Home" : "首页", href: "/" },
+    { label: lang === "en" ? "Home" : "首頁", href: "/" },
     { label: t(translations.nav.pricing, lang), href: "/#pricing" },
     { label: t(translations.nav.portfolio, lang), href: "/portfolio" },
     { label: lang === "en" ? "About" : "關於", href: "/about" },
