@@ -617,7 +617,7 @@ const IndexContent = () => {
             {/* Left: Copy */}
             <div className="text-white pt-2 lg:pt-6">
               <h1 className="text-[1.85rem] md:text-[clamp(2.8rem,5.5vw,4.2rem)] lg:text-[clamp(2.8rem,4.5vw,3.6rem)] font-black leading-[1.08] lg:leading-[1.15] font-display tracking-tight">
-                {lang === "en" ? (<>Turn Your Outdated<br />Website Into a<br />Conversion&nbsp;Machine.</>) : (<>將您過時的網站，<br />變成轉換機器。</>)}
+                {lang === "en" ? (<>Turn Your Outdated<br />Website Into a<br />Conversion&nbsp;Machine.</>) : (<>將您過時的網站，<br />變成自動帶客的業績引擎。</>)}
               </h1>
 
               <p className="mt-5 lg:mt-7 text-lg md:text-xl lg:text-[1.25rem] font-medium text-white leading-[1.5] lg:leading-[1.6] max-w-lg">
