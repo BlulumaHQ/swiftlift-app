@@ -782,12 +782,7 @@ const IndexContent = () => {
               {lang === "en" ? (
                 <>Growth Upgrade — {singlePagePlans[2]?.price} · Website Makeover — {singlePagePlans[1]?.price} · Facelift Starter — {singlePagePlans[0]?.price}</>
               ) : (
-                singlePagePlans.map((p, i) => (
-                  <span key={i}>
-                    {p.name}: {p.price}
-                    {i < singlePagePlans.length - 1 ? " · " : ""}
-                  </span>
-                ))
+                <>{singlePagePlans[2]?.name} — {singlePagePlans[2]?.price} · {singlePagePlans[1]?.name} — {singlePagePlans[1]?.price} · {singlePagePlans[0]?.name} — {singlePagePlans[0]?.price}</>
               )}
             </p>
             <p className="text-xs text-muted-foreground">
