@@ -51,6 +51,14 @@ const FaqContent = () => {
 
   useEffect(() => {
     document.title = "FAQ — SwiftLift";
+    let canonical = document.querySelector("link[rel='canonical']") as HTMLLinkElement | null;
+    if (!canonical) {
+      canonical = document.createElement("link");
+      canonical.setAttribute("rel", "canonical");
+      document.head.appendChild(canonical);
+    }
+    canonical.setAttribute("href", "https://swiftlift.app/faq");
+    return () => { canonical?.setAttribute("href", "https://swiftlift.app/"); };
   }, []);
 
   return (

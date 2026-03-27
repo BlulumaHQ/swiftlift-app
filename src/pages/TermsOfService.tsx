@@ -10,6 +10,14 @@ const TermsContent = () => {
 
   useEffect(() => {
     document.title = "Terms of Service — SwiftLift";
+    let canonical = document.querySelector("link[rel='canonical']") as HTMLLinkElement | null;
+    if (!canonical) {
+      canonical = document.createElement("link");
+      canonical.setAttribute("rel", "canonical");
+      document.head.appendChild(canonical);
+    }
+    canonical.setAttribute("href", "https://swiftlift.app/terms");
+    return () => { canonical?.setAttribute("href", "https://swiftlift.app/"); };
   }, []);
 
   return (

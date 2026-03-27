@@ -374,61 +374,6 @@ const IntakeForm = () => {
                 </a>
               </div>
 
-              {formSubmissionsDebug && (
-                <div className="mt-4 rounded-3xl border border-border bg-background p-6 text-left shadow-xl">
-                  <h4 className="text-sm font-semibold text-foreground">form_submissions debug</h4>
-                  <div className="mt-4 space-y-4 text-sm text-foreground">
-                    <div>
-                      <p className="font-medium text-foreground">form_submissions insert attempted</p>
-                      <pre className="mt-1 whitespace-pre-wrap break-words rounded-2xl bg-secondary/40 p-3 font-mono text-xs text-foreground">
-                        {JSON.stringify(formSubmissionsDebug.attempted, null, 2)}
-                      </pre>
-                    </div>
-                    <div>
-                      <p className="font-medium text-foreground">Payload sent</p>
-                      <pre className="mt-1 whitespace-pre-wrap break-words rounded-2xl bg-secondary/40 p-3 font-mono text-xs text-foreground">
-                        {JSON.stringify(formSubmissionsDebug.payload, null, 2)}
-                      </pre>
-                    </div>
-                    <div>
-                      <p className="font-medium text-foreground">Supabase response</p>
-                      <pre className="mt-1 whitespace-pre-wrap break-words rounded-2xl bg-secondary/40 p-3 font-mono text-xs text-foreground">
-                        {JSON.stringify(formSubmissionsDebug.response, null, 2)}
-                      </pre>
-                    </div>
-                    <div>
-                      <p className="font-medium text-foreground">error.message</p>
-                      <pre className="mt-1 whitespace-pre-wrap break-words rounded-2xl bg-secondary/40 p-3 font-mono text-xs text-foreground">
-                        {JSON.stringify(formSubmissionsDebug.error?.message ?? null, null, 2)}
-                      </pre>
-                    </div>
-                    <div>
-                      <p className="font-medium text-foreground">error.details</p>
-                      <pre className="mt-1 whitespace-pre-wrap break-words rounded-2xl bg-secondary/40 p-3 font-mono text-xs text-foreground">
-                        {JSON.stringify(formSubmissionsDebug.error?.details ?? null, null, 2)}
-                      </pre>
-                    </div>
-                    <div>
-                      <p className="font-medium text-foreground">error.hint</p>
-                      <pre className="mt-1 whitespace-pre-wrap break-words rounded-2xl bg-secondary/40 p-3 font-mono text-xs text-foreground">
-                        {JSON.stringify(formSubmissionsDebug.error?.hint ?? null, null, 2)}
-                      </pre>
-                    </div>
-                    <div>
-                      <p className="font-medium text-foreground">error.code</p>
-                      <pre className="mt-1 whitespace-pre-wrap break-words rounded-2xl bg-secondary/40 p-3 font-mono text-xs text-foreground">
-                        {JSON.stringify(formSubmissionsDebug.error?.code ?? null, null, 2)}
-                      </pre>
-                    </div>
-                    <div>
-                      <p className="font-medium text-foreground">Full error object</p>
-                      <pre className="mt-1 whitespace-pre-wrap break-words rounded-2xl bg-secondary/40 p-3 font-mono text-xs text-foreground">
-                        {JSON.stringify(formSubmissionsDebug.error?.full ?? null, null, 2)}
-                      </pre>
-                    </div>
-                  </div>
-                </div>
-              )}
             </>
           </ScrollReveal>
         ) : (
@@ -464,7 +409,7 @@ const IntakeForm = () => {
                     {t(fields.timeline, lang)} <span className="text-destructive">*</span>
                   </label>
                   <select name="timeline" required className={inputClass}>
-                    <option value="">{lang === "en" ? "Select an option" : "请选择"}</option>
+                    <option value="">{lang === "en" ? "Select an option" : "請選擇"}</option>
                     {fields.timelineOptions[lang].map((option, idx) => (
                       <option key={idx} value={option}>{option}</option>
                     ))}
@@ -498,12 +443,8 @@ const IntakeForm = () => {
                 <div className="md:col-span-2">
                   <label className="flex items-center text-sm font-medium text-foreground mb-1.5">
                     {t(fields.logo, lang)} <span className="text-muted-foreground ml-1 text-xs">{t(fields.logoOptional, lang)}</span>
-                    <Tooltip text={t(fields.logoTooltip, lang)} />
                   </label>
-                  <input type="file" accept="image/*" className="w-full rounded-xl border border-border bg-background px-4 py-3 text-sm text-foreground file:mr-4 file:py-1 file:px-3 file:rounded-full file:border-0 file:text-xs file:font-semibold file:bg-primary/10 file:text-primary" />
-                  <p className="mt-1 text-xs text-muted-foreground">
-                    {lang === "en" ? "Or provide a cloud link in the description." : "或在描述中提供云端链接。"}
-                  </p>
+                  <input type="text" name="logo_url" placeholder={lang === "en" ? "Share a cloud link to your logo file (Google Drive, Dropbox, etc.)" : "請提供您標誌檔案的雲端連結（Google Drive、Dropbox 等）"} className={inputClass} />
                 </div>
               </div>
               {submitError && (
@@ -515,7 +456,7 @@ const IntakeForm = () => {
                 className={`mt-8 w-full btn-brand rounded-full py-4 px-10 text-base ${submitting ? "opacity-70 pointer-events-none" : ""}`}
               >
                 {submitting
-                  ? (lang === "en" ? "Sending..." : "发送中...")
+                  ? (lang === "en" ? "Sending..." : "傳送中...")
                   : t(intake.submit, lang)}
               </MagneticButton>
             </form>
