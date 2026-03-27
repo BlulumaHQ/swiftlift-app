@@ -138,6 +138,14 @@ const AboutContent = () => {
       ? "關於 — SwiftLift | 我們升級您現有的網站"
       : "About — SwiftLift | We Upgrade What You Already Have";
     window.scrollTo(0, 0);
+    let canonical = document.querySelector("link[rel='canonical']") as HTMLLinkElement | null;
+    if (!canonical) {
+      canonical = document.createElement("link");
+      canonical.setAttribute("rel", "canonical");
+      document.head.appendChild(canonical);
+    }
+    canonical.setAttribute("href", "https://swiftlift.app/about");
+    return () => { canonical?.setAttribute("href", "https://swiftlift.app/"); };
   }, [lang]);
 
   const handleCTA = (e: React.MouseEvent) => {

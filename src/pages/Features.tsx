@@ -252,6 +252,14 @@ const FeaturesContent = () => {
 
   useEffect(() => {
     document.title = "Features & Add-ons — SwiftLift";
+    let canonical = document.querySelector("link[rel='canonical']") as HTMLLinkElement | null;
+    if (!canonical) {
+      canonical = document.createElement("link");
+      canonical.setAttribute("rel", "canonical");
+      document.head.appendChild(canonical);
+    }
+    canonical.setAttribute("href", "https://swiftlift.app/features");
+    return () => { canonical?.setAttribute("href", "https://swiftlift.app/"); };
   }, []);
 
   return (

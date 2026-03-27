@@ -12,6 +12,14 @@ const HostingGuideContent = () => {
 
   useEffect(() => {
     document.title = lang === "en" ? "Managed Hosting — SwiftLift" : "托管主机 — SwiftLift";
+    let canonical = document.querySelector("link[rel='canonical']") as HTMLLinkElement | null;
+    if (!canonical) {
+      canonical = document.createElement("link");
+      canonical.setAttribute("rel", "canonical");
+      document.head.appendChild(canonical);
+    }
+    canonical.setAttribute("href", "https://swiftlift.app/hosting-guide");
+    return () => { canonical?.setAttribute("href", "https://swiftlift.app/"); };
   }, [lang]);
 
   return (

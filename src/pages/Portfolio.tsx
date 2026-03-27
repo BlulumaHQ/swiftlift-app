@@ -509,6 +509,14 @@ const PortfolioContent = () => {
     document.title = lang === "zh"
       ? "作品集 — SwiftLift | 真實網站改版成果"
       : "Portfolio — SwiftLift | Real Website Transformations";
+    let canonical = document.querySelector("link[rel='canonical']") as HTMLLinkElement | null;
+    if (!canonical) {
+      canonical = document.createElement("link");
+      canonical.setAttribute("rel", "canonical");
+      document.head.appendChild(canonical);
+    }
+    canonical.setAttribute("href", "https://swiftlift.app/portfolio");
+    return () => { canonical?.setAttribute("href", "https://swiftlift.app/"); };
   }, [lang]);
 
   return (
