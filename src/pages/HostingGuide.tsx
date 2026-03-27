@@ -67,6 +67,9 @@ const HostingGuideContent = () => {
           <ScrollReveal delay={0.1}>
             <div className="mt-10 space-y-5 text-muted-foreground text-base md:text-lg leading-relaxed text-left max-w-lg mx-auto">
               <p>{lang === "en"
+                ? "Every website built with SwiftLift comes with free hosting — no monthly fees, no lock-in, no surprises."
+                : "每个SwiftLift建设的网站都附带免费托管 — 无月费、无锁定、无意外。"}</p>
+              <p>{lang === "en"
                 ? "Most business owners don't want to deal with hosting. And they shouldn't have to."
                 : "大多数企业主不想处理托管问题。他们也不应该处理。"}</p>
               <p>{lang === "en"
@@ -139,13 +142,13 @@ const HostingGuideContent = () => {
             {(lang === "en"
               ? [
                   { step: "1", text: "We build your website" },
-                  { step: "2", text: "We host and maintain everything" },
-                  { step: "3", text: "You focus on your business" },
+                  { step: "2", text: "Before launch, we ask one simple question: free hosting or managed plan?" },
+                  { step: "3", text: "You focus on your business — we handle the rest" },
                 ]
               : [
                   { step: "1", text: "我们构建您的网站" },
-                  { step: "2", text: "我们托管并维护一切" },
-                  { step: "3", text: "您专注于您的业务" },
+                  { step: "2", text: "启动前，我们只问一个简单的问题：免费托管还是托管计划？" },
+                  { step: "3", text: "您专注于您的业务 — 我们处理其余一切" },
                 ]
             ).map((s, i) => (
               <ScrollReveal key={i} delay={i * 0.1}>
@@ -176,18 +179,45 @@ const HostingGuideContent = () => {
 
           <ScrollReveal delay={0.1}>
             <div className="mt-12 rounded-2xl border border-border bg-background p-8 shadow-sm">
-              <p className="text-sm font-semibold text-muted-foreground uppercase tracking-wider">
-                {lang === "en" ? "Managed Hosting" : "托管主机"}
+              <p className="text-sm font-bold text-foreground uppercase tracking-wider">
+                {lang === "en" ? "Free Hosting — Always Included" : "免费托管 — 始终包含"}
               </p>
-              <p className="mt-4 text-4xl font-black text-foreground font-display">$15<span className="text-lg font-medium text-muted-foreground">/mo</span></p>
-              <p className="mt-2 text-muted-foreground text-sm">
-                {lang === "en" ? "or" : "或"} <span className="font-semibold text-foreground">$135/year</span>
-              </p>
-              <p className="mt-6 text-xs text-muted-foreground leading-relaxed">
+              <p className="mt-3 text-muted-foreground text-sm leading-relaxed">
                 {lang === "en"
-                  ? "Most clients choose yearly and never think about hosting again."
-                  : "大多数客户选择年付，从此不再为托管烦恼。"}
+                  ? "Every SwiftLift website comes with free hosting at no cost."
+                  : "每个SwiftLift网站都附带免费托管，无需任何费用。"}
               </p>
+
+              <div className="mt-8 pt-8 border-t border-border">
+                <p className="text-xs text-muted-foreground uppercase tracking-wider font-medium">
+                  {lang === "en" ? "Want us to manage everything for you?" : "希望我们为您管理一切？"}
+                </p>
+                <p className="mt-3 text-sm font-bold text-foreground uppercase tracking-wider">
+                  {lang === "en" ? "Managed Hosting Plan" : "托管主机计划"}
+                </p>
+                <p className="mt-3 text-3xl font-black text-foreground font-display">$15<span className="text-lg font-medium text-muted-foreground">/mo</span> <span className="text-sm text-muted-foreground font-normal">{lang === "en" ? "or" : "或"} <span className="font-semibold text-foreground">$135/year</span></span></p>
+
+                <ul className="mt-6 space-y-3 text-left text-sm text-muted-foreground leading-relaxed">
+                  <li className="flex items-start gap-2">
+                    <Check size={16} className="flex-shrink-0 mt-0.5" style={{ color: "hsl(275 51% 46%)" }} />
+                    <span>{lang === "en" ? "1 free content update included every month — we make the changes for you" : "每月包含1次免费内容更新 — 我们为您进行更改"}</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <Check size={16} className="flex-shrink-0 mt-0.5" style={{ color: "hsl(275 51% 46%)" }} />
+                    <span>{lang === "en" ? "Monitoring, SSL, and uptime support included" : "包含监控、SSL和正常运行支持"}</span>
+                  </li>
+                  <li className="flex items-start gap-2">
+                    <Check size={16} className="flex-shrink-0 mt-0.5" style={{ color: "hsl(275 51% 46%)" }} />
+                    <span>{lang === "en" ? "No dashboards. No technical work. Ever." : "无控制面板。无技术工作。永远不需要。"}</span>
+                  </li>
+                </ul>
+
+                <p className="mt-6 text-xs text-muted-foreground leading-relaxed">
+                  {lang === "en"
+                    ? "Individual content updates available at $45/request — update 3+ times a month? The plan pays for itself."
+                    : "单次内容更新$45/次 — 每月更新3次以上？该计划物超所值。"}
+                </p>
+              </div>
             </div>
           </ScrollReveal>
         </div>
@@ -206,8 +236,8 @@ const HostingGuideContent = () => {
           <ScrollReveal delay={0.1}>
             <div className="mt-12 space-y-5 max-w-sm mx-auto">
               {(lang === "en"
-                ? ["No setup fees", "No technical maintenance required", "No unexpected charges"]
-                : ["无设置费用", "无需技术维护", "无意外收费"]
+                ? ["Free hosting included with every website — forever", "No setup fees", "No technical maintenance required", "No unexpected charges"]
+                : ["每个网站都包含免费托管 — 永远", "无设置费用", "无需技术维护", "无意外收费"]
               ).map((item, i) => (
                 <div key={i} className="flex items-center gap-3">
                   <Check size={20} className="flex-shrink-0" style={{ color: "hsl(275 51% 46%)" }} />
