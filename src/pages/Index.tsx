@@ -512,7 +512,7 @@ const IndexContent = () => {
       name: lang === "en" ? "Growth Upgrade" : "成長升級版",
       price: formatPrice(PRICING.websitePackages.multiPage[2].price),
       features: lang === "en"
-        ? ["Conversion-focused layout built to generate leads", "Completely different design strategy from Makeover", "Stronger content flow and business positioning", "Free hosting included — built to turn visitors into enquiries"]
+        ? ["Conversion-focused layout built to generate leads", "Completely different design approach from Makeover", "Stronger content flow and business positioning", "Free hosting included — built to turn visitors into enquiries"]
         : ["轉換導向版面，專為產生詢問而設計", "與改造版完全不同的設計策略", "更強的內容架構與商業定位", "免費代管，將訪客轉換為詢問"],
       highlighted: false,
     },
