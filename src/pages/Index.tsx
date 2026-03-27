@@ -385,7 +385,7 @@ const MultiStepIntake = ({ variant = "hero" }: { variant?: "hero" | "cta" }) => 
             className="w-full rounded-full py-4 px-8 text-sm font-bold text-white whitespace-nowrap transition-all hover:opacity-90 hover:scale-[1.01]"
             style={{ background: "hsl(275 51% 46%)" }}
           >
-            {lang === "en" ? "Get My 2 Free Previews" : "獲取我的2個免費預覽"}
+            {lang === "en" ? "Get My 2 Free Website Versions" : "獲取我的2個免費網站版本"}
           </button>
         </div>
       </form>
@@ -454,7 +454,7 @@ const MultiStepIntake = ({ variant = "hero" }: { variant?: "hero" | "cta" }) => 
             className={`flex-1 rounded-full py-3.5 px-8 text-sm font-bold text-white transition-all hover:opacity-90 ${submitting ? "opacity-70 pointer-events-none" : ""}`}
             style={{ background: "hsl(275 51% 46%)" }}
           >
-            {submitting ? (lang === "en" ? "Sending..." : "發送中...") : (lang === "en" ? "Get My 2 Free Previews" : "獲取我的2個免費預覽")}
+            {submitting ? (lang === "en" ? "Sending..." : "發送中...") : (lang === "en" ? "Get My 2 Free Website Versions" : "獲取我的2個免費網站版本")}
           </button>
         </div>
       </form>
@@ -929,13 +929,13 @@ const IndexContent = () => {
                 <div className="p-5">
                   <p className="text-xs text-muted-foreground uppercase tracking-wider font-medium">{t(item.desc, lang)}</p>
                   <h3 className="mt-1 text-base font-bold text-foreground font-display">{t(item.name, lang)}</h3>
-                  <Link
-                    to="/portfolio"
-                    className="mt-3 inline-flex items-center text-sm font-semibold hover:underline transition-all"
-                    style={{ color: "hsl(275 51% 46%)" }}
-                  >
-                    {lang === "en" ? "View Project →" : "查看項目 →"}
-                  </Link>
+                    <Link
+                      to="/portfolio"
+                      className="mt-3 inline-flex items-center text-sm font-semibold hover:underline transition-all"
+                      style={{ color: "hsl(275 51% 46%)" }}
+                    >
+                      {lang === "en" ? "View Website Transformation →" : "查看網站改造 →"}
+                    </Link>
                 </div>
               </div>
             ))}
@@ -962,7 +962,7 @@ const IndexContent = () => {
                       className="mt-2 inline-flex items-center text-sm font-semibold hover:underline transition-all"
                       style={{ color: "hsl(275 51% 46%)" }}
                     >
-                      {lang === "en" ? "View Project →" : "查看項目 →"}
+                      {lang === "en" ? "View Website Transformation →" : "查看網站改造 →"}
                     </Link>
                   </div>
                 </div>
