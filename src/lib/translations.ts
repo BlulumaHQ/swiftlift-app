@@ -41,6 +41,7 @@ export const translations = {
     outdatedTitle: { en: "Traditional Agencies", zh: "傳統機構" },
     outdatedItems: [
       { en: "Book a demo", zh: "預約演示" },
+      { en: "Template-based — you build it yourself", zh: "模板化——自己動手做" },
       { en: "Wait days or weeks", zh: "等待數天或數週" },
       { en: "Endless back-and-forth", zh: "無止境的來回溝通" },
       { en: "Unclear pricing", zh: "定價不透明" },
@@ -48,6 +49,7 @@ export const translations = {
     rebuildTitle: { en: "SwiftLift", zh: "SwiftLift" },
     rebuildItems: [
       { en: "Instant live previews", zh: "即時預覽" },
+      { en: "Custom-built for you — no templates, no guesswork", zh: "為您量身打造——沒有模板、沒有猜測" },
       { en: "No calls or meetings", zh: "無需電話或會議" },
       { en: "Launch in 3 days", zh: "3天內上線" },
       { en: "Transparent pricing", zh: "透明定價" },

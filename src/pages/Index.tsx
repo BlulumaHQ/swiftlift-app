@@ -806,6 +806,11 @@ const IndexContent = () => {
               ? "No need to start from scratch — we upgrade what's already there."
               : "無需從頭開始——我們升級您已有的內容。"}
           </p>
+          <p className="mt-4 text-base md:text-lg lg:text-base text-muted-foreground max-w-xl mx-auto leading-relaxed">
+            {lang === "en"
+              ? "Wix and Squarespace give you a template and leave you to figure it out. We don't. We build a custom website for you — no templates, no guesswork. You just choose."
+              : "Wix 和 Squarespace 給你一個模板，然後讓你自己摸索。我們不一樣。我們為您量身打造網站——沒有模板、沒有猜測。您只需選擇。"}
+          </p>
 
           <ul className="mt-8 space-y-4 text-left max-w-xl mx-auto">
             {[

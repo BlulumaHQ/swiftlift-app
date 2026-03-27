@@ -106,6 +106,7 @@ const tx = {
   diffTraditional: { en: "Traditional Agencies", zh: "傳統代理商" },
   diffTraditionalItems: [
     { en: "Weeks just to get started", zh: "光是啟動就需要數週" },
+    { en: "Template-based — you build it yourself", zh: "模板化——自己動手做" },
     { en: "Multiple meetings before anything happens", zh: "需要多次會議才能開始" },
     { en: "High upfront costs with no guarantee", zh: "高額預付費用且無保證" },
     { en: "One version — take it or leave it", zh: "只有一個版本——接受或拒絕" },
@@ -113,6 +114,7 @@ const tx = {
   ],
   diffSwiftItems: [
     { en: "Previews ready in 48 hours", zh: "48小時內 Preview 準備就緒" },
+    { en: "Custom-built for you — no templates, no guesswork", zh: "為您量身打造——沒有模板、沒有猜測" },
     { en: "No calls, no meetings required", zh: "無需電話、無需會議" },
     { en: "You see 2 real versions before paying anything", zh: "付款前先看到2個真實版本" },
     { en: "You choose what works best", zh: "您選擇最適合的版本" },
