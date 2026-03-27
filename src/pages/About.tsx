@@ -120,8 +120,8 @@ const tx = {
   ],
 
   // Section 7 - CTA
-  ctaH2: { en: "See Your New Website Before You Pay.", zh: "付款前先看到您的新網站。" },
-  ctaSub: { en: "No risk. No waiting. Just real results.", zh: "零風險。無需等待。只有真實成果。" },
+  ctaH2: { en: "See Both Versions. Choose What Works. Pay Only Then.", zh: "查看兩個版本。選擇合適的。再付款。" },
+  ctaSub: { en: "No pressure. No guesswork. Just a better website for your business.", zh: "無壓力。無猜測。只為您的業務打造更好的網站。" },
   ctaFooter: {
     en: "No upfront payment · No obligation · Built for real business results",
     zh: "無需預付費用 · 無任何義務 · 專為真實商業成果而生",
