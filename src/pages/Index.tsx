@@ -616,7 +616,7 @@ const IndexContent = () => {
           <div className="grid grid-cols-1 lg:grid-cols-[3fr_2fr] gap-10 lg:gap-14 items-start">
             {/* Left: Copy */}
             <div className="text-white pt-2 lg:pt-6">
-              <h1 className="text-[2.4rem] md:text-[clamp(2.8rem,5.5vw,4.2rem)] lg:text-[clamp(2.8rem,4.5vw,3.6rem)] font-black leading-[1.08] lg:leading-[1.15] font-display tracking-tight">
+              <h1 className="text-[1.85rem] md:text-[clamp(2.8rem,5.5vw,4.2rem)] lg:text-[clamp(2.8rem,4.5vw,3.6rem)] font-black leading-[1.08] lg:leading-[1.15] font-display tracking-tight">
                 {lang === "en" ? (<>Turn Your Outdated<br />Website Into a<br />Conversion&nbsp;Machine.</>) : (<>將您過時的網站<br />變成轉換機器。</>)}
               </h1>
 
@@ -738,10 +738,13 @@ const IndexContent = () => {
 
           {/* Pricing cards */}
           <div className="mt-10 grid grid-cols-1 md:grid-cols-3 gap-5">
-            {multiPagePlans.map((plan, i) => (
+            {multiPagePlans.map((plan, i) => {
+              // Mobile order: Facelift Starter(2) top, Website Makeover(1) mid, Growth Upgrade(0) bottom
+              const mobileOrder = i === 0 ? "order-3" : i === 1 ? "order-2" : "order-1";
+              return (
               <div
                 key={i}
-                className={`relative rounded-2xl border p-6 md:p-7 flex flex-col ${
+                className={`relative rounded-2xl border p-6 md:p-7 flex flex-col ${mobileOrder} md:order-none ${
                   plan.highlighted
                     ? "border-[hsl(275_51%_46%)] bg-background shadow-xl"
                     : "border-border bg-background"
@@ -770,7 +773,9 @@ const IndexContent = () => {
                   {lang === "en" ? "Get My 2 Free Website Versions" : "獲取我的2個免費網站版本"}
                 </button>
               </div>
-            ))}
+            );
+            })}
+
           </div>
 
           {/* Single-page note */}
