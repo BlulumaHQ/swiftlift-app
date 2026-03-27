@@ -29,6 +29,8 @@ import reviewSlideChicagoboxing from "@/assets/swiftlift-review-slide-chicagobox
 
 const PRELOADER_KEY = "swiftlift_visited";
 
+const portfolioImages = [reviewSlideGenes, reviewSlideMuttpuddles, reviewSlideChicagoboxing];
+
 const portfolioLinks = [
   { a: "https://genes-sausage-a.netlify.app/", b: "https://genes-sausage-b.netlify.app/" },
   { a: "https://mutt-puddles-dog-wash-preview-01.lovable.app/", b: "https://mutt-puddles-dog-wash-preview-02.lovable.app/" },
