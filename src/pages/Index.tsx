@@ -512,7 +512,7 @@ const IndexContent = () => {
       name: lang === "en" ? "Growth Upgrade" : "成長升級版",
       price: formatPrice(PRICING.websitePackages.multiPage[2].price),
       features: lang === "en"
-        ? ["Conversion-focused layout", "Lead generation optimization", "Higher performance structure"]
+        ? ["Conversion-focused layout built to generate leads", "Completely different design strategy from Makeover", "Stronger content flow and business positioning", "Free hosting included — built to turn visitors into enquiries"]
         : ["轉化導向版面", "潛客獲取優化", "更高性能結構"],
       highlighted: false,
     },
@@ -521,7 +521,7 @@ const IndexContent = () => {
       price: formatPrice(PRICING.websitePackages.multiPage[1].price),
       badge: lang === "en" ? "Most Popular" : "最受歡迎",
       features: lang === "en"
-        ? ["Full visual upgrade", "Improved layout & UX", "Stronger business positioning"]
+        ? ["Everything in Facelift Starter, fully polished", "Meta description, social graph & favicon setup", "Bug fixes and final refinements included", "Free hosting included — launch-ready in 3 days"]
         : ["全面視覺升級", "改進版面和用戶體驗", "更強的商業定位"],
       highlighted: true,
     },
@@ -529,7 +529,7 @@ const IndexContent = () => {
       name: lang === "en" ? "Facelift Starter" : "基礎版",
       price: formatPrice(PRICING.websitePackages.multiPage[0].price),
       features: lang === "en"
-        ? ["Clean, modern redesign", "Fast turnaround", "Essential pages"]
+        ? ["Clean, modern redesign of your existing site", "Mobile responsive & SEO-friendly structure", "Up to 7 pages", "Free hosting included — no monthly fees required"]
         : ["簡潔現代重新設計", "快速交付", "核心頁面"],
       highlighted: false,
     },
