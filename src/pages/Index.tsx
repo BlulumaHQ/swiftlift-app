@@ -785,7 +785,7 @@ const IndexContent = () => {
             </p>
             <p className="text-sm font-semibold text-foreground">
               {lang === "en" ? (
-                <>Facelift Starter — {singlePagePlans[0]?.price} · Website Makeover — {singlePagePlans[1]?.price} · Growth Upgrade — {singlePagePlans[2]?.price}</>
+                <>Growth Upgrade — {singlePagePlans[2]?.price} · Website Makeover — {singlePagePlans[1]?.price} · Facelift Starter — {singlePagePlans[0]?.price}</>
               ) : (
                 singlePagePlans.map((p, i) => (
                   <span key={i}>
