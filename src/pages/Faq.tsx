@@ -28,6 +28,10 @@ const faqItems = [
     a: { en: "We provide a free hosting option or an optional managed hosting upgrade. Hosting subscriptions begin upon activation.\n\nYou may also choose to host independently if preferred.", zh: "我们提供免费的托管方案或可选的托管主机升级。托管订阅在激活后开始。\n\n如果您愿意，也可以选择自行托管。" },
   },
   {
+    q: { en: "Can I host the website myself?", zh: "我可以自己托管网站吗？" },
+    a: { en: "Yes — if you prefer to use your own hosting, just let us know before we launch. We'll package your complete website files and send them to you as a zip file so you can deploy wherever you'd like. No lock-in, no restrictions.", zh: "可以 — 如果您更喜欢使用自己的托管，只需在启动前告知我们。我们将打包您的完整网站文件，以zip文件形式发送给您，您可以部署到任何您想要的地方。无锁定，无限制。" },
+  },
+  {
     q: { en: "What about refunds?", zh: "关于退款政策？" },
     a: { en: "Because of the structured and digital nature of our services, payments are non-refundable once development begins after preview selection.\n\nSelecting a package and submitting payment confirms approval to proceed.", zh: "由于我们服务的结构化和数字化特性，一旦在预览选择后开始开发，款项将不予退还。\n\n选择套餐并提交付款即表示确认同意继续。" },
   },
