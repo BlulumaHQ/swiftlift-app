@@ -770,7 +770,7 @@ const IndexContent = () => {
           {/* Single-page note */}
           <div className="mt-8 text-center space-y-1">
             <p className="text-sm text-muted-foreground">
-              {lang === "en" ? "Need a simple one-page website?" : "需要簡單的單頁網站？"}
+              {lang === "en" ? "Need a simple landing / one-page website?" : "需要簡單的著陸頁/單頁網站？"}
             </p>
             <p className="text-sm font-semibold text-foreground">
               {lang === "en" ? (
@@ -785,7 +785,7 @@ const IndexContent = () => {
               )}
             </p>
             <p className="text-xs text-muted-foreground">
-              {lang === "en" ? "Custom projects also available. " : "也可提供定制項目。"}
+              {lang === "en" ? "Custom projects — E-commerce, brand new websites — also available. " : "定制項目——電商、全新網站——也可提供。"}
               <Link to="/custom-brief" className="font-semibold hover:underline" style={{ color: "hsl(275 51% 46%)" }}>
                 {lang === "en" ? "Learn more →" : "了解更多 →"}
               </Link>
@@ -794,26 +794,31 @@ const IndexContent = () => {
         </div>
       </section>
 
-      {/* ═══ 4. WE HANDLE THE HARD PART ═══ */}
+      {/* ═══ 4. TURN YOUR CURRENT WEBSITE INTO SOMETHING BETTER ═══ */}
       <section className="py-16 md:py-24 bg-background">
         <div className="max-w-3xl mx-auto px-6 text-center">
           <h2 className="text-[clamp(1.8rem,4vw,2.8rem)] font-black text-foreground font-display">
-            {lang === "en" ? "We Handle the Hard Part" : "我們處理困難的部分"}
+            {lang === "en" ? "Turn Your Current Website Into Something Better" : "將您現有的網站變得更好"}
           </h2>
+          <p className="mt-3 text-base md:text-lg text-muted-foreground max-w-xl mx-auto leading-relaxed">
+            {lang === "en"
+              ? "We specialize in website makeovers and upgrades — not starting from scratch."
+              : "我們專注於網站改造和升級——不是從頭開始。"}
+          </p>
 
           <ul className="mt-8 space-y-4 text-left max-w-xl mx-auto">
             {[
               {
-                en: "Already have a website? We rebuild and launch it for you.",
-                zh: "已有網站？我們為您重建並上線。",
+                en: "We take your existing website and rebuild it into a better version.",
+                zh: "我們將您現有的網站重建為更好的版本。",
               },
               {
-                en: "Hosting, domain, and setup guidance included — no confusion.",
-                zh: "包含託管、域名和設置指導——不會混亂。",
+                en: "No complicated migration or technical hassle.",
+                zh: "沒有複雜的遷移或技術麻煩。",
               },
               {
-                en: "No forced monthly fees — you are not locked into our hosting.",
-                zh: "無強制月費——您不會被鎖定在我們的託管中。",
+                en: "We guide the setup, launch, and transition.",
+                zh: "我們指導設置、上線和過渡。",
               },
             ].map((item, i) => (
               <li key={i} className="flex items-start gap-3">
@@ -826,16 +831,15 @@ const IndexContent = () => {
           </ul>
 
           <div className="mt-10 rounded-2xl border border-border p-6 md:p-8 max-w-xl mx-auto" style={{ background: "hsl(var(--surface-sunken))" }}>
-            <div className="flex items-center justify-center gap-3 mb-3">
-              <Shield size={22} style={{ color: "hsl(275 51% 46%)" }} />
-              <span className="font-bold text-foreground font-display text-lg">
-                {lang === "en" ? "Zero Risk" : "零風險"}
-              </span>
-            </div>
-            <p className="text-base text-muted-foreground leading-relaxed">
+            <p className="text-base text-foreground leading-relaxed font-medium">
               {lang === "en"
-                ? "We build first. You review first. You only pay if you decide to move forward."
-                : "我們先建。您先審核。只有在您決定繼續時才付款。"}
+                ? "You only pay for the website — no hosting fee required."
+                : "您只需為網站付費——無需託管費用。"}
+            </p>
+            <p className="mt-3 text-base text-muted-foreground leading-relaxed">
+              {lang === "en"
+                ? "You only pay if you choose to use one of the versions we created."
+                : "只有在您選擇使用我們創建的版本時才需付款。"}
             </p>
           </div>
         </div>
