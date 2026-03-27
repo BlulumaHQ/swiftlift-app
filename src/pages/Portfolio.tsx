@@ -1,6 +1,6 @@
 import { useEffect, useState, useRef, useCallback } from "react";
 import { Link } from "react-router-dom";
-import { LanguageProvider } from "@/contexts/LanguageContext";
+import { LanguageProvider, useLanguage } from "@/contexts/LanguageContext";
 import { useIsMobile } from "@/hooks/use-mobile";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
@@ -50,18 +50,42 @@ import portfolioWestsideB from "@/assets/portfolio-westside-medical-b.webp";
 import portfolioYangHealthA from "@/assets/portfolio-yang-health-a.webp";
 import portfolioYangHealthB from "@/assets/portfolio-yang-health-b.webp";
 
+type TBlock = { en: string; zh: string };
+const T = (b: TBlock, lang: string) => (lang === "zh" ? b.zh : b.en);
+
+/* ── Page-level translations ── */
+const ptx = {
+  badge: { en: "Portfolio", zh: "作品集" },
+  heroH1: { en: "Real Website Transformations", zh: "真實網站改版成果" },
+  heroSub: { en: "Compare two preview versions. See what clients chose. Explore real results.", zh: "比較兩個 Preview 版本。了解客戶的選擇。探索真實成果。" },
+  heroSub2: { en: "From outdated websites to modern, high-performing experiences.", zh: "從過時的網站到現代化、高效能的體驗。" },
+  featuredH2: { en: "Featured Transformations", zh: "精選改版案例" },
+  featuredSub: { en: "Full before → after breakdowns with preview versions and client feedback.", zh: "完整的改版前→改版後解析，包含 Preview 版本與客戶回饋。" },
+  moreH2: { en: "More Projects", zh: "更多專案" },
+  moreSub: { en: "Hover over Preview A or B to see each direction. Click to open the live preview.", zh: "將滑鼠移到 Preview A 或 B 上查看不同方向。點擊開啟即時預覽。" },
+  ctaH2: { en: "Get Your 2 Free Website Previews", zh: "獲取您的2個免費網站預覽" },
+  ctaSub: { en: "See your new website before making any payment.", zh: "付款前先看到您的新網站。" },
+  ctaBtn: { en: "Get My 2 Free Previews", zh: "獲取我的2個免費預覽" },
+  before: { en: "Before", zh: "改版前" },
+  finalVersion: { en: "Final Selected Version", zh: "最終選定版本" },
+  openA: { en: "Open Live Preview A", zh: "開啟即時 Preview A" },
+  openB: { en: "Open Live Preview B", zh: "開啟即時 Preview B" },
+  versionA: { en: "Version A", zh: "Version A" },
+  versionB: { en: "Version B", zh: "Version B" },
+};
+
 /* ── Featured Case Data ── */
 
 interface FeaturedCase {
   company: string;
-  industry: string;
-  description: string;
-  beforeSummary: string;
+  industry: TBlock;
+  description: TBlock;
+  beforeSummary: TBlock;
   previewA: string;
   previewB: string;
   selectedVersion: "A" | "B";
-  selectedLabel: string;
-  testimonial: string;
+  selectedLabel: TBlock;
+  testimonial: TBlock;
   testimonialAuthor: string;
   imageBefore: string;
   imageA: string;
@@ -71,15 +95,23 @@ interface FeaturedCase {
 const featuredCases: FeaturedCase[] = [
   {
     company: "Architect57",
-    industry: "Construction",
-    description: "A modern architecture firm redesign with two distinct directions: one clean professional layout and one stronger conversion-focused version.",
-    beforeSummary: "Outdated layout, weak hierarchy, and a website that did not reflect the studio's design quality.",
+    industry: { en: "Construction", zh: "建築設計" },
+    description: {
+      en: "A modern architecture firm redesign with two distinct directions: one clean professional layout and one stronger conversion-focused version.",
+      zh: "一家現代建築事務所的網站改版，提供兩個截然不同的方向：一個簡潔專業的版面，一個更強轉換導向的版本。",
+    },
+    beforeSummary: {
+      en: "Outdated layout, weak hierarchy, and a website that did not reflect the studio's design quality.",
+      zh: "過時的版面、薄弱的層次結構，網站無法反映工作室的設計品質。",
+    },
     previewA: "architect-57-a.netlify.app",
     previewB: "architect-57-b.netlify.app",
     selectedVersion: "B",
-    selectedLabel: "Version B — Conversion-Focused",
-    testimonial:
-      "Before SwiftLift, our website felt outdated and did not reflect the quality of our architecture work. The preview process made it very easy to compare two different directions side by side. Version A felt cleaner, but Version B gave us a stronger overall presentation and a more compelling first impression. The final result feels much more aligned with our brand.",
+    selectedLabel: { en: "Version B — Conversion-Focused", zh: "Version B — 轉換導向" },
+    testimonial: {
+      en: "Before SwiftLift, our website felt outdated and did not reflect the quality of our architecture work. The preview process made it very easy to compare two different directions side by side. Version A felt cleaner, but Version B gave us a stronger overall presentation and a more compelling first impression. The final result feels much more aligned with our brand.",
+      zh: "在使用 SwiftLift 之前，我們的網站感覺過時，無法反映我們建築作品的品質。Preview 流程讓我們可以輕鬆地並排比較兩個不同方向。Version A 感覺更簡潔，但 Version B 給了我們更強的整體呈現和更有說服力的第一印象。最終結果與我們的品牌更加一致。",
+    },
     testimonialAuthor: "Cary T., Architect",
     imageBefore: portfolioArchitect57Before,
     imageA: portfolioArchitect57A,
@@ -87,15 +119,23 @@ const featuredCases: FeaturedCase[] = [
   },
   {
     company: "Gene's Sausage Shop",
-    industry: "Specialty Food",
-    description: "A specialty food business redesign with a cleaner structure, better visual storytelling, and a stronger product-first presentation.",
-    beforeSummary: "An older site with limited visual impact, dated styling, and a weaker presentation of products and brand quality.",
+    industry: { en: "Specialty Food", zh: "特色食品" },
+    description: {
+      en: "A specialty food business redesign with a cleaner structure, better visual storytelling, and a stronger product-first presentation.",
+      zh: "一家特色食品企業的網站改版，結構更清晰、視覺敘事更佳，產品優先的展示更具力道。",
+    },
+    beforeSummary: {
+      en: "An older site with limited visual impact, dated styling, and a weaker presentation of products and brand quality.",
+      zh: "舊網站視覺衝擊力有限、風格過時，產品和品牌品質的展示較弱。",
+    },
     previewA: "genes-sausage-a.netlify.app",
     previewB: "genes-sausage-b.netlify.app",
     selectedVersion: "A",
-    selectedLabel: "Version A — Clean Professional",
-    testimonial:
-      "The old website no longer matched the quality of our products or brand. SwiftLift gave us two real website versions to compare, which made the decision process much easier. The new design feels much more polished, organized, and professional. It presents our business in a way that finally feels current.",
+    selectedLabel: { en: "Version A — Clean Professional", zh: "Version A — 簡潔專業" },
+    testimonial: {
+      en: "The old website no longer matched the quality of our products or brand. SwiftLift gave us two real website versions to compare, which made the decision process much easier. The new design feels much more polished, organized, and professional. It presents our business in a way that finally feels current.",
+      zh: "舊網站已不再匹配我們產品或品牌的品質。SwiftLift 提供了兩個真實的網站版本供比較，讓決策過程更加輕鬆。新設計感覺更加精緻、有條理且專業。它以一種終於跟上時代的方式展示了我們的業務。",
+    },
     testimonialAuthor: "Sarah R., Owner",
     imageBefore: portfolioGenesBefore,
     imageA: portfolioGenesA,
@@ -103,15 +143,23 @@ const featuredCases: FeaturedCase[] = [
   },
   {
     company: "Art's Automotive",
-    industry: "Auto Repair",
-    description: "An automotive service website redesign focused on clearer communication, stronger trust signals, and a more modern customer experience.",
-    beforeSummary: "Text-heavy layout, dated design, and a site structure that made services harder to understand quickly.",
+    industry: { en: "Auto Repair", zh: "汽車維修" },
+    description: {
+      en: "An automotive service website redesign focused on clearer communication, stronger trust signals, and a more modern customer experience.",
+      zh: "汽車維修服務網站改版，專注於更清晰的溝通、更強的信任信號和更現代的客戶體驗。",
+    },
+    beforeSummary: {
+      en: "Text-heavy layout, dated design, and a site structure that made services harder to understand quickly.",
+      zh: "文字密集的版面、過時的設計、難以快速理解服務內容的網站結構。",
+    },
     previewA: "arts-automotive-a.netlify.app",
     previewB: "arts-automotive-b.netlify.app",
     selectedVersion: "B",
-    selectedLabel: "Version B — Conversion-Focused",
-    testimonial:
-      "Our previous site looked old and did not communicate our services clearly. SwiftLift helped us compare two different website directions before making a decision. The updated version feels much more professional, easier to navigate, and better structured for customers who need information fast. It is a major improvement over what we had before.",
+    selectedLabel: { en: "Version B — Conversion-Focused", zh: "Version B — 轉換導向" },
+    testimonial: {
+      en: "Our previous site looked old and did not communicate our services clearly. SwiftLift helped us compare two different website directions before making a decision. The updated version feels much more professional, easier to navigate, and better structured for customers who need information fast. It is a major improvement over what we had before.",
+      zh: "我們之前的網站看起來很舊，無法清楚傳達我們的服務。SwiftLift 幫助我們在做決定前比較了兩個不同的網站方向。更新後的版本感覺更加專業、更容易瀏覽，對於需要快速獲取資訊的客戶來說結構更好。這是一個重大的改進。",
+    },
     testimonialAuthor: "David L., Manager",
     imageBefore: portfolioArtsBefore,
     imageA: portfolioArtsAV2,
@@ -123,11 +171,16 @@ const featuredCases: FeaturedCase[] = [
 type FeaturedState = "before" | "A" | "B";
 const FEATURED_STATES: FeaturedState[] = ["before", "A", "B"];
 const FEATURED_TIMINGS: Record<FeaturedState, number> = { before: 1000, A: 2800, B: 2800 };
-const FEATURED_LABELS: Record<FeaturedState, string> = { before: "Before", A: "Version A", B: "Version B" };
+const FEATURED_LABELS: Record<FeaturedState, TBlock> = {
+  before: { en: "Before", zh: "改版前" },
+  A: { en: "Version A", zh: "Version A" },
+  B: { en: "Version B", zh: "Version B" },
+};
 const FEATURED_SWIPE_THRESHOLD = 30;
 const FEATURED_RESUME_DELAY = 5000;
 
 const FeaturedCaseCard = ({ c }: { c: FeaturedCase }) => {
+  const { lang } = useLanguage();
   const isMobile = useIsMobile();
   const [activeState, setActiveState] = useState<FeaturedState>("A");
   const [isHovered, setIsHovered] = useState(false);
@@ -141,7 +194,6 @@ const FeaturedCaseCard = ({ c }: { c: FeaturedCase }) => {
     B: c.imageB,
   };
 
-  // Auto carousel with per-state timing
   useEffect(() => {
     if (isHovered) return;
     const advance = () => {
@@ -155,7 +207,6 @@ const FeaturedCaseCard = ({ c }: { c: FeaturedCase }) => {
     return () => clearInterval(id);
   }, [isHovered, activeState]);
 
-  // Mobile swipe
   const handleTouchStart = useCallback((e: React.TouchEvent) => {
     touchStart.current = { x: e.touches[0].clientX, y: e.touches[0].clientY };
   }, []);
@@ -189,7 +240,7 @@ const FeaturedCaseCard = ({ c }: { c: FeaturedCase }) => {
           <img
             key={state}
             src={images[state]}
-            alt={`${c.company} — ${FEATURED_LABELS[state]}`}
+            alt={`${c.company} — ${T(FEATURED_LABELS[state], lang)}`}
             className="absolute inset-0 w-full h-full object-cover"
             style={{
               opacity: activeState === state ? 1 : 0,
@@ -198,7 +249,6 @@ const FeaturedCaseCard = ({ c }: { c: FeaturedCase }) => {
             }}
           />
         ))}
-        {/* Before overlay — subtle de-emphasis */}
         <div
           className="absolute inset-0 bg-foreground/[0.12] pointer-events-none"
           style={{
@@ -206,24 +256,23 @@ const FeaturedCaseCard = ({ c }: { c: FeaturedCase }) => {
             transition: "opacity 0.7s cubic-bezier(0.4, 0, 0.2, 1)",
           }}
         />
-        {/* State badge */}
         <span className="absolute left-1/2 -translate-x-1/2 top-[14%] z-10 rounded-full bg-[#0a1e4a]/35 backdrop-blur-lg px-4 py-1.5 text-[10px] font-semibold uppercase tracking-widest text-white/90 shadow-md ring-1 ring-white/10 transition-all duration-300">
-          {FEATURED_LABELS[activeState]}
+          {T(FEATURED_LABELS[activeState], lang)}
         </span>
       </div>
 
       <div className="bg-[hsl(var(--surface-sunken))] px-5 py-4 border-b border-border">
         <span className="text-[10px] font-semibold uppercase tracking-widest text-[hsl(var(--accent-purple))]">
-          {c.industry}
+          {T(c.industry, lang)}
         </span>
         <h3 className="text-base font-bold text-foreground mt-1">{c.company}</h3>
-        <p className="mt-1 text-xs text-muted-foreground leading-relaxed">{c.description}</p>
+        <p className="mt-1 text-xs text-muted-foreground leading-relaxed">{T(c.description, lang)}</p>
       </div>
 
       <div className="p-5 space-y-4 flex-1 flex flex-col">
         <div>
-          <p className="text-[10px] font-semibold uppercase tracking-widest text-muted-foreground mb-1">Before</p>
-          <p className="text-xs text-muted-foreground italic">{c.beforeSummary}</p>
+          <p className="text-[10px] font-semibold uppercase tracking-widest text-muted-foreground mb-1">{T(ptx.before, lang)}</p>
+          <p className="text-xs text-muted-foreground italic">{T(c.beforeSummary, lang)}</p>
         </div>
 
         <div className="grid grid-cols-3 gap-2">
@@ -234,7 +283,7 @@ const FeaturedCaseCard = ({ c }: { c: FeaturedCase }) => {
             onMouseLeave={handleHoverEnd}
             onClick={() => setBeforeModalOpen(true)}
           >
-            <Eye className="w-2.5 h-2.5" /> Before
+            <Eye className="w-2.5 h-2.5" /> {T(ptx.before, lang)}
           </button>
           <a
             href={`https://${c.previewA}`}
@@ -262,18 +311,18 @@ const FeaturedCaseCard = ({ c }: { c: FeaturedCase }) => {
 
         <div className="rounded-lg border border-[hsl(var(--accent-purple))]/20 bg-[hsl(var(--accent-purple))]/[0.03] p-3">
           <p className="text-[10px] font-semibold uppercase tracking-widest text-[hsl(var(--accent-purple))] mb-1">
-            Final Selected Version
+            {T(ptx.finalVersion, lang)}
           </p>
           <p className="text-xs font-bold text-foreground flex items-center gap-1">
             <Star className="w-3 h-3 fill-current text-[hsl(var(--accent-purple))]" />
-            {c.selectedLabel}
+            {T(c.selectedLabel, lang)}
           </p>
         </div>
 
         <div className="flex gap-2 pt-1 mt-auto">
           <Quote className="w-4 h-4 text-[hsl(var(--accent-purple))] shrink-0 mt-0.5" />
           <div>
-            <p className="text-xs text-foreground leading-relaxed italic">"{c.testimonial}"</p>
+            <p className="text-xs text-foreground leading-relaxed italic">"{T(c.testimonial, lang)}"</p>
             <p className="mt-1.5 text-[11px] font-semibold text-muted-foreground inline-flex items-center gap-1.5">
               {c.testimonialAuthor}
               <span className="inline-flex gap-0.5">
@@ -286,10 +335,9 @@ const FeaturedCaseCard = ({ c }: { c: FeaturedCase }) => {
         </div>
       </div>
 
-      {/* Before Image Modal */}
       <Dialog open={beforeModalOpen} onOpenChange={setBeforeModalOpen}>
         <DialogContent className="max-w-4xl w-[90vw] p-0 border-none bg-transparent shadow-none [&>button]:hidden">
-          <DialogTitle className="sr-only">{c.company} — Before</DialogTitle>
+          <DialogTitle className="sr-only">{c.company} — {T(ptx.before, lang)}</DialogTitle>
           <div className="relative">
             <button
               type="button"
@@ -300,7 +348,7 @@ const FeaturedCaseCard = ({ c }: { c: FeaturedCase }) => {
             </button>
             <img
               src={c.imageBefore}
-              alt={`${c.company} — Before`}
+              alt={`${c.company} — ${T(ptx.before, lang)}`}
               className="w-full h-auto max-h-[85vh] object-contain rounded-lg"
             />
           </div>
@@ -314,8 +362,8 @@ const FeaturedCaseCard = ({ c }: { c: FeaturedCase }) => {
 
 interface GridCase {
   company: string;
-  industry: string;
-  description: string;
+  industry: TBlock;
+  description: TBlock;
   previewA: string;
   previewB: string;
   imageA?: string;
@@ -323,19 +371,19 @@ interface GridCase {
 }
 
 const gridCasesBase: GridCase[] = [
-  { company: "Chicago Boxing Club", industry: "Boxing Gym", description: "High-energy fitness site designed to improve trial sign-ups and class discovery.", previewA: "https://chicagoboxingclub-preveiw-01.lovable.app/", previewB: "https://chicagoboxingclub-preveiw-02.lovable.app/", imageA: portfolioChicagoA, imageB: portfolioChicagoB },
-  { company: "One Park Home", industry: "Real Estate", description: "Luxury real estate presentation with a more polished property-first experience.", previewA: "https://one-park-home-preview-01.lovable.app/", previewB: "https://one-park-home-concept-preview.lovable.app/", imageA: portfolioOneParkA, imageB: portfolioOneParkB },
-  { company: "Friendly Dental Centre", industry: "Dental Clinic", description: "Modern dental website focused on trust, clarity, and stronger appointment conversion.", previewA: "https://friendly-dental-centre-preview.lovable.app/", previewB: "https://friendly-dental-preview-02.lovable.app/", imageA: portfolioDentalA, imageB: portfolioDentalB },
-  { company: "Studio 21 Salon Spa", industry: "Salon & Spa", description: "Beauty-focused redesign with cleaner service presentation and more premium visual balance.", previewA: "https://studio-21-salon-spa-a.netlify.app/", previewB: "https://studio-21-salon-spa-b.netlify.app/", imageA: portfolioStudio21A, imageB: portfolioStudio21B },
-  { company: "Presotea", industry: "Beverage Brand", description: "Franchise-style beverage website with stronger menu visibility and cleaner brand execution.", previewA: "https://presotea.bluluma.com/", previewB: "https://presotea-b.netlify.app/", imageA: portfolioPresoteaA, imageB: portfolioPresoteaB },
-  { company: "Styles Hair Salon", industry: "Hair Salon", description: "Service-based salon redesign built for cleaner browsing and better appointment intent.", previewA: "https://styles-hair-salon-a.netlify.app/", previewB: "https://styles-hair-salon-b.netlify.app/", imageA: portfolioStylesHairA, imageB: portfolioStylesHairB },
-  { company: "Yang Health Therapeutic", industry: "Wellness", description: "Calm, trust-focused wellness design with improved service clarity and stronger credibility.", previewA: "https://yang-health-therapeutic.bluluma.com/", previewB: "https://yang-health-therapeutic-b.netlify.app/", imageA: portfolioYangHealthA, imageB: portfolioYangHealthB },
-  { company: "Unity Tattoo", industry: "Tattoo Studio", description: "Visual-first redesign with stronger portfolio presentation and better inquiry flow.", previewA: "https://unity-tattoo.bluluma.com/", previewB: "https://unity-tattoo-b.netlify.app/", imageA: portfolioUnityTattooA, imageB: portfolioUnityTattooB },
-  { company: "Nuera Nutra", industry: "Nutrition", description: "Supplement brand concept with cleaner product structure and more modern trust signals.", previewA: "https://nueranutra.bluluma.com/", previewB: "https://nueranutra-preveiw-02.netlify.app/", imageA: portfolioNueraA, imageB: portfolioNueraB },
-  { company: "Phoenix Remodel", industry: "Home Remodeling", description: "Contractor website redesign with clearer service hierarchy and stronger lead intent.", previewA: "https://phoenix-remodel-a.netlify.app/", previewB: "https://phoenix-remodel-b.netlify.app/", imageA: portfolioPhoenixA, imageB: portfolioPhoenixB },
-  { company: "Westside Medical Associates", industry: "Medical", description: "Professional healthcare presentation with better structure and more trustworthy messaging.", previewA: "https://westside-medical-associates-a.netlify.app/", previewB: "https://westside-medical-associates-b.netlify.app/", imageA: portfolioWestsideA, imageB: portfolioWestsideB },
-  { company: "HSIN HSIN", industry: "Trade Show & Branding", description: "Brand-forward business website with stronger positioning and cleaner corporate presentation.", previewA: "https://hsinhsin.ca/", previewB: "https://hsin-hsin-b.netlify.app/", imageA: portfolioHsinA, imageB: portfolioHsinB },
-  { company: "HH Nexus Capital", industry: "Capital / Finance", description: "Corporate finance website with improved professionalism, hierarchy, and investor-facing clarity.", previewA: "https://hh-nexus-capital-a.netlify.app/", previewB: "https://hh-nexus-capital-b.netlify.app/", imageA: portfolioHHNexusA, imageB: portfolioHHNexusB },
+  { company: "Chicago Boxing Club", industry: { en: "Boxing Gym", zh: "拳擊健身房" }, description: { en: "High-energy fitness site designed to improve trial sign-ups and class discovery.", zh: "高能量健身網站，旨在提高試用報名和課程發現率。" }, previewA: "https://chicagoboxingclub-preveiw-01.lovable.app/", previewB: "https://chicagoboxingclub-preveiw-02.lovable.app/", imageA: portfolioChicagoA, imageB: portfolioChicagoB },
+  { company: "One Park Home", industry: { en: "Real Estate", zh: "房地產" }, description: { en: "Luxury real estate presentation with a more polished property-first experience.", zh: "豪華房地產展示，提供更精緻的物業優先體驗。" }, previewA: "https://one-park-home-preview-01.lovable.app/", previewB: "https://one-park-home-concept-preview.lovable.app/", imageA: portfolioOneParkA, imageB: portfolioOneParkB },
+  { company: "Friendly Dental Centre", industry: { en: "Dental Clinic", zh: "牙科診所" }, description: { en: "Modern dental website focused on trust, clarity, and stronger appointment conversion.", zh: "現代牙科網站，專注於信任、清晰度和更強的預約轉換。" }, previewA: "https://friendly-dental-centre-preview.lovable.app/", previewB: "https://friendly-dental-preview-02.lovable.app/", imageA: portfolioDentalA, imageB: portfolioDentalB },
+  { company: "Studio 21 Salon Spa", industry: { en: "Salon & Spa", zh: "美容沙龍" }, description: { en: "Beauty-focused redesign with cleaner service presentation and more premium visual balance.", zh: "以美容為核心的改版，服務展示更清晰，視覺平衡更具高級感。" }, previewA: "https://studio-21-salon-spa-a.netlify.app/", previewB: "https://studio-21-salon-spa-b.netlify.app/", imageA: portfolioStudio21A, imageB: portfolioStudio21B },
+  { company: "Presotea", industry: { en: "Beverage Brand", zh: "飲品品牌" }, description: { en: "Franchise-style beverage website with stronger menu visibility and cleaner brand execution.", zh: "連鎖風格飲品網站，菜單可見度更高，品牌呈現更乾淨。" }, previewA: "https://presotea.bluluma.com/", previewB: "https://presotea-b.netlify.app/", imageA: portfolioPresoteaA, imageB: portfolioPresoteaB },
+  { company: "Styles Hair Salon", industry: { en: "Hair Salon", zh: "髮廊" }, description: { en: "Service-based salon redesign built for cleaner browsing and better appointment intent.", zh: "以服務為核心的髮廊改版，瀏覽更清晰、預約意圖更強。" }, previewA: "https://styles-hair-salon-a.netlify.app/", previewB: "https://styles-hair-salon-b.netlify.app/", imageA: portfolioStylesHairA, imageB: portfolioStylesHairB },
+  { company: "Yang Health Therapeutic", industry: { en: "Wellness", zh: "健康養生" }, description: { en: "Calm, trust-focused wellness design with improved service clarity and stronger credibility.", zh: "平靜、注重信任的健康養生設計，服務更清晰、可信度更強。" }, previewA: "https://yang-health-therapeutic.bluluma.com/", previewB: "https://yang-health-therapeutic-b.netlify.app/", imageA: portfolioYangHealthA, imageB: portfolioYangHealthB },
+  { company: "Unity Tattoo", industry: { en: "Tattoo Studio", zh: "刺青工作室" }, description: { en: "Visual-first redesign with stronger portfolio presentation and better inquiry flow.", zh: "視覺優先的改版，作品展示更強、詢問流程更順暢。" }, previewA: "https://unity-tattoo.bluluma.com/", previewB: "https://unity-tattoo-b.netlify.app/", imageA: portfolioUnityTattooA, imageB: portfolioUnityTattooB },
+  { company: "Nuera Nutra", industry: { en: "Nutrition", zh: "營養保健" }, description: { en: "Supplement brand concept with cleaner product structure and more modern trust signals.", zh: "保健品牌概念，產品結構更清晰，信任信號更現代化。" }, previewA: "https://nueranutra.bluluma.com/", previewB: "https://nueranutra-preveiw-02.netlify.app/", imageA: portfolioNueraA, imageB: portfolioNueraB },
+  { company: "Phoenix Remodel", industry: { en: "Home Remodeling", zh: "室內改造" }, description: { en: "Contractor website redesign with clearer service hierarchy and stronger lead intent.", zh: "承包商網站改版，服務層次更清晰、獲取客戶意圖更強。" }, previewA: "https://phoenix-remodel-a.netlify.app/", previewB: "https://phoenix-remodel-b.netlify.app/", imageA: portfolioPhoenixA, imageB: portfolioPhoenixB },
+  { company: "Westside Medical Associates", industry: { en: "Medical", zh: "醫療" }, description: { en: "Professional healthcare presentation with better structure and more trustworthy messaging.", zh: "專業醫療展示，結構更好、訊息更值得信賴。" }, previewA: "https://westside-medical-associates-a.netlify.app/", previewB: "https://westside-medical-associates-b.netlify.app/", imageA: portfolioWestsideA, imageB: portfolioWestsideB },
+  { company: "HSIN HSIN", industry: { en: "Trade Show & Branding", zh: "展覽與品牌" }, description: { en: "Brand-forward business website with stronger positioning and cleaner corporate presentation.", zh: "品牌優先的企業網站，定位更強、企業展示更乾淨。" }, previewA: "https://hsinhsin.ca/", previewB: "https://hsin-hsin-b.netlify.app/", imageA: portfolioHsinA, imageB: portfolioHsinB },
+  { company: "HH Nexus Capital", industry: { en: "Capital / Finance", zh: "資本 / 金融" }, description: { en: "Corporate finance website with improved professionalism, hierarchy, and investor-facing clarity.", zh: "企業金融網站，專業度、層次感和面向投資者的清晰度均有提升。" }, previewA: "https://hh-nexus-capital-a.netlify.app/", previewB: "https://hh-nexus-capital-b.netlify.app/", imageA: portfolioHHNexusA, imageB: portfolioHHNexusB },
 ];
 
 /* Shuffle helper */
@@ -354,13 +402,13 @@ const SWIPE_THRESHOLD = 30;
 const RESUME_DELAY = 5000;
 
 const GridCaseCard = ({ c }: { c: GridCase }) => {
+  const { lang } = useLanguage();
   const isMobile = useIsMobile();
   const [showVersion, setShowVersion] = useState<"A" | "B">("A");
   const imgA = c.imageA || swiftliftReviewSlide;
   const imgB = c.imageB || swiftliftFeature;
   const hasRealImages = !!(c.imageA && c.imageB);
 
-  // Mobile: auto slideshow
   const pausedUntil = useRef(0);
   useEffect(() => {
     if (!isMobile) return;
@@ -371,7 +419,6 @@ const GridCaseCard = ({ c }: { c: GridCase }) => {
     return () => clearInterval(id);
   }, [isMobile]);
 
-  // Mobile: swipe gesture
   const touchStart = useRef<{ x: number; y: number } | null>(null);
   const handleTouchStart = useCallback((e: React.TouchEvent) => {
     touchStart.current = { x: e.touches[0].clientX, y: e.touches[0].clientY };
@@ -415,16 +462,16 @@ const GridCaseCard = ({ c }: { c: GridCase }) => {
           }}
         />
         <span className="absolute left-1/2 -translate-x-1/2 top-[14%] z-10 rounded-full bg-[#0a1e4a]/35 backdrop-blur-lg px-4 py-1.5 text-[10px] font-semibold uppercase tracking-widest text-white/90 shadow-md ring-1 ring-white/10 transition-all duration-300">
-          {showVersion === "B" ? "Version B" : "Version A"}
+          {showVersion === "B" ? T(ptx.versionB, lang) : T(ptx.versionA, lang)}
         </span>
       </div>
 
       <div className="p-4 flex flex-col flex-1">
         <span className="text-[10px] font-semibold uppercase tracking-widest text-[hsl(var(--accent-purple))]">
-          {c.industry}
+          {T(c.industry, lang)}
         </span>
         <h3 className="text-sm font-bold text-foreground mt-1 mb-1">{c.company}</h3>
-        <p className="text-xs text-muted-foreground mb-3">{c.description}</p>
+        <p className="text-xs text-muted-foreground mb-3">{T(c.description, lang)}</p>
 
         <div className="grid grid-cols-2 gap-2 mt-auto">
           <a
@@ -435,7 +482,7 @@ const GridCaseCard = ({ c }: { c: GridCase }) => {
             style={{ background: "#2DA8FF" }}
             onMouseEnter={!isMobile ? () => setShowVersion("A") : undefined}
           >
-            Open Live Preview A <ExternalLink className="w-2.5 h-2.5" />
+            {T(ptx.openA, lang)} <ExternalLink className="w-2.5 h-2.5" />
           </a>
           <a
             href={c.previewB}
@@ -445,7 +492,7 @@ const GridCaseCard = ({ c }: { c: GridCase }) => {
             style={{ background: "#2DA8FF" }}
             onMouseEnter={!isMobile ? () => setShowVersion("B") : undefined}
           >
-            Open Live Preview B <ExternalLink className="w-2.5 h-2.5" />
+            {T(ptx.openB, lang)} <ExternalLink className="w-2.5 h-2.5" />
           </a>
         </div>
       </div>
@@ -455,11 +502,14 @@ const GridCaseCard = ({ c }: { c: GridCase }) => {
 
 /* ── Page ── */
 const PortfolioContent = () => {
+  const { lang } = useLanguage();
   const [gridCases] = useState(() => shuffleArray(gridCasesBase));
 
   useEffect(() => {
-    document.title = "Portfolio — SwiftLift | Real Website Transformations";
-  }, []);
+    document.title = lang === "zh"
+      ? "作品集 — SwiftLift | 真實網站改版成果"
+      : "Portfolio — SwiftLift | Real Website Transformations";
+  }, [lang]);
 
   return (
     <div className="min-h-screen bg-background text-foreground">
@@ -470,16 +520,16 @@ const PortfolioContent = () => {
       <section className="pt-28 pb-10 sm:pt-36 sm:pb-14 px-4">
         <div className="max-w-4xl mx-auto text-center">
           <span className="inline-block rounded-full bg-[hsl(var(--accent-purple))]/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-widest text-[hsl(var(--accent-purple))] mb-4">
-            Portfolio
+            {T(ptx.badge, lang)}
           </span>
           <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black leading-[1.1] tracking-tight text-foreground mb-3">
-            Real Website Transformations
+            {T(ptx.heroH1, lang)}
           </h1>
           <p className="text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto mb-2">
-            Compare two preview versions. See what clients chose. Explore real results.
+            {T(ptx.heroSub, lang)}
           </p>
           <p className="text-sm text-muted-foreground">
-            From outdated websites to modern, high-performing experiences.
+            {T(ptx.heroSub2, lang)}
           </p>
         </div>
       </section>
@@ -488,10 +538,10 @@ const PortfolioContent = () => {
       <section className="pb-14 sm:pb-18 px-4">
         <div className="max-w-7xl mx-auto">
           <h2 className="text-xl sm:text-2xl font-bold text-foreground text-center mb-2">
-            Featured Transformations
+            {T(ptx.featuredH2, lang)}
           </h2>
           <p className="text-sm text-muted-foreground text-center mb-8 max-w-lg mx-auto">
-            Full before → after breakdowns with preview versions and client feedback.
+            {T(ptx.featuredSub, lang)}
           </p>
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-5">
             {featuredCases.map((c) => (
@@ -505,10 +555,10 @@ const PortfolioContent = () => {
       <section className="pb-14 sm:pb-18 px-4 bg-[hsl(var(--surface-sunken))]">
         <div className="max-w-6xl mx-auto pt-12 sm:pt-16">
           <h2 className="text-xl sm:text-2xl font-bold text-foreground text-center mb-2">
-            More Projects
+            {T(ptx.moreH2, lang)}
           </h2>
           <p className="text-sm text-muted-foreground text-center mb-8 max-w-lg mx-auto">
-            Hover over Preview A or B to see each direction. Click to open the live preview.
+            {T(ptx.moreSub, lang)}
           </p>
           <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-4">
             {gridCases.map((c) => (
@@ -522,16 +572,16 @@ const PortfolioContent = () => {
       <section className="py-14 sm:py-20 px-4">
         <div className="max-w-2xl mx-auto text-center">
           <h2 className="text-2xl sm:text-3xl font-black text-foreground mb-3">
-            Get Your 2 Free Website Previews
+            {T(ptx.ctaH2, lang)}
           </h2>
           <p className="text-muted-foreground mb-6">
-            See your new website before making any payment.
+            {T(ptx.ctaSub, lang)}
           </p>
           <Link
             to="/#contact"
             className="inline-flex items-center gap-2 rounded-xl bg-[hsl(var(--accent-purple))] px-8 py-3.5 text-sm font-bold text-white shadow-lg hover:opacity-90 transition-all"
           >
-            Get My 2 Free Previews
+            {T(ptx.ctaBtn, lang)}
             <ArrowRight className="w-4 h-4" />
           </Link>
         </div>
