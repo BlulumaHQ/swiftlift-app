@@ -451,7 +451,7 @@ const BundleCard = ({ bundle, lang }: { bundle: typeof bundles[number]; lang: "e
         </p>
         <p className="text-xs text-muted-foreground leading-relaxed">{T(bundle.includes, lang)}</p>
       </div>
-      <div className="mt-5 flex items-baseline gap-3">
+      <div className="mt-auto pt-5 flex items-baseline gap-3">
         <span className="text-sm text-muted-foreground line-through">{bundle.originalPrice}</span>
         <span className="text-3xl font-black text-foreground">{bundle.price}</span>
       </div>
