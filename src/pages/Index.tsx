@@ -761,7 +761,7 @@ const IndexContent = () => {
                   className="mt-6 w-full rounded-full py-3 px-4 text-sm font-bold border-2 transition-all hover:opacity-80"
                   style={{ borderColor: "hsl(275 51% 46%)", color: "hsl(275 51% 46%)" }}
                 >
-                  {lang === "en" ? "Get My 2 Free Previews" : "獲取我的2個免費預覽"}
+                  {lang === "en" ? "Get My 2 Free Website Versions" : "獲取我的2個免費網站版本"}
                 </button>
               </div>
             ))}
