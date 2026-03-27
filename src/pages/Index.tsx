@@ -773,7 +773,9 @@ const IndexContent = () => {
                   {lang === "en" ? "Get My 2 Free Website Versions" : "獲取我的2個免費網站版本"}
                 </button>
               </div>
-            ))}
+            );
+            })}
+
           </div>
 
           {/* Single-page note */}
