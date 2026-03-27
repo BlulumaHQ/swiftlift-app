@@ -801,7 +801,7 @@ const IndexContent = () => {
       </section>
 
       {/* ═══ 4. TURN YOUR CURRENT WEBSITE INTO SOMETHING BETTER ═══ */}
-      <section className="py-16 md:py-24 bg-background">
+      <section className="py-16 md:py-24 lg:py-28 bg-background">
         <div className="max-w-3xl mx-auto px-6 text-center">
           <h2 className="text-[clamp(1.8rem,4vw,2.8rem)] lg:text-[2rem] font-black text-foreground font-display">
             {lang === "en" ? "Turn Your Current Website Into Something Better" : "將您現有的網站變得更好"}
@@ -852,7 +852,7 @@ const IndexContent = () => {
       </section>
 
       {/* ═══ 5. REVIEWS ═══ */}
-      <section className="py-16 md:py-24" style={{ background: "hsl(var(--surface-sunken))" }}>
+      <section className="py-16 md:py-24 lg:py-28" style={{ background: "hsl(var(--surface-sunken))" }}>
         <div className="max-w-4xl mx-auto px-6">
           <h2 className="text-[clamp(1.8rem,4vw,2.8rem)] lg:text-[2rem] font-black text-foreground font-display text-center mb-10">
             {lang === "en" ? "What Our Clients Say" : "客戶評價"}
@@ -911,7 +911,7 @@ const IndexContent = () => {
       </section>
 
       {/* ═══ 6. FEATURED PORTFOLIO ═══ */}
-      <section className="py-16 md:py-24 bg-background">
+      <section className="py-16 md:py-24 lg:py-28 bg-background">
         <div className="max-w-6xl mx-auto px-6">
           <h2 className="text-[clamp(1.8rem,4vw,2.8rem)] lg:text-[2rem] font-black text-foreground font-display text-center">
             {lang === "en" ? "Real Website Transformations" : "真實網站改造"}
@@ -1019,7 +1019,7 @@ const IndexContent = () => {
       </section>
 
       {/* ═══ 7. FAQ ═══ */}
-      <section className="py-16 md:py-24" style={{ background: "hsl(var(--surface-sunken))" }}>
+      <section className="py-16 md:py-24 lg:py-28" style={{ background: "hsl(var(--surface-sunken))" }}>
         <div className="max-w-3xl mx-auto px-6">
           <h2 className="text-[clamp(1.8rem,4vw,2.8rem)] lg:text-[2rem] font-black text-foreground font-display text-center">
             {lang === "en" ? "Still Have Questions?" : "還有疑問？"}
