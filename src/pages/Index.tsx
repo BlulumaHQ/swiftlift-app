@@ -617,13 +617,13 @@ const IndexContent = () => {
             {/* Left: Copy */}
             <div className="text-white pt-2 lg:pt-6">
               <h1 className="text-[2.4rem] md:text-[clamp(2.8rem,5.5vw,4.2rem)] lg:text-[clamp(2.8rem,4.5vw,3.6rem)] font-black leading-[1.08] lg:leading-[1.15] font-display tracking-tight">
-                {lang === "en" ? (<>No sales calls.<br />No meetings.<br />Just 2 live<br />website&nbsp;versions.</>) : (<>無需銷售電話。<br />無需會議。<br />直接獲得2個<br />即時網站版本。</>)}
+                {lang === "en" ? (<>Turn Your Outdated<br />Website Into a<br />Conversion&nbsp;Machine.</>) : (<>將您過時的網站<br />變成轉換機器。</>)}
               </h1>
 
               <p className="mt-5 lg:mt-7 text-lg md:text-xl lg:text-[1.25rem] font-medium text-white leading-[1.5] lg:leading-[1.6] max-w-lg">
                 {lang === "en"
-                  ? "We redesign and upgrade your website into two better versions — you choose the one you like."
-                  : "我們將您的網站重新設計並升級為兩個更好的版本——您選擇喜歡的那個。"}
+                  ? "We redesign your existing site and deliver 2 live previews in 48 hours — you only pay if you love it."
+                  : "我們重新設計您的現有網站，48小時內交付2個即時預覽——滿意才付款。"}
               </p>
 
               <div className="mt-6 space-y-2">
@@ -648,8 +648,8 @@ const IndexContent = () => {
               {/* Mobile: hide bullets for shorter scroll */}
               <ul className="mt-6 space-y-2.5 hidden md:block">
                 {[
-                  lang === "en" ? "2 live website versions to compare" : "2個即時網站版本可比較",
-                  lang === "en" ? "No upfront payment required" : "無需預付款",
+                  lang === "en" ? "See 2 live redesigns before paying anything" : "付款前先看2個即時重新設計",
+                  lang === "en" ? "Built for small businesses ready to grow" : "專為準備成長的小型企業打造",
                   lang === "en" ? "Launch in 3 days if you love it" : "滿意的話3天內上線",
                 ].map((item, i) => (
                   <li key={i} className="flex items-center gap-3 text-sm text-white/80">
@@ -684,7 +684,7 @@ const IndexContent = () => {
           {/* Desktop: horizontal steps */}
           <div className="mt-14 hidden md:flex items-start justify-center gap-0">
             {[
-              { num: "1", title: lang === "en" ? "Submit Your Website" : "提交您的網站", desc: lang === "en" ? "Enter your current website or business details." : "輸入您的網站或業務信息。" },
+              { num: "1", title: lang === "en" ? "Share Your Current Website" : "分享您的現有網站", desc: lang === "en" ? "Already have a site? Perfect — paste your URL and we handle the rest." : "已有網站？完美——貼上您的網址，我們處理其餘的。" },
               { num: "2", title: lang === "en" ? "We Build 2 Live Previews" : "我們建2個即時預覽", desc: lang === "en" ? "You receive two real, working website versions." : "您收到兩個真實可運行的網站版本。" },
               { num: "3", title: lang === "en" ? "You Choose" : "您選擇", desc: lang === "en" ? "Pick the version you like — we finalize and launch it." : "選擇您喜歡的版本——我們完善並上線。" },
             ].map((s, i) => (
@@ -708,7 +708,7 @@ const IndexContent = () => {
           {/* Mobile: compact vertical */}
           <div className="mt-10 md:hidden space-y-5">
             {[
-              { num: "1", title: lang === "en" ? "Submit Your Website" : "提交您的網站", desc: lang === "en" ? "Enter your current website or business details." : "輸入您的網站或業務信息。" },
+              { num: "1", title: lang === "en" ? "Share Your Current Website" : "分享您的現有網站", desc: lang === "en" ? "Already have a site? Perfect — paste your URL and we handle the rest." : "已有網站？完美——貼上您的網址，我們處理其餘的。" },
               { num: "2", title: lang === "en" ? "We Build 2 Live Previews" : "我們建2個即時預覽", desc: lang === "en" ? "You receive two real, working website versions." : "您收到兩個真實可運行的網站版本。" },
               { num: "3", title: lang === "en" ? "You Choose" : "您選擇", desc: lang === "en" ? "Pick the version you like — we finalize and launch it." : "選擇您喜歡的版本——我們完善並上線。" },
             ].map((s, i) => (
@@ -838,6 +838,11 @@ const IndexContent = () => {
 
           <div className="mt-10 rounded-2xl border border-border p-6 md:p-8 max-w-xl mx-auto" style={{ background: "hsl(var(--surface-sunken))" }}>
             <p className="text-base text-foreground leading-relaxed font-medium">
+              {lang === "en"
+                ? "Your current website isn't broken — it's just not converting. We fix that."
+                : "您的現有網站沒有壞——只是沒有在轉換。我們來解決這個問題。"}
+            </p>
+            <p className="mt-3 text-base text-foreground leading-relaxed font-medium">
               {lang === "en"
                 ? "You only pay for the website — no hosting fee required."
                 : "您只需為網站付費——無需託管費用。"}
