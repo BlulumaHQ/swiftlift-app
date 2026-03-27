@@ -536,9 +536,9 @@ const IndexContent = () => {
   ];
 
   const singlePagePlans = [
-    { name: lang === "en" ? "Preview" : "預覽版", price: formatPrice(PRICING.websitePackages.singlePage[0].price) },
-    { name: lang === "en" ? "Launch" : "上線版", price: formatPrice(PRICING.websitePackages.singlePage[1].price) },
-    { name: lang === "en" ? "Growth" : "成長版", price: formatPrice(PRICING.websitePackages.singlePage[2].price) },
+    { name: lang === "en" ? "Basic Launch" : "基本上線", price: formatPrice(PRICING.websitePackages.singlePage[0].price) },
+    { name: lang === "en" ? "Website Makeover" : "網站改造", price: formatPrice(PRICING.websitePackages.singlePage[1].price) },
+    { name: lang === "en" ? "Growth Upgrade" : "成長升級", price: formatPrice(PRICING.websitePackages.singlePage[2].price) },
   ];
 
   const reviewItems = [
@@ -780,7 +780,7 @@ const IndexContent = () => {
             </p>
             <p className="text-sm font-semibold text-foreground">
               {lang === "en" ? (
-                <>Preview: {singlePagePlans[0]?.price} · Launch: {singlePagePlans[1]?.price} · Growth: {singlePagePlans[2]?.price}</>
+                <>Basic Launch — {singlePagePlans[0]?.price} · Website Makeover — {singlePagePlans[1]?.price} · Growth Upgrade — {singlePagePlans[2]?.price}</>
               ) : (
                 singlePagePlans.map((p, i) => (
                   <span key={i}>
@@ -921,9 +921,9 @@ const IndexContent = () => {
           </p>
 
           {/* Desktop: 3 cards in a row */}
-          <div className="mt-10 hidden md:grid grid-cols-3 gap-5">
+          <div className="mt-10 hidden md:grid grid-cols-3 gap-5 items-stretch">
             {home.portfolioItems.map((item, i) => (
-              <div key={i} className="rounded-2xl border border-border overflow-hidden bg-background shadow-sm hover:shadow-lg transition-shadow">
+              <div key={i} className="rounded-2xl border border-border overflow-hidden bg-background shadow-sm hover:shadow-lg transition-shadow flex flex-col">
                 <div className="aspect-[4/3] overflow-hidden">
                   <img
                     src={portfolioImages[i]}
@@ -932,12 +932,12 @@ const IndexContent = () => {
                     loading="lazy"
                   />
                 </div>
-                <div className="p-5">
+                <div className="p-5 flex flex-col flex-1">
                   <p className="text-xs text-muted-foreground uppercase tracking-wider font-medium">{t(item.desc, lang)}</p>
                   <h3 className="mt-1 text-base font-bold text-foreground font-display">
                     {lang === "en" ? "Website Transformation" : "網站改造"}
                   </h3>
-                  <div className="mt-3 flex gap-2">
+                  <div className="mt-auto pt-4 flex gap-2">
                     <a
                       href={portfolioLinks[i].a}
                       target="_blank"
@@ -966,7 +966,7 @@ const IndexContent = () => {
           <div className="mt-10 md:hidden overflow-x-auto scrollbar-none -mx-6 px-6">
             <div className="flex gap-4" style={{ width: "max-content" }}>
               {home.portfolioItems.map((item, i) => (
-                <div key={i} className="rounded-2xl border border-border overflow-hidden bg-background shadow-sm w-[280px] flex-shrink-0">
+                <div key={i} className="rounded-2xl border border-border overflow-hidden bg-background shadow-sm w-[280px] flex-shrink-0 flex flex-col">
                   <div className="aspect-[4/3] overflow-hidden">
                     <img
                       src={portfolioImages[i]}
@@ -975,12 +975,12 @@ const IndexContent = () => {
                       loading="lazy"
                     />
                   </div>
-                  <div className="p-4">
+                  <div className="p-4 flex flex-col flex-1">
                     <p className="text-xs text-muted-foreground uppercase tracking-wider font-medium">{t(item.desc, lang)}</p>
                     <h3 className="mt-1 text-base font-bold text-foreground font-display">
                       {lang === "en" ? "Website Transformation" : "網站改造"}
                     </h3>
-                    <div className="mt-2 flex gap-2">
+                    <div className="mt-auto pt-3 flex gap-2">
                       <a
                         href={portfolioLinks[i].a}
                         target="_blank"
