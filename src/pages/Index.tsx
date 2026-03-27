@@ -1072,7 +1072,7 @@ const IndexContent = () => {
         <div className="absolute inset-0 pointer-events-none" style={{ background: "radial-gradient(ellipse 60% 50% at 50% 40%, hsl(209 70% 30% / 0.25), transparent)" }} />
         <div className="relative max-w-2xl mx-auto px-6 text-center">
           <h2 className="text-[clamp(1.7rem,4.5vw,2.8rem)] lg:text-[2rem] font-black text-white font-display leading-tight">
-            {lang === "en" ? "No Calls. No Waiting. No Risk." : "無需電話。無需等待。無風險。"}
+            {lang === "en" ? "We Build First. You Decide After." : "我們先建站。您再決定。"}
           </h2>
           <p className="mt-4 text-white/60 text-base md:text-lg lg:text-base max-w-md mx-auto leading-relaxed">
             {lang === "en"
