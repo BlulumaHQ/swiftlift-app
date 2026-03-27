@@ -521,8 +521,8 @@ const IndexContent = () => {
       price: formatPrice(PRICING.websitePackages.multiPage[1].price),
       badge: lang === "en" ? "Most Popular" : "最受歡迎",
       features: lang === "en"
-        ? ["Everything in Facelift Starter, fully polished", "Meta description, social graph & favicon setup", "Bug fixes and final refinements included", "Free hosting included — launch-ready in 3 days"]
-        : ["包含入門版的所有內容，全面精修", "Meta描述、社群預覽圖與網站圖示設定", "Bug修正與最終細節調整", "免費代管，3天內上線"],
+        ? ["Everything in Facelift Starter, fully polished", "Optimized to show up better on Google searches", "Looks great when shared on social media and messaging apps", "Fine-tuned for a stronger first impression", "Free hosting included — launch-ready in 3 days"]
+        : ["包含入門版的所有內容，全面精修", "優化後在 Google 搜尋中更容易被找到", "在社群媒體和通訊軟體分享時呈現最佳效果", "細節調校，打造更強烈的第一印象", "免費代管，3天內上線"],
       highlighted: true,
     },
     {
