@@ -611,38 +611,38 @@ const IndexContent = () => {
             {/* Left: Copy */}
             <div className="text-white pt-2 lg:pt-6">
               <h1 className="text-[2.4rem] md:text-[clamp(2.8rem,5.5vw,4.2rem)] font-black leading-[1.08] font-display tracking-tight">
-                {lang === "en" ? (<>No Calls.<br />No Waiting.<br />Just 2 Live<br />Website&nbsp;Previews.</>) : (<>無需電話。<br />無需等待。<br />直接獲得2個<br />即時網站預覽。</>)}
+                {lang === "en" ? (<>No sales calls.<br />No meetings.<br />Just 2 live<br />website&nbsp;versions.</>) : (<>無需銷售電話。<br />無需會議。<br />直接獲得2個<br />即時網站版本。</>)}
               </h1>
 
               <p className="mt-5 text-lg md:text-xl font-medium text-white leading-[1.5] max-w-lg">
                 {lang === "en"
-                  ? "We build your website first. You review it before paying anything."
-                  : "我們先建好您的網站。您在付任何費用之前先審核。"}
+                  ? "We redesign and upgrade your website into two better versions — you choose the one you like."
+                  : "我們將您的網站重新設計並升級為兩個更好的版本——您選擇喜歡的那個。"}
               </p>
 
               <div className="mt-6 space-y-2">
                 <p className="text-base md:text-lg text-white/90 font-semibold">
                   {lang === "en"
-                    ? "2 free previews. Launch packages start at $299."
-                    : "2個免費預覽。上線套餐起價$299。"}
+                    ? "Free to review. Packages start at $299."
+                    : "免費審核。套餐起價$299。"}
                 </p>
                 <p className="text-sm md:text-base text-white/70">
                   {lang === "en"
-                    ? "No monthly fees required."
-                    : "無需每月付費。"}
+                    ? "No monthly hosting fees required."
+                    : "無需每月託管費用。"}
                 </p>
               </div>
 
               <p className="mt-5 text-sm text-white/50">
                 {lang === "en"
-                  ? "Already have a website? We handle the rebuild and setup for you."
-                  : "已有網站？我們為您處理重建和設置。"}
+                  ? "We specialize in website makeovers — we rebuild and upgrade your existing site into something better."
+                  : "我們專注於網站改造——將您現有的網站重建升級為更好的版本。"}
               </p>
 
               {/* Mobile: hide bullets for shorter scroll */}
               <ul className="mt-6 space-y-2.5 hidden md:block">
                 {[
-                  lang === "en" ? "2 live website previews to compare" : "2個即時網站預覽可比較",
+                  lang === "en" ? "2 live website versions to compare" : "2個即時網站版本可比較",
                   lang === "en" ? "No upfront payment required" : "無需預付款",
                   lang === "en" ? "Launch in 3 days if you love it" : "滿意的話3天內上線",
                 ].map((item, i) => (
@@ -657,7 +657,7 @@ const IndexContent = () => {
             {/* Right: Intake Form */}
             <div className="bg-background rounded-2xl p-7 md:p-10 border border-border/50 shadow-[0_25px_60px_-12px_rgba(0,0,0,0.35)] lg:mt-2">
               <h3 className="text-base font-bold text-foreground font-display mb-1">
-                {lang === "en" ? "Get Your 2 Free Website Previews" : "獲取您的2個免費網站預覽"}
+                {lang === "en" ? "Get Your 2 Free Website Versions" : "獲取您的2個免費網站版本"}
               </h3>
               <p className="text-xs text-muted-foreground mb-5">
                 {lang === "en" ? "Takes less than 30 seconds. No commitment." : "不到30秒。無需承諾。"}
@@ -680,7 +680,7 @@ const IndexContent = () => {
             {[
               { num: "1", title: lang === "en" ? "Submit Your Website" : "提交您的網站", desc: lang === "en" ? "Enter your current website or business details." : "輸入您的網站或業務信息。" },
               { num: "2", title: lang === "en" ? "We Build 2 Live Previews" : "我們建2個即時預覽", desc: lang === "en" ? "You receive two real, working website versions." : "您收到兩個真實可運行的網站版本。" },
-              { num: "3", title: lang === "en" ? "You Decide" : "您做決定", desc: lang === "en" ? "Choose your preferred version and we launch it." : "選擇您喜歡的版本，我們幫您上線。" },
+              { num: "3", title: lang === "en" ? "You Choose" : "您選擇", desc: lang === "en" ? "Pick the version you like — we finalize and launch it." : "選擇您喜歡的版本——我們完善並上線。" },
             ].map((s, i) => (
               <div key={i} className="flex items-start">
                 <div className="flex flex-col items-center text-center max-w-[220px]">
@@ -704,7 +704,7 @@ const IndexContent = () => {
             {[
               { num: "1", title: lang === "en" ? "Submit Your Website" : "提交您的網站", desc: lang === "en" ? "Enter your current website or business details." : "輸入您的網站或業務信息。" },
               { num: "2", title: lang === "en" ? "We Build 2 Live Previews" : "我們建2個即時預覽", desc: lang === "en" ? "You receive two real, working website versions." : "您收到兩個真實可運行的網站版本。" },
-              { num: "3", title: lang === "en" ? "You Decide" : "您做決定", desc: lang === "en" ? "Choose your preferred version and we launch it." : "選擇您喜歡的版本，我們幫您上線。" },
+              { num: "3", title: lang === "en" ? "You Choose" : "您選擇", desc: lang === "en" ? "Pick the version you like — we finalize and launch it." : "選擇您喜歡的版本——我們完善並上線。" },
             ].map((s, i) => (
               <div key={i} className="flex items-start gap-4 text-left">
                 <span className="w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold text-white flex-shrink-0" style={{ background: "hsl(275 51% 46%)" }}>
