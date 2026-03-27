@@ -1054,8 +1054,8 @@ const IndexContent = () => {
           </h2>
           <p className="mt-4 text-white/60 text-base md:text-lg max-w-md mx-auto leading-relaxed">
             {lang === "en"
-              ? "Get 2 free design previews and decide with confidence — before spending a dollar."
-              : "獲取2個免費設計預覽，在花一分錢之前自信決策。"}
+              ? "Get 2 free website versions and decide with confidence — before spending a dollar."
+              : "獲取2個免費網站版本，在花一分錢之前自信決策。"}
           </p>
           <div className="mt-10 max-w-xl mx-auto text-left">
             <MultiStepIntake variant="cta" />
