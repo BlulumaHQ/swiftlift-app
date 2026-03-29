@@ -935,13 +935,12 @@ const IndexContent = () => {
           <div className="hidden md:block">
             <div className="grid grid-cols-3 gap-5 items-start">
               {(() => {
-                const startIdx = reviewIdx * 3;
+                const startIdx = reviewPage * 3;
                 const visible = reviewItems.slice(startIdx, startIdx + 3);
-                // If not enough items for a full page, wrap around
                 const cards = visible.length === 3 ? visible : [...visible, ...reviewItems.slice(0, 3 - visible.length)];
                 return cards.map((item, ci) => (
                   <motion.div
-                    key={`${reviewIdx}-${ci}`}
+                    key={`${reviewPage}-${ci}`}
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.4, delay: ci * 0.1 }}
@@ -967,16 +966,19 @@ const IndexContent = () => {
             </div>
             {/* Dots for desktop pages */}
             <div className="flex justify-center gap-2 mt-8">
-              {Array.from({ length: Math.ceil(reviewItems.length / 3) }).map((_, i) => (
+              {Array.from({ length: totalPages }).map((_, i) => (
                 <button
                   key={i}
                   onClick={() => {
-                    setReviewIdx(i);
+                    setReviewPage(i);
                     clearInterval(reviewAutoRef.current);
-                    reviewAutoRef.current = setInterval(() => setReviewIdx((j) => (j + 1) % Math.ceil(reviewItems.length / 3)), 5000);
+                    reviewAutoRef.current = setInterval(() => {
+                      setReviewIdx((j) => (j + 1) % totalReviews);
+                      setReviewPage((p) => (p + 1) % totalPages);
+                    }, 5000);
                   }}
-                  className={`w-2.5 h-2.5 rounded-full transition-all ${i === reviewIdx ? "scale-125" : "opacity-30"}`}
-                  style={{ background: i === reviewIdx ? "hsl(275 51% 46%)" : "hsl(var(--muted-foreground))" }}
+                  className={`w-2.5 h-2.5 rounded-full transition-all ${i === reviewPage ? "scale-125" : "opacity-30"}`}
+                  style={{ background: i === reviewPage ? "hsl(275 51% 46%)" : "hsl(var(--muted-foreground))" }}
                 />
               ))}
             </div>
