@@ -487,17 +487,18 @@ const IndexContent = () => {
   }, []);
 
   // Desktop page count and mobile total
-  const totalPages = Math.ceil(reviewItems.length / 3);
+  const totalPages = 2; // 6 testimonials / 3 per page
+  const totalReviews = 6;
   const [reviewPage, setReviewPage] = useState(0);
 
   // Auto-slide: desktop rotates pages, mobile rotates individual items
   useEffect(() => {
     reviewAutoRef.current = setInterval(() => {
-      setReviewIdx((i) => (i + 1) % reviewItems.length);
+      setReviewIdx((i) => (i + 1) % totalReviews);
       setReviewPage((p) => (p + 1) % totalPages);
     }, 5000);
     return () => clearInterval(reviewAutoRef.current);
-  }, [reviewItems.length, totalPages]);
+  }, []);
 
   const handleReviewTouchStart = (e: React.TouchEvent) => {
     touchStartX.current = e.touches[0].clientX;
@@ -505,11 +506,11 @@ const IndexContent = () => {
   const handleReviewTouchEnd = (e: React.TouchEvent) => {
     const diff = touchStartX.current - e.changedTouches[0].clientX;
     if (Math.abs(diff) > 50) {
-      if (diff > 0) setReviewIdx((i) => (i + 1) % reviewItems.length);
-      else setReviewIdx((i) => (i === 0 ? reviewItems.length - 1 : i - 1));
+      if (diff > 0) setReviewIdx((i) => (i + 1) % totalReviews);
+      else setReviewIdx((i) => (i === 0 ? totalReviews - 1 : i - 1));
       clearInterval(reviewAutoRef.current);
       reviewAutoRef.current = setInterval(() => {
-        setReviewIdx((i) => (i + 1) % reviewItems.length);
+        setReviewIdx((i) => (i + 1) % totalReviews);
         setReviewPage((p) => (p + 1) % totalPages);
       }, 5000);
     }
