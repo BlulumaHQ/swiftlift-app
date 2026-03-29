@@ -486,10 +486,11 @@ const IndexContent = () => {
     document.title = "SwiftLift — Website Makeover & Upgrade Service";
   }, []);
 
-  // Auto-slide reviews (mobile + desktop)
+  // Auto-slide reviews — cycles through all 6 items (on mobile shows 1, on desktop pages of 3)
+  const totalReviews = 6;
   useEffect(() => {
     reviewAutoRef.current = setInterval(() => {
-      setReviewIdx((i) => (i + 1) % 3);
+      setReviewIdx((i) => (i + 1) % totalReviews);
     }, 5000);
     return () => clearInterval(reviewAutoRef.current);
   }, []);
@@ -500,10 +501,10 @@ const IndexContent = () => {
   const handleReviewTouchEnd = (e: React.TouchEvent) => {
     const diff = touchStartX.current - e.changedTouches[0].clientX;
     if (Math.abs(diff) > 50) {
-      if (diff > 0) setReviewIdx((i) => (i + 1) % 3);
-      else setReviewIdx((i) => (i === 0 ? 2 : i - 1));
+      if (diff > 0) setReviewIdx((i) => (i + 1) % totalReviews);
+      else setReviewIdx((i) => (i === 0 ? totalReviews - 1 : i - 1));
       clearInterval(reviewAutoRef.current);
-      reviewAutoRef.current = setInterval(() => setReviewIdx((i) => (i + 1) % 3), 5000);
+      reviewAutoRef.current = setInterval(() => setReviewIdx((i) => (i + 1) % totalReviews), 5000);
     }
   };
 
