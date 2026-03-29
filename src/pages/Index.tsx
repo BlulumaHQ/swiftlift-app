@@ -763,6 +763,11 @@ const IndexContent = () => {
           <p className="mt-2 text-muted-foreground text-sm text-center max-w-lg mx-auto">
             {lang === "en" ? "You only pay after you've seen your previews and feel confident." : "只有在看過預覽並有信心後才付款。"}
           </p>
+          <p className="mt-3 text-muted-foreground text-xs text-center max-w-2xl mx-auto">
+            {lang === "en"
+              ? "Other services charge $199 for 3 pages with surprise add-ons later. We show you 2 complete websites first — you only pay if you love it."
+              : "其他服務收費 $199 做 3 頁，之後還有額外收費。我們先展示 2 個完整網站——滿意才付款。"}
+          </p>
 
           {/* Pricing cards */}
           <div className="mt-10 grid grid-cols-1 md:grid-cols-3 gap-5">
