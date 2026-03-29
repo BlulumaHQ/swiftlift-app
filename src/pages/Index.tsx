@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, useCallback, useMemo } from "react";
+import React, { useEffect, useRef, useState, useCallback, useMemo } from "react";
 import { useSearchParams, Link } from "react-router-dom";
 import { PRICING, formatPrice } from "@/lib/pricing";
 import { LanguageProvider, useLanguage } from "@/contexts/LanguageContext";
@@ -704,50 +704,85 @@ const IndexContent = () => {
 
       {/* ═══ 2. HOW IT WORKS ═══ */}
       <section id="process" className="py-16 md:py-24 lg:py-28 bg-background">
-        <div className="max-w-5xl mx-auto px-6 text-center">
+        <div className="max-w-6xl mx-auto px-6 text-center">
           <h2 className="text-[clamp(1.8rem,4vw,2.8rem)] lg:text-[2rem] font-black text-foreground font-display">
             {lang === "en" ? "How It Works" : "如何運作"}
           </h2>
 
+          <p className="mt-6 text-muted-foreground text-sm md:text-base text-center max-w-2xl mx-auto leading-relaxed">
+            {lang === "en"
+              ? "Other services charge upfront for a few pages and add surprise fees later. We build 2 complete website previews first — you only pay if you love them."
+              : "其他服務先收費做幾頁，之後再加額外費用。我們先建好 2 個完整網站預覽——滿意才付款。"}
+          </p>
+
           {/* Desktop: horizontal steps */}
-          <div className="mt-14 hidden md:flex items-start justify-center gap-0">
+          <div className="mt-16 hidden md:grid grid-cols-[1fr_auto_1fr_auto_1fr] items-start gap-0">
             {[
               { num: "1", title: lang === "en" ? "Share Your Current Website" : "分享您的現有網站", desc: lang === "en" ? "Already have a site? Perfect — paste your URL and we handle the rest." : "已有網站？完美——貼上您的網址，我們處理其餘的。" },
-              { num: "2", title: lang === "en" ? "We Build 2 Live Previews" : "我們建2個即時預覽", desc: lang === "en" ? "You receive two real, working website versions." : "您收到兩個真實可運行的網站版本。" },
-              { num: "3", title: lang === "en" ? "You Choose" : "您選擇", desc: lang === "en" ? "Pick the version you like within 48 hours — we finalize and launch it." : "48小時內選擇您喜歡的版本——我們完善並上線。" },
+              { num: "2", title: lang === "en" ? "We Build 2 Live Previews" : "我們建2個即時預覽", desc: lang === "en" ? "You receive two real, working website versions you can click through." : "您收到兩個真實可點擊瀏覽的網站版本。" },
+              { num: "3", title: lang === "en" ? "You Choose & We Launch" : "您選擇，我們上線", desc: lang === "en" ? "Pick the version you like within 48 hours — we finalize and launch it." : "48小時內選擇您喜歡的版本——我們完善並上線。" },
             ].map((s, i) => (
-              <div key={i} className="flex items-start">
-                <div className="flex flex-col items-center text-center max-w-[220px]">
-                  <span className="w-12 h-12 rounded-full flex items-center justify-center text-base font-bold text-white" style={{ background: "hsl(275 51% 46%)" }}>
+              <React.Fragment key={i}>
+                <div className="flex flex-col items-center text-center px-4">
+                  <div
+                    className="w-[72px] h-[72px] rounded-full flex items-center justify-center text-2xl font-black text-white shadow-lg"
+                    style={{ background: "linear-gradient(135deg, hsl(275 51% 46%), hsl(214 58% 50%))" }}
+                  >
                     {s.num}
-                  </span>
-                  <h3 className="mt-4 text-base font-bold text-foreground font-display">{s.title}</h3>
-                  <p className="mt-2 text-sm text-muted-foreground leading-relaxed">{s.desc}</p>
+                  </div>
+                  <h3 className="mt-5 text-lg font-bold text-foreground font-display leading-snug">{s.title}</h3>
+                  <p className="mt-3 text-[15px] text-muted-foreground leading-relaxed max-w-[240px]">{s.desc}</p>
                 </div>
                 {i < 2 && (
-                  <div className="flex items-center px-6 pt-5">
-                    <ArrowRight size={20} className="text-muted-foreground/30" strokeWidth={1.5} />
+                  <div className="flex items-center pt-6 px-2">
+                    <svg width="48" height="24" viewBox="0 0 48 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <defs>
+                        <linearGradient id={`arrow-grad-${i}`} x1="0" y1="12" x2="48" y2="12" gradientUnits="userSpaceOnUse">
+                          <stop stopColor="hsl(275 51% 46%)" />
+                          <stop offset="1" stopColor="hsl(214 58% 50%)" />
+                        </linearGradient>
+                      </defs>
+                      <path d="M0 12H40M40 12L30 4M40 12L30 20" stroke={`url(#arrow-grad-${i})`} strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+                    </svg>
                   </div>
                 )}
-              </div>
+              </React.Fragment>
             ))}
           </div>
 
-          {/* Mobile: compact vertical */}
-          <div className="mt-10 md:hidden space-y-5">
+          {/* Mobile: vertical steps */}
+          <div className="mt-12 md:hidden space-y-2">
             {[
               { num: "1", title: lang === "en" ? "Share Your Current Website" : "分享您的現有網站", desc: lang === "en" ? "Already have a site? Perfect — paste your URL and we handle the rest." : "已有網站？完美——貼上您的網址，我們處理其餘的。" },
-              { num: "2", title: lang === "en" ? "We Build 2 Live Previews" : "我們建2個即時預覽", desc: lang === "en" ? "You receive two real, working website versions." : "您收到兩個真實可運行的網站版本。" },
-              { num: "3", title: lang === "en" ? "You Choose" : "您選擇", desc: lang === "en" ? "Pick the version you like within 48 hours — we finalize and launch it." : "48小時內選擇您喜歡的版本——我們完善並上線。" },
+              { num: "2", title: lang === "en" ? "We Build 2 Live Previews" : "我們建2個即時預覽", desc: lang === "en" ? "You receive two real, working website versions you can click through." : "您收到兩個真實可點擊瀏覽的網站版本。" },
+              { num: "3", title: lang === "en" ? "You Choose & We Launch" : "您選擇，我們上線", desc: lang === "en" ? "Pick the version you like within 48 hours — we finalize and launch it." : "48小時內選擇您喜歡的版本——我們完善並上線。" },
             ].map((s, i) => (
-              <div key={i} className="flex items-start gap-4 text-left">
-                <span className="w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold text-white flex-shrink-0" style={{ background: "hsl(275 51% 46%)" }}>
-                  {s.num}
-                </span>
-                <div>
-                  <h3 className="text-base font-bold text-foreground font-display">{s.title}</h3>
-                  <p className="mt-1 text-sm text-muted-foreground leading-relaxed">{s.desc}</p>
+              <div key={i} className="flex flex-col items-center">
+                <div className="flex items-start gap-4 text-left w-full max-w-sm">
+                  <div
+                    className="w-12 h-12 rounded-full flex items-center justify-center text-base font-black text-white flex-shrink-0 shadow-md"
+                    style={{ background: "linear-gradient(135deg, hsl(275 51% 46%), hsl(214 58% 50%))" }}
+                  >
+                    {s.num}
+                  </div>
+                  <div className="pt-0.5">
+                    <h3 className="text-[17px] font-bold text-foreground font-display leading-snug">{s.title}</h3>
+                    <p className="mt-1.5 text-[15px] text-muted-foreground leading-relaxed">{s.desc}</p>
+                  </div>
                 </div>
+                {i < 2 && (
+                  <div className="py-2 pl-6 self-start ml-[18px]">
+                    <svg width="20" height="32" viewBox="0 0 20 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+                      <defs>
+                        <linearGradient id={`arrow-grad-m-${i}`} x1="10" y1="0" x2="10" y2="32" gradientUnits="userSpaceOnUse">
+                          <stop stopColor="hsl(275 51% 46%)" />
+                          <stop offset="1" stopColor="hsl(214 58% 50%)" />
+                        </linearGradient>
+                      </defs>
+                      <path d="M10 0V24M10 24L4 16M10 24L16 16" stroke={`url(#arrow-grad-m-${i})`} strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" />
+                    </svg>
+                  </div>
+                )}
               </div>
             ))}
           </div>
@@ -765,8 +800,8 @@ const IndexContent = () => {
           </p>
           <p className="mt-3 text-muted-foreground text-xs text-center max-w-2xl mx-auto">
             {lang === "en"
-              ? "Other services charge $199 for 3 pages with surprise add-ons later. We show you 2 complete websites first — you only pay if you love it."
-              : "其他服務收費 $199 做 3 頁，之後還有額外收費。我們先展示 2 個完整網站——滿意才付款。"}
+              ? "Other services charge upfront for a few pages and add surprise fees later. We build 2 complete website previews first — you only pay if you love them."
+              : "其他服務先收費做幾頁，之後再加額外費用。我們先建好 2 個完整網站預覽——滿意才付款。"}
           </p>
 
           {/* Pricing cards */}
