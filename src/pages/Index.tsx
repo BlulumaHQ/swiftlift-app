@@ -1023,7 +1023,10 @@ const IndexContent = () => {
                   onClick={() => {
                     setReviewIdx(i);
                     clearInterval(reviewAutoRef.current);
-                    reviewAutoRef.current = setInterval(() => setReviewIdx((j) => (j + 1) % reviewItems.length), 5000);
+                    reviewAutoRef.current = setInterval(() => {
+                      setReviewIdx((j) => (j + 1) % totalReviews);
+                      setReviewPage((p) => (p + 1) % totalPages);
+                    }, 5000);
                   }}
                   className={`w-2 h-2 rounded-full transition-all ${i === reviewIdx ? "scale-125" : "opacity-30"}`}
                   style={{ background: i === reviewIdx ? "hsl(275 51% 46%)" : "hsl(var(--muted-foreground))" }}
