@@ -692,7 +692,7 @@ const IndexContent = () => {
             {[
               { num: "1", title: lang === "en" ? "Share Your Current Website" : "分享您的現有網站", desc: lang === "en" ? "Already have a site? Perfect — paste your URL and we handle the rest." : "已有網站？完美——貼上您的網址，我們處理其餘的。" },
               { num: "2", title: lang === "en" ? "We Build 2 Live Previews" : "我們建2個即時預覽", desc: lang === "en" ? "You receive two real, working website versions." : "您收到兩個真實可運行的網站版本。" },
-              { num: "3", title: lang === "en" ? "You Choose" : "您選擇", desc: lang === "en" ? "Pick the version you like — we finalize and launch it." : "選擇您喜歡的版本——我們完善並上線。" },
+              { num: "3", title: lang === "en" ? "You Choose" : "您選擇", desc: lang === "en" ? "Pick the version you like within 48 hours — we finalize and launch it." : "48小時內選擇您喜歡的版本——我們完善並上線。" },
             ].map((s, i) => (
               <div key={i} className="flex items-start">
                 <div className="flex flex-col items-center text-center max-w-[220px]">
@@ -716,7 +716,7 @@ const IndexContent = () => {
             {[
               { num: "1", title: lang === "en" ? "Share Your Current Website" : "分享您的現有網站", desc: lang === "en" ? "Already have a site? Perfect — paste your URL and we handle the rest." : "已有網站？完美——貼上您的網址，我們處理其餘的。" },
               { num: "2", title: lang === "en" ? "We Build 2 Live Previews" : "我們建2個即時預覽", desc: lang === "en" ? "You receive two real, working website versions." : "您收到兩個真實可運行的網站版本。" },
-              { num: "3", title: lang === "en" ? "You Choose" : "您選擇", desc: lang === "en" ? "Pick the version you like — we finalize and launch it." : "選擇您喜歡的版本——我們完善並上線。" },
+              { num: "3", title: lang === "en" ? "You Choose" : "您選擇", desc: lang === "en" ? "Pick the version you like within 48 hours — we finalize and launch it." : "48小時內選擇您喜歡的版本——我們完善並上線。" },
             ].map((s, i) => (
               <div key={i} className="flex items-start gap-4 text-left">
                 <span className="w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold text-white flex-shrink-0" style={{ background: "hsl(275 51% 46%)" }}>
