@@ -486,14 +486,18 @@ const IndexContent = () => {
     document.title = "SwiftLift — Website Makeover & Upgrade Service";
   }, []);
 
-  // Auto-slide reviews — cycles through all 6 items (on mobile shows 1, on desktop pages of 3)
-  const totalReviews = 6;
+  // Desktop page count and mobile total
+  const totalPages = Math.ceil(reviewItems.length / 3);
+  const [reviewPage, setReviewPage] = useState(0);
+
+  // Auto-slide: desktop rotates pages, mobile rotates individual items
   useEffect(() => {
     reviewAutoRef.current = setInterval(() => {
-      setReviewIdx((i) => (i + 1) % totalReviews);
+      setReviewIdx((i) => (i + 1) % reviewItems.length);
+      setReviewPage((p) => (p + 1) % totalPages);
     }, 5000);
     return () => clearInterval(reviewAutoRef.current);
-  }, []);
+  }, [reviewItems.length, totalPages]);
 
   const handleReviewTouchStart = (e: React.TouchEvent) => {
     touchStartX.current = e.touches[0].clientX;
@@ -501,10 +505,13 @@ const IndexContent = () => {
   const handleReviewTouchEnd = (e: React.TouchEvent) => {
     const diff = touchStartX.current - e.changedTouches[0].clientX;
     if (Math.abs(diff) > 50) {
-      if (diff > 0) setReviewIdx((i) => (i + 1) % totalReviews);
-      else setReviewIdx((i) => (i === 0 ? totalReviews - 1 : i - 1));
+      if (diff > 0) setReviewIdx((i) => (i + 1) % reviewItems.length);
+      else setReviewIdx((i) => (i === 0 ? reviewItems.length - 1 : i - 1));
       clearInterval(reviewAutoRef.current);
-      reviewAutoRef.current = setInterval(() => setReviewIdx((i) => (i + 1) % totalReviews), 5000);
+      reviewAutoRef.current = setInterval(() => {
+        setReviewIdx((i) => (i + 1) % reviewItems.length);
+        setReviewPage((p) => (p + 1) % totalPages);
+      }, 5000);
     }
   };
 
@@ -556,7 +563,9 @@ const IndexContent = () => {
       company: lang === "en" ? "Realtor" : "房地產經紀人",
     },
     {
-      text: "設計出來我們整個團隊都很喜歡！大家快來看我們的新網站 👉 one-park-home.bluluma.com",
+      text: lang === "en"
+        ? <>設計出來我們整個團隊都很喜歡！大家快來看我們的新網站 👉 <a href="https://one-park-home.bluluma.com" target="_blank" rel="noopener noreferrer" className="underline hover:opacity-80 transition-opacity" style={{ color: "hsl(275 51% 46%)" }}>one-park-home.bluluma.com</a></>
+        : <>設計出來我們整個團隊都很喜歡！大家快來看我們的新網站 👉 <a href="https://one-park-home.bluluma.com" target="_blank" rel="noopener noreferrer" className="underline hover:opacity-80 transition-opacity" style={{ color: "hsl(275 51% 46%)" }}>one-park-home.bluluma.com</a></>,
       name: "One Park Development",
       company: lang === "en" ? "Real Estate Developer · Richmond, BC" : "房地產開發商 · 列治文, BC",
     },
