@@ -550,43 +550,41 @@ const IndexContent = () => {
   const reviewItems = [
     {
       text: lang === "en"
-        ? "We got two versions within a day. Picked one and moved forward. Way easier than freelancers."
-        : "我們一天之內就收到了兩個版本。選了一個就開始了。比自由職業者容易得多。",
+        ? "Honestly just wanted something cleaner. They sent over two options, I picked the one I liked, and that was it. No back and forth, no waiting around."
+        : "老實說就是想要更乾淨的設計。他們發了兩個選項，我選了喜歡的，就這樣。沒有來回溝通，也不用等待。",
       name: "David Chen",
       company: lang === "en" ? "Realtor" : "房地產經紀人",
     },
     {
-      text: lang === "en"
-        ? "I was embarrassed by my old site for years. SwiftLift had two new versions ready in 48 hours — I picked one and launched the same week."
-        : "多年來我一直為舊網站感到尷尬。SwiftLift在48小時內準備好了兩個新版本——我選了一個，同一週就上線了。",
-      name: "Sarah Mitchell",
-      company: lang === "en" ? "Independent Realtor · Austin, TX" : "獨立房地產經紀人 · 德州奧斯汀",
+      text: "設計出來我們整個團隊都很喜歡！大家快來看我們的新網站 👉 one-park-home.bluluma.com",
+      name: "One Park Development",
+      company: lang === "en" ? "Real Estate Developer · Richmond, BC" : "房地產開發商 · 列治文, BC",
     },
     {
       text: lang === "en"
-        ? "I already had a website but it felt outdated. They showed two upgraded versions and handled everything after that. Didn't need to deal with any tech stuff."
-        : "我已經有網站了，但感覺很過時。他們展示了兩個升級版本，之後處理了一切。不需要處理任何技術問題。",
+        ? "I loved the design so much I showed my receptionist before I even paid. We both agreed immediately. Honestly didn't expect it to be this smooth — I was ready for it to be complicated."
+        : "設計太好看了，我甚至在付款前就拿給櫃台看。我們馬上就達成一致。老實說沒想到會這麼順利——我已經做好會很複雜的心理準備了。",
       name: "Melissa Wong",
       company: lang === "en" ? "Clinic Owner" : "診所老闆",
     },
     {
       text: lang === "en"
-        ? "Honestly didn't think a dental office website could look this good without spending thousands. They showed me two completely different designs before I paid a single dollar. The whole process was smooth and way faster than I expected. My front desk staff actually said the new site looks more professional than our clinic interior!"
-        : "老實說沒想到牙科診所的網站不花幾千美金也能做得這麼好。在我付一分錢之前他們就展示了兩個完全不同的設計。整個過程很順利，比我預期的快得多。前台工作人員甚至說新網站看起來比我們診所內部還專業！",
+        ? "I went with Version A right away — didn't even need to think about it. Finally a site I'm not embarrassed to put on my business card."
+        : "我馬上就選了版本A——根本不用考慮。終於有一個不會讓我尷尬放在名片上的網站了。",
+      name: "Sarah Mitchell",
+      company: lang === "en" ? "Independent Realtor · Austin, TX" : "獨立房地產經紀人 · 德州奧斯汀",
+    },
+    {
+      text: lang === "en"
+        ? "Honestly didn't think a dental office website could look this good without spending thousands. The whole process was smooth and way faster than I expected. My front desk staff actually said the new site looks more professional than our clinic interior!"
+        : "老實說沒想到牙科診所的網站不花幾千美金也能做得這麼好。整個過程很順利，比我預期的快得多。前台工作人員甚至說新網站看起來比我們診所內部還專業！",
       name: "Dr. James Kowalski",
       company: lang === "en" ? "Family Dentistry · Columbus, OH" : "家庭牙科 · 俄亥俄州哥倫布",
     },
     {
       text: lang === "en"
-        ? "Honestly wasn't expecting much at first, but the two versions were actual working websites, not mockups. You can click through everything. We chose one, made a few adjustments, and it was ready to go. Much smoother than hiring freelancers."
-        : "老實說一開始沒抱太大期望，但兩個版本都是真正可運行的網站，不是模型。你可以點擊所有內容。我們選了一個，做了一些調整，就準備好了。比僱用自由職業者順暢得多。",
-      name: "Jason Liu",
-      company: lang === "en" ? "Restaurant Owner" : "餐廳老闆",
-    },
-    {
-      text: lang === "en"
-        ? "I've been in construction for 22 years and my website looked like it was built in 2005 — because it was. A buddy told me about SwiftLift and I figured I'd try it since I didn't have to pay upfront. They sent me two live website versions to browse on my phone, and I could actually click through everything. Picked the one that felt more like my brand, requested a couple small changes, and it was live within days. I've already had two new clients mention they found me online, which never happened before. Wish I did this years ago."
-        : "我做建築22年了，我的網站看起來像2005年建的——因為確實是。一個朋友告訴我SwiftLift，我想既然不用先付錢就試試。他們發了兩個即時網站版本讓我在手機上瀏覽，我真的可以點擊所有內容。選了那個更符合我品牌的，提了幾個小修改，幾天內就上線了。已經有兩個新客戶說他們在網上找到我的，以前從沒發生過。真希望幾年前就這樣做了。",
+        ? "I've been in construction for 22 years and my website looked like it was built in 2005 — because it was. Figured I'd try SwiftLift since I didn't have to pay upfront. They sent me two live versions to browse on my phone, I could actually click through everything. Picked the one that felt more like my brand, made a couple small tweaks, and it was live within days. I've already had two new clients mention they found me online, which never happened before. Wish I did this years ago."
+        : "我做建築22年了，我的網站看起來像2005年建的——因為確實是。想說SwiftLift不用先付錢就試試看。他們發了兩個即時版本讓我在手機上瀏覽，真的可以點擊所有內容。選了那個更符合我品牌的，做了幾個小調整，幾天內就上線了。已經有兩個新客戶說他們在網上找到我的，以前從沒發生過。真希望幾年前就這樣做了。",
       name: "Mike Hartwell",
       company: lang === "en" ? "Hartwell General Contracting · Boise, ID" : "Hartwell 綜合承包 · 愛達荷州博伊西",
     },
@@ -800,8 +798,8 @@ const IndexContent = () => {
           </p>
           <p className="mt-3 text-muted-foreground text-xs text-center max-w-2xl mx-auto">
             {lang === "en"
-              ? "Other services charge upfront for a few pages and add surprise fees later. We build 2 complete website previews first — you only pay if you love them."
-              : "其他服務先收費做幾頁，之後再加額外費用。我們先建好 2 個完整網站預覽——滿意才付款。"}
+              ? "Other services charge $199 for 3 pages with surprise add-ons later. We show you 2 complete websites first — you only pay if you love it."
+              : "其他服務收費 $199 做 3 頁，之後還有額外收費。我們先展示 2 個完整網站——滿意才付款。"}
           </p>
 
           {/* Pricing cards */}
