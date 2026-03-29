@@ -675,25 +675,6 @@ const IndexContent = () => {
                 </p>
               </div>
 
-              <p className="mt-5 text-sm text-white/50">
-                {lang === "en"
-                  ? "We specialize in website makeovers — we rebuild and upgrade your existing site into something better."
-                  : "我們專注於網站改版——將您現有的網站升級為更好的版本。"}
-              </p>
-
-              {/* Mobile: hide bullets for shorter scroll */}
-              <ul className="mt-6 space-y-2.5 hidden md:block">
-                {[
-                  lang === "en" ? "See 2 live redesigns before paying anything" : "付款前先看2個即時重新設計",
-                  lang === "en" ? "Built for small businesses ready to grow" : "專為準備成長的小型企業打造",
-                  lang === "en" ? "Launch in 3 days if you love it" : "滿意的話3天內上線",
-                ].map((item, i) => (
-                  <li key={i} className="flex items-center gap-3 text-sm text-white/80">
-                    <Check size={16} className="flex-shrink-0" style={{ color: "hsl(275 51% 46%)" }} />
-                    {item}
-                  </li>
-                ))}
-              </ul>
             </div>
 
             {/* Right: Intake Form */}
@@ -719,8 +700,8 @@ const IndexContent = () => {
 
           <p className="mt-6 text-muted-foreground text-sm md:text-base text-center max-w-2xl mx-auto leading-relaxed">
             {lang === "en"
-              ? "Other services charge upfront for a few pages and add surprise fees later. We build 2 complete website previews first — you only pay if you love them."
-              : "其他服務先收費做幾頁，之後再加額外費用。我們先建好 2 個完整網站預覽——滿意才付款。"}
+              ? "No surprise fees. No templates. Just two complete websites ready for you to choose from."
+              : "沒有隱藏費用。沒有模板。只有兩個完整的網站，供您選擇。"}
           </p>
 
           {/* Desktop: horizontal steps */}
@@ -803,9 +784,6 @@ const IndexContent = () => {
           <h2 className="text-[clamp(1.8rem,4vw,2.8rem)] lg:text-[2rem] font-black text-foreground font-display text-center">
             {lang === "en" ? "Simple, Transparent Pricing" : "簡單透明的定價"}
           </h2>
-          <p className="mt-2 text-muted-foreground text-sm text-center max-w-lg mx-auto">
-            {lang === "en" ? "You only pay after you've seen your previews and feel confident." : "只有在看過預覽並有信心後才付款。"}
-          </p>
           <p className="mt-3 text-muted-foreground text-xs text-center max-w-2xl mx-auto">
             {lang === "en"
               ? "Other services charge $199 for 3 pages with surprise add-ons later. We show you 2 complete websites first — you only pay if you love it."
