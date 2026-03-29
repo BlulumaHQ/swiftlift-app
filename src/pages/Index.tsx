@@ -551,22 +551,43 @@ const IndexContent = () => {
       text: lang === "en"
         ? "We got two versions within a day. Picked one and moved forward. Way easier than freelancers."
         : "我們一天之內就收到了兩個版本。選了一個就開始了。比自由職業者容易得多。",
-      name: lang === "en" ? "David Chen" : "David Chen",
+      name: "David Chen",
       company: lang === "en" ? "Realtor" : "房地產經紀人",
+    },
+    {
+      text: lang === "en"
+        ? "I was embarrassed by my old site for years. SwiftLift had two new versions ready in 48 hours — I picked one and launched the same week."
+        : "多年來我一直為舊網站感到尷尬。SwiftLift在48小時內準備好了兩個新版本——我選了一個，同一週就上線了。",
+      name: "Sarah Mitchell",
+      company: lang === "en" ? "Independent Realtor · Austin, TX" : "獨立房地產經紀人 · 德州奧斯汀",
     },
     {
       text: lang === "en"
         ? "I already had a website but it felt outdated. They showed two upgraded versions and handled everything after that. Didn't need to deal with any tech stuff."
         : "我已經有網站了，但感覺很過時。他們展示了兩個升級版本，之後處理了一切。不需要處理任何技術問題。",
-      name: lang === "en" ? "Melissa Wong" : "Melissa Wong",
+      name: "Melissa Wong",
       company: lang === "en" ? "Clinic Owner" : "診所老闆",
+    },
+    {
+      text: lang === "en"
+        ? "Honestly didn't think a dental office website could look this good without spending thousands. They showed me two completely different designs before I paid a single dollar. The whole process was smooth and way faster than I expected. My front desk staff actually said the new site looks more professional than our clinic interior!"
+        : "老實說沒想到牙科診所的網站不花幾千美金也能做得這麼好。在我付一分錢之前他們就展示了兩個完全不同的設計。整個過程很順利，比我預期的快得多。前台工作人員甚至說新網站看起來比我們診所內部還專業！",
+      name: "Dr. James Kowalski",
+      company: lang === "en" ? "Family Dentistry · Columbus, OH" : "家庭牙科 · 俄亥俄州哥倫布",
     },
     {
       text: lang === "en"
         ? "Honestly wasn't expecting much at first, but the two versions were actual working websites, not mockups. You can click through everything. We chose one, made a few adjustments, and it was ready to go. Much smoother than hiring freelancers."
         : "老實說一開始沒抱太大期望，但兩個版本都是真正可運行的網站，不是模型。你可以點擊所有內容。我們選了一個，做了一些調整，就準備好了。比僱用自由職業者順暢得多。",
-      name: lang === "en" ? "Jason Liu" : "Jason Liu",
+      name: "Jason Liu",
       company: lang === "en" ? "Restaurant Owner" : "餐廳老闆",
+    },
+    {
+      text: lang === "en"
+        ? "I've been in construction for 22 years and my website looked like it was built in 2005 — because it was. A buddy told me about SwiftLift and I figured I'd try it since I didn't have to pay upfront. They sent me two live website versions to browse on my phone, and I could actually click through everything. Picked the one that felt more like my brand, requested a couple small changes, and it was live within days. I've already had two new clients mention they found me online, which never happened before. Wish I did this years ago."
+        : "我做建築22年了，我的網站看起來像2005年建的——因為確實是。一個朋友告訴我SwiftLift，我想既然不用先付錢就試試。他們發了兩個即時網站版本讓我在手機上瀏覽，我真的可以點擊所有內容。選了那個更符合我品牌的，提了幾個小修改，幾天內就上線了。已經有兩個新客戶說他們在網上找到我的，以前從沒發生過。真希望幾年前就這樣做了。",
+      name: "Mike Hartwell",
+      company: lang === "en" ? "Hartwell General Contracting · Boise, ID" : "Hartwell 綜合承包 · 愛達荷州博伊西",
     },
   ];
 
@@ -856,13 +877,65 @@ const IndexContent = () => {
 
       {/* ═══ 5. REVIEWS ═══ */}
       <section className="py-16 md:py-24 lg:py-28" style={{ background: "hsl(var(--surface-sunken))" }}>
-        <div className="max-w-4xl mx-auto px-6">
+        <div className="max-w-6xl mx-auto px-6">
           <h2 className="text-[clamp(1.8rem,4vw,2.8rem)] lg:text-[2rem] font-black text-foreground font-display text-center mb-10">
             {lang === "en" ? "What Our Clients Say" : "客戶評價"}
           </h2>
 
+          {/* Desktop: show 3 at a time */}
+          <div className="hidden md:block">
+            <div className="grid grid-cols-3 gap-5 items-start">
+              {(() => {
+                const startIdx = reviewIdx * 3;
+                const visible = reviewItems.slice(startIdx, startIdx + 3);
+                // If not enough items for a full page, wrap around
+                const cards = visible.length === 3 ? visible : [...visible, ...reviewItems.slice(0, 3 - visible.length)];
+                return cards.map((item, ci) => (
+                  <motion.div
+                    key={`${reviewIdx}-${ci}`}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.4, delay: ci * 0.1 }}
+                    className="rounded-2xl border border-border bg-background p-7 shadow-sm"
+                  >
+                    <p className="text-base text-foreground leading-relaxed font-medium">
+                      "{item.text}"
+                    </p>
+                    <div className="mt-5">
+                      <p className="text-sm font-bold text-foreground inline-flex items-center gap-2">
+                        {item.name}
+                        <span className="inline-flex gap-0.5">
+                          {[...Array(5)].map((_, si) => (
+                            <Star key={si} className="w-3 h-3 fill-yellow-400 text-yellow-400" />
+                          ))}
+                        </span>
+                      </p>
+                      <p className="text-xs text-muted-foreground mt-0.5">{item.company}</p>
+                    </div>
+                  </motion.div>
+                ));
+              })()}
+            </div>
+            {/* Dots for desktop pages */}
+            <div className="flex justify-center gap-2 mt-8">
+              {Array.from({ length: Math.ceil(reviewItems.length / 3) }).map((_, i) => (
+                <button
+                  key={i}
+                  onClick={() => {
+                    setReviewIdx(i);
+                    clearInterval(reviewAutoRef.current);
+                    reviewAutoRef.current = setInterval(() => setReviewIdx((j) => (j + 1) % Math.ceil(reviewItems.length / 3)), 5000);
+                  }}
+                  className={`w-2.5 h-2.5 rounded-full transition-all ${i === reviewIdx ? "scale-125" : "opacity-30"}`}
+                  style={{ background: i === reviewIdx ? "hsl(275 51% 46%)" : "hsl(var(--muted-foreground))" }}
+                />
+              ))}
+            </div>
+          </div>
+
+          {/* Mobile: 1 at a time with swipe */}
           <div
-            className="relative"
+            className="md:hidden"
             onTouchStart={handleReviewTouchStart}
             onTouchEnd={handleReviewTouchEnd}
           >
@@ -873,38 +946,35 @@ const IndexContent = () => {
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: -30 }}
                 transition={{ duration: 0.35 }}
-                className="rounded-2xl border border-border bg-background p-8 md:p-10 shadow-sm"
+                className="rounded-2xl border border-border bg-background p-7 shadow-sm"
               >
-                <p className="text-lg md:text-xl lg:text-lg text-foreground leading-relaxed font-medium">
-                  "{reviewItems[reviewIdx].text}"
+                <p className="text-base text-foreground leading-relaxed font-medium">
+                  "{reviewItems[reviewIdx % reviewItems.length].text}"
                 </p>
-                <div className="mt-6 flex items-center gap-3">
-                  <div>
-                    <p className="text-base font-bold text-foreground inline-flex items-center gap-2">
-                      {reviewItems[reviewIdx].name}
-                      <span className="inline-flex gap-0.5">
-                        {[...Array(5)].map((_, i) => (
-                          <Star key={i} className="w-3.5 h-3.5 fill-yellow-400 text-yellow-400" />
-                        ))}
-                      </span>
-                    </p>
-                    <p className="text-sm text-muted-foreground">{reviewItems[reviewIdx].company}</p>
-                  </div>
+                <div className="mt-5">
+                  <p className="text-sm font-bold text-foreground inline-flex items-center gap-2">
+                    {reviewItems[reviewIdx % reviewItems.length].name}
+                    <span className="inline-flex gap-0.5">
+                      {[...Array(5)].map((_, si) => (
+                        <Star key={si} className="w-3 h-3 fill-yellow-400 text-yellow-400" />
+                      ))}
+                    </span>
+                  </p>
+                  <p className="text-xs text-muted-foreground mt-0.5">{reviewItems[reviewIdx % reviewItems.length].company}</p>
                 </div>
               </motion.div>
             </AnimatePresence>
-
-            {/* Dots */}
+            {/* Dots for mobile */}
             <div className="flex justify-center gap-2 mt-6">
-              {[0, 1, 2].map((i) => (
+              {reviewItems.map((_, i) => (
                 <button
                   key={i}
                   onClick={() => {
                     setReviewIdx(i);
                     clearInterval(reviewAutoRef.current);
-                    reviewAutoRef.current = setInterval(() => setReviewIdx((j) => (j + 1) % 3), 5000);
+                    reviewAutoRef.current = setInterval(() => setReviewIdx((j) => (j + 1) % reviewItems.length), 5000);
                   }}
-                  className={`w-2.5 h-2.5 rounded-full transition-all ${i === reviewIdx ? "scale-125" : "opacity-30"}`}
+                  className={`w-2 h-2 rounded-full transition-all ${i === reviewIdx ? "scale-125" : "opacity-30"}`}
                   style={{ background: i === reviewIdx ? "hsl(275 51% 46%)" : "hsl(var(--muted-foreground))" }}
                 />
               ))}
