@@ -393,6 +393,11 @@ const MultiStepIntake = ({ variant = "hero" }: { variant?: "hero" | "cta" }) => 
           >
             {lang === "en" ? "Get My 2 Free Website Versions" : "獲取我的2個免費網站版本"}
           </button>
+          <p className={`text-[11px] text-center mt-2 ${isDark ? "text-white/35" : "text-muted-foreground/60"}`}>
+            {lang === "en"
+              ? "No payment required · No commitment · Just enter your URL"
+              : "無需付款 · 無需承諾 · 只需輸入網址"}
+          </p>
         </div>
       </form>
     );
@@ -626,6 +631,12 @@ const IndexContent = () => {
                   : "我們重新設計您現有的網站，48小時內交付2個即時預覽——滿意才付款。"}
               </p>
 
+              <p className="mt-3 text-sm text-white/50 lg:text-left text-center">
+                {lang === "en"
+                  ? "500+ websites built · See yours before you pay"
+                  : "已建設500+網站 · 付款前先看成果"}
+              </p>
+
               <div className="mt-6 space-y-2">
                 <p className="text-base md:text-lg text-white/90 font-semibold">
                   {lang === "en"
@@ -735,7 +746,8 @@ const IndexContent = () => {
           <div className="mt-10 grid grid-cols-1 md:grid-cols-3 gap-5">
             {multiPagePlans.map((plan, i) => {
               // Mobile order: Facelift Starter(2) top, Website Makeover(1) mid, Growth Upgrade(0) bottom
-              const mobileOrder = i === 0 ? "order-3" : i === 1 ? "order-2" : "order-1";
+              // Mobile order: $499 Makeover(1) top, $299 Facelift(2) mid, $799 Growth(0) bottom
+              const mobileOrder = i === 0 ? "order-3" : i === 1 ? "order-1" : "order-2";
               return (
               <div
                 key={i}
