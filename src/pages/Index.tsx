@@ -393,6 +393,11 @@ const MultiStepIntake = ({ variant = "hero" }: { variant?: "hero" | "cta" }) => 
           >
             {lang === "en" ? "Get My 2 Free Website Versions" : "獲取我的2個免費網站版本"}
           </button>
+          <p className={`text-[11px] text-center mt-2 ${isDark ? "text-white/35" : "text-muted-foreground/60"}`}>
+            {lang === "en"
+              ? "No payment required · No commitment · Just enter your URL"
+              : "無需付款 · 無需承諾 · 只需輸入網址"}
+          </p>
         </div>
       </form>
     );
@@ -481,10 +486,11 @@ const IndexContent = () => {
     document.title = "SwiftLift — Website Makeover & Upgrade Service";
   }, []);
 
-  // Auto-slide reviews (mobile + desktop)
+  // Auto-slide reviews — cycles through all 6 items (on mobile shows 1, on desktop pages of 3)
+  const totalReviews = 6;
   useEffect(() => {
     reviewAutoRef.current = setInterval(() => {
-      setReviewIdx((i) => (i + 1) % 3);
+      setReviewIdx((i) => (i + 1) % totalReviews);
     }, 5000);
     return () => clearInterval(reviewAutoRef.current);
   }, []);
@@ -495,10 +501,10 @@ const IndexContent = () => {
   const handleReviewTouchEnd = (e: React.TouchEvent) => {
     const diff = touchStartX.current - e.changedTouches[0].clientX;
     if (Math.abs(diff) > 50) {
-      if (diff > 0) setReviewIdx((i) => (i + 1) % 3);
-      else setReviewIdx((i) => (i === 0 ? 2 : i - 1));
+      if (diff > 0) setReviewIdx((i) => (i + 1) % totalReviews);
+      else setReviewIdx((i) => (i === 0 ? totalReviews - 1 : i - 1));
       clearInterval(reviewAutoRef.current);
-      reviewAutoRef.current = setInterval(() => setReviewIdx((i) => (i + 1) % 3), 5000);
+      reviewAutoRef.current = setInterval(() => setReviewIdx((i) => (i + 1) % totalReviews), 5000);
     }
   };
 
@@ -546,22 +552,43 @@ const IndexContent = () => {
       text: lang === "en"
         ? "We got two versions within a day. Picked one and moved forward. Way easier than freelancers."
         : "我們一天之內就收到了兩個版本。選了一個就開始了。比自由職業者容易得多。",
-      name: lang === "en" ? "David Chen" : "David Chen",
+      name: "David Chen",
       company: lang === "en" ? "Realtor" : "房地產經紀人",
+    },
+    {
+      text: lang === "en"
+        ? "I was embarrassed by my old site for years. SwiftLift had two new versions ready in 48 hours — I picked one and launched the same week."
+        : "多年來我一直為舊網站感到尷尬。SwiftLift在48小時內準備好了兩個新版本——我選了一個，同一週就上線了。",
+      name: "Sarah Mitchell",
+      company: lang === "en" ? "Independent Realtor · Austin, TX" : "獨立房地產經紀人 · 德州奧斯汀",
     },
     {
       text: lang === "en"
         ? "I already had a website but it felt outdated. They showed two upgraded versions and handled everything after that. Didn't need to deal with any tech stuff."
         : "我已經有網站了，但感覺很過時。他們展示了兩個升級版本，之後處理了一切。不需要處理任何技術問題。",
-      name: lang === "en" ? "Melissa Wong" : "Melissa Wong",
+      name: "Melissa Wong",
       company: lang === "en" ? "Clinic Owner" : "診所老闆",
+    },
+    {
+      text: lang === "en"
+        ? "Honestly didn't think a dental office website could look this good without spending thousands. They showed me two completely different designs before I paid a single dollar. The whole process was smooth and way faster than I expected. My front desk staff actually said the new site looks more professional than our clinic interior!"
+        : "老實說沒想到牙科診所的網站不花幾千美金也能做得這麼好。在我付一分錢之前他們就展示了兩個完全不同的設計。整個過程很順利，比我預期的快得多。前台工作人員甚至說新網站看起來比我們診所內部還專業！",
+      name: "Dr. James Kowalski",
+      company: lang === "en" ? "Family Dentistry · Columbus, OH" : "家庭牙科 · 俄亥俄州哥倫布",
     },
     {
       text: lang === "en"
         ? "Honestly wasn't expecting much at first, but the two versions were actual working websites, not mockups. You can click through everything. We chose one, made a few adjustments, and it was ready to go. Much smoother than hiring freelancers."
         : "老實說一開始沒抱太大期望，但兩個版本都是真正可運行的網站，不是模型。你可以點擊所有內容。我們選了一個，做了一些調整，就準備好了。比僱用自由職業者順暢得多。",
-      name: lang === "en" ? "Jason Liu" : "Jason Liu",
+      name: "Jason Liu",
       company: lang === "en" ? "Restaurant Owner" : "餐廳老闆",
+    },
+    {
+      text: lang === "en"
+        ? "I've been in construction for 22 years and my website looked like it was built in 2005 — because it was. A buddy told me about SwiftLift and I figured I'd try it since I didn't have to pay upfront. They sent me two live website versions to browse on my phone, and I could actually click through everything. Picked the one that felt more like my brand, requested a couple small changes, and it was live within days. I've already had two new clients mention they found me online, which never happened before. Wish I did this years ago."
+        : "我做建築22年了，我的網站看起來像2005年建的——因為確實是。一個朋友告訴我SwiftLift，我想既然不用先付錢就試試。他們發了兩個即時網站版本讓我在手機上瀏覽，我真的可以點擊所有內容。選了那個更符合我品牌的，提了幾個小修改，幾天內就上線了。已經有兩個新客戶說他們在網上找到我的，以前從沒發生過。真希望幾年前就這樣做了。",
+      name: "Mike Hartwell",
+      company: lang === "en" ? "Hartwell General Contracting · Boise, ID" : "Hartwell 綜合承包 · 愛達荷州博伊西",
     },
   ];
 
@@ -626,6 +653,12 @@ const IndexContent = () => {
                   : "我們重新設計您現有的網站，48小時內交付2個即時預覽——滿意才付款。"}
               </p>
 
+              <p className="mt-3 text-sm text-white/50 lg:text-left text-center">
+                {lang === "en"
+                  ? "500+ websites built · See yours before you pay"
+                  : "已建設500+網站 · 付款前先看成果"}
+              </p>
+
               <div className="mt-6 space-y-2">
                 <p className="text-base md:text-lg text-white/90 font-semibold">
                   {lang === "en"
@@ -681,7 +714,7 @@ const IndexContent = () => {
             {[
               { num: "1", title: lang === "en" ? "Share Your Current Website" : "分享您的現有網站", desc: lang === "en" ? "Already have a site? Perfect — paste your URL and we handle the rest." : "已有網站？完美——貼上您的網址，我們處理其餘的。" },
               { num: "2", title: lang === "en" ? "We Build 2 Live Previews" : "我們建2個即時預覽", desc: lang === "en" ? "You receive two real, working website versions." : "您收到兩個真實可運行的網站版本。" },
-              { num: "3", title: lang === "en" ? "You Choose" : "您選擇", desc: lang === "en" ? "Pick the version you like — we finalize and launch it." : "選擇您喜歡的版本——我們完善並上線。" },
+              { num: "3", title: lang === "en" ? "You Choose" : "您選擇", desc: lang === "en" ? "Pick the version you like within 48 hours — we finalize and launch it." : "48小時內選擇您喜歡的版本——我們完善並上線。" },
             ].map((s, i) => (
               <div key={i} className="flex items-start">
                 <div className="flex flex-col items-center text-center max-w-[220px]">
@@ -705,7 +738,7 @@ const IndexContent = () => {
             {[
               { num: "1", title: lang === "en" ? "Share Your Current Website" : "分享您的現有網站", desc: lang === "en" ? "Already have a site? Perfect — paste your URL and we handle the rest." : "已有網站？完美——貼上您的網址，我們處理其餘的。" },
               { num: "2", title: lang === "en" ? "We Build 2 Live Previews" : "我們建2個即時預覽", desc: lang === "en" ? "You receive two real, working website versions." : "您收到兩個真實可運行的網站版本。" },
-              { num: "3", title: lang === "en" ? "You Choose" : "您選擇", desc: lang === "en" ? "Pick the version you like — we finalize and launch it." : "選擇您喜歡的版本——我們完善並上線。" },
+              { num: "3", title: lang === "en" ? "You Choose" : "您選擇", desc: lang === "en" ? "Pick the version you like within 48 hours — we finalize and launch it." : "48小時內選擇您喜歡的版本——我們完善並上線。" },
             ].map((s, i) => (
               <div key={i} className="flex items-start gap-4 text-left">
                 <span className="w-10 h-10 rounded-full flex items-center justify-center text-sm font-bold text-white flex-shrink-0" style={{ background: "hsl(275 51% 46%)" }}>
@@ -735,7 +768,8 @@ const IndexContent = () => {
           <div className="mt-10 grid grid-cols-1 md:grid-cols-3 gap-5">
             {multiPagePlans.map((plan, i) => {
               // Mobile order: Facelift Starter(2) top, Website Makeover(1) mid, Growth Upgrade(0) bottom
-              const mobileOrder = i === 0 ? "order-3" : i === 1 ? "order-2" : "order-1";
+              // Mobile order: $499 Makeover(1) top, $299 Facelift(2) mid, $799 Growth(0) bottom
+              const mobileOrder = i === 0 ? "order-3" : i === 1 ? "order-1" : "order-2";
               return (
               <div
                 key={i}
@@ -844,13 +878,65 @@ const IndexContent = () => {
 
       {/* ═══ 5. REVIEWS ═══ */}
       <section className="py-16 md:py-24 lg:py-28" style={{ background: "hsl(var(--surface-sunken))" }}>
-        <div className="max-w-4xl mx-auto px-6">
+        <div className="max-w-6xl mx-auto px-6">
           <h2 className="text-[clamp(1.8rem,4vw,2.8rem)] lg:text-[2rem] font-black text-foreground font-display text-center mb-10">
             {lang === "en" ? "What Our Clients Say" : "客戶評價"}
           </h2>
 
+          {/* Desktop: show 3 at a time */}
+          <div className="hidden md:block">
+            <div className="grid grid-cols-3 gap-5 items-start">
+              {(() => {
+                const startIdx = reviewIdx * 3;
+                const visible = reviewItems.slice(startIdx, startIdx + 3);
+                // If not enough items for a full page, wrap around
+                const cards = visible.length === 3 ? visible : [...visible, ...reviewItems.slice(0, 3 - visible.length)];
+                return cards.map((item, ci) => (
+                  <motion.div
+                    key={`${reviewIdx}-${ci}`}
+                    initial={{ opacity: 0, y: 20 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.4, delay: ci * 0.1 }}
+                    className="rounded-2xl border border-border bg-background p-7 shadow-sm"
+                  >
+                    <p className="text-base text-foreground leading-relaxed font-medium">
+                      "{item.text}"
+                    </p>
+                    <div className="mt-5">
+                      <p className="text-sm font-bold text-foreground inline-flex items-center gap-2">
+                        {item.name}
+                        <span className="inline-flex gap-0.5">
+                          {[...Array(5)].map((_, si) => (
+                            <Star key={si} className="w-3 h-3 fill-yellow-400 text-yellow-400" />
+                          ))}
+                        </span>
+                      </p>
+                      <p className="text-xs text-muted-foreground mt-0.5">{item.company}</p>
+                    </div>
+                  </motion.div>
+                ));
+              })()}
+            </div>
+            {/* Dots for desktop pages */}
+            <div className="flex justify-center gap-2 mt-8">
+              {Array.from({ length: Math.ceil(reviewItems.length / 3) }).map((_, i) => (
+                <button
+                  key={i}
+                  onClick={() => {
+                    setReviewIdx(i);
+                    clearInterval(reviewAutoRef.current);
+                    reviewAutoRef.current = setInterval(() => setReviewIdx((j) => (j + 1) % Math.ceil(reviewItems.length / 3)), 5000);
+                  }}
+                  className={`w-2.5 h-2.5 rounded-full transition-all ${i === reviewIdx ? "scale-125" : "opacity-30"}`}
+                  style={{ background: i === reviewIdx ? "hsl(275 51% 46%)" : "hsl(var(--muted-foreground))" }}
+                />
+              ))}
+            </div>
+          </div>
+
+          {/* Mobile: 1 at a time with swipe */}
           <div
-            className="relative"
+            className="md:hidden"
             onTouchStart={handleReviewTouchStart}
             onTouchEnd={handleReviewTouchEnd}
           >
@@ -861,38 +947,35 @@ const IndexContent = () => {
                 animate={{ opacity: 1, x: 0 }}
                 exit={{ opacity: 0, x: -30 }}
                 transition={{ duration: 0.35 }}
-                className="rounded-2xl border border-border bg-background p-8 md:p-10 shadow-sm"
+                className="rounded-2xl border border-border bg-background p-7 shadow-sm"
               >
-                <p className="text-lg md:text-xl lg:text-lg text-foreground leading-relaxed font-medium">
-                  "{reviewItems[reviewIdx].text}"
+                <p className="text-base text-foreground leading-relaxed font-medium">
+                  "{reviewItems[reviewIdx % reviewItems.length].text}"
                 </p>
-                <div className="mt-6 flex items-center gap-3">
-                  <div>
-                    <p className="text-base font-bold text-foreground inline-flex items-center gap-2">
-                      {reviewItems[reviewIdx].name}
-                      <span className="inline-flex gap-0.5">
-                        {[...Array(5)].map((_, i) => (
-                          <Star key={i} className="w-3.5 h-3.5 fill-yellow-400 text-yellow-400" />
-                        ))}
-                      </span>
-                    </p>
-                    <p className="text-sm text-muted-foreground">{reviewItems[reviewIdx].company}</p>
-                  </div>
+                <div className="mt-5">
+                  <p className="text-sm font-bold text-foreground inline-flex items-center gap-2">
+                    {reviewItems[reviewIdx % reviewItems.length].name}
+                    <span className="inline-flex gap-0.5">
+                      {[...Array(5)].map((_, si) => (
+                        <Star key={si} className="w-3 h-3 fill-yellow-400 text-yellow-400" />
+                      ))}
+                    </span>
+                  </p>
+                  <p className="text-xs text-muted-foreground mt-0.5">{reviewItems[reviewIdx % reviewItems.length].company}</p>
                 </div>
               </motion.div>
             </AnimatePresence>
-
-            {/* Dots */}
+            {/* Dots for mobile */}
             <div className="flex justify-center gap-2 mt-6">
-              {[0, 1, 2].map((i) => (
+              {reviewItems.map((_, i) => (
                 <button
                   key={i}
                   onClick={() => {
                     setReviewIdx(i);
                     clearInterval(reviewAutoRef.current);
-                    reviewAutoRef.current = setInterval(() => setReviewIdx((j) => (j + 1) % 3), 5000);
+                    reviewAutoRef.current = setInterval(() => setReviewIdx((j) => (j + 1) % reviewItems.length), 5000);
                   }}
-                  className={`w-2.5 h-2.5 rounded-full transition-all ${i === reviewIdx ? "scale-125" : "opacity-30"}`}
+                  className={`w-2 h-2 rounded-full transition-all ${i === reviewIdx ? "scale-125" : "opacity-30"}`}
                   style={{ background: i === reviewIdx ? "hsl(275 51% 46%)" : "hsl(var(--muted-foreground))" }}
                 />
               ))}
