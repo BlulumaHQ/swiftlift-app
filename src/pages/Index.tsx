@@ -486,11 +486,16 @@ const IndexContent = () => {
     document.title = "SwiftLift — Website Makeover & Upgrade Service";
   }, []);
 
-  // Auto-slide reviews — cycles through all 6 items (on mobile shows 1, on desktop pages of 3)
+  // Desktop page count and mobile total
+  const totalPages = 2; // 6 testimonials / 3 per page
   const totalReviews = 6;
+  const [reviewPage, setReviewPage] = useState(0);
+
+  // Auto-slide: desktop rotates pages, mobile rotates individual items
   useEffect(() => {
     reviewAutoRef.current = setInterval(() => {
       setReviewIdx((i) => (i + 1) % totalReviews);
+      setReviewPage((p) => (p + 1) % totalPages);
     }, 5000);
     return () => clearInterval(reviewAutoRef.current);
   }, []);
@@ -504,7 +509,10 @@ const IndexContent = () => {
       if (diff > 0) setReviewIdx((i) => (i + 1) % totalReviews);
       else setReviewIdx((i) => (i === 0 ? totalReviews - 1 : i - 1));
       clearInterval(reviewAutoRef.current);
-      reviewAutoRef.current = setInterval(() => setReviewIdx((i) => (i + 1) % totalReviews), 5000);
+      reviewAutoRef.current = setInterval(() => {
+        setReviewIdx((i) => (i + 1) % totalReviews);
+        setReviewPage((p) => (p + 1) % totalPages);
+      }, 5000);
     }
   };
 
@@ -556,7 +564,9 @@ const IndexContent = () => {
       company: lang === "en" ? "Realtor" : "房地產經紀人",
     },
     {
-      text: "設計出來我們整個團隊都很喜歡！大家快來看我們的新網站 👉 one-park-home.bluluma.com",
+      text: lang === "en"
+        ? <>設計出來我們整個團隊都很喜歡！大家快來看我們的新網站 👉 <a href="https://one-park-home.bluluma.com" target="_blank" rel="noopener noreferrer" className="underline hover:opacity-80 transition-opacity" style={{ color: "hsl(275 51% 46%)" }}>one-park-home.bluluma.com</a></>
+        : <>設計出來我們整個團隊都很喜歡！大家快來看我們的新網站 👉 <a href="https://one-park-home.bluluma.com" target="_blank" rel="noopener noreferrer" className="underline hover:opacity-80 transition-opacity" style={{ color: "hsl(275 51% 46%)" }}>one-park-home.bluluma.com</a></>,
       name: "One Park Development",
       company: lang === "en" ? "Real Estate Developer · Richmond, BC" : "房地產開發商 · 列治文, BC",
     },
@@ -925,13 +935,12 @@ const IndexContent = () => {
           <div className="hidden md:block">
             <div className="grid grid-cols-3 gap-5 items-start">
               {(() => {
-                const startIdx = reviewIdx * 3;
+                const startIdx = reviewPage * 3;
                 const visible = reviewItems.slice(startIdx, startIdx + 3);
-                // If not enough items for a full page, wrap around
                 const cards = visible.length === 3 ? visible : [...visible, ...reviewItems.slice(0, 3 - visible.length)];
                 return cards.map((item, ci) => (
                   <motion.div
-                    key={`${reviewIdx}-${ci}`}
+                    key={`${reviewPage}-${ci}`}
                     initial={{ opacity: 0, y: 20 }}
                     animate={{ opacity: 1, y: 0 }}
                     transition={{ duration: 0.4, delay: ci * 0.1 }}
@@ -957,16 +966,19 @@ const IndexContent = () => {
             </div>
             {/* Dots for desktop pages */}
             <div className="flex justify-center gap-2 mt-8">
-              {Array.from({ length: Math.ceil(reviewItems.length / 3) }).map((_, i) => (
+              {Array.from({ length: totalPages }).map((_, i) => (
                 <button
                   key={i}
                   onClick={() => {
-                    setReviewIdx(i);
+                    setReviewPage(i);
                     clearInterval(reviewAutoRef.current);
-                    reviewAutoRef.current = setInterval(() => setReviewIdx((j) => (j + 1) % Math.ceil(reviewItems.length / 3)), 5000);
+                    reviewAutoRef.current = setInterval(() => {
+                      setReviewIdx((j) => (j + 1) % totalReviews);
+                      setReviewPage((p) => (p + 1) % totalPages);
+                    }, 5000);
                   }}
-                  className={`w-2.5 h-2.5 rounded-full transition-all ${i === reviewIdx ? "scale-125" : "opacity-30"}`}
-                  style={{ background: i === reviewIdx ? "hsl(275 51% 46%)" : "hsl(var(--muted-foreground))" }}
+                  className={`w-2.5 h-2.5 rounded-full transition-all ${i === reviewPage ? "scale-125" : "opacity-30"}`}
+                  style={{ background: i === reviewPage ? "hsl(275 51% 46%)" : "hsl(var(--muted-foreground))" }}
                 />
               ))}
             </div>
@@ -1011,7 +1023,10 @@ const IndexContent = () => {
                   onClick={() => {
                     setReviewIdx(i);
                     clearInterval(reviewAutoRef.current);
-                    reviewAutoRef.current = setInterval(() => setReviewIdx((j) => (j + 1) % reviewItems.length), 5000);
+                    reviewAutoRef.current = setInterval(() => {
+                      setReviewIdx((j) => (j + 1) % totalReviews);
+                      setReviewPage((p) => (p + 1) % totalPages);
+                    }, 5000);
                   }}
                   className={`w-2 h-2 rounded-full transition-all ${i === reviewIdx ? "scale-125" : "opacity-30"}`}
                   style={{ background: i === reviewIdx ? "hsl(275 51% 46%)" : "hsl(var(--muted-foreground))" }}
