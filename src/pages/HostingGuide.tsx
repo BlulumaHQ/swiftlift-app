@@ -2,7 +2,6 @@ import { useEffect } from "react";
 import { LanguageProvider, useLanguage } from "@/contexts/LanguageContext";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import CustomCursor from "@/components/CustomCursor";
 import ScrollReveal from "@/components/ScrollReveal";
 import { motion } from "framer-motion";
 import { Check, ShieldCheck, Headphones, Zap, MonitorSmartphone, RefreshCw } from "lucide-react";
@@ -289,7 +288,6 @@ const HostingGuideContent = () => {
 
 const HostingGuide = () => (
   <LanguageProvider>
-    <CustomCursor />
     <Header />
     <HostingGuideContent />
     <Footer />

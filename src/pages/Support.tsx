@@ -2,7 +2,6 @@ import { useEffect } from "react";
 import { LanguageProvider, useLanguage } from "@/contexts/LanguageContext";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import CustomCursor from "@/components/CustomCursor";
 import { motion } from "framer-motion";
 import { useState } from "react";
 import { Send, Check } from "lucide-react";
@@ -163,7 +162,6 @@ const SupportContent = () => {
 const Support = () => (
   <LanguageProvider>
     <div className="min-h-screen bg-background scroll-smooth">
-      <CustomCursor />
       <Header />
       <SupportContent />
       <Footer />

@@ -3,7 +3,6 @@ import { Link, useNavigate, useLocation } from "react-router-dom";
 import { LanguageProvider, useLanguage } from "@/contexts/LanguageContext";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import CustomCursor from "@/components/CustomCursor";
 import ScrollReveal from "@/components/ScrollReveal";
 import { ArrowRight, X, Check, Layout, Smartphone, Gauge, Sparkles } from "lucide-react";
 
@@ -163,7 +162,6 @@ const AboutContent = () => {
 
   return (
     <div className="min-h-screen bg-background text-foreground">
-      <CustomCursor />
       <Header />
 
       {/* ═══════════════════════ SECTION 1: HERO ═══════════════════════ */}

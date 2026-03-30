@@ -5,7 +5,6 @@ import { PRICING, formatPrice } from "@/lib/pricing";
 import { LanguageProvider } from "@/contexts/LanguageContext";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import CustomCursor from "@/components/CustomCursor";
 import PreviewSelector from "@/components/PreviewSelector";
 import { Check, CreditCard, AlertCircle, User, Building2, Mail } from "lucide-react";
 import { motion } from "framer-motion";
@@ -230,7 +229,6 @@ const PayBuildContent = () => {
 
 const PayBuild = () => (
   <LanguageProvider>
-    <CustomCursor />
     <Header />
     <PayBuildContent />
     <Footer />

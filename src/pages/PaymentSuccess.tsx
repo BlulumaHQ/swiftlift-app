@@ -4,7 +4,6 @@ import { CheckCircle, ArrowRight, Mail, Copy, CheckCircle2 } from "lucide-react"
 import { LanguageProvider, useLanguage } from "@/contexts/LanguageContext";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import CustomCursor from "@/components/CustomCursor";
 import { motion } from "framer-motion";
 import { useState } from "react";
 import { getOrCreateProjectId } from "@/lib/projectId";
@@ -199,7 +198,6 @@ const PaymentSuccessContent = () => {
 
 const PaymentSuccess = () => (
   <LanguageProvider>
-    <CustomCursor />
     <Header />
     <PaymentSuccessContent />
     <Footer />
