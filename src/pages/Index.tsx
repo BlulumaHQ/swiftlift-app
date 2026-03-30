@@ -473,7 +473,7 @@ const MultiStepIntake = ({ variant = "hero" }: { variant?: "hero" | "cta" }) => 
 };
 
 /* ── Main Page ── */
-const IndexContent = () => {
+const IndexContent = ({ variant = "home" }: { variant?: "home" | "start" }) => {
   const { lang } = useLanguage();
   const home = translations.home;
   const [reviewIdx, setReviewIdx] = useState(0);
@@ -564,15 +564,15 @@ const IndexContent = () => {
     },
     {
       text: lang === "en"
-        ? <>SwiftLift sent me two versions and I could actually <strong>see exactly what my new site would look like before paying anything</strong>. Made the decision so easy. My booking requests have gone up noticeably since we launched.</>
-        : "SwiftLift 發了兩個版本給我，我可以在付款前清楚看到新網站的樣子。讓決定變得非常簡單。自從上線後，我的預約請求明顯增加了。",
+        ? <>SwiftLift sent me two versions and I could actually <strong>see exactly what my new site would look like before paying anything</strong>. Made the decision so easy. Within three weeks of launching, my booking requests went up — I wasn't expecting results that fast.</>
+        : "SwiftLift 發了兩個版本給我，我可以在付款前清楚看到新網站的樣子。讓決定變得非常簡單。上線三週內，我的預約請求就增加了——沒想到結果會這麼快。",
       name: "Jennifer Park",
       company: lang === "en" ? "Yoga Studio Owner · Seattle, WA" : "瑜伽工作室老闆 · 西雅圖, WA",
     },
     {
       text: lang === "en"
-        ? <>I loved the design so much I showed my receptionist before I even paid. <strong>We both agreed immediately.</strong> Honestly didn't expect it to be this smooth — I was ready for it to be complicated.</>
-        : "設計太好看了，我甚至在付款前就拿給櫃台看。我們馬上就達成一致。老實說沒想到會這麼順利——我已經做好會很複雜的心理準備了。",
+        ? <>I loved the design so much I showed my receptionist before I even paid. <strong>We both agreed immediately.</strong> New patients have been mentioning they found us online — that never used to happen.</>
+        : "設計太好看了，我甚至在付款前就拿給櫃台看。我們馬上就達成一致。新病患一直說他們是在網上找到我們的——這以前從來沒有過。",
       name: "Melissa Wong",
       company: lang === "en" ? "Clinic Owner" : "診所老闆",
     },
@@ -640,19 +640,27 @@ const IndexContent = () => {
             {/* Left: Copy */}
             <div className="text-white pt-2 lg:pt-6">
               <h1 className="text-[1.85rem] md:text-[clamp(2.8rem,5.5vw,4.2rem)] lg:text-[clamp(2.8rem,4.5vw,3.6rem)] font-black leading-[1.08] lg:leading-[1.15] font-display tracking-tight">
-                {lang === "en" ? (<>Get a Website That<br />Brings You More<br /><span className="text-transparent bg-clip-text bg-gradient-to-r from-[hsl(var(--accent-purple))] to-[hsl(210,100%,65%)]">Customers.</span></>) : (<>打造一個為您<br /><span className="text-transparent bg-clip-text bg-gradient-to-r from-[hsl(var(--accent-purple))] to-[hsl(210,100%,65%)]">帶來更多客戶的網站。</span></>)}
+                {variant === "start"
+                  ? (lang === "en" ? (<>Your Website Exists.<br />Your Phone Should Be<br /><span className="text-transparent bg-clip-text bg-gradient-to-r from-[hsl(var(--accent-purple))] to-[hsl(210,100%,65%)]">Ringing More.</span></>) : (<>您的網站已存在。<br /><span className="text-transparent bg-clip-text bg-gradient-to-r from-[hsl(var(--accent-purple))] to-[hsl(210,100%,65%)]">您的電話應該響更多。</span></>))
+                  : (lang === "en" ? (<>Is Your Website<br />Actually Bringing You<br /><span className="text-transparent bg-clip-text bg-gradient-to-r from-[hsl(var(--accent-purple))] to-[hsl(210,100%,65%)]">Customers?</span></>) : (<>您的網站真的在<br /><span className="text-transparent bg-clip-text bg-gradient-to-r from-[hsl(var(--accent-purple))] to-[hsl(210,100%,65%)]">為您帶來客戶嗎？</span></>))
+                }
               </h1>
 
               <p className="mt-5 lg:mt-7 text-lg md:text-xl lg:text-[1.25rem] font-medium text-white leading-[1.5] lg:leading-[1.6] max-w-lg">
-                {lang === "en"
-                  ? "We give your business a website that looks great, builds trust, and turns more visitors into paying customers — 2 live previews delivered in 48 hours, you only pay if you love it."
-                  : "我們為您的企業打造一個外觀出色、建立信任、將更多訪客轉化為付費客戶的網站——48小時內交付2個即時預覽，滿意才付款。"}
+                {variant === "start"
+                  ? (lang === "en"
+                    ? "If your website isn't bringing in new customers every week, it's not doing its job. We rebuild what you already have — 2 complete, live versions ready in 48 hours. You pick the one you love. You only pay then."
+                    : "如果您的網站沒有每週帶來新客戶，那它就沒有發揮作用。我們重建您已有的網站——48小時內準備好2個完整的即時版本。您選擇喜歡的那個。然後才付款。")
+                  : (lang === "en"
+                    ? "Your business is good. Your website should be proving it. We rebuild what you already have into something that gets you noticed, builds trust, and brings in more customers — 2 live previews delivered in 48 hours, you only pay if you love it."
+                    : "您的生意很好。您的網站應該證明這一點。我們將您已有的網站重建為能讓您被注意到、建立信任並帶來更多客戶的網站——48小時內交付2個即時預覽，滿意才付款。")
+                }
               </p>
 
               <p className="mt-3 text-sm text-white/50 lg:text-left text-center">
                 {lang === "en"
-                  ? "500+ websites built · See yours before you pay"
-                  : "已建設500+網站 · 付款前先看成果"}
+                  ? "Trusted by 500+ small businesses · See yours before you pay"
+                  : "受500+小企業信賴 · 付款前先看成果"}
               </p>
 
               <div className="mt-6 space-y-2">
