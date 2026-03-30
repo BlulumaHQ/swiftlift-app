@@ -671,7 +671,7 @@ const IndexContent = () => {
                 {lang === "en" ? "Get Your 2 Free Website Versions" : "獲取您的2個免費網站版本"}
               </h3>
               <p className="text-xs text-muted-foreground mb-5">
-                {lang === "en" ? "Takes less than 30 seconds. No commitment." : "不到30秒。無需承諾。"}
+                {lang === "en" ? "Takes you less than 30 seconds to fill out." : "填寫不到30秒。"}
               </p>
               <MultiStepIntake variant="hero" />
             </div>
