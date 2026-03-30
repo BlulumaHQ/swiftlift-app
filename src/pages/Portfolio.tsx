@@ -397,7 +397,7 @@ function shuffleArray<T>(arr: T[]): T[] {
 }
 
 /* ── Grid Case Card — desktop: hover swap | mobile: swipe + auto slideshow ── */
-const SLIDESHOW_INTERVAL = 3000;
+const SLIDESHOW_INTERVAL = 5000;
 const SWIPE_THRESHOLD = 30;
 const RESUME_DELAY = 5000;
 

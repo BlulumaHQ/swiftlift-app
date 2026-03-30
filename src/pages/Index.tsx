@@ -777,7 +777,115 @@ const IndexContent = () => {
         </div>
       </section>
 
-      {/* ═══ 3. PRICING ═══ */}
+      {/* ═══ FEATURED PORTFOLIO ═══ */}
+      <section className="py-16 md:py-24 lg:py-28 bg-background">
+        <div className="max-w-6xl mx-auto px-6">
+          <h2 className="text-[clamp(1.8rem,4vw,2.8rem)] lg:text-[2rem] font-black text-foreground font-display text-center">
+            {lang === "en" ? "Real Website Transformations" : "真實網站改造"}
+          </h2>
+          <p className="mt-2 text-muted-foreground text-sm text-center">
+            {lang === "en" ? "Built from real businesses like yours." : "為像您一樣的真實企業而建。"}
+          </p>
+
+          {/* Desktop: 3 cards in a row */}
+          <div className="mt-10 hidden md:grid grid-cols-3 gap-5 items-stretch">
+            {home.portfolioItems.map((item, i) => (
+              <div key={i} className="rounded-2xl border border-border overflow-hidden bg-background shadow-sm hover:shadow-lg transition-shadow flex flex-col">
+                <div className="aspect-[4/3] overflow-hidden">
+                  <img
+                    src={portfolioImages[i]}
+                    alt={t(item.name, lang)}
+                    className="w-full h-full object-cover"
+                    loading="lazy"
+                  />
+                </div>
+                <div className="p-5 flex flex-col flex-1">
+                  <p className="text-xs text-muted-foreground uppercase tracking-wider font-medium">{t(item.desc, lang)}</p>
+                  <h3 className="mt-1 text-base font-bold text-foreground font-display">
+                    {lang === "en" ? "Website Transformation" : "網站改造"}
+                  </h3>
+                  <div className="mt-auto pt-4 flex gap-2">
+                    <a
+                      href={portfolioLinks[i].a}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center text-xs font-semibold px-3 py-1.5 rounded-full border transition-all hover:opacity-80"
+                      style={{ borderColor: "hsl(275 51% 46%)", color: "hsl(275 51% 46%)" }}
+                    >
+                      Version A
+                    </a>
+                    <a
+                      href={portfolioLinks[i].b}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="inline-flex items-center text-xs font-semibold px-3 py-1.5 rounded-full border transition-all hover:opacity-80"
+                      style={{ borderColor: "hsl(275 51% 46%)", color: "hsl(275 51% 46%)" }}
+                    >
+                      Version B
+                    </a>
+                  </div>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          {/* Mobile: horizontal scroll carousel */}
+          <div className="mt-10 md:hidden overflow-x-auto scrollbar-none -mx-6 px-6">
+            <div className="flex gap-4" style={{ width: "max-content" }}>
+              {home.portfolioItems.map((item, i) => (
+                <div key={i} className="rounded-2xl border border-border overflow-hidden bg-background shadow-sm w-[280px] flex-shrink-0 flex flex-col">
+                  <div className="aspect-[4/3] overflow-hidden">
+                    <img
+                      src={portfolioImages[i]}
+                      alt={t(item.name, lang)}
+                      className="w-full h-full object-cover"
+                      loading="lazy"
+                    />
+                  </div>
+                  <div className="p-4 flex flex-col flex-1">
+                    <p className="text-xs text-muted-foreground uppercase tracking-wider font-medium">{t(item.desc, lang)}</p>
+                    <h3 className="mt-1 text-base font-bold text-foreground font-display">
+                      {lang === "en" ? "Website Transformation" : "網站改造"}
+                    </h3>
+                    <div className="mt-auto pt-3 flex gap-2">
+                      <a
+                        href={portfolioLinks[i].a}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center text-xs font-semibold px-3 py-1.5 rounded-full border transition-all hover:opacity-80"
+                        style={{ borderColor: "hsl(275 51% 46%)", color: "hsl(275 51% 46%)" }}
+                      >
+                        Version A
+                      </a>
+                      <a
+                        href={portfolioLinks[i].b}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center text-xs font-semibold px-3 py-1.5 rounded-full border transition-all hover:opacity-80"
+                        style={{ borderColor: "hsl(275 51% 46%)", color: "hsl(275 51% 46%)" }}
+                      >
+                        Version B
+                      </a>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div className="mt-8 text-center">
+            <Link
+              to="/portfolio"
+              className="text-sm font-semibold hover:underline transition-all"
+              style={{ color: "hsl(275 51% 46%)" }}
+            >
+              {lang === "en" ? "View Full Portfolio →" : "查看完整作品集 →"}
+            </Link>
+          </div>
+        </div>
+      </section>
+
+
       <section id="pricing" className="py-16 md:py-24 lg:py-28" style={{ background: "hsl(var(--surface-sunken))" }}>
         <div className="max-w-5xl mx-auto px-6">
           <h2 className="text-[clamp(1.8rem,4vw,2.8rem)] lg:text-[2rem] font-black text-foreground font-display text-center">
