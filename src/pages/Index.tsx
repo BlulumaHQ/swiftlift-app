@@ -21,7 +21,7 @@ function generateClientId(): string {
   return `CL-${yyyy}${mm}${dd}-${rand}`;
 }
 
-import heroDesktopBg from "@/assets/hero-bg-desktop.webp"; // kept for portfolio slides
+
 import reviewSlideGenes from "@/assets/swiftlift-review-slide-genes.webp";
 import reviewSlideMuttpuddles from "@/assets/swiftlift-review-slide-muttpuddles.webp";
 import reviewSlideChicagoboxing from "@/assets/swiftlift-review-slide-chicagoboxing.webp";
