@@ -1169,7 +1169,6 @@ const IndexContent = () => {
         className="relative py-20 md:py-28 overflow-hidden"
         style={{ background: "#0f172a" }}
       >
-      >
         <div className="absolute inset-0 pointer-events-none" style={{ background: "radial-gradient(ellipse 60% 50% at 50% 40%, hsl(209 70% 30% / 0.25), transparent)" }} />
         <div className="relative max-w-2xl mx-auto px-6 text-center">
           <h2 className="text-[clamp(1.7rem,4.5vw,2.8rem)] lg:text-[2rem] font-black text-white font-display leading-tight">
