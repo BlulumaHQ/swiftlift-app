@@ -659,8 +659,8 @@ const IndexContent = ({ variant = "home" }: { variant?: "home" | "start" }) => {
 
               <p className="mt-3 text-sm text-white/50 lg:text-left text-center">
                 {lang === "en"
-                  ? "500+ websites built · See yours before you pay"
-                  : "已建設500+網站 · 付款前先看成果"}
+                  ? "Trusted by 500+ small businesses · See yours before you pay"
+                  : "受500+小企業信賴 · 付款前先看成果"}
               </p>
 
               <div className="mt-6 space-y-2">
