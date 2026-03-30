@@ -593,8 +593,8 @@ const IndexContent = () => {
     },
     {
       text: lang === "en"
-        ? "I've been in construction for 22 years and my website looked like it was built in 2005 — because it was. Figured I'd try SwiftLift since I didn't have to pay upfront. They sent me two live versions to browse on my phone, I could actually click through everything. Picked the one that felt more like my brand, made a couple small tweaks, and it was live within days. I've already had two new clients mention they found me online, which never happened before. Wish I did this years ago."
-        : "我做建築22年了，我的網站看起來像2005年建的——因為確實是。想說SwiftLift不用先付錢就試試看。他們發了兩個即時版本讓我在手機上瀏覽，真的可以點擊所有內容。選了那個更符合我品牌的，做了幾個小調整，幾天內就上線了。已經有兩個新客戶說他們在網上找到我的，以前從沒發生過。真希望幾年前就這樣做了。",
+        ? "I've been in construction for 22 years and never really had a website that did anything for my business. Figured I'd try SwiftLift since I didn't have to pay upfront. They sent me two live versions to browse on my phone, I could actually click through everything. Picked the one that felt more like my brand, made a couple small tweaks, and it was live within days. I've already had two new clients mention they found me online, which never happened before. Wish I did this years ago."
+        : "我做建築22年了，從來沒有一個真正為我的生意帶來幫助的網站。想說SwiftLift不用先付錢就試試看。他們發了兩個即時版本讓我在手機上瀏覽，真的可以點擊所有內容。選了那個更符合我品牌的，做了幾個小調整，幾天內就上線了。已經有兩個新客戶說他們在網上找到我的，以前從沒發生過。真希望幾年前就這樣做了。",
       name: "Mike Hartwell",
       company: lang === "en" ? "Hartwell General Contracting · Boise, ID" : "Hartwell 綜合承包 · 愛達荷州博伊西",
     },
@@ -652,13 +652,13 @@ const IndexContent = () => {
             {/* Left: Copy */}
             <div className="text-white pt-2 lg:pt-6">
               <h1 className="text-[1.85rem] md:text-[clamp(2.8rem,5.5vw,4.2rem)] lg:text-[clamp(2.8rem,4.5vw,3.6rem)] font-black leading-[1.08] lg:leading-[1.15] font-display tracking-tight">
-                {lang === "en" ? (<>Turn Your Outdated<br />Website Into a<br /><span className="text-transparent bg-clip-text bg-gradient-to-r from-[hsl(var(--accent-purple))] to-[hsl(210,100%,65%)]">Conversion&nbsp;Machine.</span></>) : (<>將您過時的網站，<br /><span className="text-transparent bg-clip-text bg-gradient-to-r from-[hsl(var(--accent-purple))] to-[hsl(210,100%,65%)]">變成自動帶客的業績引擎。</span></>)}
+                {lang === "en" ? (<>Get a Website That<br />Brings You More<br /><span className="text-transparent bg-clip-text bg-gradient-to-r from-[hsl(var(--accent-purple))] to-[hsl(210,100%,65%)]">Customers.</span></>) : (<>打造一個為您<br /><span className="text-transparent bg-clip-text bg-gradient-to-r from-[hsl(var(--accent-purple))] to-[hsl(210,100%,65%)]">帶來更多客戶的網站。</span></>)}
               </h1>
 
               <p className="mt-5 lg:mt-7 text-lg md:text-xl lg:text-[1.25rem] font-medium text-white leading-[1.5] lg:leading-[1.6] max-w-lg">
                 {lang === "en"
-                  ? "We redesign your existing site and deliver 2 live previews in 48 hours — you only pay if you love it."
-                  : "我們重新設計您現有的網站，48小時內交付2個即時預覽——滿意才付款。"}
+                  ? "We give your business a website that looks great, builds trust, and turns more visitors into paying customers — 2 live previews delivered in 48 hours, you only pay if you love it."
+                  : "我們為您的企業打造一個外觀出色、建立信任、將更多訪客轉化為付費客戶的網站——48小時內交付2個即時預覽，滿意才付款。"}
               </p>
 
               <p className="mt-3 text-sm text-white/50 lg:text-left text-center">
@@ -1224,7 +1224,6 @@ const Index = () => {
     <LanguageProvider>
       <div className="min-h-screen bg-background scroll-smooth">
         {showPreloader && <Preloader onComplete={handlePreloaderComplete} />}
-        <CustomCursor />
         <Header />
         <IndexContent />
         <Footer />
