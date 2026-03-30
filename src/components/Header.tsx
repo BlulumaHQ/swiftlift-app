@@ -45,11 +45,10 @@ const Header = () => {
     setMobileOpen(false);
   };
 
-  const headerBg = scrolled ? "header-scrolled" : "header-brand-solid";
-
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-500 ${headerBg}`}
+      className="fixed top-0 left-0 right-0 z-50 bg-white border-b border-gray-100"
+      style={{ boxShadow: scrolled ? '0 1px 12px hsl(0 0% 0% / 0.06)' : 'none' }}
     >
       <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between transition-all duration-500">
         <Link to="/" className="flex items-center py-[5px]">
@@ -62,11 +61,7 @@ const Header = () => {
               key={item.href}
               href={item.href}
               onClick={(e) => handleNavClick(e, item.href)}
-              className={`text-[0.9rem] font-bold transition-colors duration-300 ${
-                !scrolled
-                  ? "text-white hover:text-white/90"
-                  : "text-foreground hover:text-primary"
-              }`}
+              className="text-[0.9rem] font-bold transition-colors duration-300 text-[#1a1a1a] hover:text-primary"
             >
               {item.label}
             </a>
@@ -84,24 +79,18 @@ const Header = () => {
         <div className="flex items-center gap-4">
           <a
             href="mailto:support@swiftlift.app"
-            className={`hidden md:flex items-center transition-colors ${
-              !scrolled ? "text-white/70 hover:text-white" : "text-muted-foreground hover:text-foreground"
-            }`}
+            className="hidden md:flex items-center transition-colors text-muted-foreground hover:text-foreground"
             aria-label="Email us"
           >
             <Mail size={17} />
           </a>
-          <div className={`flex items-center rounded-full border overflow-hidden text-[0.85rem] transition-colors duration-300 ${
-            !scrolled ? "border-white/30" : "border-border"
-          }`}>
+          <div className="flex items-center rounded-full border border-border overflow-hidden text-[0.85rem]">
             <button
               onClick={() => setLang("en")}
               className={`px-3 py-1.5 font-medium transition-colors ${
                 lang === "en"
                   ? "bg-primary text-primary-foreground"
-                  : !scrolled
-                    ? "text-white/70 hover:text-white"
-                    : "text-muted-foreground hover:text-foreground"
+                  : "text-muted-foreground hover:text-foreground"
               }`}
             >
               EN
@@ -111,9 +100,7 @@ const Header = () => {
               className={`px-3 py-1.5 font-medium transition-colors ${
                 lang === "zh"
                   ? "bg-primary text-primary-foreground"
-                  : !scrolled
-                    ? "text-white/70 hover:text-white"
-                    : "text-muted-foreground hover:text-foreground"
+                  : "text-muted-foreground hover:text-foreground"
               }`}
             >
               中文
@@ -121,7 +108,7 @@ const Header = () => {
           </div>
 
           <button
-            className={`md:hidden transition-colors duration-300 ${!scrolled ? "text-white" : "text-foreground"}`}
+            className="md:hidden text-foreground"
             onClick={() => setMobileOpen(!mobileOpen)}
             aria-label="Toggle menu"
           >
