@@ -601,28 +601,28 @@ const IndexContent = () => {
 
   const faqItems = [
     {
-      q: lang === "en" ? "Do I have to pay monthly hosting fees?" : "需要每月支付託管費嗎？",
+      q: lang === "en" ? "Is this really free to start?" : "真的可以免費開始嗎？",
       a: lang === "en"
-        ? "No. There are no required monthly hosting fees. You are not locked into our hosting."
-        : "不需要。沒有強制的每月託管費。您不會被鎖定在我們的託管中。",
+        ? "Yes. Submitting your request costs nothing. We build two complete, live website versions for you to browse — on desktop and mobile — before you make any decision. You only pay when you've chosen a direction you love."
+        : "是的。提交請求完全免費。我們會為您建立兩個完整的即時網站版本，供您在桌面和手機上瀏覽——在您做出任何決定之前。只有當您選定了喜歡的方向後才需要付款。",
     },
     {
-      q: lang === "en" ? "What if I already have a website?" : "如果我已有網站怎麼辦？",
+      q: lang === "en" ? "How do the free previews work?" : "免費預覽是如何運作的？",
       a: lang === "en"
-        ? "That's exactly what we specialize in. We rebuild and upgrade your existing website into something better."
-        : "這正是我們的專長。我們將您現有的網站重建升級為更好的版本。",
+        ? "Submit your website URL and a few basic details about your business. Within 48 hours, you'll receive two fully built, clickable website versions — not mockups, not screenshots. Real working sites you can browse on any device, especially mobile. No payment, no commitment required to receive them."
+        : "提交您的網站網址和一些基本業務資訊。48小時內，您將收到兩個完整建立的可點擊網站版本——不是模型，不是截圖。是真正可在任何設備上瀏覽的網站，尤其是手機。無需付款，無需承諾即可獲取。",
     },
     {
-      q: lang === "en" ? "Is this really free?" : "這真的免費嗎？",
+      q: lang === "en" ? "Where is my website hosted? Are there hidden fees?" : "我的網站託管在哪裡？有隱藏費用嗎？",
       a: lang === "en"
-        ? "Yes. You can review both website versions before paying. You only pay if you choose to use one of them."
-        : "是的。您可以在付款前審核兩個網站版本。只有在您選擇使用其中之一時才需付款。",
+        ? "Your website is hosted on Netlify — one of the most reliable hosting platforms available. Hosting is completely free with no monthly fees. We will never use hosting costs to lock you in."
+        : "您的網站託管在Netlify——最可靠的託管平台之一。託管完全免費，無月費。我們絕不會用託管費用來綁住您。",
     },
     {
-      q: lang === "en" ? "How is SwiftLift different from just hiring a freelancer?" : "SwiftLift 和直接請自由工作者有什麼不同？",
+      q: lang === "en" ? "What about revisions and updates?" : "修改和更新怎麼辦？",
       a: lang === "en"
-        ? "With a freelancer you describe what you want and hope it turns out right. With SwiftLift you see two complete working websites first — then decide. No guessing, no back and forth, no paying before you know you love it."
-        : "請自由工作者的話，你描述你想要的然後希望結果是對的。用 SwiftLift，你先看到兩個完整可運作的網站——然後再決定。不用猜測、不用來回溝通、不用在確定喜歡之前就付錢。",
+        ? "After launch, additional revisions are available at $45 per revision round. If you expect to update your site regularly, our Managed Hosting plan at $15/month or $135/year includes one free revision every month plus priority support — most clients find this pays for itself with the first update."
+        : "上線後，額外修改每輪$45。如果您預計定期更新網站，我們的託管方案每月$15或每年$135，包含每月一次免費修改和優先支援——大多數客戶發現第一次更新就回本了。",
     },
   ];
 
