@@ -87,7 +87,7 @@
     font-size: 19px;
     line-height: 1.65;
     letter-spacing: 0.01em;
-    cursor: none;
+    cursor: auto;
   }
 
   /* Chinese font override */
