@@ -2,7 +2,6 @@ import { useEffect } from "react";
 import { LanguageProvider, useLanguage } from "@/contexts/LanguageContext";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import CustomCursor from "@/components/CustomCursor";
 import ScrollReveal from "@/components/ScrollReveal";
 import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
@@ -489,7 +488,6 @@ const BundleCard = ({ bundle, lang }: { bundle: typeof bundles[number]; lang: "e
 
 const Features = () => (
   <LanguageProvider>
-    <CustomCursor />
     <Header />
     <FeaturesContent />
     <Footer />
