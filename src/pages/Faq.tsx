@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import CustomCursor from "@/components/CustomCursor";
 import { LanguageProvider, useLanguage } from "@/contexts/LanguageContext";
 import { motion, AnimatePresence } from "framer-motion";
 import { Plus } from "lucide-react";
@@ -137,7 +136,7 @@ const FaqContent = () => {
 const Faq = () => (
   <LanguageProvider>
     <div className="min-h-screen bg-background text-foreground">
-      <CustomCursor />
+      
       <Header />
       <FaqContent />
       <Footer />

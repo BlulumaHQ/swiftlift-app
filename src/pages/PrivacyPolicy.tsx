@@ -2,7 +2,6 @@ import { useEffect } from "react";
 import { LanguageProvider, useLanguage } from "@/contexts/LanguageContext";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import CustomCursor from "@/components/CustomCursor";
 import { motion } from "framer-motion";
 
 const PrivacyContent = () => {
@@ -153,7 +152,7 @@ const PrivacyContent = () => {
 const PrivacyPolicy = () => (
   <LanguageProvider>
     <div className="min-h-screen bg-background scroll-smooth">
-      <CustomCursor />
+      
       <Header />
       <PrivacyContent />
       <Footer />
