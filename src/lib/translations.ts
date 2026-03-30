@@ -21,8 +21,8 @@ export const translations = {
       zh: "獲取我的2個免費預覽",
     },
     ctaSub: {
-      en: "Takes less than 30 seconds.\nNo commitment.",
-      zh: "不到30秒即可完成。\n無需承諾。",
+      en: "Takes you less than 30 seconds to fill out.",
+      zh: "填寫不到30秒。",
     },
     launchPricing: {
       en: "Limited preview slots available today",
@@ -509,7 +509,7 @@ export const translations = {
       { en: "No upfront payment required", zh: "無需預付款" },
       { en: "Launch in 3 days if you love it", zh: "滿意的話3天內上線" },
     ],
-    formNote: { en: "Takes less than 30 seconds. No commitment.", zh: "不到30秒即可完成。無需承諾。" },
+    formNote: { en: "Takes you less than 30 seconds to fill out.", zh: "填寫不到30秒。" },
     formBusinessName: { en: "Business Name", zh: "企業名稱" },
     formBusinessNamePlaceholder: { en: "Your business name", zh: "您的企業名稱" },
     formCurrentWebsite: { en: "Current Website", zh: "目前網站" },
