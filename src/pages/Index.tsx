@@ -5,7 +5,6 @@ import { LanguageProvider, useLanguage } from "@/contexts/LanguageContext";
 import { translations, t } from "@/lib/translations";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import CustomCursor from "@/components/CustomCursor";
 import Preloader from "@/components/Preloader";
 import { Check, Plus, Star, ChevronLeft, ChevronRight as ChevronRightIcon, Shield, Loader2, CheckCircle2, Clock, Mail, Copy, Palette, Globe, ArrowRight } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
