@@ -7,40 +7,48 @@ import { Plus } from "lucide-react";
 
 const faqItems = [
   {
-    q: { en: "How do the FREE previews work?", zh: "免费预览是如何运作的？" },
-    a: { en: "Submit your company name, logo, and business details. Within 48 hours, you'll receive two fully designed, live homepage preview links — viewable on desktop and mobile.\n\nThese are functional previews built specifically around your business structure. There is no payment required to receive them.", zh: "提交您的公司名稱、標誌和業務資訊。48小時內，您將收到兩個專為您的業務量身設計的即時首頁預覽連結——可在桌面和移動裝置上查看。\n\n這些是圍繞您的業務結構專門構建的功能預覽。無需支付任何費用即可獲取。" },
+    q: { en: "Is this really free to start?", zh: "真的可以免費開始嗎？" },
+    a: { en: "Yes. Submitting your request costs nothing. We build two complete, live website versions for you to browse — on desktop and mobile — before you make any decision. You only pay when you've chosen a direction you love.", zh: "是的。提交請求完全免費。我們會為您建立兩個完整的即時網站版本，供您在桌面和手機上瀏覽——在您做出任何決定之前。只有當您選定了喜歡的方向後才需要付款。" },
   },
   {
-    q: { en: "What happens after I choose a concept?", zh: "选择方案后会发生什么？" },
-    a: { en: "Once you select your preferred preview direction, you choose your package and submit payment. We then expand that concept into your full website build based on your selected tier.\n\nAll builds follow SwiftLift's structured system for speed, clarity, and consistency.", zh: "选定您心仪的预览方向后，选择套餐并提交付款。我们随后会根据您选择的套餐等级，将该方案扩展为完整的网站建设。\n\n所有建设均遵循SwiftLift的结构化系统，确保速度、清晰度和一致性。" },
+    q: { en: "How do the free previews work?", zh: "免費預覽是如何運作的？" },
+    a: { en: "Submit your website URL and a few basic details about your business. Within 48 hours, you'll receive two fully built, clickable website versions — not mockups, not screenshots. Real working sites you can browse on any device, especially mobile. No payment, no commitment required to receive them.", zh: "提交您的網站網址和一些基本業務資訊。48小時內，您將收到兩個完整建立的可點擊網站版本——不是模型，不是截圖。是真正可在任何設備上瀏覽的網站，尤其是手機。無需付款，無需承諾即可獲取。" },
   },
   {
-    q: { en: "What happens to my current hosting or website?", zh: "我目前的托管或网站会怎样？" },
-    a: { en: "We take care of everything for you.\n\nIf your website is on Wix, Squarespace, or WordPress, we rebuild and launch your new site seamlessly.\n\nNo need to cancel anything upfront. Your existing website stays live until you're ready to switch.\n\nWe guide you step by step to ensure a smooth transition.", zh: "我们会为您处理一切。\n\n如果您的网站在Wix、Squarespace或WordPress上，我们会无缝地重建并启动您的新网站。\n\n无需提前取消任何东西。您的现有网站会保持上线状态，直到您准备好切换。\n\n我们会一步步引导您，确保顺利过渡。" },
+    q: { en: "What if I already have a website?", zh: "如果我已經有網站呢？" },
+    a: { en: "That's exactly what we specialize in. We rebuild your existing site into a faster, cleaner, mobile-optimized website designed to bring you more customers. A site that looks great on every device isn't just a bonus — it's a priority, since over 90% of visitors are browsing on their phones. Your existing site stays live throughout the entire process — we only switch over when you're ready.", zh: "這正是我們的專長。我們將您現有的網站重建為更快、更乾淨、針對手機優化的網站，旨在為您帶來更多客戶。在每台設備上看起來都很棒的網站不僅是加分項——而是優先事項，因為超過90%的訪客都在用手機瀏覽。您的現有網站在整個過程中保持上線——我們只在您準備好時才切換。" },
   },
   {
-    q: { en: "Can I use my own domain name?", zh: "可以使用自己的域名吗？" },
-    a: { en: "Yes. You may use your existing domain or purchase a new one. You remain the owner of your domain at all times.\n\nWe provide simple instructions to connect your domain during deployment.", zh: "可以。您可以使用现有域名或购买新域名。域名始终归您所有。\n\n我们会提供简单的说明，帮助您在部署过程中连接域名。" },
+    q: { en: "I don't have a website yet. Can you still help me?", zh: "我還沒有網站。你們還能幫我嗎？" },
+    a: { en: "SwiftLift specializes in rebuilding and upgrading existing websites. If you're starting from scratch and need a brand new website built, we'd love to help — please visit our Custom Quote page and we'll put together a proposal tailored to your needs.", zh: "SwiftLift專注於重建和升級現有網站。如果您從零開始需要建立全新網站，我們很樂意幫助——請訪問我們的定制報價頁面，我們將為您量身定制方案。" },
   },
   {
-    q: { en: "Do I need hosting?", zh: "我需要托管吗？" },
-    a: { en: "We provide a free hosting option or an optional managed hosting upgrade. Hosting subscriptions begin upon activation.\n\nYou may also choose to host independently if preferred.", zh: "我们提供免费的托管方案或可选的托管主机升级。托管订阅在激活后开始。\n\n如果您愿意，也可以选择自行托管。" },
+    q: { en: "What kind of websites do you build?", zh: "你們建什麼類型的網站？" },
+    a: { en: "We build fast, modern static websites — clean code that loads quickly, ranks well on Google, and looks sharp on every screen size. Mobile-responsive design is built into every project by default. Static websites are ideal for business websites, service pages, landing pages, and professional portfolios. They are not suitable for e-commerce stores or sites requiring a shopping cart or product database. If you need e-commerce functionality, please visit our Custom Quote page.", zh: "我們建立快速、現代的靜態網站——乾淨的代碼，載入迅速，在Google上排名良好，在每個螢幕尺寸上都清晰銳利。每個項目默認內建手機響應式設計。靜態網站非常適合企業網站、服務頁面、著陸頁和專業作品集。不適用於電子商務商店或需要購物車或產品數據庫的網站。如需電子商務功能，請訪問我們的定制報價頁面。" },
   },
   {
-    q: { en: "Can I host the website myself?", zh: "我可以自己托管网站吗？" },
-    a: { en: "Yes — if you prefer to use your own hosting, just let us know before we launch. We'll package your complete website files and send them to you as a zip file so you can deploy wherever you'd like. No lock-in, no restrictions.", zh: "可以 — 如果您更喜欢使用自己的托管，只需在启动前告知我们。我们将打包您的完整网站文件，以zip文件形式发送给您，您可以部署到任何您想要的地方。无锁定，无限制。" },
+    q: { en: "Where is my website hosted? Are there hidden fees?", zh: "我的網站託管在哪裡？有隱藏費用嗎？" },
+    a: { en: "All SwiftLift websites are hosted on Netlify — one of the most reliable hosting platforms available. Your hosting is completely free with no monthly fees, and we will never use hosting costs to lock you in. If you prefer to manage your own hosting, we'll deliver your complete website as a ZIP file. You can then deploy it yourself on either Netlify or Vercel — both are free platforms and fully compatible with your site files.", zh: "所有SwiftLift網站都託管在Netlify——最可靠的託管平台之一。您的託管完全免費，無月費，我們絕不會用託管費用來綁住您。如果您偏好自行管理託管，我們會將完整網站以ZIP檔案交付。您可以自行部署在Netlify或Vercel上——兩者都是免費平台，完全兼容您的網站檔案。" },
   },
   {
-    q: { en: "What about refunds?", zh: "关于退款政策？" },
-    a: { en: "Because of the structured and digital nature of our services, payments are non-refundable once development begins after preview selection.\n\nSelecting a package and submitting payment confirms approval to proceed.", zh: "由于我们服务的结构化和数字化特性，一旦在预览选择后开始开发，款项将不予退还。\n\n选择套餐并提交付款即表示确认同意继续。" },
+    q: { en: "Can I use my own domain name?", zh: "可以使用自己的網域嗎？" },
+    a: { en: "Yes. You keep full ownership of your domain at all times. Once your site is ready to launch, we'll help connect your domain to your new website. If you're able to share access with us, we'll handle the entire DNS and nameserver setup for you — the safest and fastest option. If two-factor authentication or account restrictions prevent direct access, we'll provide clear step-by-step instructions and guide you through the process personally until everything is connected correctly.", zh: "可以。您始終保有網域的完全所有權。網站準備就緒後，我們會幫助將您的網域連接到新網站。如果您能與我們共享存取權限，我們將為您處理整個DNS和名稱伺服器設置——最安全、最快的選項。如果雙重驗證或帳戶限制無法直接存取，我們會提供清晰的逐步說明，並親自引導您完成整個過程，直到一切正確連接。" },
   },
   {
-    q: { en: "Is there a satisfaction guarantee?", zh: "有满意保证吗？" },
-    a: { en: "Yes — our guarantee is built into the process. You receive two free live previews before making any purchase decision.\n\nThis ensures you approve the direction before committing.", zh: "是的——我们的保证已融入流程之中。在做出任何购买决定之前，您会收到两个免费的实时预览。\n\n这确保您在承诺之前认可方向。" },
+    q: { en: "What about my existing email? Will it be affected?", zh: "我現有的電子郵件呢？會受影響嗎？" },
+    a: { en: "This is important to understand before switching. Our websites do not include email hosting. If your current hosting provider includes a business email address such as info@yourbusiness.com, you must not cancel that hosting until your email has been moved to an independent email provider such as Google Workspace or Zoho Mail. We will flag this during your launch process and help you understand your options so nothing gets interrupted.", zh: "在切換之前了解這一點很重要。我們的網站不包含電子郵件託管。如果您目前的託管提供商包含企業電子郵件地址（如info@yourbusiness.com），在將電子郵件遷移到獨立電子郵件提供商（如Google Workspace或Zoho Mail）之前，請勿取消該託管。我們會在上線過程中提醒您，並幫助您了解選項，確保不會中斷任何服務。" },
   },
   {
-    q: { en: "Can I request future updates?", zh: "可以请求后续更新吗？" },
-    a: { en: "Yes. After launch, you may request structured upgrades such as booking integrations, calculators, multilingual setup, CRM tools, and more.\n\nMore advanced custom features require a custom quote.\n\nAll upgrades must be approved and paid before development begins.", zh: "可以。上线后，您可以请求结构化升级，如预约集成、计算器、多语言设置、CRM工具等。\n\n更高级的自定义功能需要定制报价。\n\n所有升级必须在开发开始前获得批准并支付费用。" },
+    q: { en: "What about revisions and updates?", zh: "修改和更新怎麼辦？" },
+    a: { en: "After launch, additional revisions are available at $45 per revision round. If you expect to update your site regularly, our Managed Hosting plan at $15/month or $135/year includes one free revision every month plus priority support — most clients find this pays for itself with the first update. More advanced additions such as booking integrations, multilingual setup, calculators, or CRM tools are available as custom upgrades and require a separate quote. All upgrades are approved and confirmed before any work begins.", zh: "上線後，額外修改每輪$45。如果您預計定期更新網站，我們的託管方案每月$15或每年$135，包含每月一次免費修改和優先支援——大多數客戶發現第一次更新就回本了。更進階的功能如預約整合、多語言設置、計算器或CRM工具，可作為定制升級，需另行報價。所有升級在開始工作前均需確認和批准。" },
+  },
+  {
+    q: { en: "What about refunds?", zh: "關於退款？" },
+    a: { en: "Because you review two complete working websites before making any payment, the preview process is your approval step. Once you've selected a direction and submitted payment, work proceeds immediately — payments are non-refundable at that stage. If you have any hesitation, take your time reviewing both versions before committing.", zh: "因為您在付款前已審閱了兩個完整的網站，預覽過程就是您的批准步驟。一旦您選定方向並提交付款，工作立即開始——此階段款項不可退還。如有任何猶豫，請花時間審閱兩個版本後再做決定。" },
+  },
+  {
+    q: { en: "Is there a satisfaction guarantee?", zh: "有滿意保證嗎？" },
+    a: { en: "Yes — and it's built into how we work. You see both complete websites before spending a single dollar. You only pay for a direction you've already clicked through and approved. There are no surprises after payment.", zh: "是的——這已融入我們的工作方式。您在花一分錢之前就能看到兩個完整的網站。您只為已經點擊瀏覽並認可的方向付款。付款後沒有任何意外。" },
   },
 ];
 
@@ -71,7 +79,7 @@ const FaqContent = () => {
             transition={{ duration: 0.6 }}
             className="text-[clamp(2rem,4.5vw,3rem)] font-bold text-white mb-4"
           >
-            {lang === "en" ? "Frequently Asked Questions" : "常见问题"}
+            {lang === "en" ? "Frequently Asked Questions" : "常見問題"}
           </motion.h1>
           <motion.p
             initial={{ opacity: 0, y: 20 }}
@@ -79,7 +87,7 @@ const FaqContent = () => {
             transition={{ duration: 0.6, delay: 0.15 }}
             className="text-[1.05rem] md:text-xl text-white/80 max-w-2xl mx-auto"
           >
-            {lang === "en" ? "Everything you need to know before and after your free preview." : "关于免费预览前后您需要了解的一切。"}
+            {lang === "en" ? "Everything you need to know before and after your free preview." : "關於免費預覽前後您需要了解的一切。"}
           </motion.p>
         </div>
       </section>
