@@ -564,8 +564,8 @@ const IndexContent = ({ variant = "home" }: { variant?: "home" | "start" }) => {
     },
     {
       text: lang === "en"
-        ? <>SwiftLift sent me two versions and I could actually <strong>see exactly what my new site would look like before paying anything</strong>. Made the decision so easy. My booking requests have gone up noticeably since we launched.</>
-        : "SwiftLift 發了兩個版本給我，我可以在付款前清楚看到新網站的樣子。讓決定變得非常簡單。自從上線後，我的預約請求明顯增加了。",
+        ? <>SwiftLift sent me two versions and I could actually <strong>see exactly what my new site would look like before paying anything</strong>. Made the decision so easy. Within three weeks of launching, my booking requests went up — I wasn't expecting results that fast.</>
+        : "SwiftLift 發了兩個版本給我，我可以在付款前清楚看到新網站的樣子。讓決定變得非常簡單。上線三週內，我的預約請求就增加了——沒想到結果會這麼快。",
       name: "Jennifer Park",
       company: lang === "en" ? "Yoga Studio Owner · Seattle, WA" : "瑜伽工作室老闆 · 西雅圖, WA",
     },
