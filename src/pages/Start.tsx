@@ -45,7 +45,7 @@ const Start = () => {
       <div className="min-h-screen bg-background scroll-smooth">
         {showPreloader && <Preloader onComplete={handlePreloaderComplete} />}
         <MinimalHeader />
-        <IndexContent />
+        <IndexContent variant="start" />
         <MinimalFooter />
       </div>
     </LanguageProvider>

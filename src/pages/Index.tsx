@@ -571,8 +571,8 @@ const IndexContent = ({ variant = "home" }: { variant?: "home" | "start" }) => {
     },
     {
       text: lang === "en"
-        ? <>I loved the design so much I showed my receptionist before I even paid. <strong>We both agreed immediately.</strong> Honestly didn't expect it to be this smooth — I was ready for it to be complicated.</>
-        : "設計太好看了，我甚至在付款前就拿給櫃台看。我們馬上就達成一致。老實說沒想到會這麼順利——我已經做好會很複雜的心理準備了。",
+        ? <>I loved the design so much I showed my receptionist before I even paid. <strong>We both agreed immediately.</strong> New patients have been mentioning they found us online — that never used to happen.</>
+        : "設計太好看了，我甚至在付款前就拿給櫃台看。我們馬上就達成一致。新病患一直說他們是在網上找到我們的——這以前從來沒有過。",
       name: "Melissa Wong",
       company: lang === "en" ? "Clinic Owner" : "診所老闆",
     },
