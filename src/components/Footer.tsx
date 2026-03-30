@@ -34,7 +34,7 @@ const Footer = () => {
   };
 
   return (
-    <footer className="py-12 md:py-16" style={{ background: "hsl(var(--footer-bg))" }}>
+    <footer className="py-12 md:py-16" style={{ background: "#0f172a" }}>
       <div className="max-w-7xl mx-auto px-6">
         {/* Desktop: multi-column grid */}
         <div className="hidden md:grid grid-cols-[2fr_0.5fr_1fr_1fr_1fr_1.2fr] gap-8">
