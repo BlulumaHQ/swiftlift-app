@@ -21,7 +21,7 @@ function generateClientId(): string {
   return `CL-${yyyy}${mm}${dd}-${rand}`;
 }
 
-import heroDesktopBg from "@/assets/hero-bg-desktop.webp";
+
 import reviewSlideGenes from "@/assets/swiftlift-review-slide-genes.webp";
 import reviewSlideMuttpuddles from "@/assets/swiftlift-review-slide-muttpuddles.webp";
 import reviewSlideChicagoboxing from "@/assets/swiftlift-review-slide-chicagoboxing.webp";
@@ -554,45 +554,45 @@ const IndexContent = () => {
     { name: lang === "en" ? "Growth Upgrade" : "成長優化版", price: formatPrice(PRICING.websitePackages.singlePage[2].price) },
   ];
 
-  const reviewItems = [
+  const reviewItems: { text: string | React.ReactNode; name: string; company: string }[] = [
     {
       text: lang === "en"
-        ? "Honestly just wanted something cleaner. They sent over two options, I picked the one I liked, and that was it. No back and forth, no waiting around."
+        ? <>Honestly just wanted something cleaner. They sent over two options, <strong>I picked the one I liked, and that was it.</strong> No back and forth, no waiting around.</>
         : "老實說就是想要更乾淨的設計。他們發了兩個選項，我選了喜歡的，就這樣。沒有來回溝通，也不用等待。",
       name: "David Chen",
       company: lang === "en" ? "Realtor" : "房地產經紀人",
     },
     {
       text: lang === "en"
-        ? <>設計出來我們整個團隊都很喜歡！大家快來看我們的新網站 👉 <a href="https://one-park-home.bluluma.com" target="_blank" rel="noopener noreferrer" className="underline hover:opacity-80 transition-opacity" style={{ color: "hsl(275 51% 46%)" }}>one-park-home.bluluma.com</a></>
-        : <>設計出來我們整個團隊都很喜歡！大家快來看我們的新網站 👉 <a href="https://one-park-home.bluluma.com" target="_blank" rel="noopener noreferrer" className="underline hover:opacity-80 transition-opacity" style={{ color: "hsl(275 51% 46%)" }}>one-park-home.bluluma.com</a></>,
-      name: "One Park Development",
-      company: lang === "en" ? "Real Estate Developer · Richmond, BC" : "房地產開發商 · 列治文, BC",
+        ? <>SwiftLift sent me two versions and I could actually <strong>see exactly what my new site would look like before paying anything</strong>. Made the decision so easy. My booking requests have gone up noticeably since we launched.</>
+        : "SwiftLift 發了兩個版本給我，我可以在付款前清楚看到新網站的樣子。讓決定變得非常簡單。自從上線後，我的預約請求明顯增加了。",
+      name: "Jennifer Park",
+      company: lang === "en" ? "Yoga Studio Owner · Seattle, WA" : "瑜伽工作室老闆 · 西雅圖, WA",
     },
     {
       text: lang === "en"
-        ? "I loved the design so much I showed my receptionist before I even paid. We both agreed immediately. Honestly didn't expect it to be this smooth — I was ready for it to be complicated."
+        ? <>I loved the design so much I showed my receptionist before I even paid. <strong>We both agreed immediately.</strong> Honestly didn't expect it to be this smooth — I was ready for it to be complicated.</>
         : "設計太好看了，我甚至在付款前就拿給櫃台看。我們馬上就達成一致。老實說沒想到會這麼順利——我已經做好會很複雜的心理準備了。",
       name: "Melissa Wong",
       company: lang === "en" ? "Clinic Owner" : "診所老闆",
     },
     {
       text: lang === "en"
-        ? "I went with Version A right away — didn't even need to think about it. Finally a site I'm not embarrassed to put on my business card."
+        ? <>I went with Version A right away — didn't even need to think about it. <strong>Finally a site I'm not embarrassed to put on my business card.</strong></>
         : "我馬上就選了版本A——根本不用考慮。終於有一個不會讓我尷尬放在名片上的網站了。",
       name: "Sarah Mitchell",
       company: lang === "en" ? "Independent Realtor · Austin, TX" : "獨立房地產經紀人 · 德州奧斯汀",
     },
     {
       text: lang === "en"
-        ? "Honestly didn't think a dental office website could look this good without spending thousands. The whole process was smooth and way faster than I expected. My front desk staff actually said the new site looks more professional than our clinic interior!"
+        ? <>Honestly didn't think a dental office website could look this good without spending thousands. <strong>The whole process was smooth and way faster than I expected.</strong> My front desk staff actually said the new site looks more professional than our clinic interior!</>
         : "老實說沒想到牙科診所的網站不花幾千美金也能做得這麼好。整個過程很順利，比我預期的快得多。前台工作人員甚至說新網站看起來比我們診所內部還專業！",
       name: "Dr. James Kowalski",
       company: lang === "en" ? "Family Dentistry · Columbus, OH" : "家庭牙科 · 俄亥俄州哥倫布",
     },
     {
       text: lang === "en"
-        ? "I've been in construction for 22 years and never really had a website that did anything for my business. Figured I'd try SwiftLift since I didn't have to pay upfront. They sent me two live versions to browse on my phone, I could actually click through everything. Picked the one that felt more like my brand, made a couple small tweaks, and it was live within days. I've already had two new clients mention they found me online, which never happened before. Wish I did this years ago."
+        ? <>I've been in construction for 22 years and never really had a website that did anything for my business. Figured I'd try SwiftLift since I didn't have to pay upfront. They sent me two live versions to browse on my phone, I could actually click through everything. <strong>Picked the one that felt more like my brand, made a couple small tweaks, and it was live within days.</strong> I've already had two new clients mention they found me online, which never happened before. Wish I did this years ago.</>
         : "我做建築22年了，從來沒有一個真正為我的生意帶來幫助的網站。想說SwiftLift不用先付錢就試試看。他們發了兩個即時版本讓我在手機上瀏覽，真的可以點擊所有內容。選了那個更符合我品牌的，做了幾個小調整，幾天內就上線了。已經有兩個新客戶說他們在網上找到我的，以前從沒發生過。真希望幾年前就這樣做了。",
       name: "Mike Hartwell",
       company: lang === "en" ? "Hartwell General Contracting · Boise, ID" : "Hartwell 綜合承包 · 愛達荷州博伊西",
@@ -618,6 +618,12 @@ const IndexContent = () => {
         ? "Yes. You can review both website versions before paying. You only pay if you choose to use one of them."
         : "是的。您可以在付款前審核兩個網站版本。只有在您選擇使用其中之一時才需付款。",
     },
+    {
+      q: lang === "en" ? "How is SwiftLift different from just hiring a freelancer?" : "SwiftLift 和直接請自由工作者有什麼不同？",
+      a: lang === "en"
+        ? "With a freelancer you describe what you want and hope it turns out right. With SwiftLift you see two complete working websites first — then decide. No guessing, no back and forth, no paying before you know you love it."
+        : "請自由工作者的話，你描述你想要的然後希望結果是對的。用 SwiftLift，你先看到兩個完整可運作的網站——然後再決定。不用猜測、不用來回溝通、不用在確定喜歡之前就付錢。",
+    },
   ];
 
   return (
@@ -626,25 +632,8 @@ const IndexContent = () => {
       <section
         id="contact"
         className="relative pt-28 pb-16 md:pt-36 md:pb-24 overflow-hidden"
-        style={{
-          background: "linear-gradient(180deg, hsl(209 66% 16%) 0%, hsl(209 66% 12%) 100%)",
-        }}
+        style={{ background: "#0f172a" }}
       >
-        <img
-          src={heroDesktopBg}
-          alt=""
-          className="absolute inset-0 w-full h-full object-cover z-0 hidden lg:block"
-        />
-        <div
-          className="absolute inset-0 z-[1] pointer-events-none hidden lg:block"
-          style={{ background: "rgba(10, 15, 30, 0.4)" }}
-        />
-        <div
-          className="absolute inset-0 pointer-events-none"
-          style={{
-            background: "radial-gradient(ellipse 80% 60% at 20% 40%, hsl(275 51% 46% / 0.05) 0%, transparent 60%), radial-gradient(ellipse 60% 50% at 80% 30%, hsl(214 58% 60% / 0.04) 0%, transparent 50%)",
-          }}
-        />
 
         <div className="relative z-10 max-w-6xl mx-auto px-6">
           <div className="grid grid-cols-1 lg:grid-cols-[3fr_2fr] gap-10 lg:gap-14 items-center">
@@ -691,7 +680,7 @@ const IndexContent = () => {
       </section>
 
       {/* ═══ 2. HOW IT WORKS ═══ */}
-      <section id="process" className="py-16 md:py-24 lg:py-28 bg-background">
+      <section id="process" className="py-16 md:py-24 lg:py-28" style={{ background: "#F5F5F5" }}>
         <div className="max-w-6xl mx-auto px-6 text-center">
           <h2 className="text-[clamp(1.8rem,4vw,2.8rem)] lg:text-[2rem] font-black text-foreground font-display">
             {lang === "en" ? "How It Works" : "如何運作"}
@@ -778,7 +767,7 @@ const IndexContent = () => {
       </section>
 
       {/* ═══ FEATURED PORTFOLIO ═══ */}
-      <section className="py-16 md:py-24 lg:py-28 bg-background">
+      <section className="py-16 md:py-24 lg:py-28" style={{ background: "#FFFFFF" }}>
         <div className="max-w-6xl mx-auto px-6">
           <h2 className="text-[clamp(1.8rem,4vw,2.8rem)] lg:text-[2rem] font-black text-foreground font-display text-center">
             {lang === "en" ? "Real Website Transformations" : "真實網站改造"}
@@ -886,7 +875,7 @@ const IndexContent = () => {
       </section>
 
 
-      <section id="pricing" className="py-16 md:py-24 lg:py-28" style={{ background: "hsl(var(--surface-sunken))" }}>
+      <section id="pricing" className="py-16 md:py-24 lg:py-28" style={{ background: "#F5F5F5" }}>
         <div className="max-w-5xl mx-auto px-6">
           <h2 className="text-[clamp(1.8rem,4vw,2.8rem)] lg:text-[2rem] font-black text-foreground font-display text-center">
             {lang === "en" ? "Simple, Transparent Pricing" : "簡單透明的定價"}
@@ -963,7 +952,7 @@ const IndexContent = () => {
       </section>
 
       {/* ═══ 4. TURN YOUR CURRENT WEBSITE INTO SOMETHING BETTER ═══ */}
-      <section className="py-16 md:py-24 lg:py-28 bg-background">
+      <section className="py-16 md:py-24 lg:py-28" style={{ background: "#FFFFFF" }}>
         <div className="max-w-3xl mx-auto px-6 text-center">
           <h2 className="text-[clamp(1.8rem,4vw,2.8rem)] lg:text-[2rem] font-black text-foreground font-display">
             {lang === "en" ? (<>We Work With What<br className="md:hidden" /> You Already Have</>) : "我們在您現有的基礎上改版"}
@@ -1010,7 +999,7 @@ const IndexContent = () => {
       </section>
 
       {/* ═══ 5. REVIEWS ═══ */}
-      <section className="py-16 md:py-24 lg:py-28" style={{ background: "hsl(var(--surface-sunken))" }}>
+      <section className="py-16 md:py-24 lg:py-28" style={{ background: "#F5F5F5" }}>
         <div className="max-w-6xl mx-auto px-6">
           <h2 className="text-[clamp(1.8rem,4vw,2.8rem)] lg:text-[2rem] font-black text-foreground font-display text-center mb-10">
             {lang === "en" ? "What Our Clients Say" : "客戶評價"}
@@ -1124,7 +1113,7 @@ const IndexContent = () => {
 
 
       {/* ═══ 7. FAQ ═══ */}
-      <section className="py-16 md:py-24 lg:py-28" style={{ background: "hsl(var(--surface-sunken))" }}>
+      <section className="py-16 md:py-24 lg:py-28" style={{ background: "#FFFFFF" }}>
         <div className="max-w-3xl mx-auto px-6">
           <h2 className="text-[clamp(1.8rem,4vw,2.8rem)] lg:text-[2rem] font-black text-foreground font-display text-center">
             {lang === "en" ? "Still Have Questions?" : "還有疑問？"}
@@ -1184,9 +1173,7 @@ const IndexContent = () => {
       {/* ═══ FINAL CTA ═══ */}
       <section
         className="relative py-20 md:py-28 overflow-hidden"
-        style={{
-          background: "linear-gradient(160deg, hsl(213 55% 22%) 0%, hsl(215 60% 16%) 50%, hsl(217 65% 12%) 100%)",
-        }}
+        style={{ background: "#0f172a" }}
       >
         <div className="absolute inset-0 pointer-events-none" style={{ background: "radial-gradient(ellipse 60% 50% at 50% 40%, hsl(209 70% 30% / 0.25), transparent)" }} />
         <div className="relative max-w-2xl mx-auto px-6 text-center">
@@ -1211,6 +1198,8 @@ const IndexContent = () => {
     </main>
   );
 };
+
+export { IndexContent };
 
 const Index = () => {
   const [showPreloader, setShowPreloader] = useState(() => !sessionStorage.getItem(PRELOADER_KEY));

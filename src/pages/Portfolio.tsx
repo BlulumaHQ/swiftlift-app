@@ -4,7 +4,6 @@ import { LanguageProvider, useLanguage } from "@/contexts/LanguageContext";
 import { useIsMobile } from "@/hooks/use-mobile";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import CustomCursor from "@/components/CustomCursor";
 import { ArrowRight, ExternalLink, Quote, Star, Eye, X } from "lucide-react";
 import { Dialog, DialogContent, DialogTitle } from "@/components/ui/dialog";
 
@@ -521,7 +520,7 @@ const PortfolioContent = () => {
 
   return (
     <div className="min-h-screen bg-background text-foreground">
-      <CustomCursor />
+      
       <Header />
 
       {/* SECTION 1 — HERO */}
