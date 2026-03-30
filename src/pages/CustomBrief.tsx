@@ -3,6 +3,7 @@ import { useSearchParams } from "react-router-dom";
 import { LanguageProvider, useLanguage } from "@/contexts/LanguageContext";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import CustomCursor from "@/components/CustomCursor";
 import PreviewSelector from "@/components/PreviewSelector";
 import { toast } from "@/hooks/use-toast";
 import { motion } from "framer-motion";
@@ -367,6 +368,7 @@ const CustomBriefContent = () => {
 const CustomBrief = () => (
   <LanguageProvider>
     <div className="min-h-screen bg-background scroll-smooth">
+      <CustomCursor />
       <Header />
       <CustomBriefContent />
       <Footer />

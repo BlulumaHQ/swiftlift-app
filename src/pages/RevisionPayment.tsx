@@ -4,6 +4,7 @@ import { LanguageProvider } from "@/contexts/LanguageContext";
 import { STRIPE_LINKS } from "@/lib/pricing";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import CustomCursor from "@/components/CustomCursor";
 import { Check, CreditCard, AlertCircle, Hash, ArrowRight } from "lucide-react";
 import { motion } from "framer-motion";
 
@@ -194,6 +195,7 @@ const RevisionPaymentContent = () => {
 
 const RevisionPayment = () => (
   <LanguageProvider>
+    <CustomCursor />
     <Header />
     <RevisionPaymentContent />
     <Footer />

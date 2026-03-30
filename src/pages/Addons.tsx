@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { LanguageProvider, useLanguage } from "@/contexts/LanguageContext";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import CustomCursor from "@/components/CustomCursor";
 import ScrollReveal from "@/components/ScrollReveal";
 import MagneticButton from "@/components/MagneticButton";
 import { motion } from "framer-motion";
@@ -356,6 +357,7 @@ const Addons = () => {
   return (
     <LanguageProvider>
       <div className="min-h-screen bg-background scroll-smooth">
+        <CustomCursor />
         <Header />
         <AddonsContent />
         <Footer />

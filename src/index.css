@@ -87,7 +87,7 @@
     font-size: 19px;
     line-height: 1.65;
     letter-spacing: 0.01em;
-    cursor: auto;
+    cursor: none;
   }
 
   /* Chinese font override */
@@ -143,6 +143,32 @@
     font-size: 103%;
   }
 
+  /* Custom cursor */
+  .custom-cursor {
+    width: 8px;
+    height: 8px;
+    background: #2DA8FF;
+    border-radius: 50%;
+    position: fixed;
+    pointer-events: none;
+    z-index: 9999;
+    transition: transform 0.15s ease, width 0.15s ease, height 0.15s ease;
+    mix-blend-mode: normal;
+  }
+
+  .custom-cursor.hovering {
+    width: 24px;
+    height: 24px;
+    margin-left: -8px;
+    margin-top: -8px;
+    opacity: 0.5;
+  }
+
+  /* Restore cursor for interactive elements on touch devices */
+  @media (pointer: coarse) {
+    body { cursor: auto; }
+    .custom-cursor { display: none; }
+  }
 }
 
 @layer utilities {

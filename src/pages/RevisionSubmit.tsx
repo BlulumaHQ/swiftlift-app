@@ -3,6 +3,7 @@ import { useSearchParams } from "react-router-dom";
 import { LanguageProvider } from "@/contexts/LanguageContext";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
+import CustomCursor from "@/components/CustomCursor";
 import { Check, User, Mail, Hash, Link as LinkIcon, Upload, AlertCircle } from "lucide-react";
 import { motion } from "framer-motion";
 import { supabase } from "@/integrations/supabase/client";
@@ -314,6 +315,7 @@ const RevisionSubmitContent = () => {
 
 const RevisionSubmit = () => (
   <LanguageProvider>
+    <CustomCursor />
     <Header />
     <RevisionSubmitContent />
     <Footer />
