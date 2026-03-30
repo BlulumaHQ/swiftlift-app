@@ -207,24 +207,20 @@ export const translations = {
     },
     items: [
       {
-        q: { en: "Is the preview really free?", zh: "預覽真的免費嗎？" },
-        a: { en: "Yes. We create two fully working website previews at no cost. You only pay if you decide to move forward.\n\nThere's no credit card required and no obligation. If you don't like either preview, you walk away — no questions asked.", zh: "是的。我們免費創建兩個完全可運行的網站預覽。只有在您決定繼續時才需付款。\n\n無需信用卡，無任何義務。如果您不喜歡任何預覽，可以直接離開——不問原因。" },
+        q: { en: "Is this really free to start?", zh: "真的可以免費開始嗎？" },
+        a: { en: "Yes. Submitting your request costs nothing. We build two complete, live website versions for you to browse — on desktop and mobile — before you make any decision. You only pay when you've chosen a direction you love.", zh: "是的。提交請求完全免費。我們會為您建立兩個完整的即時網站版本，供您在桌面和手機上瀏覽——在您做出任何決定之前。只有當您選定了喜歡的方向後才需要付款。" },
       },
       {
-        q: { en: "How long does it take?", zh: "需要多長時間？" },
-        a: { en: "You'll receive your two website previews within 48 hours of submitting your request.\n\nOnce you choose a version, your final website goes live within 3 days.", zh: "提交請求後48小時內您將收到兩個網站預覽。\n\n選定版本後，最終網站3天內上線。" },
+        q: { en: "How do the free previews work?", zh: "免費預覽是如何運作的？" },
+        a: { en: "Submit your website URL and a few basic details about your business. Within 48 hours, you'll receive two fully built, clickable website versions — not mockups, not screenshots. Real working sites you can browse on any device, especially mobile. No payment, no commitment required to receive them.", zh: "提交您的網站網址和一些基本業務資訊。48小時內，您將收到兩個完整建立的可點擊網站版本——不是模型，不是截圖。是真正可在任何設備上瀏覽的網站，尤其是手機。無需付款，無需承諾即可獲取。" },
       },
       {
-        q: { en: "What happens after I choose a version?", zh: "選擇方案後會發生什麼？" },
-        a: { en: "You select your preferred direction, choose a package, and submit payment. We then finalize your website and launch it within 3 days.\n\nNo long process. No endless revisions. Just a clean, fast launch.", zh: "選定您心儀的方向，選擇套餐並提交付款。我們隨後完成您的網站並在3天內上線。\n\n沒有漫長的流程。沒有無止境的修改。只有乾淨、快速的上線。" },
+        q: { en: "Where is my website hosted? Are there hidden fees?", zh: "我的網站託管在哪裡？有隱藏費用嗎？" },
+        a: { en: "Your website is hosted on Netlify — one of the most reliable hosting platforms available. Hosting is completely free with no monthly fees. We will never use hosting costs to lock you in.", zh: "您的網站託管在Netlify——最可靠的託管平台之一。託管完全免費，無月費。我們絕不會用託管費用來綁住您。" },
       },
       {
-        q: { en: "Can I use my own domain?", zh: "可以使用自己的網域嗎？" },
-        a: { en: "Yes. You can use your existing domain or purchase a new one. You remain the owner at all times.\n\nWe provide simple instructions to connect your domain during deployment.", zh: "可以。您可以使用現有網域或購買新網域。網域始終歸您所有。\n\n我們會提供簡單的說明，幫助您在部署過程中連接網域。" },
-      },
-      {
-        q: { en: "Do I need to have an existing website?", zh: "需要有現有網站嗎？" },
-        a: { en: "SwiftLift is built for businesses with an existing website that needs upgrading. If you need a brand new site, explore our custom build options.", zh: "SwiftLift 針對需要升級現有網站的企業而建。如果您需要全新網站，請探索我們的定制建設選項。" },
+        q: { en: "What about revisions and updates?", zh: "修改和更新怎麼辦？" },
+        a: { en: "After launch, additional revisions are available at $45 per revision round. If you expect to update your site regularly, our Managed Hosting plan at $15/month or $135/year includes one free revision every month plus priority support — most clients find this pays for itself with the first update.", zh: "上線後，額外修改每輪$45。如果您預計定期更新網站，我們的託管方案每月$15或每年$135，包含每月一次免費修改和優先支援——大多數客戶發現第一次更新就回本了。" },
       },
     ],
   },
