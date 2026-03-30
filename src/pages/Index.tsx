@@ -626,25 +626,8 @@ const IndexContent = () => {
       <section
         id="contact"
         className="relative pt-28 pb-16 md:pt-36 md:pb-24 overflow-hidden"
-        style={{
-          background: "linear-gradient(180deg, hsl(209 66% 16%) 0%, hsl(209 66% 12%) 100%)",
-        }}
+        style={{ background: "#0f172a" }}
       >
-        <img
-          src={heroDesktopBg}
-          alt=""
-          className="absolute inset-0 w-full h-full object-cover z-0 hidden lg:block"
-        />
-        <div
-          className="absolute inset-0 z-[1] pointer-events-none hidden lg:block"
-          style={{ background: "rgba(10, 15, 30, 0.4)" }}
-        />
-        <div
-          className="absolute inset-0 pointer-events-none"
-          style={{
-            background: "radial-gradient(ellipse 80% 60% at 20% 40%, hsl(275 51% 46% / 0.05) 0%, transparent 60%), radial-gradient(ellipse 60% 50% at 80% 30%, hsl(214 58% 60% / 0.04) 0%, transparent 50%)",
-          }}
-        />
 
         <div className="relative z-10 max-w-6xl mx-auto px-6">
           <div className="grid grid-cols-1 lg:grid-cols-[3fr_2fr] gap-10 lg:gap-14 items-center">
@@ -691,7 +674,7 @@ const IndexContent = () => {
       </section>
 
       {/* ═══ 2. HOW IT WORKS ═══ */}
-      <section id="process" className="py-16 md:py-24 lg:py-28 bg-background">
+      <section id="process" className="py-16 md:py-24 lg:py-28" style={{ background: "#F5F5F5" }}>
         <div className="max-w-6xl mx-auto px-6 text-center">
           <h2 className="text-[clamp(1.8rem,4vw,2.8rem)] lg:text-[2rem] font-black text-foreground font-display">
             {lang === "en" ? "How It Works" : "如何運作"}
@@ -778,7 +761,7 @@ const IndexContent = () => {
       </section>
 
       {/* ═══ FEATURED PORTFOLIO ═══ */}
-      <section className="py-16 md:py-24 lg:py-28 bg-background">
+      <section className="py-16 md:py-24 lg:py-28" style={{ background: "#FFFFFF" }}>
         <div className="max-w-6xl mx-auto px-6">
           <h2 className="text-[clamp(1.8rem,4vw,2.8rem)] lg:text-[2rem] font-black text-foreground font-display text-center">
             {lang === "en" ? "Real Website Transformations" : "真實網站改造"}
@@ -886,7 +869,7 @@ const IndexContent = () => {
       </section>
 
 
-      <section id="pricing" className="py-16 md:py-24 lg:py-28" style={{ background: "hsl(var(--surface-sunken))" }}>
+      <section id="pricing" className="py-16 md:py-24 lg:py-28" style={{ background: "#F5F5F5" }}>
         <div className="max-w-5xl mx-auto px-6">
           <h2 className="text-[clamp(1.8rem,4vw,2.8rem)] lg:text-[2rem] font-black text-foreground font-display text-center">
             {lang === "en" ? "Simple, Transparent Pricing" : "簡單透明的定價"}
@@ -963,7 +946,7 @@ const IndexContent = () => {
       </section>
 
       {/* ═══ 4. TURN YOUR CURRENT WEBSITE INTO SOMETHING BETTER ═══ */}
-      <section className="py-16 md:py-24 lg:py-28 bg-background">
+      <section className="py-16 md:py-24 lg:py-28" style={{ background: "#FFFFFF" }}>
         <div className="max-w-3xl mx-auto px-6 text-center">
           <h2 className="text-[clamp(1.8rem,4vw,2.8rem)] lg:text-[2rem] font-black text-foreground font-display">
             {lang === "en" ? (<>We Work With What<br className="md:hidden" /> You Already Have</>) : "我們在您現有的基礎上改版"}
@@ -1010,7 +993,7 @@ const IndexContent = () => {
       </section>
 
       {/* ═══ 5. REVIEWS ═══ */}
-      <section className="py-16 md:py-24 lg:py-28" style={{ background: "hsl(var(--surface-sunken))" }}>
+      <section className="py-16 md:py-24 lg:py-28" style={{ background: "#F5F5F5" }}>
         <div className="max-w-6xl mx-auto px-6">
           <h2 className="text-[clamp(1.8rem,4vw,2.8rem)] lg:text-[2rem] font-black text-foreground font-display text-center mb-10">
             {lang === "en" ? "What Our Clients Say" : "客戶評價"}
@@ -1124,7 +1107,7 @@ const IndexContent = () => {
 
 
       {/* ═══ 7. FAQ ═══ */}
-      <section className="py-16 md:py-24 lg:py-28" style={{ background: "hsl(var(--surface-sunken))" }}>
+      <section className="py-16 md:py-24 lg:py-28" style={{ background: "#FFFFFF" }}>
         <div className="max-w-3xl mx-auto px-6">
           <h2 className="text-[clamp(1.8rem,4vw,2.8rem)] lg:text-[2rem] font-black text-foreground font-display text-center">
             {lang === "en" ? "Still Have Questions?" : "還有疑問？"}
@@ -1184,9 +1167,8 @@ const IndexContent = () => {
       {/* ═══ FINAL CTA ═══ */}
       <section
         className="relative py-20 md:py-28 overflow-hidden"
-        style={{
-          background: "linear-gradient(160deg, hsl(213 55% 22%) 0%, hsl(215 60% 16%) 50%, hsl(217 65% 12%) 100%)",
-        }}
+        style={{ background: "#0f172a" }}
+      >
       >
         <div className="absolute inset-0 pointer-events-none" style={{ background: "radial-gradient(ellipse 60% 50% at 50% 40%, hsl(209 70% 30% / 0.25), transparent)" }} />
         <div className="relative max-w-2xl mx-auto px-6 text-center">
