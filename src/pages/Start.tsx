@@ -9,7 +9,7 @@ const PRELOADER_KEY = "swiftlift_visited";
 
 const MinimalHeader = () => {
   return (
-    <header className="fixed top-0 left-0 right-0 z-50 transition-all duration-500" style={{ background: "#0f172a" }}>
+    <header className="fixed top-0 left-0 right-0 z-50 bg-white border-b border-gray-100">
       <div className="max-w-7xl mx-auto px-6 h-20 flex items-center">
         <Link to="/start" className="flex items-center py-[5px]">
           <img src={swiftsiteLogo} alt="SwiftLift Studio" className="h-[calc(5rem-10px)] w-auto" />
