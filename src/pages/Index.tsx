@@ -564,10 +564,10 @@ const IndexContent = () => {
     },
     {
       text: lang === "en"
-        ? <>設計出來我們整個團隊都很喜歡！大家快來看我們的新網站 👉 <a href="https://one-park-home.bluluma.com" target="_blank" rel="noopener noreferrer" className="underline hover:opacity-80 transition-opacity" style={{ color: "hsl(275 51% 46%)" }}>one-park-home.bluluma.com</a></>
-        : <>設計出來我們整個團隊都很喜歡！大家快來看我們的新網站 👉 <a href="https://one-park-home.bluluma.com" target="_blank" rel="noopener noreferrer" className="underline hover:opacity-80 transition-opacity" style={{ color: "hsl(275 51% 46%)" }}>one-park-home.bluluma.com</a></>,
-      name: "One Park Development",
-      company: lang === "en" ? "Real Estate Developer · Richmond, BC" : "房地產開發商 · 列治文, BC",
+        ? "SwiftLift sent me two versions and I could actually see exactly what my new site would look like before paying anything. Made the decision so easy. My booking requests have gone up noticeably since we launched."
+        : "SwiftLift 發了兩個版本給我，我可以在付款之前清楚看到新網站的樣子。決定變得很簡單。上線後預約明顯增加了。",
+      name: "Jennifer Park",
+      company: lang === "en" ? "Yoga Studio Owner · Seattle, WA" : "瑜伽工作室老闆 · 西雅圖, WA",
     },
     {
       text: lang === "en"
@@ -618,6 +618,12 @@ const IndexContent = () => {
         ? "Yes. You can review both website versions before paying. You only pay if you choose to use one of them."
         : "是的。您可以在付款前審核兩個網站版本。只有在您選擇使用其中之一時才需付款。",
     },
+    {
+      q: lang === "en" ? "How is SwiftLift different from just hiring a freelancer?" : "SwiftLift 和直接請自由接案者有什麼不同？",
+      a: lang === "en"
+        ? "With a freelancer you describe what you want and hope it turns out right. With SwiftLift you see two complete working websites first — then decide. No guessing, no back and forth, no paying before you know you love it."
+        : "請自由接案者時，你描述你想要的，然後祈禱結果是對的。用 SwiftLift，你先看到兩個完整可運行的網站——然後再決定。不用猜測、不用來回溝通、不用在確定喜歡之前就付款。",
+    },
   ];
 
   return (
@@ -626,72 +632,51 @@ const IndexContent = () => {
       <section
         id="contact"
         className="relative pt-28 pb-16 md:pt-36 md:pb-24 overflow-hidden"
-        style={{
-          background: "linear-gradient(180deg, hsl(209 66% 16%) 0%, hsl(209 66% 12%) 100%)",
-        }}
+        style={{ background: "#FFFFFF" }}
       >
-        <img
-          src={heroDesktopBg}
-          alt=""
-          className="absolute inset-0 w-full h-full object-cover z-0 hidden lg:block"
-        />
-        <div
-          className="absolute inset-0 z-[1] pointer-events-none hidden lg:block"
-          style={{ background: "rgba(10, 15, 30, 0.4)" }}
-        />
-        <div
-          className="absolute inset-0 pointer-events-none"
-          style={{
-            background: "radial-gradient(ellipse 80% 60% at 20% 40%, hsl(275 51% 46% / 0.05) 0%, transparent 60%), radial-gradient(ellipse 60% 50% at 80% 30%, hsl(214 58% 60% / 0.04) 0%, transparent 50%)",
-          }}
-        />
+        <div className="relative z-10 max-w-3xl mx-auto px-6 text-center">
+          <h1 className="text-[1.85rem] md:text-[clamp(2.8rem,5.5vw,4.2rem)] lg:text-[clamp(2.8rem,4.5vw,3.6rem)] font-black leading-[1.08] lg:leading-[1.15] font-display tracking-tight" style={{ color: "#1a1a1a" }}>
+            {lang === "en" ? (<>Get a Website That<br />Brings You More<br /><span className="text-transparent bg-clip-text bg-gradient-to-r from-[hsl(var(--accent-purple))] to-[hsl(210,100%,65%)]">Customers.</span></>) : (<>打造一個為您<br /><span className="text-transparent bg-clip-text bg-gradient-to-r from-[hsl(var(--accent-purple))] to-[hsl(210,100%,65%)]">帶來更多客戶的網站。</span></>)}
+          </h1>
 
-        <div className="relative z-10 max-w-6xl mx-auto px-6">
-          <div className="grid grid-cols-1 lg:grid-cols-[3fr_2fr] gap-10 lg:gap-14 items-center">
-            {/* Left: Copy */}
-            <div className="text-white pt-2 lg:pt-6">
-              <h1 className="text-[1.85rem] md:text-[clamp(2.8rem,5.5vw,4.2rem)] lg:text-[clamp(2.8rem,4.5vw,3.6rem)] font-black leading-[1.08] lg:leading-[1.15] font-display tracking-tight">
-                {lang === "en" ? (<>Get a Website That<br />Brings You More<br /><span className="text-transparent bg-clip-text bg-gradient-to-r from-[hsl(var(--accent-purple))] to-[hsl(210,100%,65%)]">Customers.</span></>) : (<>打造一個為您<br /><span className="text-transparent bg-clip-text bg-gradient-to-r from-[hsl(var(--accent-purple))] to-[hsl(210,100%,65%)]">帶來更多客戶的網站。</span></>)}
-              </h1>
+          <p className="mt-5 lg:mt-7 text-lg md:text-xl lg:text-[1.25rem] font-medium leading-[1.5] lg:leading-[1.6] max-w-2xl mx-auto" style={{ color: "#444" }}>
+            {lang === "en"
+              ? "We give your business a website that looks great, builds trust, and turns more visitors into paying customers — 2 live previews delivered in 48 hours, you only pay if you love it."
+              : "我們為您的企業打造一個外觀出色、建立信任、將更多訪客轉化為付費客戶的網站——48小時內交付2個即時預覽，滿意才付款。"}
+          </p>
 
-              <p className="mt-5 lg:mt-7 text-lg md:text-xl lg:text-[1.25rem] font-medium text-white leading-[1.5] lg:leading-[1.6] max-w-lg">
-                {lang === "en"
-                  ? "We give your business a website that looks great, builds trust, and turns more visitors into paying customers — 2 live previews delivered in 48 hours, you only pay if you love it."
-                  : "我們為您的企業打造一個外觀出色、建立信任、將更多訪客轉化為付費客戶的網站——48小時內交付2個即時預覽，滿意才付款。"}
-              </p>
+          <p className="mt-3 text-sm" style={{ color: "#999" }}>
+            {lang === "en"
+              ? "500+ websites built · See yours before you pay"
+              : "已建設500+網站 · 付款前先看成果"}
+          </p>
 
-              <p className="mt-3 text-sm text-white/50 lg:text-left text-center">
-                {lang === "en"
-                  ? "500+ websites built · See yours before you pay"
-                  : "已建設500+網站 · 付款前先看成果"}
-              </p>
-
-              <div className="mt-6 space-y-2">
-                <p className="text-base md:text-lg text-white/90 font-semibold">
-                  {lang === "en"
-                    ? "Free to review. Packages start at $299."
-                    : "免費審閱。方案起價 $299。無需代管月費。"}
-                </p>
-              </div>
-
-            </div>
-
-            {/* Right: Intake Form */}
-            <div className="bg-background rounded-2xl p-7 md:p-10 border border-border/50 shadow-[0_25px_60px_-12px_rgba(0,0,0,0.35)] lg:mt-2">
-              <h3 className="text-base font-bold text-foreground font-display mb-1">
-                {lang === "en" ? "Get Your 2 Free Website Versions" : "獲取您的2個免費網站版本"}
-              </h3>
-              <p className="text-xs text-muted-foreground mb-5">
-                {lang === "en" ? "Takes less than 30 seconds. No commitment." : "不到30秒。無需承諾。"}
-              </p>
-              <MultiStepIntake variant="hero" />
-            </div>
+          <div className="mt-8">
+            <button
+              onClick={scrollToForm}
+              className="inline-block rounded-full py-4 px-10 text-base font-bold text-white transition-all hover:opacity-90 hover:scale-[1.01] shadow-lg"
+              style={{ background: "hsl(275 51% 46%)" }}
+            >
+              {lang === "en" ? "Get My 2 Free Previews" : "獲取我的2個免費預覽"}
+            </button>
           </div>
+
+          <p className="mt-3 text-xs" style={{ color: "#aaa" }}>
+            {lang === "en"
+              ? "No payment required · No commitment · Just enter your URL"
+              : "無需付款 · 無需承諾 · 只需輸入網址"}
+          </p>
+
+          <p className="mt-4 text-sm font-semibold" style={{ color: "#555" }}>
+            {lang === "en"
+              ? "Free to review. Packages start at $299."
+              : "免費審閱。方案起價 $299。"}
+          </p>
         </div>
       </section>
 
       {/* ═══ 2. HOW IT WORKS ═══ */}
-      <section id="process" className="py-16 md:py-24 lg:py-28 bg-background">
+      <section id="process" className="py-16 md:py-24 lg:py-28" style={{ background: "#F5F5F5" }}>
         <div className="max-w-6xl mx-auto px-6 text-center">
           <h2 className="text-[clamp(1.8rem,4vw,2.8rem)] lg:text-[2rem] font-black text-foreground font-display">
             {lang === "en" ? "How It Works" : "如何運作"}
@@ -778,7 +763,7 @@ const IndexContent = () => {
       </section>
 
       {/* ═══ FEATURED PORTFOLIO ═══ */}
-      <section className="py-16 md:py-24 lg:py-28 bg-background">
+      <section className="py-16 md:py-24 lg:py-28" style={{ background: "#FFFFFF" }}>
         <div className="max-w-6xl mx-auto px-6">
           <h2 className="text-[clamp(1.8rem,4vw,2.8rem)] lg:text-[2rem] font-black text-foreground font-display text-center">
             {lang === "en" ? "Real Website Transformations" : "真實網站改造"}
@@ -886,7 +871,7 @@ const IndexContent = () => {
       </section>
 
 
-      <section id="pricing" className="py-16 md:py-24 lg:py-28" style={{ background: "hsl(var(--surface-sunken))" }}>
+      <section id="pricing" className="py-16 md:py-24 lg:py-28" style={{ background: "#F5F5F5" }}>
         <div className="max-w-5xl mx-auto px-6">
           <h2 className="text-[clamp(1.8rem,4vw,2.8rem)] lg:text-[2rem] font-black text-foreground font-display text-center">
             {lang === "en" ? "Simple, Transparent Pricing" : "簡單透明的定價"}
@@ -963,7 +948,7 @@ const IndexContent = () => {
       </section>
 
       {/* ═══ 4. TURN YOUR CURRENT WEBSITE INTO SOMETHING BETTER ═══ */}
-      <section className="py-16 md:py-24 lg:py-28 bg-background">
+      <section className="py-16 md:py-24 lg:py-28" style={{ background: "#FFFFFF" }}>
         <div className="max-w-3xl mx-auto px-6 text-center">
           <h2 className="text-[clamp(1.8rem,4vw,2.8rem)] lg:text-[2rem] font-black text-foreground font-display">
             {lang === "en" ? (<>We Work With What<br className="md:hidden" /> You Already Have</>) : "我們在您現有的基礎上改版"}
@@ -1010,7 +995,7 @@ const IndexContent = () => {
       </section>
 
       {/* ═══ 5. REVIEWS ═══ */}
-      <section className="py-16 md:py-24 lg:py-28" style={{ background: "hsl(var(--surface-sunken))" }}>
+      <section className="py-16 md:py-24 lg:py-28" style={{ background: "#F5F5F5" }}>
         <div className="max-w-6xl mx-auto px-6">
           <h2 className="text-[clamp(1.8rem,4vw,2.8rem)] lg:text-[2rem] font-black text-foreground font-display text-center mb-10">
             {lang === "en" ? "What Our Clients Say" : "客戶評價"}
@@ -1124,7 +1109,7 @@ const IndexContent = () => {
 
 
       {/* ═══ 7. FAQ ═══ */}
-      <section className="py-16 md:py-24 lg:py-28" style={{ background: "hsl(var(--surface-sunken))" }}>
+      <section className="py-16 md:py-24 lg:py-28" style={{ background: "#FFFFFF" }}>
         <div className="max-w-3xl mx-auto px-6">
           <h2 className="text-[clamp(1.8rem,4vw,2.8rem)] lg:text-[2rem] font-black text-foreground font-display text-center">
             {lang === "en" ? "Still Have Questions?" : "還有疑問？"}
