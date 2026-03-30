@@ -640,7 +640,10 @@ const IndexContent = ({ variant = "home" }: { variant?: "home" | "start" }) => {
             {/* Left: Copy */}
             <div className="text-white pt-2 lg:pt-6">
               <h1 className="text-[1.85rem] md:text-[clamp(2.8rem,5.5vw,4.2rem)] lg:text-[clamp(2.8rem,4.5vw,3.6rem)] font-black leading-[1.08] lg:leading-[1.15] font-display tracking-tight">
-                {lang === "en" ? (<>Get a Website That<br />Brings You More<br /><span className="text-transparent bg-clip-text bg-gradient-to-r from-[hsl(var(--accent-purple))] to-[hsl(210,100%,65%)]">Customers.</span></>) : (<>打造一個為您<br /><span className="text-transparent bg-clip-text bg-gradient-to-r from-[hsl(var(--accent-purple))] to-[hsl(210,100%,65%)]">帶來更多客戶的網站。</span></>)}
+                {variant === "start"
+                  ? (lang === "en" ? (<>Your Website Exists.<br />Your Phone Should Be<br /><span className="text-transparent bg-clip-text bg-gradient-to-r from-[hsl(var(--accent-purple))] to-[hsl(210,100%,65%)]">Ringing More.</span></>) : (<>您的網站已存在。<br /><span className="text-transparent bg-clip-text bg-gradient-to-r from-[hsl(var(--accent-purple))] to-[hsl(210,100%,65%)]">您的電話應該響更多。</span></>))
+                  : (lang === "en" ? (<>Is Your Website<br />Actually Bringing You<br /><span className="text-transparent bg-clip-text bg-gradient-to-r from-[hsl(var(--accent-purple))] to-[hsl(210,100%,65%)]">Customers?</span></>) : (<>您的網站真的在<br /><span className="text-transparent bg-clip-text bg-gradient-to-r from-[hsl(var(--accent-purple))] to-[hsl(210,100%,65%)]">為您帶來客戶嗎？</span></>))
+                }
               </h1>
 
               <p className="mt-5 lg:mt-7 text-lg md:text-xl lg:text-[1.25rem] font-medium text-white leading-[1.5] lg:leading-[1.6] max-w-lg">
