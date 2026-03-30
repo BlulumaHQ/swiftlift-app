@@ -473,7 +473,7 @@ const MultiStepIntake = ({ variant = "hero" }: { variant?: "hero" | "cta" }) => 
 };
 
 /* ── Main Page ── */
-const IndexContent = () => {
+const IndexContent = ({ variant = "home" }: { variant?: "home" | "start" }) => {
   const { lang } = useLanguage();
   const home = translations.home;
   const [reviewIdx, setReviewIdx] = useState(0);
