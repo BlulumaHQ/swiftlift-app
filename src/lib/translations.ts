@@ -545,9 +545,9 @@ export const translations = {
     portfolioTitle: { en: "Real Website Transformations", zh: "真實網站改造" },
     portfolioSub: { en: "Built from real businesses like yours. Each preview is a real, working website — not a mockup.", zh: "為像您一樣的真實企業而建。每個預覽都是真正可運行的網站——不是模型。" },
     portfolioItems: [
-      { name: { en: "Gene's Sausage Shop", zh: "Gene's Sausage Shop" }, desc: { en: "From dated specialty shop site to a cleaner, more premium food brand experience.", zh: "從過時的特色商店網站到更清晰、更高端的食品品牌體驗。" } },
-      { name: { en: "Mutt Puddles Dog Wash", zh: "Mutt Puddles Dog Wash" }, desc: { en: "From a basic local service site to a warmer, more polished grooming brand.", zh: "從基礎的本地服務網站到更溫暖、更精緻的寵物美容品牌。" } },
-      { name: { en: "Chicago Boxing Club", zh: "Chicago Boxing Club" }, desc: { en: "From an outdated gym website to a stronger, higher-impact fitness brand presence.", zh: "從過時的健身房網站到更強大、更高影響力的健身品牌形象。" } },
+      { name: { en: "Gene's Sausage Shop", zh: "Gene's Sausage Shop" }, desc: { en: "A cleaner, more premium food brand experience — built to attract more customers.", zh: "更清晰、更高端的食品品牌體驗——為吸引更多客戶而打造。" } },
+      { name: { en: "Mutt Puddles Dog Wash", zh: "Mutt Puddles Dog Wash" }, desc: { en: "A warmer, more polished grooming brand — built to stand out locally.", zh: "更溫暖、更精緻的寵物美容品牌——為在地脫穎而出而打造。" } },
+      { name: { en: "Chicago Boxing Club", zh: "Chicago Boxing Club" }, desc: { en: "A stronger, higher-impact fitness brand — built to drive more sign-ups.", zh: "更強大、更高影響力的健身品牌——為推動更多註冊而打造。" } },
     ],
     testimonialItems: [
       { text: { en: "Our old website had character, but it felt crowded and outdated. SwiftLift gave us two very different directions to compare. Version A felt more classic and brand-focused, while Version B felt cleaner and easier for customers to browse. Seeing both options side by side made the decision much easier, and the new presentation feels far more aligned with the quality of our store.", zh: "我們的舊網站有特色，但感覺擁擠且過時。SwiftLift 給了我們兩個截然不同的方向進行比較。版本A感覺更經典、更注重品牌，而版本B感覺更簡潔、更方便客戶瀏覽。並排查看兩個選項讓決策變得容易得多，新的展示感覺與我們商店的品質更加一致。" }, name: { en: "Michael Nowak", zh: "Michael Nowak" }, company: { en: "Gene's Sausage Shop", zh: "Gene's Sausage Shop" } },

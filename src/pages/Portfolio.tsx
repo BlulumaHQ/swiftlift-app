@@ -170,7 +170,7 @@ const featuredCases: FeaturedCase[] = [
 /* ── Featured Case Card — 3-state carousel: Before / A / B ── */
 type FeaturedState = "before" | "A" | "B";
 const FEATURED_STATES: FeaturedState[] = ["before", "A", "B"];
-const FEATURED_TIMINGS: Record<FeaturedState, number> = { before: 1000, A: 2800, B: 2800 };
+const FEATURED_TIMINGS: Record<FeaturedState, number> = { before: 2000, A: 5000, B: 5000 };
 const FEATURED_LABELS: Record<FeaturedState, TBlock> = {
   before: { en: "Before", zh: "改版前" },
   A: { en: "Version A", zh: "Version A" },
@@ -397,7 +397,7 @@ function shuffleArray<T>(arr: T[]): T[] {
 }
 
 /* ── Grid Case Card — desktop: hover swap | mobile: swipe + auto slideshow ── */
-const SLIDESHOW_INTERVAL = 3000;
+const SLIDESHOW_INTERVAL = 5000;
 const SWIPE_THRESHOLD = 30;
 const RESUME_DELAY = 5000;
 

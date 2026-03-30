@@ -20,7 +20,7 @@ const images = [
   portfolioRestaurant, portfolioRealestate, portfolioDental,
 ];
 
-const AUTOPLAY_INTERVAL = 3000;
+const AUTOPLAY_INTERVAL = 5000;
 
 const Portfolio = () => {
   const { lang } = useLanguage();
