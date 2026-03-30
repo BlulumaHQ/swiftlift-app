@@ -21,6 +21,7 @@ import RevisionPayment from "./pages/RevisionPayment";
 import Portfolio from "./pages/Portfolio";
 import WorkWithUs from "./pages/WorkWithUs";
 import About from "./pages/About";
+import Start from "./pages/Start";
 import ScrollToTop from "./components/ScrollToTop";
 
 const queryClient = new QueryClient();
