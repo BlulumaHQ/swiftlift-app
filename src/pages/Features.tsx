@@ -458,16 +458,9 @@ const BundleCard = ({ bundle, lang }: { bundle: typeof bundles[number]; lang: "e
         </p>
         <p className="text-xs text-muted-foreground leading-relaxed">{T(bundle.includes, lang)}</p>
       </div>
-      <div className="mt-auto pt-5 flex items-baseline gap-3">
-        <span className="text-sm text-muted-foreground line-through">{bundle.originalPrice}</span>
+      <div className="mt-auto pt-5">
         <span className="text-3xl font-black text-foreground">{bundle.price}</span>
       </div>
-      <span
-        className="mt-1 inline-block text-xs font-bold px-3 py-1 rounded-full w-fit"
-        style={{ backgroundColor: "hsl(142 70% 45% / 0.1)", color: "hsl(142 70% 35%)" }}
-      >
-        {T(bundle.savings, lang)}
-      </span>
       <div className="mt-5">
         <a
           href={STRIPE_LINKS[bundle.key]}
