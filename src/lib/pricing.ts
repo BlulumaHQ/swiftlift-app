@@ -299,7 +299,7 @@ export const STRIPE_LINKS: Record<string, string> = {
 // ── Formatting helpers ──
 
 export const formatPrice = (value: number): string =>
-  `$${value.toLocaleString("en-US")}`;
+  `$${value.toLocaleString("en-US")} USD`;
 
 export const formatStartingAt = (value: number): string =>
   `Starting at ${formatPrice(value)}`;
