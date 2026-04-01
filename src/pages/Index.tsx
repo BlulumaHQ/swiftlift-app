@@ -674,30 +674,36 @@ const IndexContent = ({ variant = "home" }: { variant?: "home" | "start" }) => {
                 }
               </h1>
 
-              <p className="mt-5 lg:mt-7 text-lg md:text-xl lg:text-[1.25rem] font-medium text-white leading-[1.5] lg:leading-[1.6] max-w-lg">
-                {variant === "start"
-                  ? (lang === "en"
-                    ? "If your website isn't bringing in new customers every week, it's not doing its job. We rebuild what you already have — 2 complete, live versions ready in 48 hours. You pick the one you love. You only pay then."
-                    : "如果您的網站沒有每週帶來新客戶，那它就沒有發揮作用。我們重建您已有的網站——48小時內準備好2個完整的即時版本。您選擇喜歡的那個。然後才付款。")
-                  : (lang === "en"
-                    ? "Your business is good. Your website should be proving it. We rebuild what you already have into something that gets you noticed, builds trust, and brings in more customers — 2 live previews delivered in 48 hours, you only pay if you love it."
-                    : "您的生意很好。您的網站應該證明這一點。我們將您已有的網站重建為能讓您被注意到、建立信任並帶來更多客戶的網站——48小時內交付2個即時預覽，滿意才付款。")
-                }
-              </p>
+              <div className="mt-5 lg:mt-7 space-y-4 max-w-lg">
+                <p className="text-lg md:text-xl lg:text-[1.25rem] font-medium text-white leading-[1.5] lg:leading-[1.6]">
+                  {variant === "start"
+                    ? (lang === "en"
+                      ? "If your website isn't bringing in new customers every week, it's not doing its job. We rebuild what you already have — 2 complete, live versions ready in 48 hours. You pick the one you love. You only pay then."
+                      : "如果您的網站沒有每週帶來新客戶，那它就沒有發揮作用。我們重建您已有的網站——48小時內準備好2個完整的即時版本。您選擇喜歡的那個。然後才付款。")
+                    : (lang === "en"
+                      ? "Your business is good. Your website should prove it."
+                      : "您的生意很好。您的網站應該證明這一點。")
+                  }
+                </p>
+                {variant !== "start" && (
+                  <p className="text-base md:text-lg text-white/80 leading-[1.6]">
+                    {lang === "en"
+                      ? "We rebuild your existing site into something that gets noticed, builds trust, and brings in more customers."
+                      : "我們將您已有的網站重建為能讓您被注意到、建立信任並帶來更多客戶的網站。"}
+                  </p>
+                )}
+                <p className="text-base md:text-lg text-white/80 leading-[1.6]">
+                  {lang === "en"
+                    ? "See your redesigned website in 48 hours — before you pay."
+                    : "48小時內查看您重新設計的網站——付款前先看。"}
+                </p>
+              </div>
 
-              <p className="mt-3 text-sm text-white/50 lg:text-left text-center">
+              <p className="mt-4 text-sm text-white/50 lg:text-left text-center">
                 {lang === "en"
                   ? "Trusted by 500+ small businesses · See yours before you pay"
                   : "受500+小企業信賴 · 付款前先看成果"}
               </p>
-
-              <div className="mt-6 space-y-2">
-                <p className="text-base md:text-lg text-white/90 font-semibold">
-                  {lang === "en"
-                    ? "Free to review. Packages start at $299."
-                    : "免費審閱。方案起價 $299。無需代管月費。"}
-                </p>
-              </div>
 
             </div>
 
