@@ -292,9 +292,8 @@ const AddonsContent = () => {
                       </ul>
                     </div>
 
-                    <div className="mt-5 flex items-baseline gap-3">
+                    <div className="mt-5">
                       <span className="text-3xl font-black font-display text-foreground">{bundle.price}</span>
-                      <span className="text-base text-muted-foreground line-through">{bundle.originalPrice}</span>
                     </div>
 
                     <div className="mt-5">
