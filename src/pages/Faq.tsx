@@ -40,7 +40,7 @@ const faqItems = [
   },
   {
     q: { en: "What about revisions and updates?", zh: "修改和更新怎麼辦？" },
-    a: { en: "After launch, additional revisions are available at $45 per revision round. If you expect to update your site regularly, our Managed Hosting plan at $15/month or $135/year includes one free revision every month plus priority support — most clients find this pays for itself with the first update. More advanced additions such as booking integrations, multilingual setup, calculators, or CRM tools are available as custom upgrades and require a separate quote. All upgrades are approved and confirmed before any work begins.", zh: "上線後，額外修改每輪$45。如果您預計定期更新網站，我們的託管方案每月$15或每年$135，包含每月一次免費修改和優先支援——大多數客戶發現第一次更新就回本了。更進階的功能如預約整合、多語言設置、計算器或CRM工具，可作為定制升級，需另行報價。所有升級在開始工作前均需確認和批准。" },
+    a: { en: "After launch, additional revisions are available at $45 USD per revision round. If you expect to update your site regularly, our Managed Hosting plan at $15 USD/month or $135 USD/year includes one free revision every month plus priority support — most clients find this pays for itself with the first update. More advanced additions such as booking integrations, multilingual setup, calculators, or CRM tools are available as custom upgrades and require a separate quote. All upgrades are approved and confirmed before any work begins.", zh: "上線後，額外修改每輪$45 USD。如果您預計定期更新網站，我們的託管方案每月$15 USD或每年$135 USD，包含每月一次免費修改和優先支援——大多數客戶發現第一次更新就回本了。更進階的功能如預約整合、多語言設置、計算器或CRM工具，可作為定制升級，需另行報價。所有升級在開始工作前均需確認和批准。" },
   },
   {
     q: { en: "What about refunds?", zh: "關於退款？" },

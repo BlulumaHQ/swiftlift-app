@@ -520,39 +520,67 @@ const IndexContent = ({ variant = "home" }: { variant?: "home" | "start" }) => {
     if (el) el.scrollIntoView({ behavior: "smooth" });
   };
 
-  const multiPagePlans = [
-    {
-      name: lang === "en" ? "Growth Upgrade" : "成長升級版",
-      price: formatPrice(PRICING.websitePackages.multiPage[2].price),
-      features: lang === "en"
-        ? ["Conversion-focused layout built to generate leads", "Completely different design approach from Makeover", "Stronger content flow and business positioning", "Free hosting included — built to turn visitors into enquiries"]
-        : ["轉換導向版面，專為產生詢問而設計", "與改造版完全不同的設計策略", "更強的內容架構與商業定位", "免費代管，將訪客轉換為詢問"],
-      highlighted: false,
-    },
-    {
-      name: lang === "en" ? "Website Makeover" : "網站改造版",
-      price: formatPrice(PRICING.websitePackages.multiPage[1].price),
-      badge: lang === "en" ? "Most Popular" : "最受歡迎",
-      features: lang === "en"
-        ? ["Everything in Facelift Starter, fully polished", "Optimized to show up better on Google searches", "Looks great when shared on social media and messaging apps", "Fine-tuned for a stronger first impression", "Free hosting included — launch-ready in 3 days"]
-        : ["包含入門版的所有內容，全面精修", "優化後在 Google 搜尋中更容易被找到", "在社群媒體和通訊軟體分享時呈現最佳效果", "細節調校，打造更強烈的第一印象", "免費代管，3天內上線"],
-      highlighted: true,
-    },
-    {
-      name: lang === "en" ? "Facelift Starter" : "入門改版",
-      price: formatPrice(PRICING.websitePackages.multiPage[0].price),
-      features: lang === "en"
-        ? ["Clean, modern redesign of your existing site", "Mobile responsive & SEO-friendly structure", "Up to 7 pages", "Free hosting included — no monthly fees required"]
-        : ["現有網站的簡潔現代重新設計", "手機響應式與SEO友善架構", "最多7頁", "免費代管，無需月費"],
-      highlighted: false,
-    },
-  ];
+  // Preview A & B plans
+  const previewA = {
+    title: "Preview A",
+    price: "$299 USD",
+    positioning: lang === "en" ? "Clean, professional website — ready to launch fast" : "簡潔專業的網站——快速上線",
+    features: lang === "en"
+      ? [
+          "Choose Version A",
+          "Clean, modern design",
+          "Mobile responsive across all devices",
+          "Up to 5–7 pages",
+          "Basic SEO-ready structure",
+          "Contact form included",
+          "Fast 3-day turnaround",
+          "Free hosting (no monthly fees)",
+        ]
+      : [
+          "選擇版本A",
+          "簡潔現代設計",
+          "所有裝置響應式",
+          "最多5–7頁",
+          "基礎SEO結構",
+          "包含聯絡表單",
+          "3天快速交付",
+          "免費代管（無月費）",
+        ],
+  };
 
-  const singlePagePlans = [
-    { name: lang === "en" ? "Facelift Starter" : "入門改版", price: formatPrice(PRICING.websitePackages.singlePage[0].price) },
-    { name: lang === "en" ? "Website Makeover" : "網站改造版", price: formatPrice(PRICING.websitePackages.singlePage[1].price) },
-    { name: lang === "en" ? "Growth Upgrade" : "成長優化版", price: formatPrice(PRICING.websitePackages.singlePage[2].price) },
-  ];
+  const previewB = {
+    title: "Preview B",
+    price: "$799 USD",
+    badge: lang === "en" ? "Most Popular" : "最受歡迎",
+    valueStatement: lang === "en"
+      ? "Designed to increase inquiries and client conversions"
+      : "專為增加詢問和客戶轉換而設計",
+    features: lang === "en"
+      ? [
+          "Everything in Preview A",
+          "Conversion-focused layout structure",
+          "Strategic CTA placement for lead generation",
+          "Optimized section flow for user engagement",
+          "Trust-building sections (reviews, credibility blocks)",
+          "Improved user journey and content hierarchy",
+          "Clear, high-impact messaging structure",
+          "More refined and premium visual polish",
+          "Stronger business positioning",
+          "Priority build slot",
+        ]
+      : [
+          "Preview A 的所有功能",
+          "轉換導向版面結構",
+          "策略性CTA放置以生成潛在客戶",
+          "優化的區塊流程以提高用戶參與",
+          "信任建立區塊（評價、信譽模組）",
+          "改善的用戶旅程和內容層級",
+          "清晰高影響力的訊息結構",
+          "更精緻高級的視覺打磨",
+          "更強的商業定位",
+          "優先構建名額",
+        ],
+  };
 
   const reviewItems: { text: string | React.ReactNode; name: string; company: string }[] = [
     {
@@ -621,8 +649,8 @@ const IndexContent = ({ variant = "home" }: { variant?: "home" | "start" }) => {
     {
       q: lang === "en" ? "What about revisions and updates?" : "修改和更新怎麼辦？",
       a: lang === "en"
-        ? "After launch, additional revisions are available at $45 per revision round. If you expect to update your site regularly, our Managed Hosting plan at $15/month or $135/year includes one free revision every month plus priority support — most clients find this pays for itself with the first update."
-        : "上線後，額外修改每輪$45。如果您預計定期更新網站，我們的託管方案每月$15或每年$135，包含每月一次免費修改和優先支援——大多數客戶發現第一次更新就回本了。",
+        ? "After launch, additional revisions are available at $45 USD per revision round. If you expect to update your site regularly, our Managed Hosting plan at $15 USD/month or $135 USD/year includes one free revision every month plus priority support — most clients find this pays for itself with the first update."
+        : "上線後，額外修改每輪$45 USD。如果您預計定期更新網站，我們的託管方案每月$15 USD或每年$135 USD，包含每月一次免費修改和優先支援——大多數客戶發現第一次更新就回本了。",
     },
   ];
 
@@ -883,79 +911,129 @@ const IndexContent = ({ variant = "home" }: { variant?: "home" | "start" }) => {
       </section>
 
 
-      <section id="pricing" className="py-16 md:py-24 lg:py-28" style={{ background: "#F5F5F5" }}>
+      {/* ═══ PRICING SECTION 1 — Choose Your Website Preview ═══ */}
+      <section id="pricing" className="py-16 md:py-24 lg:py-28 bg-white">
         <div className="max-w-5xl mx-auto px-6">
           <h2 className="text-[clamp(1.8rem,4vw,2.8rem)] lg:text-[2rem] font-black text-foreground font-display text-center">
-            {lang === "en" ? "Simple, Transparent Pricing" : "簡單透明的定價"}
+            {lang === "en" ? "Choose Your Website Preview" : "選擇您的網站預覽"}
           </h2>
-          <p className="mt-3 text-muted-foreground text-xs text-center max-w-2xl mx-auto">
+          <p className="mt-3 text-muted-foreground text-sm text-center max-w-2xl mx-auto">
             {lang === "en"
-              ? "Other services charge $199 for 3 pages with surprise add-ons later. We show you 2 complete websites first — you only pay if you love it."
-              : "其他服務收費 $199 做 3 頁，之後還有額外收費。我們先展示 2 個完整網站——滿意才付款。"}
+              ? "Choose from 2 preview versions before you pay"
+              : "付款前從2個預覽版本中選擇"}
           </p>
 
-          {/* Pricing cards */}
-          <div className="mt-10 grid grid-cols-1 md:grid-cols-3 gap-5">
-            {multiPagePlans.map((plan, i) => {
-              // Mobile order: Facelift Starter(2) top, Website Makeover(1) mid, Growth Upgrade(0) bottom
-              // Mobile order: $499 Makeover(1) top, $299 Facelift(2) mid, $799 Growth(0) bottom
-              const mobileOrder = i === 0 ? "order-3" : i === 1 ? "order-1" : "order-2";
-              return (
-              <div
-                key={i}
-                className={`relative rounded-2xl border p-6 md:p-7 flex flex-col ${mobileOrder} md:order-none ${
-                  plan.highlighted
-                    ? "border-[hsl(275_51%_46%)] bg-background shadow-xl"
-                    : "border-border bg-background"
-                }`}
+          {/* 2-column layout */}
+          <div className="mt-12 grid grid-cols-1 md:grid-cols-2 gap-6 items-stretch">
+            {/* Preview B first on mobile */}
+            <div className="order-2 md:order-1 rounded-2xl border border-border bg-background p-6 md:p-8 flex flex-col">
+              <h3 className="font-bold text-foreground font-display text-xl">{previewA.title}</h3>
+              <p className="text-sm text-muted-foreground mt-1">{previewA.positioning}</p>
+              <p className="text-4xl font-black text-foreground font-display mt-4">{previewA.price}</p>
+              <ul className="mt-6 space-y-3 flex-1">
+                {previewA.features.map((f, fi) => (
+                  <li key={fi} className="flex items-start gap-2.5 text-[15px] text-muted-foreground">
+                    <Check size={16} className="flex-shrink-0 mt-0.5" style={{ color: "hsl(275 51% 46%)" }} />
+                    {f}
+                  </li>
+                ))}
+              </ul>
+              <button
+                onClick={scrollToForm}
+                className="mt-8 w-full rounded-full py-3.5 px-4 text-sm font-bold border-2 transition-all hover:opacity-80"
+                style={{ borderColor: "hsl(275 51% 46%)", color: "hsl(275 51% 46%)" }}
               >
-                {plan.badge && (
-                  <span className="absolute -top-3 left-1/2 -translate-x-1/2 text-[10px] font-bold text-white px-3 py-1 rounded-full" style={{ background: "hsl(275 51% 46%)" }}>
-                    {plan.badge}
-                  </span>
-                )}
-                <h3 className="font-bold text-foreground font-display text-lg">{plan.name}</h3>
-                <p className="text-3xl md:text-4xl lg:text-3xl font-black text-foreground font-display mt-2">{plan.price}</p>
-                <ul className="mt-5 space-y-2.5 flex-1">
-                  {plan.features.map((f, fi) => (
-                    <li key={fi} className="flex items-start gap-2.5 text-sm text-muted-foreground">
-                      <Check size={15} className="flex-shrink-0 mt-0.5" style={{ color: "hsl(275 51% 46%)" }} />
-                      {f}
+                {lang === "en" ? "Choose Preview A" : "選擇預覽 A"}
+              </button>
+            </div>
+
+            {/* Preview B — highlighted */}
+            <div className="order-1 md:order-2 relative rounded-2xl border-2 bg-background p-6 md:p-8 flex flex-col shadow-xl" style={{ borderColor: "hsl(275 51% 46%)" }}>
+              <span className="absolute -top-3.5 left-1/2 -translate-x-1/2 text-xs font-bold text-white px-4 py-1.5 rounded-full whitespace-nowrap" style={{ background: "hsl(275 51% 46%)" }}>
+                <Star size={12} className="inline-block mr-1 fill-current -mt-0.5" />
+                {previewB.badge}
+              </span>
+              <h3 className="font-bold text-foreground font-display text-2xl">{previewB.title}</h3>
+              <p className="text-sm font-medium mt-1" style={{ color: "hsl(275 51% 46%)" }}>{previewB.valueStatement}</p>
+              <p className="text-5xl font-black text-foreground font-display mt-4">{previewB.price}</p>
+              <ul className="mt-6 space-y-3 flex-1">
+                {previewB.features.map((f, fi) => (
+                  <li key={fi} className="flex items-start gap-2.5 text-[15px] text-muted-foreground">
+                    <Check size={16} className="flex-shrink-0 mt-0.5" style={{ color: "hsl(275 51% 46%)" }} />
+                    {f}
+                  </li>
+                ))}
+              </ul>
+              <button
+                onClick={scrollToForm}
+                className="mt-8 w-full rounded-full py-3.5 px-4 text-sm font-bold text-white transition-all hover:opacity-90"
+                style={{ background: "hsl(275 51% 46%)" }}
+              >
+                {lang === "en" ? "Choose Preview B" : "選擇預覽 B"}
+              </button>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ═══ PRICING SECTION 2 — Custom Solutions ═══ */}
+      <section className="py-10 md:py-14" style={{ background: "#FAFAFA" }}>
+        <div className="max-w-5xl mx-auto px-6">
+          <p className="text-sm text-muted-foreground text-center mb-8">
+            {lang === "en"
+              ? "Custom solutions for businesses with more specific needs"
+              : "為有特定需求的企業提供客製化方案"}
+          </p>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+            {[
+              {
+                title: lang === "en" ? "One Page Website" : "單頁網站",
+                desc: lang === "en" ? "Best for simple businesses or focused landing pages" : "適合簡單企業或專注的著陸頁",
+                bullets: lang === "en"
+                  ? ["Single-page layout", "Streamlined content structure", "Ideal for ads or quick launches"]
+                  : ["單頁版面", "精簡內容結構", "適合廣告或快速上線"],
+              },
+              {
+                title: lang === "en" ? "Custom Website" : "客製化網站",
+                desc: lang === "en" ? "Best for businesses with unique requirements" : "適合有獨特需求的企業",
+                bullets: lang === "en"
+                  ? ["Fully custom structure", "Advanced features and flexibility", "Built around your workflow"]
+                  : ["完全客製化結構", "進階功能與彈性", "圍繞您的工作流程打造"],
+              },
+              {
+                title: lang === "en" ? "E-commerce Website" : "電商網站",
+                desc: lang === "en" ? "Best for selling products online" : "適合線上銷售產品",
+                bullets: lang === "en"
+                  ? ["Product catalog and checkout system", "Payment integration", "Scalable store setup"]
+                  : ["商品目錄與結帳系統", "金流整合", "可擴展的商店架構"],
+              },
+            ].map((opt, i) => (
+              <div key={i} className="rounded-xl border border-border bg-background p-5 flex flex-col">
+                <h4 className="font-bold text-foreground font-display text-base">{opt.title}</h4>
+                <p className="text-xs text-muted-foreground mt-1">{opt.desc}</p>
+                <ul className="mt-3 space-y-1.5 flex-1">
+                  {opt.bullets.map((b, bi) => (
+                    <li key={bi} className="flex items-start gap-2 text-sm text-muted-foreground">
+                      <Check size={14} className="flex-shrink-0 mt-0.5" style={{ color: "hsl(275 51% 46%)" }} />
+                      {b}
                     </li>
                   ))}
                 </ul>
-                <button
-                  onClick={scrollToForm}
-                  className="mt-6 w-full rounded-full py-3 px-4 text-sm font-bold border-2 transition-all hover:opacity-80"
+                <Link
+                  to="/custom-brief"
+                  className="mt-4 w-full inline-flex items-center justify-center rounded-full py-2.5 px-4 text-xs font-bold border transition-all hover:opacity-80"
                   style={{ borderColor: "hsl(275 51% 46%)", color: "hsl(275 51% 46%)" }}
                 >
-                  {lang === "en" ? "Get My 2 Free Website Versions" : "獲取我的2個免費網站版本"}
-                </button>
+                  {lang === "en" ? "Request a Quote" : "索取報價"}
+                </Link>
               </div>
-            );
-            })}
-
+            ))}
           </div>
-
-          {/* Single-page note */}
-          <div className="mt-8 text-center space-y-1">
-            <p className="text-sm text-muted-foreground">
-              {lang === "en" ? "Need a simple landing / one-page website?" : "需要簡單的著陸頁/單頁網站？"}
-            </p>
-            <p className="text-sm font-semibold text-foreground">
-              {lang === "en" ? (
-                <>Growth Upgrade — {singlePagePlans[2]?.price} · Website Makeover — {singlePagePlans[1]?.price} · Facelift Starter — {singlePagePlans[0]?.price}</>
-              ) : (
-                <>{singlePagePlans[2]?.name} — {singlePagePlans[2]?.price} · {singlePagePlans[1]?.name} — {singlePagePlans[1]?.price} · {singlePagePlans[0]?.name} — {singlePagePlans[0]?.price}</>
-              )}
-            </p>
-            <p className="text-xs text-muted-foreground">
-              {lang === "en" ? "Custom projects — E-commerce, brand new websites — also available. " : "客製化專案——電商、全新網站——也可提供。"}
-              <Link to="/custom-brief" className="font-semibold hover:underline" style={{ color: "hsl(275 51% 46%)" }}>
-                {lang === "en" ? "Learn more →" : "了解更多 →"}
-              </Link>
-            </p>
-          </div>
+          <p className="mt-6 text-xs text-muted-foreground text-center">
+            {lang === "en"
+              ? "Pricing varies based on features, integrations, and project scope."
+              : "價格因功能、整合和專案範圍而異。"}
+          </p>
         </div>
       </section>
 

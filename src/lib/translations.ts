@@ -110,7 +110,7 @@ export const translations = {
       {
         title: { en: "Starter", zh: "入門版" },
         subtitle: { en: "1–2 Pages", zh: "1–2 頁" },
-        price: "$299",
+        price: "$299 USD",
         originalPrice: null,
         features: {
           en: ["1–2 Pages", "Clean Modern Design", "Mobile Responsive", "Contact Form Setup", "Brand Color Integration", "Fast Performance Loading"],
@@ -120,7 +120,7 @@ export const translations = {
       {
         title: { en: "Growth", zh: "成長版" },
         subtitle: { en: "3–7 Pages", zh: "3–7 頁" },
-        price: "$499",
+        price: "$499 USD",
         originalPrice: null,
         badge: { en: "Most Popular", zh: "最受歡迎" },
         subtext: null,
@@ -343,7 +343,7 @@ export const translations = {
       {
         title: { en: "Brand Identity Package", zh: "品牌形象套餐" },
         desc: { en: "Strengthen your visual identity with a professional brand system aligned with your new website.", zh: "透過與新網站相配的專業品牌體系來增強您的視覺形象。" },
-        price: "$499",
+        price: "$499 USD",
         standalone: null,
         features: {
           en: ["Logo refinement system", "Color palette definition", "Typography hierarchy", "Brand usage guide (PDF)"],
@@ -353,7 +353,7 @@ export const translations = {
       {
         title: { en: "Advanced SEO Setup", zh: "高級SEO設置" },
         desc: { en: "Improve visibility and search readiness beyond the basic foundation.", zh: "超越基礎提升搜索可見度和搜索準備度。" },
-        price: "$299",
+        price: "$299 USD",
         standalone: null,
         features: {
           en: ["On-page SEO structure", "Meta titles & descriptions", "Schema setup", "Basic keyword mapping", "Sitemap optimization"],
@@ -373,7 +373,7 @@ export const translations = {
       {
         title: { en: "Performance Optimization", zh: "性能優化" },
         desc: { en: "Enhance speed and user experience for stronger engagement.", zh: "提升速度和使用者體驗以增強互動性。" },
-        price: "$199",
+        price: "$199 USD",
         standalone: null,
         features: {
           en: ["Image optimization", "Code minification", "Load performance tuning", "Core Web Vitals improvements"],
@@ -390,7 +390,7 @@ export const translations = {
     hostingOptions: [
       {
         title: { en: "Free Hosting (You Own It)", zh: "免費託管（您擁有所有權）" },
-        price: "$0",
+        price: "$0 USD",
         altPrice: null,
         paragraph: { en: "You fully own your hosting account. No monthly fees. No lock-in.", zh: "您完全擁有託管帳戶所有權。無月費。無鎖定。" },
         button: { en: "Start Free Setup", zh: "開始免費設置" },
@@ -416,7 +416,7 @@ export const translations = {
     upgrades: [
       {
         title: { en: "Brand Identity Package", zh: "品牌形象套餐" },
-        price: "$499",
+        price: "$499 USD",
         features: {
           en: ["Logo refinement system", "Color palette definition", "Typography hierarchy", "Brand usage guide (PDF)"],
           zh: ["標誌優化系統", "色彩調色板定義", "排版層次結構", "品牌使用指南（PDF）"],
@@ -424,7 +424,7 @@ export const translations = {
       },
       {
         title: { en: "Advanced SEO Setup", zh: "高級SEO設置" },
-        price: "$299",
+        price: "$299 USD",
         features: {
           en: ["On-page SEO structure", "Meta titles & descriptions", "Schema setup", "Basic keyword mapping", "Sitemap optimization"],
           zh: ["頁面SEO結構", "Meta標題和描述", "Schema設置", "基礎關鍵詞映射", "站點地圖優化"],
@@ -432,7 +432,7 @@ export const translations = {
       },
       {
         title: { en: "Performance Optimization", zh: "性能優化" },
-        price: "$199",
+        price: "$199 USD",
         features: {
           en: ["Image optimization", "Code minification", "Load performance tuning", "Core Web Vitals improvements"],
           zh: ["圖片優化", "代碼壓縮", "載入性能調優", "核心網頁指標改進"],
@@ -561,24 +561,24 @@ export const translations = {
     multiPageLabel: { en: "Multi-Page Website", zh: "多頁面網站" },
     multiPageSub: { en: "Best for businesses that need a complete website presence", zh: "最適合需要完整網站形象的企業" },
     plans: [
-      { name: { en: "Preview Access", zh: "預覽版" }, price: "$299", features: { en: ["Live website preview", "Clean professional layout", "Delivered as-is", "Up to 7 pages", "Mobile responsive", "SEO-friendly structure"], zh: ["即時網站預覽", "簡潔專業版面", "按原樣交付", "最多7頁", "行動裝置響應式", "SEO友好結構"] }, note: { en: "No revisions included. Minor edits available.", zh: "不含修改。可進行小幅編輯。" }, cta: { en: "Get My 2 Free Previews", zh: "獲取我的2個免費預覽" } },
-      { name: { en: "Launch Ready", zh: "上線版" }, price: "$499", features: { en: ["Fully polished website", "Bug fixes and content refinement", "Ready for real business use", "Up to 7 pages", "Mobile responsive", "SEO-friendly structure"], zh: ["完全打磨的網站", "修復和內容優化", "適合實際商業使用", "最多7頁", "行動裝置響應式", "SEO友好結構"] }, note: { en: "", zh: "" }, cta: { en: "Get My 2 Free Previews", zh: "獲取我的2個免費預覽" } },
-      { name: { en: "Growth Optimized", zh: "成長版" }, price: "$799", features: { en: ["Conversion-focused layout", "Optimized structure and content flow", "Designed to generate more leads", "Up to 7 pages", "Mobile responsive", "SEO-friendly structure"], zh: ["轉化導向版面", "優化結構和內容流程", "設計以產生更多潛在客戶", "最多7頁", "行動裝置響應式", "SEO友好結構"] }, note: { en: "", zh: "" }, cta: { en: "Get My 2 Free Previews", zh: "獲取我的2個免費預覽" } },
+      { name: { en: "Preview Access", zh: "預覽版" }, price: "$299 USD", features: { en: ["Live website preview", "Clean professional layout", "Delivered as-is", "Up to 7 pages", "Mobile responsive", "SEO-friendly structure"], zh: ["即時網站預覽", "簡潔專業版面", "按原樣交付", "最多7頁", "行動裝置響應式", "SEO友好結構"] }, note: { en: "No revisions included. Minor edits available.", zh: "不含修改。可進行小幅編輯。" }, cta: { en: "Get My 2 Free Previews", zh: "獲取我的2個免費預覽" } },
+      { name: { en: "Launch Ready", zh: "上線版" }, price: "$499 USD", features: { en: ["Fully polished website", "Bug fixes and content refinement", "Ready for real business use", "Up to 7 pages", "Mobile responsive", "SEO-friendly structure"], zh: ["完全打磨的網站", "修復和內容優化", "適合實際商業使用", "最多7頁", "行動裝置響應式", "SEO友好結構"] }, note: { en: "", zh: "" }, cta: { en: "Get My 2 Free Previews", zh: "獲取我的2個免費預覽" } },
+      { name: { en: "Growth Optimized", zh: "成長版" }, price: "$799 USD", features: { en: ["Conversion-focused layout", "Optimized structure and content flow", "Designed to generate more leads", "Up to 7 pages", "Mobile responsive", "SEO-friendly structure"], zh: ["轉化導向版面", "優化結構和內容流程", "設計以產生更多潛在客戶", "最多7頁", "行動裝置響應式", "SEO友好結構"] }, note: { en: "", zh: "" }, cta: { en: "Get My 2 Free Previews", zh: "獲取我的2個免費預覽" } },
     ],
     /* Single-page plans (secondary) */
     singlePageLabel: { en: "Single Page Website", zh: "單頁面網站" },
     singlePageSub: { en: "Best for simple businesses or quick online presence", zh: "最適合簡單企業或快速建立線上形象" },
     singlePagePlans: [
-      { name: { en: "Preview", zh: "預覽版" }, price: "$199", cta: { en: "Get My 2 Free Previews", zh: "獲取我的2個免費預覽" } },
-      { name: { en: "Launch", zh: "上線版" }, price: "$349", cta: { en: "Get My 2 Free Previews", zh: "獲取我的2個免費預覽" } },
-      { name: { en: "Growth", zh: "成長版" }, price: "$549", cta: { en: "Get My 2 Free Previews", zh: "獲取我的2個免費預覽" } },
+      { name: { en: "Preview", zh: "預覽版" }, price: "$199 USD", cta: { en: "Get My 2 Free Previews", zh: "獲取我的2個免費預覽" } },
+      { name: { en: "Launch", zh: "上線版" }, price: "$349 USD", cta: { en: "Get My 2 Free Previews", zh: "獲取我的2個免費預覽" } },
+      { name: { en: "Growth", zh: "成長版" }, price: "$549 USD", cta: { en: "Get My 2 Free Previews", zh: "獲取我的2個免費預覽" } },
     ],
     /* Custom plans */
     customLabel: { en: "Custom Website Solutions", zh: "定制網站方案" },
     customSub: { en: "For businesses that need more flexibility or advanced features", zh: "適合需要更多靈活性或高級功能的企業" },
     customPlans: [
-      { name: { en: "Starter Custom", zh: "入門定制" }, price: "$1,499" },
-      { name: { en: "Business Custom", zh: "商務定制" }, price: "$2,499" },
+      { name: { en: "Starter Custom", zh: "入門定制" }, price: "$1,499 USD" },
+      { name: { en: "Business Custom", zh: "商務定制" }, price: "$2,499 USD" },
       { name: { en: "Advanced", zh: "高級版" }, price: "$4,999+" },
     ],
     customCta: { en: "Request Custom Quote", zh: "申請定制報價" },

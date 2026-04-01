@@ -97,8 +97,8 @@ const bundles: Bundle[] = [
       { en: "SEO Optimization ($299)", zh: "SEO優化（$299）" },
       { en: "Advanced Contact Form ($149)", zh: "進階聯繫表單（$149）" },
     ],
-    price: "$549",
-    originalPrice: "$647",
+    price: "$549 USD",
+    originalPrice: "$647 USD",
     badge: "Save $98",
   },
   {
@@ -111,8 +111,8 @@ const bundles: Bundle[] = [
       { en: "Review / Testimonial Section ($99)", zh: "評價展示區塊（$99）" },
       { en: "FAQ Section ($79)", zh: "常見問題區塊（$79）" },
     ],
-    price: "$579",
-    originalPrice: "$677",
+    price: "$579 USD",
+    originalPrice: "$677 USD",
     badge: "Save $98",
   },
   {
@@ -125,8 +125,8 @@ const bundles: Bundle[] = [
       { en: "SEO Optimization ($299)", zh: "SEO優化（$299）" },
       { en: "Social Media Launch Kit ($299)", zh: "社交媒體啟動套件（$299）" },
     ],
-    price: "$699",
-    originalPrice: "$797",
+    price: "$699 USD",
+    originalPrice: "$797 USD",
     badge: "Best Value — Save $98",
   },
 ];
@@ -292,9 +292,8 @@ const AddonsContent = () => {
                       </ul>
                     </div>
 
-                    <div className="mt-5 flex items-baseline gap-3">
+                    <div className="mt-5">
                       <span className="text-3xl font-black font-display text-foreground">{bundle.price}</span>
-                      <span className="text-base text-muted-foreground line-through">{bundle.originalPrice}</span>
                     </div>
 
                     <div className="mt-5">
