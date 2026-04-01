@@ -520,39 +520,67 @@ const IndexContent = ({ variant = "home" }: { variant?: "home" | "start" }) => {
     if (el) el.scrollIntoView({ behavior: "smooth" });
   };
 
-  const multiPagePlans = [
-    {
-      name: lang === "en" ? "Growth Upgrade" : "成長升級版",
-      price: formatPrice(PRICING.websitePackages.multiPage[2].price),
-      features: lang === "en"
-        ? ["Conversion-focused layout built to generate leads", "Completely different design approach from Makeover", "Stronger content flow and business positioning", "Free hosting included — built to turn visitors into enquiries"]
-        : ["轉換導向版面，專為產生詢問而設計", "與改造版完全不同的設計策略", "更強的內容架構與商業定位", "免費代管，將訪客轉換為詢問"],
-      highlighted: false,
-    },
-    {
-      name: lang === "en" ? "Website Makeover" : "網站改造版",
-      price: formatPrice(PRICING.websitePackages.multiPage[1].price),
-      badge: lang === "en" ? "Most Popular" : "最受歡迎",
-      features: lang === "en"
-        ? ["Everything in Facelift Starter, fully polished", "Optimized to show up better on Google searches", "Looks great when shared on social media and messaging apps", "Fine-tuned for a stronger first impression", "Free hosting included — launch-ready in 3 days"]
-        : ["包含入門版的所有內容，全面精修", "優化後在 Google 搜尋中更容易被找到", "在社群媒體和通訊軟體分享時呈現最佳效果", "細節調校，打造更強烈的第一印象", "免費代管，3天內上線"],
-      highlighted: true,
-    },
-    {
-      name: lang === "en" ? "Facelift Starter" : "入門改版",
-      price: formatPrice(PRICING.websitePackages.multiPage[0].price),
-      features: lang === "en"
-        ? ["Clean, modern redesign of your existing site", "Mobile responsive & SEO-friendly structure", "Up to 7 pages", "Free hosting included — no monthly fees required"]
-        : ["現有網站的簡潔現代重新設計", "手機響應式與SEO友善架構", "最多7頁", "免費代管，無需月費"],
-      highlighted: false,
-    },
-  ];
+  // Preview A & B plans
+  const previewA = {
+    title: "Preview A",
+    price: "$299 USD",
+    positioning: lang === "en" ? "Clean, professional website — ready to launch fast" : "簡潔專業的網站——快速上線",
+    features: lang === "en"
+      ? [
+          "Choose Version A",
+          "Clean, modern design",
+          "Mobile responsive across all devices",
+          "Up to 5–7 pages",
+          "Basic SEO-ready structure",
+          "Contact form included",
+          "Fast 3-day turnaround",
+          "Free hosting (no monthly fees)",
+        ]
+      : [
+          "選擇版本A",
+          "簡潔現代設計",
+          "所有裝置響應式",
+          "最多5–7頁",
+          "基礎SEO結構",
+          "包含聯絡表單",
+          "3天快速交付",
+          "免費代管（無月費）",
+        ],
+  };
 
-  const singlePagePlans = [
-    { name: lang === "en" ? "Facelift Starter" : "入門改版", price: formatPrice(PRICING.websitePackages.singlePage[0].price) },
-    { name: lang === "en" ? "Website Makeover" : "網站改造版", price: formatPrice(PRICING.websitePackages.singlePage[1].price) },
-    { name: lang === "en" ? "Growth Upgrade" : "成長優化版", price: formatPrice(PRICING.websitePackages.singlePage[2].price) },
-  ];
+  const previewB = {
+    title: "Preview B",
+    price: "$799 USD",
+    badge: lang === "en" ? "Most Popular" : "最受歡迎",
+    valueStatement: lang === "en"
+      ? "Designed to increase inquiries and client conversions"
+      : "專為增加詢問和客戶轉換而設計",
+    features: lang === "en"
+      ? [
+          "Everything in Preview A",
+          "Conversion-focused layout structure",
+          "Strategic CTA placement for lead generation",
+          "Optimized section flow for user engagement",
+          "Trust-building sections (reviews, credibility blocks)",
+          "Improved user journey and content hierarchy",
+          "Clear, high-impact messaging structure",
+          "More refined and premium visual polish",
+          "Stronger business positioning",
+          "Priority build slot",
+        ]
+      : [
+          "Preview A 的所有功能",
+          "轉換導向版面結構",
+          "策略性CTA放置以生成潛在客戶",
+          "優化的區塊流程以提高用戶參與",
+          "信任建立區塊（評價、信譽模組）",
+          "改善的用戶旅程和內容層級",
+          "清晰高影響力的訊息結構",
+          "更精緻高級的視覺打磨",
+          "更強的商業定位",
+          "優先構建名額",
+        ],
+  };
 
   const reviewItems: { text: string | React.ReactNode; name: string; company: string }[] = [
     {
