@@ -22,7 +22,7 @@ const standardAddons = [
     icon: Star,
     title: { en: "Review / Testimonial Section", zh: "評價展示區塊" },
     desc: { en: "Your happiest customers are your best salespeople. Display real reviews with star ratings and brand styling to build instant trust with new visitors.", zh: "展示客戶真實評價，含星級評分和品牌風格，建立新訪客的即時信任。" },
-    price: "$99",
+    price: "$99 USD",
     btn: { en: "Add to My Website", zh: "添加到我的網站" },
   },
   {
@@ -30,7 +30,7 @@ const standardAddons = [
     icon: MessageCircle,
     title: { en: "FAQ Section", zh: "常見問題區塊" },
     desc: { en: "Answer your most common questions before they're even asked. Reduce back-and-forth, filter serious enquiries, and keep visitors on your page longer.", zh: "在問題被提出之前先回答，減少來回溝通，過濾認真的詢問，讓訪客停留更久。" },
-    price: "$79",
+    price: "$79 USD",
     btn: { en: "Add to My Website", zh: "添加到我的網站" },
   },
   {
@@ -38,7 +38,7 @@ const standardAddons = [
     icon: Mail,
     title: { en: "Advanced Contact Form", zh: "進階聯繫表單" },
     desc: { en: "A smarter enquiry form with custom fields, validation, and email routing — so you get the right information from the right people, every time.", zh: "更智能的詢問表單，含自訂欄位、驗證和郵件路由，每次都能收到正確資訊。" },
-    price: "$149",
+    price: "$149 USD",
     btn: { en: "Add to My Website", zh: "添加到我的網站" },
   },
   {
@@ -46,7 +46,7 @@ const standardAddons = [
     icon: Calendar,
     title: { en: "Booking Request Form", zh: "預約請求表單" },
     desc: { en: "Let visitors request appointments directly from your website. Structured, professional, and connected straight to your inbox.", zh: "讓訪客直接從網站預約，結構化、專業且直接連接您的信箱。" },
-    price: "$149",
+    price: "$149 USD",
     btn: { en: "Add to My Website", zh: "添加到我的網站" },
   },
   {
@@ -54,7 +54,7 @@ const standardAddons = [
     icon: List,
     title: { en: "Multi-Step Quote Form", zh: "多步驟報價表單" },
     desc: { en: "Guide visitors through a step-by-step process to request a quote. Conditional logic ensures you only receive complete, relevant enquiries.", zh: "引導訪客逐步填寫報價請求，條件邏輯確保只收到完整、相關的詢問。" },
-    price: "$199",
+    price: "$199 USD",
     btn: { en: "Add to My Website", zh: "添加到我的網站" },
   },
   {
@@ -62,7 +62,7 @@ const standardAddons = [
     icon: Globe,
     title: { en: "Basic Bilingual Setup", zh: "基礎雙語設置" },
     desc: { en: "Reach more customers by adding a second language with a simple toggle switch — no separate pages, no complicated setup.", zh: "透過簡單的切換開關新增第二語言，無需獨立頁面，無複雜設置。" },
-    price: "$199",
+    price: "$199 USD",
     btn: { en: "Add to My Website", zh: "添加到我的網站" },
   },
   {
@@ -70,7 +70,7 @@ const standardAddons = [
     icon: Edit,
     title: { en: "Blog Setup", zh: "部落格設置" },
     desc: { en: "Build authority in your industry with a clean blog layout. Includes categories, tags, and post templates — ready for you to publish anytime.", zh: "透過簡潔的部落格版面建立行業權威，含分類、標籤和文章模板。" },
-    price: "$199",
+    price: "$199 USD",
     btn: { en: "Add to My Website", zh: "添加到我的網站" },
   },
   {
@@ -78,7 +78,7 @@ const standardAddons = [
     icon: Image,
     title: { en: "Gallery Section", zh: "圖庫區塊" },
     desc: { en: "Showcase your work, products, or space with a responsive photo gallery. Includes lightbox viewing and category filtering.", zh: "透過響應式圖庫展示作品、產品或空間，含燈箱效果和分類篩選。" },
-    price: "$129",
+    price: "$129 USD",
     btn: { en: "Add to My Website", zh: "添加到我的網站" },
   },
   {
@@ -86,7 +86,7 @@ const standardAddons = [
     icon: MapPin,
     title: { en: "Google Map / Hours / Service Area", zh: "Google地圖/營業時間/服務區域" },
     desc: { en: "Help customers find you, know your hours, and understand your service area — all in one clean, embedded block.", zh: "幫助客戶找到您、了解營業時間和服務區域——集於一個簡潔的嵌入區塊。" },
-    price: "$99",
+    price: "$99 USD",
     btn: { en: "Add to My Website", zh: "添加到我的網站" },
   },
   {
@@ -94,7 +94,7 @@ const standardAddons = [
     icon: BarChart,
     title: { en: "Analytics / Pixel / Tag Setup", zh: "分析/像素/標籤設置" },
     desc: { en: "Get the data you need to grow. Includes Google Analytics, Facebook Pixel, and Tag Manager — properly configured and ready to track from day one.", zh: "獲取成長所需的數據，含 Google Analytics、Facebook Pixel 和 Tag Manager 配置。" },
-    price: "$99",
+    price: "$99 USD",
     btn: { en: "Add to My Website", zh: "添加到我的網站" },
   },
 ];
@@ -161,7 +161,7 @@ const bundles = [
     desc: { en: "Everything a small business needs to look credible and be found online — in one clean package.", zh: "小型企業在線上展現專業形象所需的一切——整合在一個套餐中。" },
     includes: { en: "Google Map / Hours / Service Area · FAQ Section · Analytics / Pixel / Tag Setup", zh: "Google地圖/營業時間/服務區域 · 常見問題區塊 · 分析/像素/標籤設置" },
     originalPrice: "$275",
-    price: "$199",
+    price: "$199 USD",
     savings: { en: "Save $76", zh: "節省 $76" },
   },
   {
@@ -172,7 +172,7 @@ const bundles = [
     desc: { en: "A comprehensive upgrade set that combines trust-building, lead generation, content marketing, and local visibility in one package.", zh: "結合信任建立、潛客獲取、內容行銷和本地能見度的全面升級套餐。" },
     includes: { en: "Review / Testimonial Section · Blog Setup · Gallery Section · Advanced Contact Form · Analytics / Pixel / Tag Setup · Google Map / Hours / Service Area", zh: "評價展示 · 部落格設置 · 圖庫區塊 · 進階聯繫表單 · 分析/像素/標籤設置 · Google地圖/營業時間/服務區域" },
     originalPrice: "$875",
-    price: "$699",
+    price: "$699 USD",
     savings: { en: "Save $176", zh: "節省 $176" },
     badge: { en: "MOST POPULAR", zh: "最受歡迎" },
   },
@@ -184,7 +184,7 @@ const bundles = [
     desc: { en: "Everything you need to launch with confidence — bilingual support, full content infrastructure, and a complete lead capture system.", zh: "自信上線所需的一切——雙語支援、完整內容架構和完整的潛客捕獲系統。" },
     includes: { en: "Basic Bilingual Setup · Blog Setup · Gallery Section · Review / Testimonial Section · Advanced Contact Form · Booking Request Form · Multi-Step Quote Form", zh: "基礎雙語設置 · 部落格設置 · 圖庫區塊 · 評價展示 · 進階聯繫表單 · 預約請求表單 · 多步驟報價表單" },
     originalPrice: "$1,150",
-    price: "$899",
+    price: "$899 USD",
     savings: { en: "Save $251", zh: "節省 $251" },
   },
   {
@@ -195,7 +195,7 @@ const bundles = [
     desc: { en: "A focused set of features designed to build trust, reduce friction, and increase the number of visitors who actually reach out.", zh: "專注於建立信任、減少摩擦、增加實際聯繫訪客數量的功能組合。" },
     includes: { en: "Review / Testimonial Section · Advanced Contact Form · Booking Request Form · Analytics / Pixel / Tag Setup · FAQ Section", zh: "評價展示 · 進階聯繫表單 · 預約請求表單 · 分析/像素/標籤設置 · 常見問題區塊" },
     originalPrice: "$625",
-    price: "$499",
+    price: "$499 USD",
     savings: { en: "Save $126", zh: "節省 $126" },
   },
   {
@@ -206,7 +206,7 @@ const bundles = [
     desc: { en: "Three powerful forms working together to capture better leads, filter serious clients, and make your enquiry process feel professional.", zh: "三個強大表單協同運作，捕獲更好的潛客，過濾認真的客戶，讓詢問流程更專業。" },
     includes: { en: "Advanced Contact Form · Booking Request Form · Multi-Step Quote Form", zh: "進階聯繫表單 · 預約請求表單 · 多步驟報價表單" },
     originalPrice: "$500",
-    price: "$399",
+    price: "$399 USD",
     savings: { en: "Save $101", zh: "節省 $101" },
   },
 ];
