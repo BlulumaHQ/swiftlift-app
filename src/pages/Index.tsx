@@ -709,8 +709,11 @@ const IndexContent = ({ variant = "home" }: { variant?: "home" | "start" }) => {
 
             {/* Right: Intake Form */}
             <div className="bg-background rounded-2xl p-7 md:p-10 border border-border/50 shadow-[0_25px_60px_-12px_rgba(0,0,0,0.35)] lg:mt-2">
-              <h3 className="text-base font-bold text-foreground font-display mb-1">
-                {lang === "en" ? "Get Your 2 Free Website Versions" : "獲取您的2個免費網站版本"}
+              <p className="text-sm font-medium text-muted-foreground mb-1">
+                {lang === "en" ? "See your redesigned website in 48 hours — before you pay" : "48小時內查看您重新設計的網站——付款前先看"}
+              </p>
+              <h3 className="text-lg font-bold text-foreground font-display mb-1">
+                {lang === "en" ? "Get My 2 Free Website Versions" : "獲取我的2個免費網站版本"}
               </h3>
               <p className="text-xs text-muted-foreground mb-5">
                 {lang === "en" ? "Takes you less than 30 seconds to fill out." : "填寫不到30秒。"}
