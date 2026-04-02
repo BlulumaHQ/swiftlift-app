@@ -523,27 +523,21 @@ const IndexContent = ({ variant = "home" }: { variant?: "home" | "start" }) => {
   // Version A & B plans (non-selection, informational only)
   const versionA = {
     title: lang === "en" ? "Version A: Launch Ready" : "版本A：啟動就緒",
-    prices: lang === "en"
-      ? ["$299 USD as-is", "$499 USD with revision"]
-      : ["$299 USD 原樣交付", "$499 USD 含修改"],
+    price: "$299 USD",
     features: lang === "en"
       ? [
-          "Clean, modern design",
-          "Mobile responsive across all devices",
-          "Up to 5–7 pages",
-          "Basic SEO-ready structure",
-          "Contact form included",
-          "Fast 3-day turnaround",
-          "Free hosting (no monthly fees)",
+          "1–3 polished pages",
+          "Mobile-optimized design",
+          "Contact form setup",
+          "Brand color integration",
+          "Fast load performance",
         ]
       : [
-          "簡潔現代設計",
-          "所有裝置響應式",
-          "最多5–7頁",
-          "基礎SEO結構",
-          "包含聯絡表單",
-          "3天快速交付",
-          "免費代管（無月費）",
+          "1–3 個精緻頁面",
+          "行動裝置優化設計",
+          "聯絡表單設置",
+          "品牌配色整合",
+          "快速載入效能",
         ],
   };
 
@@ -555,28 +549,22 @@ const IndexContent = ({ variant = "home" }: { variant?: "home" | "start" }) => {
       : "專為帶來更多電話、潛在客戶和預約而設計",
     features: lang === "en"
       ? [
-          "Everything in Version A",
-          "Conversion-focused layout structure",
-          "Strategic CTA placement for lead generation",
-          "Optimized section flow for user engagement",
-          "Trust-building sections (reviews, credibility blocks)",
-          "Improved user journey and content hierarchy",
-          "Clear, high-impact messaging structure",
-          "More refined and premium visual polish",
-          "Stronger business positioning",
-          "Priority build slot",
+          "3–7 strategic pages",
+          "Conversion-focused layout",
+          "Strategic CTA placement",
+          "Customer journey mapping",
+          "SEO-ready structure",
+          "Trust-building sections",
+          "Lead capture optimization",
         ]
       : [
-          "版本A 的所有功能",
-          "轉換導向版面結構",
-          "策略性CTA放置以生成潛在客戶",
-          "優化的區塊流程以提高用戶參與",
-          "信任建立區塊（評價、信譽模組）",
-          "改善的用戶旅程和內容層級",
-          "清晰高影響力的訊息結構",
-          "更精緻高級的視覺打磨",
-          "更強的商業定位",
-          "優先構建名額",
+          "3–7 個策略性頁面",
+          "轉化導向佈局",
+          "策略性 CTA 佈置",
+          "客戶旅程規劃",
+          "SEO 就緒結構",
+          "信任建立區塊",
+          "潛在客戶捕獲優化",
         ],
   };
 
@@ -937,11 +925,7 @@ const IndexContent = ({ variant = "home" }: { variant?: "home" | "start" }) => {
             {/* Version A */}
             <div className="order-1 rounded-2xl border border-border bg-background p-6 md:p-8 flex flex-col transition-shadow duration-300 hover:shadow-lg">
               <h3 className="font-bold text-foreground font-display text-xl">{versionA.title}</h3>
-              <div className="mt-4 space-y-1">
-                {versionA.prices.map((p, pi) => (
-                  <p key={pi} className="text-2xl font-black text-foreground font-display">{p}</p>
-                ))}
-              </div>
+              <p className="text-4xl font-black text-foreground font-display mt-4">{versionA.price}</p>
               <ul className="mt-6 space-y-3 flex-1">
                 {versionA.features.map((f, fi) => (
                   <li key={fi} className="flex items-start gap-2.5 text-[15px] text-muted-foreground">
