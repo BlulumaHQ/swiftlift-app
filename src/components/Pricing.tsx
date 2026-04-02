@@ -1,250 +1,193 @@
 import React from "react";
 import { useLanguage } from "@/contexts/LanguageContext";
-import { translations, t } from "@/lib/translations";
-import { PRICING, formatPrice, formatStartingAtPlus, STRIPE_LINKS } from "@/lib/pricing";
+import { t } from "@/lib/translations";
 import ScrollReveal from "./ScrollReveal";
-import { Check, Star } from "lucide-react";
-import { motion } from "framer-motion";
-import MagneticButton from "./MagneticButton";
+import { Check } from "lucide-react";
 
-const mp = PRICING.websitePackages.multiPage;
-const cs = PRICING.websitePackages.customSolutions;
+const SCROLL_TO_FORM = () => {
+  const form = document.getElementById("intake-form") || document.getElementById("hero");
+  if (form) form.scrollIntoView({ behavior: "smooth" });
+};
 
-const plans = [
-  {
-    tier: "launch",
-    title: { en: "Starter", zh: "入门版" },
-    subtitle: { en: "LAUNCH", zh: "启动" },
-    originalPrice: null,
-    price: formatPrice(mp[0].price),
-    promo: null,
-    badge: null,
-    description: {
-      en: "For businesses that need a clean, professional online presence fast.",
-      zh: "适合需要快速建立专业线上形象的企业。",
-    },
-    features: {
-      en: [
-        "1–2 Core Pages",
-        "Clean Modern Interface",
-        "Mobile Optimized",
-        "Contact Capture Setup",
-        "Brand Color Integration",
-        "Performance Optimized",
-      ],
-      zh: [
-        "1–2 核心页面",
-        "简洁现代界面",
-        "移动端优化",
-        "联系表单配置",
-        "品牌配色融合",
-        "性能优化",
-      ],
-    },
-    cta: { en: "Get My 2 Free Previews", zh: "獲取我的2個免費預覽" },
-    ctaSub: { en: "No credit card required. No obligation.", zh: "无需信用卡。无任何义务。" },
-    ctaHref: STRIPE_LINKS["preview-access"],
-    isPremium: false,
+const versionA = {
+  label: { en: "Version A: Launch Ready", zh: "版本 A：快速上線版" },
+  price: "$299 USD",
+  description: {
+    en: "A clean, professional website that gets your business online fast.",
+    zh: "一個簡潔、專業的網站，讓您的業務快速上線。",
   },
-  {
-    tier: "growth",
-    title: { en: "Growth", zh: "成长版" },
-    subtitle: { en: "GROWTH", zh: "成长" },
-    originalPrice: null,
-    price: formatPrice(mp[1].price),
-    promo: null,
-    badge: { en: "Most Popular", zh: "最受欢迎" },
-    description: {
-      en: "Designed to turn visitors into qualified inquiries\nwith structured layout.",
-      zh: "旨在通过结构化布局\n将访客转化为高质量咨询。",
-    },
-    features: {
-      en: [
-        "3–7 Structured Pages",
-        "Conversion-Focused Layout",
-        "Strategic CTA Placement",
-        "Contact + Map Integration",
-        "Brand Consistency System",
-        "Performance Optimized",
-      ],
-      zh: [
-        "3–7 结构化页面",
-        "转化导向布局",
-        "战略性CTA布局",
-        "联系 + 地图集成",
-        "品牌一致性系统",
-        "性能优化",
-      ],
-    },
-    cta: { en: "Get My 2 Free Previews", zh: "獲取我的2個免費預覽" },
-    ctaSub: { en: "No credit card required. No obligation.", zh: "无需信用卡。无任何义务。" },
-    ctaHref: STRIPE_LINKS["launch-ready"],
-    isPremium: false,
+  features: {
+    en: [
+      "1–3 polished pages",
+      "Mobile-optimized design",
+      "Contact form setup",
+      "Brand color integration",
+      "Fast load performance",
+    ],
+    zh: [
+      "1–3 個精緻頁面",
+      "行動裝置優化設計",
+      "聯絡表單設置",
+      "品牌配色整合",
+      "快速載入效能",
+    ],
   },
-  {
-    tier: "conversion",
-    title: { en: "Strategy-Level Website", zh: "策略级网站" },
-    subtitle: { en: "CONVERSION ARCHITECTURE", zh: "转化架构" },
-    originalPrice: null,
-    price: formatStartingAtPlus(cs[2].price),
-    promo: null,
-    badge: null,
-    description: {
-      en: "Built for brands that require strategic structure and scalable growth.",
-      zh: "为需要战略结构和可扩展增长的品牌而建。",
-    },
-    features: {
-      en: [
-        "Conversion-Driven Architecture",
-        "Customer Journey Mapping",
-        "Messaging Hierarchy Strategy",
-        "SEO Framework Planning",
-        "Funnel-Based Page Structure",
-        "Advanced Integrations",
-        "Growth-Ready Infrastructure",
-      ],
-      zh: [
-        "转化驱动架构",
-        "客户旅程映射",
-        "信息层级策略",
-        "SEO框架规划",
-        "漏斗式页面结构",
-        "高级集成",
-        "增长就绪基础设施",
-      ],
-    },
-    cta: { en: "Get My 2 Free Previews", zh: "獲取我的2個免費預覽" },
-    ctaSub: null,
-    ctaHref: STRIPE_LINKS["growth-optimized"],
-    isPremium: true,
+};
+
+const versionB = {
+  label: { en: "Version B: Sales Focused", zh: "版本 B：銷售導向版" },
+  price: "$799 USD",
+  subtitle: {
+    en: "Designed to bring you more calls, leads, and bookings",
+    zh: "專為為您帶來更多來電、潛在客戶和預約而設計",
   },
-];
+  description: {
+    en: "A conversion-driven website built to generate real business results.",
+    zh: "以轉化為驅動的網站，旨在產生真實的業務成果。",
+  },
+  features: {
+    en: [
+      "3–7 strategic pages",
+      "Conversion-focused layout",
+      "Strategic CTA placement",
+      "Customer journey mapping",
+      "SEO-ready structure",
+      "Trust-building sections",
+      "Lead capture optimization",
+    ],
+    zh: [
+      "3–7 個策略性頁面",
+      "轉化導向佈局",
+      "策略性 CTA 佈置",
+      "客戶旅程規劃",
+      "SEO 就緒結構",
+      "信任建立區塊",
+      "潛在客戶捕獲優化",
+    ],
+  },
+};
+
+const introText = {
+  en: "You don't need to choose now — you'll get both versions first.",
+  zh: "您不需要現在做決定 — 您會先收到兩個版本。",
+};
+
+const ctaText = {
+  en: "Get My 2 Free Website Previews",
+  zh: "獲取我的 2 個免費網站預覽",
+};
 
 const Pricing = () => {
   const { lang } = useLanguage();
-  const pricing = translations.pricing;
-  const headline = t(pricing.headline, lang);
 
   return (
-    <section id="pricing" className="py-16 md:py-24 relative overflow-hidden" style={{ background: "hsl(var(--surface-sunken))" }}>
-      <div className="max-w-7xl mx-auto px-6 relative z-10">
+    <section
+      id="pricing"
+      className="py-16 md:py-24 relative overflow-hidden"
+      style={{ background: "hsl(var(--surface-sunken))" }}
+    >
+      <div className="max-w-4xl mx-auto px-6 relative z-10">
+        {/* Headline */}
         <ScrollReveal>
-          <motion.h2
-            key={lang + "-price-h"}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.3 }}
-            className="text-[clamp(2rem,4vw,3.5rem)] font-black text-foreground text-center font-display whitespace-pre-line"
-          >
-            {headline}
-          </motion.h2>
+          <h2 className="text-[clamp(2rem,4vw,3rem)] font-black text-foreground text-center font-display">
+            {lang === "en" ? "Simple, Transparent Pricing" : "簡單透明的定價"}
+          </h2>
           <div className="flex justify-center">
             <span className="section-underline section-underline--light" />
           </div>
+          <p className="text-center text-muted-foreground mt-4 text-base md:text-lg">
+            {t(introText, lang)}
+          </p>
         </ScrollReveal>
 
-        <div className="mt-10 grid grid-cols-1 md:grid-cols-3 gap-6 items-stretch">
-          {plans.map((plan, i) => {
-            const isHero = i === 1;
-            return (
-              <ScrollReveal key={i} delay={0.08 * i}>
-                <div
-                  className={`rounded-2xl flex flex-col border transition-all duration-400 relative h-full ${
-                    isHero
-                      ? "p-8 bg-background border-border shadow-2xl border-t-4 md:-translate-y-3"
-                      : "p-6 md:p-8 bg-background border-border shadow-sm"
-                  }`}
-                  style={isHero ? { borderTopColor: "hsl(275 51% 46%)" } : {}}
+        {/* 2-card grid */}
+        <div className="mt-10 grid grid-cols-1 md:grid-cols-2 gap-6 items-stretch">
+          {/* Version A */}
+          <ScrollReveal delay={0}>
+            <div className="rounded-2xl flex flex-col border border-border bg-background p-6 md:p-8 shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-1 h-full">
+              <p className="text-xs font-medium text-muted-foreground uppercase tracking-wider mb-1">
+                {lang === "en" ? "VERSION A" : "版本 A"}
+              </p>
+              <h3 className="text-lg font-bold text-foreground font-display">
+                {t(versionA.label, lang)}
+              </h3>
+              <p className="mt-1 text-sm text-muted-foreground leading-relaxed">
+                {t(versionA.description, lang)}
+              </p>
+              <div className="mt-3">
+                <span className="text-4xl font-black text-foreground font-display">
+                  {versionA.price}
+                </span>
+              </div>
+
+              <ul className="space-y-3 flex-1 mt-6">
+                {versionA.features[lang].map((f, i) => (
+                  <li key={i} className="flex items-start gap-2.5 text-sm">
+                    <Check
+                      size={16}
+                      className="mt-0.5 flex-shrink-0"
+                      style={{ color: "hsl(var(--primary))" }}
+                    />
+                    <span className="text-muted-foreground">{f}</span>
+                  </li>
+                ))}
+              </ul>
+
+              <div className="mt-6">
+                <button
+                  onClick={SCROLL_TO_FORM}
+                  className="w-full inline-flex items-center justify-center rounded-full px-6 py-3.5 text-sm font-semibold border-2 border-primary text-primary hover:bg-primary hover:text-primary-foreground transition-all active:scale-[0.97]"
                 >
-                  {/* Badge */}
-                  {plan.badge && (
-                    <div
-                      className="absolute -top-4 left-1/2 -translate-x-1/2 px-5 py-1.5 rounded-full text-xs font-bold text-white flex items-center gap-1.5 whitespace-nowrap"
-                      style={{ background: "hsl(275 51% 46%)" }}
-                    >
-                      <Star size={13} className="fill-current" />
-                      {t(plan.badge, lang)}
-                    </div>
-                  )}
+                  {t(ctaText, lang)}
+                </button>
+              </div>
+            </div>
+          </ScrollReveal>
 
-                  {/* Subtitle label */}
-                  <p className="text-xs font-medium text-muted-foreground uppercase tracking-wider mb-1">
-                    {t(plan.subtitle, lang)}
-                  </p>
+          {/* Version B */}
+          <ScrollReveal delay={0.08}>
+            <div className="rounded-2xl flex flex-col border border-border bg-background p-6 md:p-8 shadow-md hover:shadow-lg transition-all duration-300 hover:-translate-y-1 h-full ring-1 ring-primary/10">
+              <p className="text-xs font-medium text-muted-foreground uppercase tracking-wider mb-1">
+                {lang === "en" ? "VERSION B" : "版本 B"}
+              </p>
+              <h3 className="text-lg font-bold text-foreground font-display">
+                {t(versionB.label, lang)}
+              </h3>
+              <p className="mt-0.5 text-sm font-medium" style={{ color: "hsl(var(--primary))" }}>
+                {t(versionB.subtitle, lang)}
+              </p>
+              <p className="mt-1 text-sm text-muted-foreground leading-relaxed">
+                {t(versionB.description, lang)}
+              </p>
+              <div className="mt-3">
+                <span className="text-4xl font-black text-foreground font-display">
+                  {versionB.price}
+                </span>
+              </div>
 
-                  {/* Title */}
-                  <h3 className={`font-bold text-foreground font-display ${isHero ? "text-xl" : "text-lg"}`}>
-                    {t(plan.title, lang)}
-                  </h3>
+              <ul className="space-y-3 flex-1 mt-6">
+                {versionB.features[lang].map((f, i) => (
+                  <li key={i} className="flex items-start gap-2.5 text-sm">
+                    <Check
+                      size={16}
+                      className="mt-0.5 flex-shrink-0"
+                      style={{ color: "hsl(var(--primary))" }}
+                    />
+                    <span className="text-muted-foreground">{f}</span>
+                  </li>
+                ))}
+              </ul>
 
-                  {/* Description */}
-                  <p className="mt-1 text-sm text-muted-foreground leading-relaxed whitespace-pre-line">
-                    {t(plan.description, lang)}
-                  </p>
-
-                  {/* Price row */}
-                  <div className="mt-3 flex items-baseline gap-2 text-foreground">
-                    {plan.originalPrice && (
-                      <span className="text-lg line-through opacity-40">{plan.originalPrice}</span>
-                    )}
-                    <span className={`font-black font-display ${isHero ? "text-5xl" : "text-4xl"}`}>
-                      {plan.price}
-                    </span>
-                  </div>
-                  {plan.isPremium && (
-                    <p className="text-xs text-muted-foreground mt-0.5">Starting at</p>
-                  )}
-
-                  {/* Promo row — reserved height for alignment */}
-                  <div className="h-8 mt-2 flex items-center">
-                    {plan.promo ? (
-                      <span
-                        className="text-xs font-bold inline-block px-3 py-1 rounded-full"
-                        style={{ color: "hsl(275 51% 46%)", background: "hsl(275 51% 46% / 0.1)" }}
-                      >
-                        {t(plan.promo, lang)}
-                      </span>
-                    ) : null}
-                  </div>
-
-                  {/* Features */}
-                  <ul className="space-y-3 flex-1 mt-3">
-                    {plan.features[lang].map((feature, ri) => (
-                      <li key={ri} className="flex items-start gap-2.5 text-sm">
-                        <Check size={16} className="mt-0.5 flex-shrink-0" style={{ color: "hsl(275 51% 46%)" }} />
-                        <span className="text-muted-foreground">{feature}</span>
-                      </li>
-                    ))}
-                  </ul>
-
-                  {/* CTA area — pushed to bottom */}
-                  <div className="mt-6 flex flex-col items-center">
-                    <a
-                      href={plan.ctaHref}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className={`w-full inline-flex items-center justify-center rounded-full px-6 py-3 text-sm font-semibold transition-all active:scale-[0.97] ${
-                        isHero
-                          ? "btn-brand text-base py-3.5"
-                          : plan.isPremium
-                            ? "border-2 border-foreground text-foreground hover:bg-foreground hover:text-background"
-                            : "border-2 border-primary text-primary hover:bg-primary hover:text-primary-foreground"
-                      }`}
-                    >
-                      {t(plan.cta, lang)}
-                    </a>
-                    {plan.ctaSub && (
-                      <p className="mt-2 text-xs text-muted-foreground">
-                        {t(plan.ctaSub, lang)}
-                      </p>
-                    )}
-                    {/* Reserve subtext row height even if empty */}
-                    {!plan.ctaSub && <p className="mt-2 text-xs">&nbsp;</p>}
-                  </div>
-                </div>
-              </ScrollReveal>
-            );
-          })}
+              <div className="mt-6">
+                <button
+                  onClick={SCROLL_TO_FORM}
+                  className="w-full inline-flex items-center justify-center rounded-full px-6 py-3.5 text-sm font-semibold border-2 border-primary text-primary hover:bg-primary hover:text-primary-foreground transition-all active:scale-[0.97]"
+                >
+                  {t(ctaText, lang)}
+                </button>
+              </div>
+            </div>
+          </ScrollReveal>
         </div>
       </div>
     </section>
