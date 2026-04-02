@@ -21,6 +21,7 @@ const ctaText = {
 
 const versionAFeatures = {
   en: [
+    "Choose Version A",
     "Clean, modern design",
     "Mobile responsive across all devices",
     "Up to 5–7 pages",
