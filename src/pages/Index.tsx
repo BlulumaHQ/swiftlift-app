@@ -526,18 +526,24 @@ const IndexContent = ({ variant = "home" }: { variant?: "home" | "start" }) => {
     price: "$299 USD",
     features: lang === "en"
       ? [
-          "1–3 polished pages",
-          "Mobile-optimized design",
-          "Contact form setup",
-          "Brand color integration",
-          "Fast load performance",
+          "Choose Version A",
+          "Clean, modern design",
+          "Mobile responsive across all devices",
+          "Up to 5–7 pages",
+          "Basic SEO-ready structure",
+          "Contact form included",
+          "Fast 3-day turnaround",
+          "Free hosting (no monthly fees)",
         ]
       : [
-          "1–3 個精緻頁面",
-          "行動裝置優化設計",
-          "聯絡表單設置",
-          "品牌配色整合",
-          "快速載入效能",
+          "選擇版本 A",
+          "簡潔、現代的設計",
+          "所有裝置的行動響應式設計",
+          "最多 5–7 個頁面",
+          "基本 SEO 就緒結構",
+          "包含聯絡表單",
+          "3 天快速交付",
+          "免費託管（無月費）",
         ],
   };
 
