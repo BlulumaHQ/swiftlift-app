@@ -551,26 +551,32 @@ const IndexContent = ({ variant = "home" }: { variant?: "home" | "start" }) => {
     title: lang === "en" ? "Version B: Sales Focused" : "版本B：銷售導向",
     price: "$799 USD",
     description: lang === "en"
-      ? "Designed to bring you more calls, leads, and bookings"
-      : "專為帶來更多電話、潛在客戶和預約而設計",
+      ? "Designed to increase inquiries and client conversions"
+      : "專為增加詢問和客戶轉化而設計",
     features: lang === "en"
       ? [
-          "3–7 strategic pages",
-          "Conversion-focused layout",
-          "Strategic CTA placement",
-          "Customer journey mapping",
-          "SEO-ready structure",
-          "Trust-building sections",
-          "Lead capture optimization",
+          "Everything in Preview A",
+          "Conversion-focused layout structure",
+          "Strategic CTA placement for lead generation",
+          "Optimized section flow for user engagement",
+          "Trust-building sections (reviews, credibility blocks)",
+          "Improved user journey and content hierarchy",
+          "Clear, high-impact messaging structure",
+          "More refined and premium visual polish",
+          "Stronger business positioning",
+          "Priority build slot",
         ]
       : [
-          "3–7 個策略性頁面",
-          "轉化導向佈局",
-          "策略性 CTA 佈置",
-          "客戶旅程規劃",
-          "SEO 就緒結構",
-          "信任建立區塊",
-          "潛在客戶捕獲優化",
+          "包含預覽 A 的所有功能",
+          "以轉化為重點的佈局結構",
+          "策略性 CTA 佈置以產生潛在客戶",
+          "優化的區塊流程以提升用戶參與度",
+          "信任建立區塊（評論、可信度區塊）",
+          "改善的用戶旅程和內容層次",
+          "清晰、高影響力的訊息結構",
+          "更精緻和高端的視覺效果",
+          "更強的商業定位",
+          "優先建構時段",
         ],
   };
 
