@@ -21,6 +21,7 @@ const ctaText = {
 
 const versionAFeatures = {
   en: [
+    "Choose Version A",
     "Clean, modern design",
     "Mobile responsive across all devices",
     "Up to 5–7 pages",
@@ -42,7 +43,7 @@ const versionAFeatures = {
 
 const versionBFeatures = {
   en: [
-    "Everything in Version A",
+    "Everything in Preview A",
     "Conversion-focused layout structure",
     "Strategic CTA placement for lead generation",
     "Optimized section flow for user engagement",
@@ -155,8 +156,8 @@ const Pricing = () => {
               </div>
               <p className="mt-2 text-sm font-medium" style={{ color: "hsl(var(--primary))" }}>
                 {lang === "en"
-                  ? "Designed to get more inquiries and customers"
-                  : "專為獲得更多詢問和客戶而設計"}
+                  ? "Designed to increase inquiries and client conversions"
+                  : "專為增加詢問和客戶轉化而設計"}
               </p>
 
               <ul className="space-y-3 flex-1 mt-6">
