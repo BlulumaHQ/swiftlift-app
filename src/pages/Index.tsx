@@ -918,27 +918,32 @@ const IndexContent = ({ variant = "home" }: { variant?: "home" | "start" }) => {
       </section>
 
 
-      {/* ═══ PRICING SECTION 1 — Choose Your Website Preview ═══ */}
+      {/* ═══ PRICING SECTION ═══ */}
       <section id="pricing" className="py-16 md:py-24 lg:py-28 bg-white">
         <div className="max-w-5xl mx-auto px-6">
+          {/* Headline */}
           <h2 className="text-[clamp(1.8rem,4vw,2.8rem)] lg:text-[2rem] font-black text-foreground font-display text-center">
-            {lang === "en" ? "Choose Your Website Preview" : "選擇您的網站預覽"}
+            {lang === "en" ? "Simple, Transparent Pricing" : "簡單透明的定價"}
           </h2>
-          <p className="mt-3 text-muted-foreground text-sm text-center max-w-2xl mx-auto">
+          <p className="mt-4 text-base md:text-lg text-muted-foreground text-center max-w-2xl mx-auto leading-relaxed">
             {lang === "en"
-              ? "Choose from 2 preview versions before you pay"
-              : "付款前從2個預覽版本中選擇"}
+              ? "You don't need to choose now — you'll get both versions first."
+              : "您不需要現在就選擇——您會先收到兩個版本。"}
           </p>
 
-          {/* 2-column layout */}
+          {/* 2-column pricing table */}
           <div className="mt-12 grid grid-cols-1 md:grid-cols-2 gap-6 items-stretch">
-            {/* Preview B first on mobile */}
-            <div className="order-2 md:order-1 rounded-2xl border border-border bg-background p-6 md:p-8 flex flex-col">
-              <h3 className="font-bold text-foreground font-display text-xl">{previewA.title}</h3>
-              <p className="text-sm text-muted-foreground mt-1">{previewA.positioning}</p>
-              <p className="text-4xl font-black text-foreground font-display mt-4">{previewA.price}</p>
+
+            {/* Version A */}
+            <div className="order-1 rounded-2xl border border-border bg-background p-6 md:p-8 flex flex-col transition-shadow duration-300 hover:shadow-lg">
+              <h3 className="font-bold text-foreground font-display text-xl">{versionA.title}</h3>
+              <div className="mt-4 space-y-1">
+                {versionA.prices.map((p, pi) => (
+                  <p key={pi} className="text-2xl font-black text-foreground font-display">{p}</p>
+                ))}
+              </div>
               <ul className="mt-6 space-y-3 flex-1">
-                {previewA.features.map((f, fi) => (
+                {versionA.features.map((f, fi) => (
                   <li key={fi} className="flex items-start gap-2.5 text-[15px] text-muted-foreground">
                     <Check size={16} className="flex-shrink-0 mt-0.5" style={{ color: "hsl(275 51% 46%)" }} />
                     {f}
@@ -950,21 +955,17 @@ const IndexContent = ({ variant = "home" }: { variant?: "home" | "start" }) => {
                 className="mt-8 w-full rounded-full py-3.5 px-4 text-sm font-bold border-2 transition-all hover:opacity-80"
                 style={{ borderColor: "hsl(275 51% 46%)", color: "hsl(275 51% 46%)" }}
               >
-                {lang === "en" ? "Choose Preview A" : "選擇預覽 A"}
+                {lang === "en" ? "Get My 2 Free Website Previews" : "獲取我的2個免費網站預覽"}
               </button>
             </div>
 
-            {/* Preview B — highlighted */}
-            <div className="order-1 md:order-2 relative rounded-2xl border-2 bg-background p-6 md:p-8 flex flex-col shadow-xl" style={{ borderColor: "hsl(275 51% 46%)" }}>
-              <span className="absolute -top-3.5 left-1/2 -translate-x-1/2 text-xs font-bold text-white px-4 py-1.5 rounded-full whitespace-nowrap" style={{ background: "hsl(275 51% 46%)" }}>
-                <Star size={12} className="inline-block mr-1 fill-current -mt-0.5" />
-                {previewB.badge}
-              </span>
-              <h3 className="font-bold text-foreground font-display text-2xl">{previewB.title}</h3>
-              <p className="text-sm font-medium mt-1" style={{ color: "hsl(275 51% 46%)" }}>{previewB.valueStatement}</p>
-              <p className="text-5xl font-black text-foreground font-display mt-4">{previewB.price}</p>
+            {/* Version B — subtly emphasized */}
+            <div className="order-2 relative rounded-2xl border border-border bg-background p-6 md:p-8 flex flex-col shadow-md transition-shadow duration-300 hover:shadow-xl" style={{ transform: "scale(1.01)" }}>
+              <h3 className="font-bold text-foreground font-display text-xl">{versionB.title}</h3>
+              <p className="text-sm font-medium mt-1" style={{ color: "hsl(275 51% 46%)" }}>{versionB.description}</p>
+              <p className="text-4xl font-black text-foreground font-display mt-4">{versionB.price}</p>
               <ul className="mt-6 space-y-3 flex-1">
-                {previewB.features.map((f, fi) => (
+                {versionB.features.map((f, fi) => (
                   <li key={fi} className="flex items-start gap-2.5 text-[15px] text-muted-foreground">
                     <Check size={16} className="flex-shrink-0 mt-0.5" style={{ color: "hsl(275 51% 46%)" }} />
                     {f}
@@ -976,71 +977,69 @@ const IndexContent = ({ variant = "home" }: { variant?: "home" | "start" }) => {
                 className="mt-8 w-full rounded-full py-3.5 px-4 text-sm font-bold text-white transition-all hover:opacity-90"
                 style={{ background: "hsl(275 51% 46%)" }}
               >
-                {lang === "en" ? "Choose Preview B" : "選擇預覽 B"}
+                {lang === "en" ? "Get My 2 Free Website Previews" : "獲取我的2個免費網站預覽"}
               </button>
             </div>
           </div>
-        </div>
-      </section>
 
-      {/* ═══ PRICING SECTION 2 — Custom Solutions ═══ */}
-      <section className="py-10 md:py-14" style={{ background: "#FAFAFA" }}>
-        <div className="max-w-5xl mx-auto px-6">
-          <p className="text-sm text-muted-foreground text-center mb-8">
-            {lang === "en"
-              ? "Custom solutions for businesses with more specific needs"
-              : "為有特定需求的企業提供客製化方案"}
-          </p>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
-            {[
-              {
-                title: lang === "en" ? "One Page Website" : "單頁網站",
-                desc: lang === "en" ? "Best for simple businesses or focused landing pages" : "適合簡單企業或專注的著陸頁",
-                bullets: lang === "en"
-                  ? ["Single-page layout", "Streamlined content structure", "Ideal for ads or quick launches"]
-                  : ["單頁版面", "精簡內容結構", "適合廣告或快速上線"],
-              },
-              {
-                title: lang === "en" ? "Custom Website" : "客製化網站",
-                desc: lang === "en" ? "Best for businesses with unique requirements" : "適合有獨特需求的企業",
-                bullets: lang === "en"
-                  ? ["Fully custom structure", "Advanced features and flexibility", "Built around your workflow"]
-                  : ["完全客製化結構", "進階功能與彈性", "圍繞您的工作流程打造"],
-              },
-              {
-                title: lang === "en" ? "E-commerce Website" : "電商網站",
-                desc: lang === "en" ? "Best for selling products online" : "適合線上銷售產品",
-                bullets: lang === "en"
-                  ? ["Product catalog and checkout system", "Payment integration", "Scalable store setup"]
-                  : ["商品目錄與結帳系統", "金流整合", "可擴展的商店架構"],
-              },
-            ].map((opt, i) => (
-              <div key={i} className="rounded-xl border border-border bg-background p-5 flex flex-col">
-                <h4 className="font-bold text-foreground font-display text-base">{opt.title}</h4>
-                <p className="text-xs text-muted-foreground mt-1">{opt.desc}</p>
-                <ul className="mt-3 space-y-1.5 flex-1">
-                  {opt.bullets.map((b, bi) => (
-                    <li key={bi} className="flex items-start gap-2 text-sm text-muted-foreground">
-                      <Check size={14} className="flex-shrink-0 mt-0.5" style={{ color: "hsl(275 51% 46%)" }} />
-                      {b}
-                    </li>
-                  ))}
-                </ul>
-                <Link
-                  to="/custom-brief"
-                  className="mt-4 w-full inline-flex items-center justify-center rounded-full py-2.5 px-4 text-xs font-bold border transition-all hover:opacity-80"
-                  style={{ borderColor: "hsl(275 51% 46%)", color: "hsl(275 51% 46%)" }}
-                >
-                  {lang === "en" ? "Request a Quote" : "索取報價"}
-                </Link>
-              </div>
-            ))}
+          {/* Custom Solutions */}
+          <div className="mt-16 pt-12 border-t border-border">
+            <p className="text-sm text-muted-foreground text-center mb-8">
+              {lang === "en"
+                ? "Custom solutions for businesses with more specific needs"
+                : "為有特定需求的企業提供客製化方案"}
+            </p>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+              {[
+                {
+                  title: lang === "en" ? "One Page Website" : "單頁網站",
+                  desc: lang === "en" ? "Best for simple businesses or focused landing pages" : "適合簡單企業或專注的著陸頁",
+                  bullets: lang === "en"
+                    ? ["Single-page layout", "Streamlined content structure", "Ideal for ads or quick launches"]
+                    : ["單頁版面", "精簡內容結構", "適合廣告或快速上線"],
+                },
+                {
+                  title: lang === "en" ? "Custom Website" : "客製化網站",
+                  desc: lang === "en" ? "Best for businesses with unique requirements" : "適合有獨特需求的企業",
+                  bullets: lang === "en"
+                    ? ["Fully custom structure", "Advanced features and flexibility", "Built around your workflow"]
+                    : ["完全客製化結構", "進階功能與彈性", "圍繞您的工作流程打造"],
+                },
+                {
+                  title: lang === "en" ? "E-commerce Website" : "電商網站",
+                  desc: lang === "en" ? "Best for selling products online" : "適合線上銷售產品",
+                  bullets: lang === "en"
+                    ? ["Product catalog and checkout system", "Payment integration", "Scalable store setup"]
+                    : ["商品目錄與結帳系統", "金流整合", "可擴展的商店架構"],
+                },
+              ].map((opt, i) => (
+                <div key={i} className="rounded-xl border border-border bg-background p-5 flex flex-col">
+                  <h4 className="font-bold text-foreground font-display text-base">{opt.title}</h4>
+                  <p className="text-xs text-muted-foreground mt-1">{opt.desc}</p>
+                  <ul className="mt-3 space-y-1.5 flex-1">
+                    {opt.bullets.map((b, bi) => (
+                      <li key={bi} className="flex items-start gap-2 text-sm text-muted-foreground">
+                        <Check size={14} className="flex-shrink-0 mt-0.5" style={{ color: "hsl(275 51% 46%)" }} />
+                        {b}
+                      </li>
+                    ))}
+                  </ul>
+                  <Link
+                    to="/custom-brief"
+                    className="mt-4 w-full inline-flex items-center justify-center rounded-full py-2.5 px-4 text-xs font-bold border transition-all hover:opacity-80"
+                    style={{ borderColor: "hsl(275 51% 46%)", color: "hsl(275 51% 46%)" }}
+                  >
+                    {lang === "en" ? "Request a Quote" : "索取報價"}
+                  </Link>
+                </div>
+              ))}
+            </div>
+            <p className="mt-6 text-xs text-muted-foreground text-center">
+              {lang === "en"
+                ? "Pricing varies based on features, integrations, and project scope."
+                : "價格因功能、整合和專案範圍而異。"}
+            </p>
           </div>
-          <p className="mt-6 text-xs text-muted-foreground text-center">
-            {lang === "en"
-              ? "Pricing varies based on features, integrations, and project scope."
-              : "價格因功能、整合和專案範圍而異。"}
-          </p>
         </div>
       </section>
 
