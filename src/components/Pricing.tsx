@@ -43,7 +43,7 @@ const versionAFeatures = {
 
 const versionBFeatures = {
   en: [
-    "Everything in Version A",
+    "Everything in Preview A",
     "Conversion-focused layout structure",
     "Strategic CTA placement for lead generation",
     "Optimized section flow for user engagement",
