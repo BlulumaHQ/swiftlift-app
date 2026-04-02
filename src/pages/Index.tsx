@@ -523,27 +523,21 @@ const IndexContent = ({ variant = "home" }: { variant?: "home" | "start" }) => {
   // Version A & B plans (non-selection, informational only)
   const versionA = {
     title: lang === "en" ? "Version A: Launch Ready" : "版本A：啟動就緒",
-    prices: lang === "en"
-      ? ["$299 USD as-is", "$499 USD with revision"]
-      : ["$299 USD 原樣交付", "$499 USD 含修改"],
+    price: "$299 USD",
     features: lang === "en"
       ? [
-          "Clean, modern design",
-          "Mobile responsive across all devices",
-          "Up to 5–7 pages",
-          "Basic SEO-ready structure",
-          "Contact form included",
-          "Fast 3-day turnaround",
-          "Free hosting (no monthly fees)",
+          "1–3 polished pages",
+          "Mobile-optimized design",
+          "Contact form setup",
+          "Brand color integration",
+          "Fast load performance",
         ]
       : [
-          "簡潔現代設計",
-          "所有裝置響應式",
-          "最多5–7頁",
-          "基礎SEO結構",
-          "包含聯絡表單",
-          "3天快速交付",
-          "免費代管（無月費）",
+          "1–3 個精緻頁面",
+          "行動裝置優化設計",
+          "聯絡表單設置",
+          "品牌配色整合",
+          "快速載入效能",
         ],
   };
 
