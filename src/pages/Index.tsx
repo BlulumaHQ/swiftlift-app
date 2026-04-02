@@ -931,11 +931,7 @@ const IndexContent = ({ variant = "home" }: { variant?: "home" | "start" }) => {
             {/* Version A */}
             <div className="order-1 rounded-2xl border border-border bg-background p-6 md:p-8 flex flex-col transition-shadow duration-300 hover:shadow-lg">
               <h3 className="font-bold text-foreground font-display text-xl">{versionA.title}</h3>
-              <div className="mt-4 space-y-1">
-                {versionA.prices.map((p, pi) => (
-                  <p key={pi} className="text-2xl font-black text-foreground font-display">{p}</p>
-                ))}
-              </div>
+              <p className="text-4xl font-black text-foreground font-display mt-4">{versionA.price}</p>
               <ul className="mt-6 space-y-3 flex-1">
                 {versionA.features.map((f, fi) => (
                   <li key={fi} className="flex items-start gap-2.5 text-[15px] text-muted-foreground">
