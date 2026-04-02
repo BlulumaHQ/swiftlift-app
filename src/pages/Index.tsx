@@ -520,14 +520,14 @@ const IndexContent = ({ variant = "home" }: { variant?: "home" | "start" }) => {
     if (el) el.scrollIntoView({ behavior: "smooth" });
   };
 
-  // Preview A & B plans
-  const previewA = {
-    title: "Preview A",
-    price: "$299 USD",
-    positioning: lang === "en" ? "Clean, professional website — ready to launch fast" : "簡潔專業的網站——快速上線",
+  // Version A & B plans (non-selection, informational only)
+  const versionA = {
+    title: lang === "en" ? "Version A: Launch Ready" : "版本A：啟動就緒",
+    prices: lang === "en"
+      ? ["$299 USD as-is", "$499 USD with revision"]
+      : ["$299 USD 原樣交付", "$499 USD 含修改"],
     features: lang === "en"
       ? [
-          "Choose Version A",
           "Clean, modern design",
           "Mobile responsive across all devices",
           "Up to 5–7 pages",
@@ -537,7 +537,6 @@ const IndexContent = ({ variant = "home" }: { variant?: "home" | "start" }) => {
           "Free hosting (no monthly fees)",
         ]
       : [
-          "選擇版本A",
           "簡潔現代設計",
           "所有裝置響應式",
           "最多5–7頁",
@@ -548,16 +547,15 @@ const IndexContent = ({ variant = "home" }: { variant?: "home" | "start" }) => {
         ],
   };
 
-  const previewB = {
-    title: "Preview B",
+  const versionB = {
+    title: lang === "en" ? "Version B: Sales Focused" : "版本B：銷售導向",
     price: "$799 USD",
-    badge: lang === "en" ? "Most Popular" : "最受歡迎",
-    valueStatement: lang === "en"
-      ? "Designed to increase inquiries and client conversions"
-      : "專為增加詢問和客戶轉換而設計",
+    description: lang === "en"
+      ? "Designed to bring you more calls, leads, and bookings"
+      : "專為帶來更多電話、潛在客戶和預約而設計",
     features: lang === "en"
       ? [
-          "Everything in Preview A",
+          "Everything in Version A",
           "Conversion-focused layout structure",
           "Strategic CTA placement for lead generation",
           "Optimized section flow for user engagement",
@@ -569,7 +567,7 @@ const IndexContent = ({ variant = "home" }: { variant?: "home" | "start" }) => {
           "Priority build slot",
         ]
       : [
-          "Preview A 的所有功能",
+          "版本A 的所有功能",
           "轉換導向版面結構",
           "策略性CTA放置以生成潛在客戶",
           "優化的區塊流程以提高用戶參與",
