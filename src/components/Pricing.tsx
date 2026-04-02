@@ -9,64 +9,6 @@ const SCROLL_TO_FORM = () => {
   if (form) form.scrollIntoView({ behavior: "smooth" });
 };
 
-const versionA = {
-  label: { en: "Version A: Launch Ready", zh: "版本 A：快速上線版" },
-  price: "$299 USD",
-  description: {
-    en: "A clean, professional website that gets your business online fast.",
-    zh: "一個簡潔、專業的網站，讓您的業務快速上線。",
-  },
-  features: {
-    en: [
-      "1–3 polished pages",
-      "Mobile-optimized design",
-      "Contact form setup",
-      "Brand color integration",
-      "Fast load performance",
-    ],
-    zh: [
-      "1–3 個精緻頁面",
-      "行動裝置優化設計",
-      "聯絡表單設置",
-      "品牌配色整合",
-      "快速載入效能",
-    ],
-  },
-};
-
-const versionB = {
-  label: { en: "Version B: Sales Focused", zh: "版本 B：銷售導向版" },
-  price: "$799 USD",
-  subtitle: {
-    en: "Designed to bring you more calls, leads, and bookings",
-    zh: "專為為您帶來更多來電、潛在客戶和預約而設計",
-  },
-  description: {
-    en: "A conversion-driven website built to generate real business results.",
-    zh: "以轉化為驅動的網站，旨在產生真實的業務成果。",
-  },
-  features: {
-    en: [
-      "3–7 strategic pages",
-      "Conversion-focused layout",
-      "Strategic CTA placement",
-      "Customer journey mapping",
-      "SEO-ready structure",
-      "Trust-building sections",
-      "Lead capture optimization",
-    ],
-    zh: [
-      "3–7 個策略性頁面",
-      "轉化導向佈局",
-      "策略性 CTA 佈置",
-      "客戶旅程規劃",
-      "SEO 就緒結構",
-      "信任建立區塊",
-      "潛在客戶捕獲優化",
-    ],
-  },
-};
-
 const introText = {
   en: "You don't need to choose now — you'll get both versions first.",
   zh: "您不需要現在做決定 — 您會先收到兩個版本。",
@@ -75,6 +17,54 @@ const introText = {
 const ctaText = {
   en: "Get My 2 Free Website Previews",
   zh: "獲取我的 2 個免費網站預覽",
+};
+
+const versionAFeatures = {
+  en: [
+    "Clean, modern design",
+    "Mobile responsive across all devices",
+    "Up to 5–7 pages",
+    "Basic SEO-ready structure",
+    "Contact form included",
+    "Fast 3-day turnaround",
+    "Free hosting (no monthly fees)",
+  ],
+  zh: [
+    "簡潔、現代的設計",
+    "所有裝置的行動響應式設計",
+    "最多 5–7 個頁面",
+    "基本 SEO 就緒結構",
+    "包含聯絡表單",
+    "3 天快速交付",
+    "免費託管（無月費）",
+  ],
+};
+
+const versionBFeatures = {
+  en: [
+    "Everything in Version A",
+    "Conversion-focused layout structure",
+    "Strategic CTA placement for lead generation",
+    "Optimized section flow for user engagement",
+    "Trust-building sections (reviews, credibility blocks)",
+    "Improved user journey and content hierarchy",
+    "Clear, high-impact messaging structure",
+    "More refined and premium visual polish",
+    "Stronger business positioning",
+    "Priority build slot",
+  ],
+  zh: [
+    "包含版本 A 的所有功能",
+    "以轉化為重點的佈局結構",
+    "策略性 CTA 佈置以產生潛在客戶",
+    "優化的區塊流程以提升用戶參與度",
+    "信任建立區塊（評論、可信度區塊）",
+    "改善的用戶旅程和內容層次",
+    "清晰、高影響力的訊息結構",
+    "更精緻和高端的視覺效果",
+    "更強的商業定位",
+    "優先建構時段",
+  ],
 };
 
 const Pricing = () => {
@@ -87,7 +77,6 @@ const Pricing = () => {
       style={{ background: "hsl(var(--surface-sunken))" }}
     >
       <div className="max-w-4xl mx-auto px-6 relative z-10">
-        {/* Headline */}
         <ScrollReveal>
           <h2 className="text-[clamp(2rem,4vw,3rem)] font-black text-foreground text-center font-display">
             {lang === "en" ? "Simple, Transparent Pricing" : "簡單透明的定價"}
@@ -100,7 +89,6 @@ const Pricing = () => {
           </p>
         </ScrollReveal>
 
-        {/* 2-card grid */}
         <div className="mt-10 grid grid-cols-1 md:grid-cols-2 gap-6 items-stretch">
           {/* Version A */}
           <ScrollReveal delay={0}>
@@ -109,19 +97,21 @@ const Pricing = () => {
                 {lang === "en" ? "VERSION A" : "版本 A"}
               </p>
               <h3 className="text-lg font-bold text-foreground font-display">
-                {t(versionA.label, lang)}
+                {lang === "en" ? "Version A: Launch Ready" : "版本 A：快速上線版"}
               </h3>
-              <p className="mt-1 text-sm text-muted-foreground leading-relaxed">
-                {t(versionA.description, lang)}
-              </p>
               <div className="mt-3">
                 <span className="text-4xl font-black text-foreground font-display">
-                  {versionA.price}
+                  $299 USD
                 </span>
               </div>
+              <p className="mt-2 text-sm font-medium" style={{ color: "hsl(var(--primary))" }}>
+                {lang === "en"
+                  ? "Clean, professional website — ready to launch fast"
+                  : "簡潔、專業的網站 — 快速上線"}
+              </p>
 
               <ul className="space-y-3 flex-1 mt-6">
-                {versionA.features[lang].map((f, i) => (
+                {versionAFeatures[lang].map((f, i) => (
                   <li key={i} className="flex items-start gap-2.5 text-sm">
                     <Check
                       size={16}
@@ -136,7 +126,12 @@ const Pricing = () => {
               <div className="mt-6">
                 <button
                   onClick={SCROLL_TO_FORM}
-                  className="w-full inline-flex items-center justify-center rounded-full px-6 py-3.5 text-sm font-semibold border-2 border-primary text-primary hover:bg-primary hover:text-primary-foreground transition-all active:scale-[0.97]"
+                  className="w-full inline-flex items-center justify-center rounded-full px-6 py-3.5 text-sm font-semibold text-primary-foreground transition-all duration-200 active:scale-[0.97]"
+                  style={{
+                    backgroundColor: "hsl(275 51% 46%)",
+                  }}
+                  onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = "hsl(275 51% 38%)")}
+                  onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = "hsl(275 51% 46%)")}
                 >
                   {t(ctaText, lang)}
                 </button>
@@ -151,22 +146,21 @@ const Pricing = () => {
                 {lang === "en" ? "VERSION B" : "版本 B"}
               </p>
               <h3 className="text-lg font-bold text-foreground font-display">
-                {t(versionB.label, lang)}
+                {lang === "en" ? "Version B: Sales Focused" : "版本 B：銷售導向版"}
               </h3>
-              <p className="mt-0.5 text-sm font-medium" style={{ color: "hsl(var(--primary))" }}>
-                {t(versionB.subtitle, lang)}
-              </p>
-              <p className="mt-1 text-sm text-muted-foreground leading-relaxed">
-                {t(versionB.description, lang)}
-              </p>
               <div className="mt-3">
                 <span className="text-4xl font-black text-foreground font-display">
-                  {versionB.price}
+                  $799 USD
                 </span>
               </div>
+              <p className="mt-2 text-sm font-medium" style={{ color: "hsl(var(--primary))" }}>
+                {lang === "en"
+                  ? "Designed to get more inquiries and customers"
+                  : "專為獲得更多詢問和客戶而設計"}
+              </p>
 
               <ul className="space-y-3 flex-1 mt-6">
-                {versionB.features[lang].map((f, i) => (
+                {versionBFeatures[lang].map((f, i) => (
                   <li key={i} className="flex items-start gap-2.5 text-sm">
                     <Check
                       size={16}
@@ -181,7 +175,12 @@ const Pricing = () => {
               <div className="mt-6">
                 <button
                   onClick={SCROLL_TO_FORM}
-                  className="w-full inline-flex items-center justify-center rounded-full px-6 py-3.5 text-sm font-semibold border-2 border-primary text-primary hover:bg-primary hover:text-primary-foreground transition-all active:scale-[0.97]"
+                  className="w-full inline-flex items-center justify-center rounded-full px-6 py-3.5 text-sm font-semibold text-primary-foreground transition-all duration-200 active:scale-[0.97]"
+                  style={{
+                    backgroundColor: "hsl(275 51% 46%)",
+                  }}
+                  onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = "hsl(275 51% 38%)")}
+                  onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = "hsl(275 51% 46%)")}
                 >
                   {t(ctaText, lang)}
                 </button>
