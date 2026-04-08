@@ -524,9 +524,11 @@ const IndexContent = ({ variant = "home" }: { variant?: "home" | "start" }) => {
   const versionA = {
     title: lang === "en" ? "Version A: Launch Ready" : "版本A：啟動就緒",
     price: "$299 USD",
+    description: lang === "en"
+      ? "A clean, professional website designed to help you launch quickly and confidently."
+      : "簡潔、專業的網站，幫助您快速自信地上線。",
     features: lang === "en"
       ? [
-          "Choose Version A",
           "Clean, modern design",
           "Mobile responsive across all devices",
           "Up to 5–7 pages",
@@ -534,9 +536,9 @@ const IndexContent = ({ variant = "home" }: { variant?: "home" | "start" }) => {
           "Contact form included",
           "Fast 3-day turnaround",
           "Free hosting (no monthly fees)",
+          "2 rounds of revisions included",
         ]
       : [
-          "選擇版本 A",
           "簡潔、現代的設計",
           "所有裝置的行動響應式設計",
           "最多 5–7 個頁面",
@@ -544,39 +546,42 @@ const IndexContent = ({ variant = "home" }: { variant?: "home" | "start" }) => {
           "包含聯絡表單",
           "3 天快速交付",
           "免費託管（無月費）",
+          "包含 2 輪修改",
         ],
   };
 
   const versionB = {
     title: lang === "en" ? "Version B: Sales Focused" : "版本B：銷售導向",
-    price: "$799 USD",
+    price: "$499 USD",
     description: lang === "en"
-      ? "Designed to increase inquiries and client conversions"
-      : "專為增加詢問和客戶轉化而設計",
+      ? "Designed to increase inquiries and turn more visitors into real customers."
+      : "專為增加詢問並將更多訪客轉化為真正客戶而設計。",
     features: lang === "en"
       ? [
-          "Everything in Preview A",
+          "Everything included in Version A",
           "Conversion-focused layout structure",
           "Strategic CTA placement for lead generation",
-          "Optimized section flow for user engagement",
+          "Optimized section flow to improve engagement",
           "Trust-building sections (reviews, credibility blocks)",
-          "Improved user journey and content hierarchy",
           "Clear, high-impact messaging structure",
+          "Improved user journey and content hierarchy",
           "More refined and premium visual polish",
           "Stronger business positioning",
           "Priority build slot",
+          "2 rounds of revisions included",
         ]
       : [
-          "包含預覽 A 的所有功能",
+          "包含版本 A 的所有功能",
           "以轉化為重點的佈局結構",
           "策略性 CTA 佈置以產生潛在客戶",
-          "優化的區塊流程以提升用戶參與度",
+          "優化的區塊流程以提升參與度",
           "信任建立區塊（評論、可信度區塊）",
-          "改善的用戶旅程和內容層次",
           "清晰、高影響力的訊息結構",
+          "改善的用戶旅程和內容層次",
           "更精緻和高端的視覺效果",
           "更強的商業定位",
           "優先建構時段",
+          "包含 2 輪修改",
         ],
   };
 
@@ -927,8 +932,8 @@ const IndexContent = ({ variant = "home" }: { variant?: "home" | "start" }) => {
           </h2>
           <p className="mt-4 text-base md:text-lg text-muted-foreground text-center max-w-2xl mx-auto leading-relaxed">
             {lang === "en"
-              ? "You don't need to choose now — you'll get both versions first."
-              : "您不需要現在就選擇——您會先收到兩個版本。"}
+              ? "You'll receive both Version A and Version B previews first — then choose the one you want to launch."
+              : "您將先收到版本 A 和版本 B 的預覽 — 然後選擇您要上線的版本。"}
           </p>
 
           {/* 2-column pricing table */}
@@ -938,6 +943,7 @@ const IndexContent = ({ variant = "home" }: { variant?: "home" | "start" }) => {
             <div className="order-1 rounded-2xl border border-border bg-background p-6 md:p-8 flex flex-col transition-shadow duration-300 hover:shadow-lg">
               <h3 className="font-bold text-foreground font-display text-xl">{versionA.title}</h3>
               <p className="text-4xl font-black text-foreground font-display mt-4">{versionA.price}</p>
+              <p className="text-sm font-medium mt-2" style={{ color: "hsl(275 51% 46%)" }}>{versionA.description}</p>
               <ul className="mt-6 space-y-3 flex-1">
                 {versionA.features.map((f, fi) => (
                   <li key={fi} className="flex items-start gap-2.5 text-[15px] text-muted-foreground">
@@ -948,16 +954,22 @@ const IndexContent = ({ variant = "home" }: { variant?: "home" | "start" }) => {
               </ul>
               <button
                 onClick={scrollToForm}
-                className="mt-8 w-full rounded-full py-3.5 px-4 text-sm font-bold border-2 transition-all hover:opacity-80"
-                style={{ borderColor: "hsl(275 51% 46%)", color: "hsl(275 51% 46%)" }}
+                className="mt-8 w-full rounded-full py-3.5 px-4 text-sm font-bold text-white transition-all hover:opacity-90"
+                style={{ background: "hsl(275 51% 46%)" }}
               >
-                {lang === "en" ? "Get My 2 Free Website Previews" : "獲取我的2個免費網站預覽"}
+                {lang === "en" ? "Get My 2 Free Previews" : "獲取我的2個免費預覽"}
               </button>
             </div>
 
-            {/* Version B — subtly emphasized */}
-            <div className="order-2 relative rounded-2xl border border-border bg-background p-6 md:p-8 flex flex-col shadow-md transition-shadow duration-300 hover:shadow-xl" style={{ transform: "scale(1.01)" }}>
-              <h3 className="font-bold text-foreground font-display text-xl">{versionB.title}</h3>
+            {/* Version B — Most Popular */}
+            <div className="order-2 relative rounded-2xl border-2 border-primary/20 bg-background p-6 md:p-8 flex flex-col shadow-md transition-shadow duration-300 hover:shadow-xl" style={{ transform: "scale(1.03)" }}>
+              <div
+                className="absolute -top-3.5 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full text-xs font-bold text-white tracking-wide"
+                style={{ backgroundColor: "hsl(275 51% 46%)" }}
+              >
+                {lang === "en" ? "MOST POPULAR" : "最受歡迎"}
+              </div>
+              <h3 className="font-bold text-foreground font-display text-xl mt-2">{versionB.title}</h3>
               <p className="text-sm font-medium mt-1" style={{ color: "hsl(275 51% 46%)" }}>{versionB.description}</p>
               <p className="text-4xl font-black text-foreground font-display mt-4">{versionB.price}</p>
               <ul className="mt-6 space-y-3 flex-1">
@@ -973,12 +985,18 @@ const IndexContent = ({ variant = "home" }: { variant?: "home" | "start" }) => {
                 className="mt-8 w-full rounded-full py-3.5 px-4 text-sm font-bold text-white transition-all hover:opacity-90"
                 style={{ background: "hsl(275 51% 46%)" }}
               >
-                {lang === "en" ? "Get My 2 Free Website Previews" : "獲取我的2個免費網站預覽"}
+                {lang === "en" ? "Get My 2 Free Previews" : "獲取我的2個免費預覽"}
               </button>
             </div>
           </div>
 
-          {/* Custom Solutions */}
+          {/* Bottom Note */}
+          <p className="text-center text-muted-foreground mt-10 text-sm md:text-base max-w-xl mx-auto leading-relaxed">
+            {lang === "en"
+              ? "Both versions are included in your free preview. You'll review both options first — and only pay for the one you choose to launch."
+              : "兩個版本都包含在您的免費預覽中。您將先檢視兩個選項 — 然後只需為您選擇上線的版本付費。"}
+          </p>
+
           <div className="mt-16 pt-12 border-t border-border">
             <p className="text-sm text-muted-foreground text-center mb-8">
               {lang === "en"
