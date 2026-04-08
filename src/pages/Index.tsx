@@ -996,12 +996,7 @@ const IndexContent = ({ variant = "home" }: { variant?: "home" | "start" }) => {
             </button>
           </div>
 
-          {/* Bottom Note */}
-          <p className="text-center text-muted-foreground mt-10 text-sm md:text-base max-w-xl mx-auto leading-relaxed">
-            {lang === "en"
-              ? "Both versions are included in your free preview. You'll review both options first — and only pay for the one you choose to launch."
-              : "兩個版本都包含在您的免費預覽中。您將先檢視兩個選項 — 然後只需為您選擇上線的版本付費。"}
-          </p>
+
 
           <div className="mt-16 pt-12 border-t border-border">
             <p className="text-sm text-muted-foreground text-center mb-8">
