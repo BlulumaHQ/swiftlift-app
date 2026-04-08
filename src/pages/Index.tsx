@@ -524,9 +524,11 @@ const IndexContent = ({ variant = "home" }: { variant?: "home" | "start" }) => {
   const versionA = {
     title: lang === "en" ? "Version A: Launch Ready" : "版本A：啟動就緒",
     price: "$299 USD",
+    description: lang === "en"
+      ? "A clean, professional website designed to help you launch quickly and confidently."
+      : "簡潔、專業的網站，幫助您快速自信地上線。",
     features: lang === "en"
       ? [
-          "Choose Version A",
           "Clean, modern design",
           "Mobile responsive across all devices",
           "Up to 5–7 pages",
@@ -534,9 +536,9 @@ const IndexContent = ({ variant = "home" }: { variant?: "home" | "start" }) => {
           "Contact form included",
           "Fast 3-day turnaround",
           "Free hosting (no monthly fees)",
+          "2 rounds of revisions included",
         ]
       : [
-          "選擇版本 A",
           "簡潔、現代的設計",
           "所有裝置的行動響應式設計",
           "最多 5–7 個頁面",
@@ -544,39 +546,42 @@ const IndexContent = ({ variant = "home" }: { variant?: "home" | "start" }) => {
           "包含聯絡表單",
           "3 天快速交付",
           "免費託管（無月費）",
+          "包含 2 輪修改",
         ],
   };
 
   const versionB = {
     title: lang === "en" ? "Version B: Sales Focused" : "版本B：銷售導向",
-    price: "$799 USD",
+    price: "$499 USD",
     description: lang === "en"
-      ? "Designed to increase inquiries and client conversions"
-      : "專為增加詢問和客戶轉化而設計",
+      ? "Designed to increase inquiries and turn more visitors into real customers."
+      : "專為增加詢問並將更多訪客轉化為真正客戶而設計。",
     features: lang === "en"
       ? [
-          "Everything in Preview A",
+          "Everything included in Version A",
           "Conversion-focused layout structure",
           "Strategic CTA placement for lead generation",
-          "Optimized section flow for user engagement",
+          "Optimized section flow to improve engagement",
           "Trust-building sections (reviews, credibility blocks)",
-          "Improved user journey and content hierarchy",
           "Clear, high-impact messaging structure",
+          "Improved user journey and content hierarchy",
           "More refined and premium visual polish",
           "Stronger business positioning",
           "Priority build slot",
+          "2 rounds of revisions included",
         ]
       : [
-          "包含預覽 A 的所有功能",
+          "包含版本 A 的所有功能",
           "以轉化為重點的佈局結構",
           "策略性 CTA 佈置以產生潛在客戶",
-          "優化的區塊流程以提升用戶參與度",
+          "優化的區塊流程以提升參與度",
           "信任建立區塊（評論、可信度區塊）",
-          "改善的用戶旅程和內容層次",
           "清晰、高影響力的訊息結構",
+          "改善的用戶旅程和內容層次",
           "更精緻和高端的視覺效果",
           "更強的商業定位",
           "優先建構時段",
+          "包含 2 輪修改",
         ],
   };
 
