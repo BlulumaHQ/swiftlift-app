@@ -937,13 +937,13 @@ const IndexContent = ({ variant = "home" }: { variant?: "home" | "start" }) => {
           </p>
 
           {/* 2-column pricing table */}
-          <div className="mt-12 grid grid-cols-1 md:grid-cols-2 gap-6 items-stretch">
+          <div className="mt-12 grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 items-stretch">
 
             {/* Version A */}
-            <div className="order-1 rounded-2xl border border-border bg-background p-6 md:p-8 flex flex-col transition-shadow duration-300 hover:shadow-lg">
+            <div className="order-1 rounded-2xl border border-border bg-background p-6 md:p-8 flex flex-col transition-shadow duration-300 hover:shadow-md">
               <h3 className="font-bold text-foreground font-display text-xl">{versionA.title}</h3>
-              <p className="text-4xl font-black text-foreground font-display mt-4">{versionA.price}</p>
               <p className="text-sm font-medium mt-2" style={{ color: "hsl(275 51% 46%)" }}>{versionA.description}</p>
+              <p className="text-4xl font-black text-foreground font-display mt-3">{versionA.price}</p>
               <ul className="mt-6 space-y-3 flex-1">
                 {versionA.features.map((f, fi) => (
                   <li key={fi} className="flex items-start gap-2.5 text-[15px] text-muted-foreground">
@@ -952,17 +952,10 @@ const IndexContent = ({ variant = "home" }: { variant?: "home" | "start" }) => {
                   </li>
                 ))}
               </ul>
-              <button
-                onClick={scrollToForm}
-                className="mt-8 w-full rounded-full py-3.5 px-4 text-sm font-bold text-white transition-all hover:opacity-90"
-                style={{ background: "hsl(275 51% 46%)" }}
-              >
-                {lang === "en" ? "Get My 2 Free Previews" : "獲取我的2個免費預覽"}
-              </button>
             </div>
 
             {/* Version B — Most Popular */}
-            <div className="order-2 relative rounded-2xl border-2 border-primary/20 bg-background p-6 md:p-8 flex flex-col shadow-md transition-shadow duration-300 hover:shadow-xl" style={{ transform: "scale(1.03)" }}>
+            <div className="order-2 relative rounded-2xl border border-border bg-background p-6 md:p-8 flex flex-col transition-shadow duration-300 hover:shadow-md">
               <div
                 className="absolute -top-3.5 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full text-xs font-bold text-white tracking-wide"
                 style={{ backgroundColor: "hsl(275 51% 46%)" }}
@@ -970,8 +963,8 @@ const IndexContent = ({ variant = "home" }: { variant?: "home" | "start" }) => {
                 {lang === "en" ? "MOST POPULAR" : "最受歡迎"}
               </div>
               <h3 className="font-bold text-foreground font-display text-xl mt-2">{versionB.title}</h3>
-              <p className="text-sm font-medium mt-1" style={{ color: "hsl(275 51% 46%)" }}>{versionB.description}</p>
-              <p className="text-4xl font-black text-foreground font-display mt-4">{versionB.price}</p>
+              <p className="text-sm font-medium mt-2" style={{ color: "hsl(275 51% 46%)" }}>{versionB.description}</p>
+              <p className="text-4xl font-black text-foreground font-display mt-3">{versionB.price}</p>
               <ul className="mt-6 space-y-3 flex-1">
                 {versionB.features.map((f, fi) => (
                   <li key={fi} className="flex items-start gap-2.5 text-[15px] text-muted-foreground">
@@ -980,13 +973,6 @@ const IndexContent = ({ variant = "home" }: { variant?: "home" | "start" }) => {
                   </li>
                 ))}
               </ul>
-              <button
-                onClick={scrollToForm}
-                className="mt-8 w-full rounded-full py-3.5 px-4 text-sm font-bold text-white transition-all hover:opacity-90"
-                style={{ background: "hsl(275 51% 46%)" }}
-              >
-                {lang === "en" ? "Get My 2 Free Previews" : "獲取我的2個免費預覽"}
-              </button>
             </div>
           </div>
 
@@ -996,6 +982,21 @@ const IndexContent = ({ variant = "home" }: { variant?: "home" | "start" }) => {
               ? "Both versions are included in your free preview. You'll review both options first — and only pay for the one you choose to launch."
               : "兩個版本都包含在您的免費預覽中。您將先檢視兩個選項 — 然後只需為您選擇上線的版本付費。"}
           </p>
+
+          {/* Single centered CTA */}
+          <div className="mt-6 flex justify-center">
+            <button
+              onClick={scrollToForm}
+              className="inline-flex items-center justify-center rounded-full px-8 py-4 text-base font-semibold text-white transition-all duration-200 active:scale-[0.97]"
+              style={{ backgroundColor: "hsl(275 51% 46%)" }}
+              onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = "hsl(275 51% 38%)")}
+              onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = "hsl(275 51% 46%)")}
+            >
+              {lang === "en" ? "Get My 2 Free Previews" : "獲取我的2個免費預覽"}
+            </button>
+          </div>
+
+
 
           <div className="mt-16 pt-12 border-t border-border">
             <p className="text-sm text-muted-foreground text-center mb-8">
