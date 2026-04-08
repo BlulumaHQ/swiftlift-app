@@ -932,8 +932,8 @@ const IndexContent = ({ variant = "home" }: { variant?: "home" | "start" }) => {
           </h2>
           <p className="mt-4 text-base md:text-lg text-muted-foreground text-center max-w-2xl mx-auto leading-relaxed">
             {lang === "en"
-              ? "You don't need to choose now — you'll get both versions first."
-              : "您不需要現在就選擇——您會先收到兩個版本。"}
+              ? "You'll receive both Version A and Version B previews first — then choose the one you want to launch."
+              : "您將先收到版本 A 和版本 B 的預覽 — 然後選擇您要上線的版本。"}
           </p>
 
           {/* 2-column pricing table */}
@@ -943,6 +943,7 @@ const IndexContent = ({ variant = "home" }: { variant?: "home" | "start" }) => {
             <div className="order-1 rounded-2xl border border-border bg-background p-6 md:p-8 flex flex-col transition-shadow duration-300 hover:shadow-lg">
               <h3 className="font-bold text-foreground font-display text-xl">{versionA.title}</h3>
               <p className="text-4xl font-black text-foreground font-display mt-4">{versionA.price}</p>
+              <p className="text-sm font-medium mt-2" style={{ color: "hsl(275 51% 46%)" }}>{versionA.description}</p>
               <ul className="mt-6 space-y-3 flex-1">
                 {versionA.features.map((f, fi) => (
                   <li key={fi} className="flex items-start gap-2.5 text-[15px] text-muted-foreground">
@@ -953,16 +954,22 @@ const IndexContent = ({ variant = "home" }: { variant?: "home" | "start" }) => {
               </ul>
               <button
                 onClick={scrollToForm}
-                className="mt-8 w-full rounded-full py-3.5 px-4 text-sm font-bold border-2 transition-all hover:opacity-80"
-                style={{ borderColor: "hsl(275 51% 46%)", color: "hsl(275 51% 46%)" }}
+                className="mt-8 w-full rounded-full py-3.5 px-4 text-sm font-bold text-white transition-all hover:opacity-90"
+                style={{ background: "hsl(275 51% 46%)" }}
               >
-                {lang === "en" ? "Get My 2 Free Website Previews" : "獲取我的2個免費網站預覽"}
+                {lang === "en" ? "Get My 2 Free Previews" : "獲取我的2個免費預覽"}
               </button>
             </div>
 
-            {/* Version B — subtly emphasized */}
-            <div className="order-2 relative rounded-2xl border border-border bg-background p-6 md:p-8 flex flex-col shadow-md transition-shadow duration-300 hover:shadow-xl" style={{ transform: "scale(1.01)" }}>
-              <h3 className="font-bold text-foreground font-display text-xl">{versionB.title}</h3>
+            {/* Version B — Most Popular */}
+            <div className="order-2 relative rounded-2xl border-2 border-primary/20 bg-background p-6 md:p-8 flex flex-col shadow-md transition-shadow duration-300 hover:shadow-xl" style={{ transform: "scale(1.03)" }}>
+              <div
+                className="absolute -top-3.5 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full text-xs font-bold text-white tracking-wide"
+                style={{ backgroundColor: "hsl(275 51% 46%)" }}
+              >
+                {lang === "en" ? "MOST POPULAR" : "最受歡迎"}
+              </div>
+              <h3 className="font-bold text-foreground font-display text-xl mt-2">{versionB.title}</h3>
               <p className="text-sm font-medium mt-1" style={{ color: "hsl(275 51% 46%)" }}>{versionB.description}</p>
               <p className="text-4xl font-black text-foreground font-display mt-4">{versionB.price}</p>
               <ul className="mt-6 space-y-3 flex-1">
@@ -978,7 +985,7 @@ const IndexContent = ({ variant = "home" }: { variant?: "home" | "start" }) => {
                 className="mt-8 w-full rounded-full py-3.5 px-4 text-sm font-bold text-white transition-all hover:opacity-90"
                 style={{ background: "hsl(275 51% 46%)" }}
               >
-                {lang === "en" ? "Get My 2 Free Website Previews" : "獲取我的2個免費網站預覽"}
+                {lang === "en" ? "Get My 2 Free Previews" : "獲取我的2個免費預覽"}
               </button>
             </div>
           </div>
