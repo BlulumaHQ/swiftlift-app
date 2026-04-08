@@ -14,14 +14,24 @@ const subtitle = {
   zh: "您將先收到版本 A 和版本 B 的預覽 — 然後選擇您要上線的版本。",
 };
 
+const bottomNote = {
+  en: "Both versions are included in your free preview. You'll review both options first — and only pay for the one you choose to launch.",
+  zh: "兩個版本都包含在您的免費預覽中。您將先檢視兩個選項 — 然後只需為您選擇上線的版本付費。",
+};
+
 const ctaText = {
   en: "Get My 2 Free Previews",
   zh: "獲取我的 2 個免費預覽",
 };
 
-const bottomNote = {
-  en: "Both versions are included in your free preview. You'll review both options first — and only pay for the one you choose to launch.",
-  zh: "兩個版本都包含在您的免費預覽中。您將先檢視兩個選項 — 然後只需為您選擇上線的版本付費。",
+const highlightA = {
+  en: "A clean, professional website designed to help you launch quickly and confidently.",
+  zh: "簡潔、專業的網站，幫助您快速自信地上線。",
+};
+
+const highlightB = {
+  en: "Designed to increase inquiries and turn more visitors into real customers.",
+  zh: "專為增加詢問並將更多訪客轉化為真正客戶而設計。",
 };
 
 const versionAFeatures = {
@@ -76,15 +86,51 @@ const versionBFeatures = {
   ],
 };
 
+interface PricingCardProps {
+  label: string;
+  title: string;
+  highlight: string;
+  price: string;
+  features: string[];
+  badge?: string;
+}
+
+const PricingCard: React.FC<PricingCardProps> = ({ label, title, highlight, price, features, badge }) => (
+  <div className="rounded-2xl flex flex-col border border-border bg-background p-6 md:p-8 shadow-sm hover:shadow-md transition-all duration-300 h-full relative">
+    {badge && (
+      <div
+        className="absolute -top-3.5 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full text-xs font-bold text-primary-foreground tracking-wide"
+        style={{ backgroundColor: "hsl(var(--primary))" }}
+      >
+        {badge}
+      </div>
+    )}
+    <p className={`text-xs font-medium text-muted-foreground uppercase tracking-wider mb-1 ${badge ? "mt-2" : ""}`}>
+      {label}
+    </p>
+    <h3 className="text-lg font-bold text-foreground font-display">{title}</h3>
+    <p className="mt-2 text-sm font-medium" style={{ color: "hsl(var(--primary))" }}>
+      {highlight}
+    </p>
+    <div className="mt-3">
+      <span className="text-4xl font-black text-foreground font-display">{price}</span>
+    </div>
+    <ul className="space-y-3 flex-1 mt-6">
+      {features.map((f, i) => (
+        <li key={i} className="flex items-start gap-2.5 text-sm">
+          <Check size={16} className="mt-0.5 flex-shrink-0" style={{ color: "hsl(var(--primary))" }} />
+          <span className="text-muted-foreground">{f}</span>
+        </li>
+      ))}
+    </ul>
+  </div>
+);
+
 const Pricing = () => {
   const { lang } = useLanguage();
 
   return (
-    <section
-      id="pricing"
-      className="py-20 md:py-28 relative overflow-hidden"
-      style={{ background: "hsl(var(--surface-sunken))" }}
-    >
+    <section id="pricing" className="py-20 md:py-28 relative overflow-hidden" style={{ background: "hsl(var(--surface-sunken))" }}>
       <div className="max-w-5xl mx-auto px-5 md:px-6 relative z-10">
         <ScrollReveal>
           <h2 className="text-[clamp(2rem,4vw,3rem)] font-black text-foreground text-center font-display">
@@ -99,114 +145,42 @@ const Pricing = () => {
         </ScrollReveal>
 
         <div className="mt-12 grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 items-stretch">
-          {/* Version A */}
           <ScrollReveal delay={0}>
-            <div className="rounded-2xl flex flex-col border border-border bg-background p-6 md:p-8 shadow-sm hover:shadow-md transition-all duration-300 hover:-translate-y-1 h-full">
-              <p className="text-xs font-medium text-muted-foreground uppercase tracking-wider mb-1">
-                {lang === "en" ? "VERSION A" : "版本 A"}
-              </p>
-              <h3 className="text-lg font-bold text-foreground font-display">
-                {lang === "en" ? "Version A: Launch Ready" : "版本 A：快速上線版"}
-              </h3>
-              <div className="mt-3">
-                <span className="text-4xl font-black text-foreground font-display">
-                  $299 USD
-                </span>
-              </div>
-              <p className="mt-2 text-sm font-medium" style={{ color: "hsl(var(--primary))" }}>
-                {lang === "en"
-                  ? "A clean, professional website designed to help you launch quickly and confidently."
-                  : "簡潔、專業的網站，幫助您快速自信地上線。"}
-              </p>
-
-              <ul className="space-y-3 flex-1 mt-6">
-                {versionAFeatures[lang].map((f, i) => (
-                  <li key={i} className="flex items-start gap-2.5 text-sm">
-                    <Check
-                      size={16}
-                      className="mt-0.5 flex-shrink-0"
-                      style={{ color: "hsl(var(--primary))" }}
-                    />
-                    <span className="text-muted-foreground">{f}</span>
-                  </li>
-                ))}
-              </ul>
-
-              <div className="mt-6">
-                <button
-                  onClick={SCROLL_TO_FORM}
-                  className="w-full inline-flex items-center justify-center rounded-full px-6 py-3.5 text-sm font-semibold text-primary-foreground transition-all duration-200 active:scale-[0.97]"
-                  style={{ backgroundColor: "hsl(275 51% 46%)" }}
-                  onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = "hsl(275 51% 38%)")}
-                  onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = "hsl(275 51% 46%)")}
-                >
-                  {t(ctaText, lang)}
-                </button>
-              </div>
-            </div>
+            <PricingCard
+              label={lang === "en" ? "VERSION A" : "版本 A"}
+              title={lang === "en" ? "Version A: Launch Ready" : "版本 A：快速上線版"}
+              highlight={t(highlightA, lang)}
+              price="$299 USD"
+              features={versionAFeatures[lang]}
+            />
           </ScrollReveal>
-
-          {/* Version B */}
           <ScrollReveal delay={0.08}>
-            <div className="rounded-2xl flex flex-col border-2 border-primary/20 bg-background p-6 md:p-8 shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-1 h-full relative md:scale-[1.03] origin-center">
-              {/* Most Popular Badge */}
-              <div
-                className="absolute -top-3.5 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full text-xs font-bold text-primary-foreground tracking-wide"
-                style={{ backgroundColor: "hsl(275 51% 46%)" }}
-              >
-                {lang === "en" ? "MOST POPULAR" : "最受歡迎"}
-              </div>
-
-              <p className="text-xs font-medium text-muted-foreground uppercase tracking-wider mb-1 mt-2">
-                {lang === "en" ? "VERSION B" : "版本 B"}
-              </p>
-              <h3 className="text-lg font-bold text-foreground font-display">
-                {lang === "en" ? "Version B: Sales Focused" : "版本 B：銷售導向版"}
-              </h3>
-              <div className="mt-3">
-                <span className="text-4xl font-black text-foreground font-display">
-                  $499 USD
-                </span>
-              </div>
-              <p className="mt-2 text-sm font-medium" style={{ color: "hsl(var(--primary))" }}>
-                {lang === "en"
-                  ? "Designed to increase inquiries and turn more visitors into real customers."
-                  : "專為增加詢問並將更多訪客轉化為真正客戶而設計。"}
-              </p>
-
-              <ul className="space-y-3 flex-1 mt-6">
-                {versionBFeatures[lang].map((f, i) => (
-                  <li key={i} className="flex items-start gap-2.5 text-sm">
-                    <Check
-                      size={16}
-                      className="mt-0.5 flex-shrink-0"
-                      style={{ color: "hsl(var(--primary))" }}
-                    />
-                    <span className="text-muted-foreground">{f}</span>
-                  </li>
-                ))}
-              </ul>
-
-              <div className="mt-6">
-                <button
-                  onClick={SCROLL_TO_FORM}
-                  className="w-full inline-flex items-center justify-center rounded-full px-6 py-3.5 text-sm font-semibold text-primary-foreground transition-all duration-200 active:scale-[0.97]"
-                  style={{ backgroundColor: "hsl(275 51% 46%)" }}
-                  onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = "hsl(275 51% 38%)")}
-                  onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = "hsl(275 51% 46%)")}
-                >
-                  {t(ctaText, lang)}
-                </button>
-              </div>
-            </div>
+            <PricingCard
+              label={lang === "en" ? "VERSION B" : "版本 B"}
+              title={lang === "en" ? "Version B: Sales Focused" : "版本 B：銷售導向版"}
+              highlight={t(highlightB, lang)}
+              price="$499 USD"
+              features={versionBFeatures[lang]}
+              badge={lang === "en" ? "MOST POPULAR" : "最受歡迎"}
+            />
           </ScrollReveal>
         </div>
 
-        {/* Bottom Note */}
         <ScrollReveal delay={0.16}>
           <p className="text-center text-muted-foreground mt-10 text-sm md:text-base max-w-xl mx-auto leading-relaxed">
             {t(bottomNote, lang)}
           </p>
+          <div className="mt-6 flex justify-center">
+            <button
+              onClick={SCROLL_TO_FORM}
+              className="inline-flex items-center justify-center rounded-full px-8 py-4 text-base font-semibold text-primary-foreground transition-all duration-200 active:scale-[0.97]"
+              style={{ backgroundColor: "hsl(275 51% 46%)" }}
+              onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = "hsl(275 51% 38%)")}
+              onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = "hsl(275 51% 46%)")}
+            >
+              {t(ctaText, lang)}
+            </button>
+          </div>
         </ScrollReveal>
       </div>
     </section>
