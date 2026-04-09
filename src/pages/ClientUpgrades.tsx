@@ -374,7 +374,7 @@ export default function ClientUpgrades() {
           supabase.from("service_items").select("*").eq("organization_id", data.organization_id).eq("is_active", true).order("sort_order"),
           supabase.from("bundle_items").select("*"),
           // Selectable addons: from service_items for the specific org, sorted by price
-          supabase.from("service_items").select("id, name, description, price, currency, price_label, stripe_payment_link_url").eq("organization_id", "1e3bf8d7-5cbb-40e3-886c-ed18e554a741").eq("is_active", true).order("price", { ascending: true }),
+          supabase.from("service_items").select("id, service_key, name, description, price_usd, currency, billing_type, stripe_name, stripe_payment_link_url").eq("organization_id", "1e3bf8d7-5cbb-40e3-886c-ed18e554a741").eq("service_type", "addon").eq("is_active", true).order("price_usd", { ascending: true }),
         ]);
 
         if (clientRes.data) setClient(clientRes.data as ClientData);
