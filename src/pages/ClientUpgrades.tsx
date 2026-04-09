@@ -427,7 +427,7 @@ export default function ClientUpgrades() {
   const addonSubtotal = useMemo(() => {
     return selectableAddons
       .filter(a => selectedAddonIds.has(a.id))
-      .reduce((sum, a) => sum + (Number(a.price) || 0), 0);
+      .reduce((sum, a) => sum + (Number(a.price_usd) || 0), 0);
   }, [selectableAddons, selectedAddonIds]);
 
   const addToCart = useCallback((item: CartItem) => {
@@ -553,7 +553,7 @@ export default function ClientUpgrades() {
                   <div className="space-y-6">
                     <div className="space-y-3">
                       {selectableAddons.map(addon => {
-                        const price = Number(addon.price) || 0;
+                        const price = Number(addon.price_usd) || 0;
                         const isSelected = selectedAddonIds.has(addon.id);
                         return (
                           <motion.div
