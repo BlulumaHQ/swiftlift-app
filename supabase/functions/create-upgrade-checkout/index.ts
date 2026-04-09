@@ -30,6 +30,19 @@ serve(async (req) => {
       apiVersion: "2025-08-27.basil",
     });
 
+    // Connect to EXTERNAL Supabase only
+    const supabaseUrl = Deno.env.get("SUPABASE_URL") || "";
+    const supabaseKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") || "";
+
+    if (!supabaseUrl || !supabaseKey) {
+      return new Response(
+        JSON.stringify({ error: "External database not configured" }),
+        { headers: { ...corsHeaders, "Content-Type": "application/json" }, status: 500 }
+      );
+    }
+
+    const supabase = createClient(supabaseUrl, supabaseKey);
+
     const body = await req.json();
     const {
       token,
@@ -61,13 +74,41 @@ serve(async (req) => {
       );
     }
 
+    // Validate organization exists in external DB
+    const { data: org, error: orgError } = await supabase
+      .from("organizations")
+      .select("id")
+      .eq("id", organization_id)
+      .maybeSingle();
+
+    if (orgError || !org) {
+      console.error("[UPGRADE-CHECKOUT] Organization not found:", organization_id, orgError);
+      return new Response(
+        JSON.stringify({ error: "Organization not found" }),
+        { headers: { ...corsHeaders, "Content-Type": "application/json" }, status: 404 }
+      );
+    }
+
+    // Validate project exists in external DB
+    const { data: project, error: projError } = await supabase
+      .from("projects")
+      .select("id")
+      .eq("id", project_id)
+      .maybeSingle();
+
+    if (projError || !project) {
+      console.error("[UPGRADE-CHECKOUT] Project not found:", project_id, projError);
+      return new Response(
+        JSON.stringify({ error: "Project not found" }),
+        { headers: { ...corsHeaders, "Content-Type": "application/json" }, status: 404 }
+      );
+    }
+
     // Determine checkout mode
     const hasRecurring = items.some(
       (i) => i.billing_type === "recurring_monthly" || i.billing_type === "recurring_yearly"
     );
     const mode = hasRecurring ? "subscription" : "payment";
-
-    // If mixing one-time and recurring in subscription mode, Stripe handles it natively
 
     // Build line items
     const lineItems: Stripe.Checkout.SessionCreateParams.LineItem[] = items.map((item) => {
@@ -98,7 +139,6 @@ serve(async (req) => {
         };
       }
 
-      // One-time
       return {
         price_data: {
           currency: "usd",
@@ -109,41 +149,34 @@ serve(async (req) => {
       };
     });
 
-    // Insert pending purchase records into Supabase
-    const supabaseUrl = Deno.env.get("SUPABASE_URL") || "";
-    const supabaseKey = Deno.env.get("SUPABASE_SERVICE_ROLE_KEY") || "";
+    // Insert pending purchases into EXTERNAL Supabase
+    const purchaseRows = items.map((item) => ({
+      project_id,
+      client_uuid,
+      organization_id,
+      access_link_id,
+      item_category: item.type || item.service_type || "addon",
+      selected_price: item.price_usd || 0,
+      currency: "USD",
+      status: "pending",
+      addon_id: item.type === "addon" ? item.id : null,
+      bundle_id: item.type === "bundle" ? item.id : null,
+      service_item_id: item.type === "service_item" ? item.id : null,
+      metadata_json: {
+        stripe_name: item.stripe_name || item.name,
+        item_name: item.name,
+        billing_type: item.billing_type || "one_time",
+        token,
+        service_key: item.service_key || null,
+      },
+    }));
 
-    if (supabaseUrl && supabaseKey) {
-      const supabase = createClient(supabaseUrl, supabaseKey);
-      const purchaseRows = items.map((item) => ({
-        project_id,
-        client_uuid,
-        organization_id,
-        access_link_id,
-        item_category: item.type || item.service_type || "addon",
-        selected_price: item.price_usd || 0,
-        currency: "USD",
-        status: "pending",
-        addon_id: item.type === "addon" ? item.id : null,
-        bundle_id: item.type === "bundle" ? item.id : null,
-        service_item_id: item.type === "service_item" ? item.id : null,
-        metadata_json: {
-          stripe_name: item.stripe_name || item.name,
-          item_name: item.name,
-          billing_type: item.billing_type || "one_time",
-          token,
-          service_key: item.service_key || null,
-        },
-      }));
+    const { error: insertError } = await supabase
+      .from("project_purchases")
+      .insert(purchaseRows);
 
-      const { error: insertError } = await supabase
-        .from("project_purchases")
-        .insert(purchaseRows);
-
-      if (insertError) {
-        console.error("[UPGRADE-CHECKOUT] Purchase insert error:", insertError);
-        // Non-blocking — continue to create checkout session
-      }
+    if (insertError) {
+      console.error("[UPGRADE-CHECKOUT] Purchase insert error:", insertError);
     }
 
     // Build success/cancel URLs
