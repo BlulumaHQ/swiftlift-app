@@ -331,58 +331,49 @@ export default function ClientUpgrades() {
   const [cart, setCart] = useState<CartItem[]>([]);
   const [checkoutLoading, setCheckoutLoading] = useState(false);
   const [checkoutError, setCheckoutError] = useState<string | null>(null);
+  const [debugData, setDebugData] = useState<any>(undefined);
+  const [debugError, setDebugError] = useState<any>(undefined);
+
+  const tokenFromUrl = new URLSearchParams(window.location.search).get('token');
 
   useEffect(() => {
-    if (!token) { setState("invalid"); return; }
-
     const load = async () => {
-      // Validate token
-      const { data: link, error: linkErr } = await supabase
-        .from("upgrade_access_links")
-        .select("*")
-        .eq("token", token)
-        .eq("status", "active")
-        .is("revoked_at", null)
+      // DEBUG: simple token lookup only
+      const { data, error } = await supabase
+        .from('upgrade_access_links')
+        .select('*')
+        .eq('token', tokenFromUrl || '')
         .maybeSingle();
 
-      if (linkErr || !link) { setState("invalid"); return; }
+      setDebugData(data);
+      setDebugError(error);
 
-      // Check expiry
-      if (link.expires_at && new Date(link.expires_at) < new Date()) {
-        setState("invalid"); return;
+      if (data) {
+        setAccessLink(data as AccessLink);
+
+        // Still fetch products for rendering
+        const [clientRes, projectRes, addonsRes, bundlesRes, serviceRes, bundleItemsRes] = await Promise.all([
+          supabase.from("clients").select("display_name").eq("id", data.client_id).maybeSingle(),
+          supabase.from("projects").select("project_code").eq("id", data.project_id).maybeSingle(),
+          supabase.from("addons").select("*").eq("organization_id", data.organization_id).eq("is_active", true).order("sort_order"),
+          supabase.from("bundles").select("*").eq("organization_id", data.organization_id).eq("is_active", true).order("sort_order"),
+          supabase.from("service_items").select("*").eq("organization_id", data.organization_id).eq("is_active", true).order("sort_order"),
+          supabase.from("bundle_items").select("*"),
+        ]);
+
+        if (clientRes.data) setClient(clientRes.data as ClientData);
+        if (projectRes.data) setProject(projectRes.data as ProjectData);
+        if (addonsRes.data) setAddons(addonsRes.data as Addon[]);
+        if (bundlesRes.data) setBundles(bundlesRes.data as Bundle[]);
+        if (serviceRes.data) setServiceItems(serviceRes.data as ServiceItem[]);
+        if (bundleItemsRes.data) setBundleItems(bundleItemsRes.data as BundleItem[]);
       }
-
-      setAccessLink(link as AccessLink);
-
-      // Track opened event (non-blocking)
-      supabase.from("upgrade_access_events").insert({
-        access_link_id: link.id,
-        event_type: "opened",
-        metadata_json: { token }
-      }).then(() => {});
-
-      // Fetch client, project, and products in parallel
-      const [clientRes, projectRes, addonsRes, bundlesRes, serviceRes, bundleItemsRes] = await Promise.all([
-        supabase.from("clients").select("display_name").eq("id", link.client_id).single(),
-        supabase.from("projects").select("project_code").eq("id", link.project_id).single(),
-        supabase.from("addons").select("*").eq("organization_id", link.organization_id).eq("is_active", true).order("sort_order"),
-        supabase.from("bundles").select("*").eq("organization_id", link.organization_id).eq("is_active", true).order("sort_order"),
-        supabase.from("service_items").select("*").eq("organization_id", link.organization_id).eq("is_active", true).order("sort_order"),
-        supabase.from("bundle_items").select("*"),
-      ]);
-
-      if (clientRes.data) setClient(clientRes.data as ClientData);
-      if (projectRes.data) setProject(projectRes.data as ProjectData);
-      if (addonsRes.data) setAddons(addonsRes.data as Addon[]);
-      if (bundlesRes.data) setBundles(bundlesRes.data as Bundle[]);
-      if (serviceRes.data) setServiceItems(serviceRes.data as ServiceItem[]);
-      if (bundleItemsRes.data) setBundleItems(bundleItemsRes.data as BundleItem[]);
 
       setState("ready");
     };
 
     load();
-  }, [token]);
+  }, [tokenFromUrl]);
 
   const addonMap = useMemo(() => {
     const m: Record<string, Addon> = {};
@@ -456,10 +447,16 @@ export default function ClientUpgrades() {
   if (isSuccess) return <SuccessScreen />;
   if (isCanceled) return <CancelScreen />;
   if (state === "loading") return <LoadingSkeleton />;
-  if (state === "invalid") return <InvalidScreen />;
 
   return (
     <div className="min-h-screen bg-background pb-24 lg:pb-0">
+      {/* ─── DEBUG BLOCK ─── */}
+      <div style={{padding:'20px',background:'#111',color:'#0f0',fontSize:'12px',fontFamily:'monospace',wordBreak:'break-all'}}>
+        <div>Token: {tokenFromUrl}</div>
+        <div>Supabase URL: {import.meta.env.VITE_SUPABASE_URL}</div>
+        <div>Data: {JSON.stringify(debugData)}</div>
+        <div>Error: {JSON.stringify(debugError)}</div>
+      </div>
       {/* ─── HEADER ─── */}
       <div className="bg-card border-b">
         <div className="max-w-6xl mx-auto px-5 py-10 md:py-14">
