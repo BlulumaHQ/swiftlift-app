@@ -396,6 +396,38 @@ export default function ClientUpgrades() {
     return m;
   }, [addons]);
 
+  const toggleAddonSelection = useCallback((addon: SelectableAddon) => {
+    setSelectedAddonIds(prev => {
+      const next = new Set(prev);
+      if (next.has(addon.id)) {
+        next.delete(addon.id);
+        // Also remove from cart
+        setCart(c => c.filter(item => item.id !== addon.id));
+      } else {
+        next.add(addon.id);
+        // Also add to cart
+        setCart(c => {
+          if (c.find(item => item.id === addon.id)) return c;
+          return [...c, {
+            id: addon.id,
+            type: "service_item" as const,
+            name: addon.name,
+            price: Number(addon.price) || 0,
+            currency: addon.currency,
+            stripe_url: addon.stripe_payment_link_url || undefined,
+          }];
+        });
+      }
+      return next;
+    });
+  }, []);
+
+  const addonSubtotal = useMemo(() => {
+    return selectableAddons
+      .filter(a => selectedAddonIds.has(a.id))
+      .reduce((sum, a) => sum + (Number(a.price) || 0), 0);
+  }, [selectableAddons, selectedAddonIds]);
+
   const addToCart = useCallback((item: CartItem) => {
     setCart(prev => {
       if (prev.find(c => c.id === item.id)) return prev;
@@ -405,6 +437,12 @@ export default function ClientUpgrades() {
 
   const removeFromCart = useCallback((id: string) => {
     setCart(prev => prev.filter(c => c.id !== id));
+    // Also deselect if it's an addon
+    setSelectedAddonIds(prev => {
+      const next = new Set(prev);
+      next.delete(id);
+      return next;
+    });
   }, []);
 
   const isInCart = useCallback((id: string) => cart.some(c => c.id === id), [cart]);
