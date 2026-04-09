@@ -587,15 +587,13 @@ export default function ClientUpgrades() {
                             ${addonSubtotal} <span className="text-sm font-normal text-muted-foreground">USD</span>
                           </p>
                         </div>
-                        {selectedAddonIds.size > 0 && (
-                          <Button
-                            onClick={handleCheckout}
-                            disabled={checkoutLoading}
-                            className="bg-primary text-primary-foreground hover:bg-primary/90"
-                          >
-                            {checkoutLoading ? "Processing..." : "Continue to Checkout"}
-                          </Button>
-                        )}
+                        <Button
+                          onClick={handleCheckout}
+                          disabled={selectedAddonIds.size === 0 || checkoutLoading}
+                          className="bg-primary text-primary-foreground hover:bg-primary/90"
+                        >
+                          {checkoutLoading ? "Processing..." : "Continue to Checkout"}
+                        </Button>
                       </div>
                     </div>
                   </div>
