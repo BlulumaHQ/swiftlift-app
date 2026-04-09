@@ -74,6 +74,16 @@ interface ServiceItem {
   sort_order: number;
 }
 
+interface SelectableAddon {
+  id: string;
+  name: string;
+  price: number;
+  currency: string;
+  description: string | null;
+  price_label: string | null;
+  stripe_payment_link_url: string | null;
+}
+
 interface BundleItem {
   id: string;
   bundle_id: string;
