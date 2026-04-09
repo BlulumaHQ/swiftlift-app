@@ -363,14 +363,16 @@ export default function ClientUpgrades() {
       if (data) {
         setAccessLink(data as AccessLink);
 
-        // Still fetch products for rendering
-        const [clientRes, projectRes, addonsRes, bundlesRes, serviceRes, bundleItemsRes] = await Promise.all([
+        // Fetch products + selectable addons from service_items
+        const [clientRes, projectRes, addonsRes, bundlesRes, serviceRes, bundleItemsRes, selectableRes] = await Promise.all([
           supabase.from("clients").select("display_name").eq("id", data.client_id).maybeSingle(),
           supabase.from("projects").select("project_code").eq("id", data.project_id).maybeSingle(),
           supabase.from("addons").select("*").eq("organization_id", data.organization_id).eq("is_active", true).order("sort_order"),
           supabase.from("bundles").select("*").eq("organization_id", data.organization_id).eq("is_active", true).order("sort_order"),
           supabase.from("service_items").select("*").eq("organization_id", data.organization_id).eq("is_active", true).order("sort_order"),
           supabase.from("bundle_items").select("*"),
+          // Selectable addons: from service_items for the specific org, sorted by price
+          supabase.from("service_items").select("id, name, description, price, currency, price_label, stripe_payment_link_url").eq("organization_id", "1e3bf8d7-5cbb-40e3-886c-ed18e554a741").eq("is_active", true).order("price", { ascending: true }),
         ]);
 
         if (clientRes.data) setClient(clientRes.data as ClientData);
@@ -379,6 +381,7 @@ export default function ClientUpgrades() {
         if (bundlesRes.data) setBundles(bundlesRes.data as Bundle[]);
         if (serviceRes.data) setServiceItems(serviceRes.data as ServiceItem[]);
         if (bundleItemsRes.data) setBundleItems(bundleItemsRes.data as BundleItem[]);
+        if (selectableRes.data) setSelectableAddons(selectableRes.data as SelectableAddon[]);
       }
 
       setState("ready");
