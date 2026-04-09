@@ -7,8 +7,10 @@ import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { motion, AnimatePresence } from "framer-motion";
 import {
   ShoppingCart, X, Check, Package, Server, AlertTriangle,
-  ChevronUp, ChevronDown, ExternalLink, Sparkles
+  ChevronUp, ChevronDown, ExternalLink, Sparkles, Mail
 } from "lucide-react";
+import { Link } from "react-router-dom";
+import swiftsiteLogo from "@/assets/swiftsite-logo.svg";
 
 /* ═══════════════════════════════════════════════
    TYPES
