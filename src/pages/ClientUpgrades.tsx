@@ -332,10 +332,6 @@ export default function ClientUpgrades() {
   const [checkoutLoading, setCheckoutLoading] = useState(false);
   const [checkoutError, setCheckoutError] = useState<string | null>(null);
 
-  // Show success/cancel screens
-  if (isSuccess) return <SuccessScreen />;
-  if (isCanceled) return <CancelScreen />;
-
   useEffect(() => {
     if (!token) { setState("invalid"); return; }
 
