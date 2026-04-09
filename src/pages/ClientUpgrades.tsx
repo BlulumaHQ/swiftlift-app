@@ -443,7 +443,7 @@ export default function ClientUpgrades() {
     setCheckoutLoading(true);
     setCheckoutError(null);
 
-    // Track
+    // Track event (non-blocking)
     if (accessLink) {
       supabase.from("upgrade_access_events").insert({
         access_link_id: accessLink.id,
@@ -452,12 +452,50 @@ export default function ClientUpgrades() {
       }).then(() => {});
     }
 
-    if (cart.length === 1 && cart[0].stripe_url) {
-      window.open(cart[0].stripe_url, "_blank");
-    } else if (cart.length > 1) {
-      setCheckoutError("Multi-item checkout is not enabled yet. Please complete one upgrade purchase at a time.");
+    try {
+      const payload = {
+        token: tokenFromUrl,
+        project_id: accessLink?.project_id,
+        client_uuid: accessLink?.client_id,
+        organization_id: accessLink?.organization_id,
+        access_link_id: accessLink?.id,
+        items: cart.map(item => ({
+          id: item.id,
+          type: item.type,
+          service_key: item.service_key || null,
+          name: item.name,
+          stripe_name: item.stripe_name || item.name,
+          price_usd: item.price,
+          currency: item.currency || "USD",
+          billing_type: item.billing_type || "one_time",
+          service_type: item.service_type || item.type,
+        })),
+      };
+
+      const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
+      const supabaseKey = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY;
+
+      const response = await fetch(`${supabaseUrl}/functions/v1/create-upgrade-checkout`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "apikey": supabaseKey,
+        },
+        body: JSON.stringify(payload),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok || !data.url) {
+        throw new Error(data.error || "Unable to start checkout. Please try again.");
+      }
+
+      window.location.href = data.url;
+    } catch (err) {
+      const msg = err instanceof Error ? err.message : "Unable to start checkout. Please try again.";
+      setCheckoutError(msg);
+      setCheckoutLoading(false);
     }
-    setCheckoutLoading(false);
   };
 
   /* ── renders ── */
