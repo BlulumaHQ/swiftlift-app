@@ -447,10 +447,16 @@ export default function ClientUpgrades() {
   if (isSuccess) return <SuccessScreen />;
   if (isCanceled) return <CancelScreen />;
   if (state === "loading") return <LoadingSkeleton />;
-  if (state === "invalid") return <InvalidScreen />;
 
   return (
     <div className="min-h-screen bg-background pb-24 lg:pb-0">
+      {/* ─── DEBUG BLOCK ─── */}
+      <div style={{padding:'20px',background:'#111',color:'#0f0',fontSize:'12px',fontFamily:'monospace',wordBreak:'break-all'}}>
+        <div>Token: {tokenFromUrl}</div>
+        <div>Supabase URL: {import.meta.env.VITE_SUPABASE_URL}</div>
+        <div>Data: {JSON.stringify(debugData)}</div>
+        <div>Error: {JSON.stringify(debugError)}</div>
+      </div>
       {/* ─── HEADER ─── */}
       <div className="bg-card border-b">
         <div className="max-w-6xl mx-auto px-5 py-10 md:py-14">
