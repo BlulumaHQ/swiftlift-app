@@ -510,7 +510,10 @@ export default function ClientUpgrades() {
     name: a.name,
     price: Number(a.price_usd) || 0,
     currency: a.currency,
-    stripe_url: ADDON_STRIPE_LINKS[a.name] || a.stripe_payment_link_url || undefined,
+    billing_type: a.billing_type || "one_time",
+    service_key: a.service_key,
+    stripe_name: a.stripe_name || undefined,
+    service_type: "addon",
   }));
 
   return (
