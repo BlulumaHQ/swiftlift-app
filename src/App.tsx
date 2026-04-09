@@ -22,6 +22,7 @@ import Portfolio from "./pages/Portfolio";
 import WorkWithUs from "./pages/WorkWithUs";
 import About from "./pages/About";
 import Start from "./pages/Start";
+import ClientUpgrades from "./pages/ClientUpgrades";
 import ScrollToTop from "./components/ScrollToTop";
 import CookieConsent from "./components/CookieConsent";
 
@@ -53,6 +54,7 @@ const App = () => (
           <Route path="/work-with-us" element={<WorkWithUs />} />
           <Route path="/about" element={<About />} />
           <Route path="/start" element={<Start />} />
+          <Route path="/client-upgrades" element={<ClientUpgrades />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>
