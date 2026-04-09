@@ -449,54 +449,40 @@ export default function ClientUpgrades() {
 
   const isInCart = useCallback((id: string) => cart.some(c => c.id === id), [cart]);
 
+  const selectedAddons = useMemo(() => {
+    return selectableAddons
+      .filter(a => selectedAddonIds.has(a.id))
+      .map(a => ({
+        service_key: a.service_key,
+        name: a.name,
+        price_usd: Number(a.price_usd) || 0,
+        stripe_name: a.stripe_name,
+      }));
+  }, [selectableAddons, selectedAddonIds]);
+
   const handleCheckout = async () => {
-    if (!accessLink || cart.length === 0) return;
+    if (selectedAddons.length === 0) return;
     setCheckoutLoading(true);
     setCheckoutError(null);
 
+    const payload = {
+      items: selectedAddons,
+      total: addonSubtotal,
+      currency: "USD",
+    };
+
+    console.log("=== CHECKOUT PAYLOAD ===", JSON.stringify(payload, null, 2));
+
     // Track purchase_started (non-blocking)
-    supabase.from("upgrade_access_events").insert({
-      access_link_id: accessLink.id,
-      event_type: "purchase_started",
-      metadata_json: { token, items: cart.map(c => c.name) }
-    }).then(() => {});
-
-    // Insert purchase records
-    const records = cart.map(item => ({
-      organization_id: accessLink.organization_id,
-      client_uuid: accessLink.client_id,
-      project_id: accessLink.project_id,
-      access_link_id: accessLink.id,
-      item_category: item.type,
-      addon_id: item.type === "addon" ? item.id : null,
-      bundle_id: item.type === "bundle" ? item.id : null,
-      service_item_id: item.type === "service_item" ? item.id : null,
-      selected_price: item.price,
-      currency: item.currency,
-      status: "pending",
-      metadata_json: {
-        source: "client-upgrades-page",
-        token,
-        item_name: item.name,
-      },
-    }));
-
-    const { error } = await supabase.from("project_purchases").insert(records);
-
-    if (error) {
-      setCheckoutError("We could not start your checkout. Please try again.");
-      setCheckoutLoading(false);
-      return;
+    if (accessLink) {
+      supabase.from("upgrade_access_events").insert({
+        access_link_id: accessLink.id,
+        event_type: "purchase_started",
+        metadata_json: { token, items: selectedAddons.map(a => a.name), total: addonSubtotal }
+      }).then(() => {});
     }
 
-    // Redirect to first item's Stripe link
-    const firstStripeUrl = cart.find(c => c.stripe_url)?.stripe_url;
-    if (firstStripeUrl) {
-      window.location.href = firstStripeUrl;
-    } else {
-      setCheckoutError("No payment link available. Please contact support.");
-      setCheckoutLoading(false);
-    }
+    setCheckoutLoading(false);
   };
 
   if (isSuccess) return <SuccessScreen />;
@@ -601,15 +587,13 @@ export default function ClientUpgrades() {
                             ${addonSubtotal} <span className="text-sm font-normal text-muted-foreground">USD</span>
                           </p>
                         </div>
-                        {selectedAddonIds.size > 0 && (
-                          <Button
-                            onClick={handleCheckout}
-                            disabled={checkoutLoading}
-                            className="bg-primary text-primary-foreground hover:bg-primary/90"
-                          >
-                            {checkoutLoading ? "Processing..." : "Continue to Checkout"}
-                          </Button>
-                        )}
+                        <Button
+                          onClick={handleCheckout}
+                          disabled={selectedAddonIds.size === 0 || checkoutLoading}
+                          className="bg-primary text-primary-foreground hover:bg-primary/90"
+                        >
+                          {checkoutLoading ? "Processing..." : "Continue to Checkout"}
+                        </Button>
                       </div>
                     </div>
                   </div>
