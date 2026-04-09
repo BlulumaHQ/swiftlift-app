@@ -76,11 +76,13 @@ interface ServiceItem {
 
 interface SelectableAddon {
   id: string;
+  service_key: string;
   name: string;
-  price: number;
+  price_usd: number;
   currency: string;
   description: string | null;
-  price_label: string | null;
+  billing_type: string | null;
+  stripe_name: string | null;
   stripe_payment_link_url: string | null;
 }
 
@@ -372,7 +374,7 @@ export default function ClientUpgrades() {
           supabase.from("service_items").select("*").eq("organization_id", data.organization_id).eq("is_active", true).order("sort_order"),
           supabase.from("bundle_items").select("*"),
           // Selectable addons: from service_items for the specific org, sorted by price
-          supabase.from("service_items").select("id, name, description, price, currency, price_label, stripe_payment_link_url").eq("organization_id", "1e3bf8d7-5cbb-40e3-886c-ed18e554a741").eq("is_active", true).order("price", { ascending: true }),
+          supabase.from("service_items").select("id, service_key, name, description, price_usd, currency, billing_type, stripe_name, stripe_payment_link_url").eq("organization_id", "1e3bf8d7-5cbb-40e3-886c-ed18e554a741").eq("service_type", "addon").eq("is_active", true).order("price_usd", { ascending: true }),
         ]);
 
         if (clientRes.data) setClient(clientRes.data as ClientData);
@@ -412,7 +414,7 @@ export default function ClientUpgrades() {
             id: addon.id,
             type: "service_item" as const,
             name: addon.name,
-            price: Number(addon.price) || 0,
+            price: Number(addon.price_usd) || 0,
             currency: addon.currency,
             stripe_url: addon.stripe_payment_link_url || undefined,
           }];
@@ -425,7 +427,7 @@ export default function ClientUpgrades() {
   const addonSubtotal = useMemo(() => {
     return selectableAddons
       .filter(a => selectedAddonIds.has(a.id))
-      .reduce((sum, a) => sum + (Number(a.price) || 0), 0);
+      .reduce((sum, a) => sum + (Number(a.price_usd) || 0), 0);
   }, [selectableAddons, selectedAddonIds]);
 
   const addToCart = useCallback((item: CartItem) => {
@@ -551,7 +553,7 @@ export default function ClientUpgrades() {
                   <div className="space-y-6">
                     <div className="space-y-3">
                       {selectableAddons.map(addon => {
-                        const price = Number(addon.price) || 0;
+                        const price = Number(addon.price_usd) || 0;
                         const isSelected = selectedAddonIds.has(addon.id);
                         return (
                           <motion.div
