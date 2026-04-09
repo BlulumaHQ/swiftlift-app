@@ -146,29 +146,6 @@ const STATIC_HOSTING: (CartItem & { description: string })[] = [
 ];
 
 /* ═══════════════════════════════════════════════
-   ADDON STRIPE LINK MAP
-   ═══════════════════════════════════════════════ */
-
-const ADDON_STRIPE_LINKS: Record<string, string> = {
-  "FAQ Section": "https://buy.stripe.com/cNifZg3KA2jz7Du2rzfw40U",
-  "Google Map & Business Info": "https://buy.stripe.com/4gM6oG4OE8HXga03vDfw40T",
-  "Analytics & Tracking Setup": "https://buy.stripe.com/6oU7sK0yo3nD0b2c29fw40S",
-  "Review & Testimonial Section": "https://buy.stripe.com/9B69AS5SI4rHf5WaY5fw40R",
-  "Gallery Section": "https://buy.stripe.com/4gM14m6WM5vLbTK0jrfw40Q",
-  "Blog Setup": "https://buy.stripe.com/dRmcN4gxm1fv1f69U1fw40P",
-  "Bilingual Content Switch": "https://buy.stripe.com/3cI4gya8Y1fvcXO0jrfw40O",
-  "Multi-Language SEO Pages": "https://buy.stripe.com/3cIeVc6WMgapcXO4zHfw40N",
-  "Advanced Contact Form": "https://buy.stripe.com/7sYdR82Gwf6lf5W3vDfw40M",
-  "Booking Request Form": "https://buy.stripe.com/bJeaEW94U4rH8Hy5DLfw40L",
-  "Multi-Step Quote Form": "https://buy.stripe.com/3cIbJ06WMbU98Hy2rzfw40K",
-  "Onsite SEO Optimization": "https://buy.stripe.com/9B6cN494UcYd7Dufelfw40J",
-  "Performance Optimization": "https://buy.stripe.com/9B67sK94U0bre1S9U1fw40I",
-  "Brand Identity Package": "https://buy.stripe.com/fZu14m80Qf6l4rieahfw40H",
-  "Payment Integration": "https://buy.stripe.com/4gMeVc80Qf6l1f63vDfw40G",
-  "Membership & Client Portal": "https://buy.stripe.com/9B63cu1Cs2jz5vmeahfw40F",
-};
-
-/* ═══════════════════════════════════════════════
    STATUS SCREENS
    ═══════════════════════════════════════════════ */
 
