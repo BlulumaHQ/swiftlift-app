@@ -179,8 +179,9 @@ const ProductCard = ({
         size="sm"
         className={inCart
           ? "bg-muted text-muted-foreground cursor-not-allowed"
-          : "bg-primary text-primary-foreground hover:bg-primary/90"
+          : "text-white hover:opacity-90"
         }
+        style={!inCart ? { background: "hsl(275 51% 46%)" } : undefined}
       >
         {inCart ? (
           <><Check className="w-4 h-4 mr-1" /> Added</>
@@ -222,7 +223,7 @@ const CartSidebar = ({
 }) => {
   const total = items.reduce((s, i) => s + (isNaN(i.price) ? 0 : i.price), 0);
   return (
-    <div className="sticky top-8 rounded-xl border bg-card p-6 shadow-sm">
+    <div className="sticky top-6 rounded-xl border bg-card p-6 shadow-sm">
       <div className="flex items-center gap-2 mb-4">
         <ShoppingCart className="w-5 h-5 text-primary" />
         <h3 className="font-semibold text-foreground">Your Cart</h3>
@@ -253,7 +254,8 @@ const CartSidebar = ({
         <Button
           onClick={onCheckout}
           disabled={items.length === 0 || loading}
-          className="w-full bg-primary text-primary-foreground hover:bg-primary/90"
+          className="w-full text-white hover:opacity-90"
+          style={{ background: "hsl(275 51% 46%)" }}
         >
           {loading ? "Processing..." : "Checkout Selected Upgrades"}
         </Button>
@@ -314,7 +316,8 @@ const MobileCartBar = ({
         <Button
           onClick={onCheckout}
           disabled={loading}
-          className="ml-auto bg-primary text-primary-foreground hover:bg-primary/90"
+          className="ml-auto text-white hover:opacity-90"
+          style={{ background: "hsl(275 51% 46%)" }}
           size="sm"
         >
           {loading ? "..." : "Checkout"}
@@ -493,19 +496,28 @@ export default function ClientUpgrades() {
 
   return (
     <div className="min-h-screen bg-background pb-24 lg:pb-0">
-      {/* ─── DEBUG BLOCK ─── */}
-      <div style={{padding:'20px',background:'#111',color:'#0f0',fontSize:'12px',fontFamily:'monospace',wordBreak:'break-all'}}>
-        <div>Token: {tokenFromUrl}</div>
-        <div>Supabase URL: {import.meta.env.VITE_SUPABASE_URL}</div>
-        <div>Data: {JSON.stringify(debugData)}</div>
-        <div>Error: {JSON.stringify(debugError)}</div>
-      </div>
-      {/* ─── HEADER ─── */}
+      {/* ─── SITE HEADER ─── */}
+      <header className="bg-white border-b border-gray-100" style={{ boxShadow: '0 1px 12px hsl(0 0% 0% / 0.06)' }}>
+        <div className="max-w-6xl mx-auto px-5 h-16 flex items-center justify-between">
+          <Link to="/" className="flex items-center">
+            <img src={swiftsiteLogo} alt="SwiftLift Studio" className="h-10 w-auto" />
+          </Link>
+          <a
+            href="mailto:support@swiftlift.app"
+            className="flex items-center gap-1.5 text-sm text-muted-foreground hover:text-foreground transition-colors"
+          >
+            <Mail size={15} />
+            <span className="hidden sm:inline">support@swiftlift.app</span>
+          </a>
+        </div>
+      </header>
+
+      {/* ─── PAGE HEADER ─── */}
       <div className="bg-card border-b">
-        <div className="max-w-6xl mx-auto px-5 py-10 md:py-14">
-          <p className="text-xs font-semibold tracking-[0.2em] text-primary uppercase mb-3">Secure Client Access</p>
-          <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-4">Upgrade Options for Your Website</h1>
-          <div className="flex flex-wrap gap-x-6 gap-y-1 text-sm text-muted-foreground mb-3">
+        <div className="max-w-6xl mx-auto px-5 py-8 md:py-10">
+          <p className="text-xs font-semibold tracking-[0.2em] uppercase mb-2" style={{ color: "hsl(275 51% 46%)" }}>Secure Client Access</p>
+          <h1 className="text-2xl md:text-3xl font-bold text-foreground mb-3">Upgrade Options for Your Website</h1>
+          <div className="flex flex-wrap gap-x-6 gap-y-1 text-sm text-muted-foreground mb-2">
             {client && <span>Client: <strong className="text-foreground">{client.display_name}</strong></span>}
             {project && <span>Project: <strong className="text-foreground">{project.project_code}</strong></span>}
           </div>
@@ -516,8 +528,8 @@ export default function ClientUpgrades() {
       </div>
 
       {/* ─── CONTENT ─── */}
-      <div className="max-w-6xl mx-auto px-5 py-10">
-        <div className="flex gap-8">
+      <div className="max-w-6xl mx-auto px-5 py-8">
+        <div className="flex gap-8 items-start">
           {/* LEFT: Products */}
           <div className="flex-1 min-w-0">
             <Tabs defaultValue="addons">
@@ -551,14 +563,14 @@ export default function ClientUpgrades() {
                             onClick={() => toggleAddonSelection(addon)}
                             className={`rounded-xl border p-5 cursor-pointer transition-all ${
                               isSelected
-                                ? "border-primary bg-primary/5 shadow-md"
+                                ? "border-[hsl(275,51%,46%)] bg-[hsl(275,51%,46%)]/5 shadow-md"
                                 : "bg-card hover:shadow-sm hover:border-muted-foreground/20"
                             }`}
                           >
                             <div className="flex items-start gap-4">
                               <div className={`mt-0.5 w-5 h-5 rounded border-2 flex items-center justify-center shrink-0 transition-colors ${
-                                isSelected ? "bg-primary border-primary" : "border-muted-foreground/30"
-                              }`}>
+                                isSelected ? "border-[hsl(275,51%,46%)]" : "border-muted-foreground/30"
+                              }`} style={isSelected ? { background: "hsl(275 51% 46%)" } : undefined}>
                                 {isSelected && <Check className="w-3.5 h-3.5 text-primary-foreground" />}
                               </div>
                               <div className="flex-1 min-w-0">
@@ -592,7 +604,8 @@ export default function ClientUpgrades() {
                         <Button
                           onClick={handleCheckout}
                           disabled={selectedAddonIds.size === 0 || checkoutLoading}
-                          className="bg-primary text-primary-foreground hover:bg-primary/90"
+                          className="text-white hover:opacity-90"
+                          style={{ background: "hsl(275 51% 46%)" }}
                         >
                           {checkoutLoading ? "Processing..." : "Continue to Checkout"}
                         </Button>
