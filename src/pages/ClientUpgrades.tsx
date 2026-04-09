@@ -3,12 +3,12 @@ import { useSearchParams } from "react-router-dom";
 import { externalSupabase as supabase } from "@/lib/externalSupabase";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Button } from "@/components/ui/button";
-import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 import { motion, AnimatePresence } from "framer-motion";
 import {
-  ShoppingCart, X, Check, Package, Server, AlertTriangle,
-  ChevronUp, ChevronDown, ExternalLink, Sparkles
+  ShoppingCart, X, Check, AlertTriangle,
+  ChevronUp, ChevronDown, Shield, Mail
 } from "lucide-react";
+import swiftsiteLogo from "@/assets/swiftsite-logo.svg";
 
 /* ═══════════════════════════════════════════════
    TYPES
@@ -16,11 +16,12 @@ import {
 
 interface CartItem {
   id: string;
-  type: "addon" | "bundle" | "service_item";
+  type: "addon" | "bundle" | "service";
   name: string;
   price: number;
   currency: string;
   stripe_url?: string;
+  priceLabel?: string;
 }
 
 interface AccessLink {
@@ -34,45 +35,8 @@ interface AccessLink {
   revoked_at: string | null;
 }
 
-interface ClientData {
-  display_name: string;
-}
-
-interface ProjectData {
-  project_code: string;
-}
-
-interface Addon {
-  id: string;
-  name: string;
-  public_name: string | null;
-  description: string | null;
-  price: number;
-  currency: string;
-  stripe_payment_link_url: string | null;
-  sort_order: number;
-}
-
-interface Bundle {
-  id: string;
-  name: string;
-  description: string | null;
-  price: number;
-  currency: string;
-  stripe_payment_link_url: string | null;
-  sort_order: number;
-}
-
-interface ServiceItem {
-  id: string;
-  name: string;
-  description: string | null;
-  price: number;
-  currency: string;
-  price_label: string | null;
-  stripe_payment_link_url: string | null;
-  sort_order: number;
-}
+interface ClientData { display_name: string; }
+interface ProjectData { project_code: string; }
 
 interface SelectableAddon {
   id: string;
@@ -86,18 +50,114 @@ interface SelectableAddon {
   stripe_payment_link_url: string | null;
 }
 
-interface BundleItem {
-  id: string;
-  bundle_id: string;
-  addon_id: string;
-}
+/* ═══════════════════════════════════════════════
+   HARDCODED STRIPE DATA
+   ═══════════════════════════════════════════════ */
+
+const ADDON_STRIPE_MAP: Record<string, string> = {
+  "FAQ Section": "https://buy.stripe.com/cNifZg3KA2jz7Du2rzfw40U",
+  "Google Map & Business Info": "https://buy.stripe.com/4gM6oG4OE8HXga03vDfw40T",
+  "Analytics & Tracking Setup": "https://buy.stripe.com/6oU7sK0yo3nD0b2c29fw40S",
+  "Review & Testimonial Section": "https://buy.stripe.com/9B69AS5SI4rHf5WaY5fw40R",
+  "Gallery Section": "https://buy.stripe.com/4gM14m6WM5vLbTK0jrfw40Q",
+  "Blog Setup": "https://buy.stripe.com/dRmcN4gxm1fv1f69U1fw40P",
+  "Bilingual Content Switch": "https://buy.stripe.com/3cI4gya8Y1fvcXO0jrfw40O",
+  "Multi-Language SEO Pages": "https://buy.stripe.com/3cIeVc6WMgapcXO4zHfw40N",
+  "Advanced Contact Form": "https://buy.stripe.com/7sYdR82Gwf6lf5W3vDfw40M",
+  "Booking Request Form": "https://buy.stripe.com/bJeaEW94U4rH8Hy5DLfw40L",
+  "Multi-Step Quote Form": "https://buy.stripe.com/3cIbJ06WMbU98Hy2rzfw40K",
+  "Onsite SEO Optimization": "https://buy.stripe.com/9B6cN494UcYd7Dufelfw40J",
+  "Performance Optimization": "https://buy.stripe.com/9B67sK94U0bre1S9U1fw40I",
+  "Brand Identity Package": "https://buy.stripe.com/fZu14m80Qf6l4rieahfw40H",
+  "Payment Integration": "https://buy.stripe.com/4gMeVc80Qf6l1f63vDfw40G",
+  "Membership & Client Portal": "https://buy.stripe.com/9B63cu1Cs2jz5vmeahfw40F",
+};
+
+const HARDCODED_BUNDLES: CartItem[] = [
+  {
+    id: "bundle-conversion-essentials",
+    type: "bundle",
+    name: "Conversion Essentials",
+    price: 199,
+    currency: "USD",
+    stripe_url: "https://buy.stripe.com/eVq7sK6WMbU95vmfelfw40E",
+  },
+  {
+    id: "bundle-lead-generation",
+    type: "bundle",
+    name: "Lead Generation Pack",
+    price: 249,
+    currency: "USD",
+    stripe_url: "https://buy.stripe.com/dRmbJ0epe7DT4ri6HPfw40D",
+  },
+  {
+    id: "bundle-conversion-upgrade",
+    type: "bundle",
+    name: "Conversion Upgrade Pack",
+    price: 299,
+    currency: "USD",
+    stripe_url: "https://buy.stripe.com/bJedR84OE5vLga0c29fw40C",
+  },
+];
+
+const BUNDLE_DESCRIPTIONS: Record<string, { desc: string; items: string[] }> = {
+  "bundle-conversion-essentials": {
+    desc: "Includes FAQ Section, Review & Testimonial Section, and Google Map & Business Info.",
+    items: ["FAQ Section", "Review & Testimonial Section", "Google Map & Business Info"],
+  },
+  "bundle-lead-generation": {
+    desc: "Includes Advanced Contact Form, Booking Request Form, and Review & Testimonial Section.",
+    items: ["Advanced Contact Form", "Booking Request Form", "Review & Testimonial Section"],
+  },
+  "bundle-conversion-upgrade": {
+    desc: "Includes Advanced Contact Form, Booking Request Form, and Multi-Step Quote Form.",
+    items: ["Advanced Contact Form", "Booking Request Form", "Multi-Step Quote Form"],
+  },
+};
+
+const HARDCODED_HOSTING: CartItem[] = [
+  {
+    id: "hosting-monthly",
+    type: "service",
+    name: "Managed Monthly Hosting",
+    price: 15,
+    currency: "USD",
+    priceLabel: "month",
+    stripe_url: "https://buy.stripe.com/dRmeVcch62jz0b20jrfw40z",
+  },
+  {
+    id: "hosting-yearly",
+    type: "service",
+    name: "Managed Yearly Hosting",
+    price: 135,
+    currency: "USD",
+    priceLabel: "year",
+    stripe_url: "https://buy.stripe.com/fZubJ0bd2e2hbTKd6dfw40y",
+  },
+  {
+    id: "revision-additional",
+    type: "service",
+    name: "Additional Revision",
+    price: 45,
+    currency: "USD",
+    stripe_url: "https://buy.stripe.com/4gM3cugxm1fv0b2c29fw40x",
+  },
+  {
+    id: "reactivation-fee",
+    type: "service",
+    name: "Reactivation Fee",
+    price: 50,
+    currency: "USD",
+    stripe_url: "https://buy.stripe.com/00w14m2Gw1fv7Du1nvfw40d",
+  },
+];
 
 /* ═══════════════════════════════════════════════
-   INVALID / SUCCESS / CANCEL SCREENS
+   STATUS SCREENS
    ═══════════════════════════════════════════════ */
 
 const InvalidScreen = () => (
-  <div className="min-h-screen flex items-center justify-center bg-background px-6">
+  <div className="min-h-screen flex items-center justify-center px-6" style={{ background: "hsl(var(--surface-sunken))" }}>
     <div className="text-center max-w-md space-y-6">
       <div className="mx-auto w-16 h-16 rounded-full bg-destructive/10 flex items-center justify-center">
         <AlertTriangle className="w-8 h-8 text-destructive" />
@@ -112,10 +172,10 @@ const InvalidScreen = () => (
 );
 
 const SuccessScreen = () => (
-  <div className="min-h-screen flex items-center justify-center bg-background px-6">
+  <div className="min-h-screen flex items-center justify-center px-6" style={{ background: "hsl(var(--surface-sunken))" }}>
     <div className="text-center max-w-md space-y-6">
-      <div className="mx-auto w-16 h-16 rounded-full bg-green-100 flex items-center justify-center">
-        <Check className="w-8 h-8 text-green-600" />
+      <div className="mx-auto w-16 h-16 rounded-full flex items-center justify-center" style={{ background: "hsl(150 60% 94%)" }}>
+        <Check className="w-8 h-8" style={{ color: "hsl(150 60% 36%)" }} />
       </div>
       <h1 className="text-2xl font-bold text-foreground">Thank you. Your upgrade request has been received.</h1>
       <p className="text-muted-foreground">We'll process your order and follow up shortly.</p>
@@ -124,7 +184,7 @@ const SuccessScreen = () => (
 );
 
 const CancelScreen = () => (
-  <div className="min-h-screen flex items-center justify-center bg-background px-6">
+  <div className="min-h-screen flex items-center justify-center px-6" style={{ background: "hsl(var(--surface-sunken))" }}>
     <div className="text-center max-w-md space-y-6">
       <div className="mx-auto w-16 h-16 rounded-full bg-muted flex items-center justify-center">
         <X className="w-8 h-8 text-muted-foreground" />
@@ -135,72 +195,13 @@ const CancelScreen = () => (
   </div>
 );
 
-/* ═══════════════════════════════════════════════
-   PRODUCT CARD
-   ═══════════════════════════════════════════════ */
-
-const ProductCard = ({
-  name, description, price, priceLabel, inCart, onAdd, includedItems
-}: {
-  name: string;
-  description: string | null;
-  price: number;
-  priceLabel?: string | null;
-  inCart: boolean;
-  onAdd: () => void;
-  includedItems?: string[];
-}) => (
-  <motion.div
-    initial={{ opacity: 0, y: 16 }}
-    animate={{ opacity: 1, y: 0 }}
-    className="rounded-xl border bg-card p-6 shadow-sm hover:shadow-md transition-shadow flex flex-col"
-  >
-    <h3 className="text-lg font-semibold text-foreground">{name}</h3>
-    {description && <p className="text-sm text-muted-foreground mt-2 flex-1">{description}</p>}
-    {includedItems && includedItems.length > 0 && (
-      <ul className="mt-3 space-y-1">
-        {includedItems.map((item, i) => (
-          <li key={i} className="text-sm text-muted-foreground flex items-start gap-2">
-            <Check className="w-4 h-4 text-primary mt-0.5 shrink-0" />
-            <span>{item}</span>
-          </li>
-        ))}
-      </ul>
-    )}
-    <div className="mt-4 pt-4 border-t flex items-center justify-between">
-      <span className="text-xl font-bold text-foreground">
-        ${isNaN(price) ? 0 : price} <span className="text-sm font-normal text-muted-foreground">USD{priceLabel ? ` / ${priceLabel}` : ""}</span>
-      </span>
-      <Button
-        onClick={onAdd}
-        disabled={inCart}
-        size="sm"
-        className={inCart
-          ? "bg-muted text-muted-foreground cursor-not-allowed"
-          : "bg-primary text-primary-foreground hover:bg-primary/90"
-        }
-      >
-        {inCart ? (
-          <><Check className="w-4 h-4 mr-1" /> Added</>
-        ) : (
-          <><ShoppingCart className="w-4 h-4 mr-1" /> Add to Cart</>
-        )}
-      </Button>
-    </div>
-  </motion.div>
-);
-
-/* ═══════════════════════════════════════════════
-   LOADING SKELETON
-   ═══════════════════════════════════════════════ */
-
 const LoadingSkeleton = () => (
-  <div className="min-h-screen bg-background">
-    <div className="max-w-6xl mx-auto px-5 py-16 space-y-8">
-      <Skeleton className="h-40 w-full rounded-xl" />
-      <Skeleton className="h-10 w-80" />
-      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {[...Array(6)].map((_, i) => <Skeleton key={i} className="h-52 rounded-xl" />)}
+  <div className="min-h-screen" style={{ background: "hsl(var(--surface-sunken))" }}>
+    <div className="h-16 bg-background border-b" />
+    <div className="max-w-5xl mx-auto px-5 py-12 space-y-6">
+      <Skeleton className="h-24 w-full rounded-xl" />
+      <div className="grid md:grid-cols-2 gap-4">
+        {[...Array(6)].map((_, i) => <Skeleton key={i} className="h-20 rounded-xl" />)}
       </div>
     </div>
   </div>
@@ -211,49 +212,53 @@ const LoadingSkeleton = () => (
    ═══════════════════════════════════════════════ */
 
 const CartSidebar = ({
-  items, onRemove, onCheckout, loading
+  items, onRemove, onCheckout, loading, error
 }: {
   items: CartItem[];
   onRemove: (id: string) => void;
   onCheckout: () => void;
   loading: boolean;
+  error: string | null;
 }) => {
-  const total = items.reduce((s, i) => s + (isNaN(i.price) ? 0 : i.price), 0);
+  const total = items.reduce((s, i) => s + i.price, 0);
   return (
-    <div className="sticky top-8 rounded-xl border bg-card p-6 shadow-sm">
+    <div className="sticky top-24 rounded-2xl border bg-background p-5 shadow-sm">
       <div className="flex items-center gap-2 mb-4">
         <ShoppingCart className="w-5 h-5 text-primary" />
-        <h3 className="font-semibold text-foreground">Your Cart</h3>
-        <span className="ml-auto text-sm text-muted-foreground">{items.length} item{items.length !== 1 ? "s" : ""}</span>
+        <h3 className="font-bold text-foreground text-sm">Your Cart</h3>
+        <span className="ml-auto text-xs text-muted-foreground">{items.length} item{items.length !== 1 ? "s" : ""}</span>
       </div>
       {items.length === 0 ? (
-        <p className="text-sm text-muted-foreground py-8 text-center">No upgrades selected yet.</p>
+        <p className="text-sm text-muted-foreground py-6 text-center">No upgrades selected yet.</p>
       ) : (
-        <div className="space-y-3 max-h-80 overflow-y-auto">
+        <div className="space-y-2 max-h-72 overflow-y-auto">
           {items.map(item => (
             <div key={item.id} className="flex items-start justify-between gap-2 py-2 border-b last:border-0">
               <div>
-                <p className="text-sm font-medium text-foreground">{item.name}</p>
-                <p className="text-sm text-muted-foreground">${isNaN(item.price) ? 0 : item.price} USD</p>
+                <p className="text-sm font-medium text-foreground leading-tight">{item.name}</p>
+                <p className="text-xs text-muted-foreground">${item.price} USD{item.priceLabel ? ` / ${item.priceLabel}` : ""}</p>
               </div>
-              <button onClick={() => onRemove(item.id)} className="text-muted-foreground hover:text-destructive mt-1">
+              <button onClick={() => onRemove(item.id)} className="text-muted-foreground hover:text-destructive mt-0.5 shrink-0">
                 <X className="w-4 h-4" />
               </button>
             </div>
           ))}
         </div>
       )}
-      <div className="mt-4 pt-4 border-t">
-        <div className="flex justify-between font-semibold text-foreground mb-4">
+      <div className="mt-4 pt-4 border-t space-y-3">
+        <div className="flex justify-between font-bold text-foreground">
           <span>Total</span>
           <span>${total} USD</span>
         </div>
+        {error && (
+          <p className="text-xs text-destructive leading-snug">{error}</p>
+        )}
         <Button
           onClick={onCheckout}
           disabled={items.length === 0 || loading}
-          className="w-full bg-primary text-primary-foreground hover:bg-primary/90"
+          className="w-full bg-primary text-primary-foreground hover:bg-primary/90 font-semibold"
         >
-          {loading ? "Processing..." : "Checkout Selected Upgrades"}
+          {loading ? "Processing..." : "Continue to Checkout"}
         </Button>
       </div>
     </div>
@@ -265,38 +270,37 @@ const CartSidebar = ({
    ═══════════════════════════════════════════════ */
 
 const MobileCartBar = ({
-  items, onRemove, onCheckout, loading
+  items, onRemove, onCheckout, loading, error
 }: {
   items: CartItem[];
   onRemove: (id: string) => void;
   onCheckout: () => void;
   loading: boolean;
+  error: string | null;
 }) => {
   const [expanded, setExpanded] = useState(false);
-  const total = items.reduce((s, i) => s + (isNaN(i.price) ? 0 : i.price), 0);
+  const total = items.reduce((s, i) => s + i.price, 0);
 
   if (items.length === 0) return null;
 
   return (
-    <div className="fixed bottom-0 left-0 right-0 z-50 bg-card border-t shadow-2xl lg:hidden">
+    <div className="fixed bottom-0 left-0 right-0 z-50 bg-background border-t shadow-2xl lg:hidden">
       <AnimatePresence>
         {expanded && (
-          <motion.div
-            initial={{ height: 0 }} animate={{ height: "auto" }} exit={{ height: 0 }}
-            className="overflow-hidden border-b"
-          >
+          <motion.div initial={{ height: 0 }} animate={{ height: "auto" }} exit={{ height: 0 }} className="overflow-hidden border-b">
             <div className="p-4 space-y-2 max-h-60 overflow-y-auto">
               {items.map(item => (
                 <div key={item.id} className="flex items-center justify-between">
                   <div>
                     <p className="text-sm font-medium text-foreground">{item.name}</p>
-                    <p className="text-xs text-muted-foreground">${isNaN(item.price) ? 0 : item.price} USD</p>
+                    <p className="text-xs text-muted-foreground">${item.price} USD{item.priceLabel ? ` / ${item.priceLabel}` : ""}</p>
                   </div>
                   <button onClick={() => onRemove(item.id)} className="text-muted-foreground hover:text-destructive">
                     <X className="w-4 h-4" />
                   </button>
                 </div>
               ))}
+              {error && <p className="text-xs text-destructive pt-1">{error}</p>}
             </div>
           </motion.div>
         )}
@@ -304,23 +308,29 @@ const MobileCartBar = ({
       <div className="p-4 flex items-center gap-3">
         <button onClick={() => setExpanded(!expanded)} className="flex items-center gap-2 text-foreground">
           <ShoppingCart className="w-5 h-5 text-primary" />
-          <span className="font-semibold">{items.length} item{items.length !== 1 ? "s" : ""}</span>
+          <span className="font-semibold text-sm">{items.length} item{items.length !== 1 ? "s" : ""}</span>
           <span className="text-muted-foreground">·</span>
-          <span className="font-semibold">${total}</span>
+          <span className="font-bold text-sm">${total}</span>
           {expanded ? <ChevronDown className="w-4 h-4" /> : <ChevronUp className="w-4 h-4" />}
         </button>
-        <Button
-          onClick={onCheckout}
-          disabled={loading}
-          className="ml-auto bg-primary text-primary-foreground hover:bg-primary/90"
-          size="sm"
-        >
+        <Button onClick={onCheckout} disabled={loading} className="ml-auto bg-primary text-primary-foreground hover:bg-primary/90" size="sm">
           {loading ? "..." : "Checkout"}
         </Button>
       </div>
     </div>
   );
 };
+
+/* ═══════════════════════════════════════════════
+   SECTION HEADER
+   ═══════════════════════════════════════════════ */
+
+const SectionHeader = ({ title, subtitle, id }: { title: string; subtitle: string; id?: string }) => (
+  <div id={id} className="mb-6">
+    <h2 className="text-xl font-bold text-foreground">{title}</h2>
+    <p className="text-sm text-muted-foreground mt-1">{subtitle}</p>
+  </div>
+);
 
 /* ═══════════════════════════════════════════════
    MAIN PAGE
@@ -336,87 +346,66 @@ export default function ClientUpgrades() {
   const [accessLink, setAccessLink] = useState<AccessLink | null>(null);
   const [client, setClient] = useState<ClientData | null>(null);
   const [project, setProject] = useState<ProjectData | null>(null);
-  const [addons, setAddons] = useState<Addon[]>([]);
-  const [bundles, setBundles] = useState<Bundle[]>([]);
-  const [serviceItems, setServiceItems] = useState<ServiceItem[]>([]);
-  const [bundleItems, setBundleItems] = useState<BundleItem[]>([]);
   const [selectableAddons, setSelectableAddons] = useState<SelectableAddon[]>([]);
   const [selectedAddonIds, setSelectedAddonIds] = useState<Set<string>>(new Set());
   const [cart, setCart] = useState<CartItem[]>([]);
   const [checkoutLoading, setCheckoutLoading] = useState(false);
   const [checkoutError, setCheckoutError] = useState<string | null>(null);
-  const [debugData, setDebugData] = useState<any>(undefined);
-  const [debugError, setDebugError] = useState<any>(undefined);
 
   const tokenFromUrl = new URLSearchParams(window.location.search).get('token');
 
   useEffect(() => {
     const load = async () => {
-      // DEBUG: simple token lookup only
-      const { data, error } = await supabase
+      const { data } = await supabase
         .from('upgrade_access_links')
         .select('*')
         .eq('token', tokenFromUrl || '')
         .maybeSingle();
 
-      setDebugData(data);
-      setDebugError(error);
-
       if (data) {
         setAccessLink(data as AccessLink);
 
-        // Fetch products + selectable addons from service_items
-        const [clientRes, projectRes, addonsRes, bundlesRes, serviceRes, bundleItemsRes, selectableRes] = await Promise.all([
+        const [clientRes, projectRes, selectableRes] = await Promise.all([
           supabase.from("clients").select("display_name").eq("id", data.client_id).maybeSingle(),
           supabase.from("projects").select("project_code").eq("id", data.project_id).maybeSingle(),
-          supabase.from("addons").select("*").eq("organization_id", data.organization_id).eq("is_active", true).order("sort_order"),
-          supabase.from("bundles").select("*").eq("organization_id", data.organization_id).eq("is_active", true).order("sort_order"),
-          supabase.from("service_items").select("*").eq("organization_id", data.organization_id).eq("is_active", true).order("sort_order"),
-          supabase.from("bundle_items").select("*"),
-          // Selectable addons: from service_items for the specific org, sorted by price
-          supabase.from("service_items").select("id, service_key, name, description, price_usd, currency, billing_type, stripe_name, stripe_payment_link_url").eq("organization_id", "1e3bf8d7-5cbb-40e3-886c-ed18e554a741").eq("service_type", "addon").eq("is_active", true).order("price_usd", { ascending: true }),
+          supabase.from("service_items")
+            .select("id, service_key, name, description, price_usd, currency, billing_type, stripe_name, stripe_payment_link_url")
+            .eq("organization_id", "1e3bf8d7-5cbb-40e3-886c-ed18e554a741")
+            .eq("service_type", "addon")
+            .eq("is_active", true)
+            .order("price_usd", { ascending: true }),
         ]);
 
         if (clientRes.data) setClient(clientRes.data as ClientData);
         if (projectRes.data) setProject(projectRes.data as ProjectData);
-        if (addonsRes.data) setAddons(addonsRes.data as Addon[]);
-        if (bundlesRes.data) setBundles(bundlesRes.data as Bundle[]);
-        if (serviceRes.data) setServiceItems(serviceRes.data as ServiceItem[]);
-        if (bundleItemsRes.data) setBundleItems(bundleItemsRes.data as BundleItem[]);
         if (selectableRes.data) setSelectableAddons(selectableRes.data as SelectableAddon[]);
       }
 
       setState("ready");
     };
-
     load();
   }, [tokenFromUrl]);
 
-  const addonMap = useMemo(() => {
-    const m: Record<string, Addon> = {};
-    addons.forEach(a => { m[a.id] = a; });
-    return m;
-  }, [addons]);
+  /* ── Selection logic ── */
 
   const toggleAddonSelection = useCallback((addon: SelectableAddon) => {
+    const stripeUrl = ADDON_STRIPE_MAP[addon.name] || addon.stripe_payment_link_url || undefined;
     setSelectedAddonIds(prev => {
       const next = new Set(prev);
       if (next.has(addon.id)) {
         next.delete(addon.id);
-        // Also remove from cart
         setCart(c => c.filter(item => item.id !== addon.id));
       } else {
         next.add(addon.id);
-        // Also add to cart
         setCart(c => {
           if (c.find(item => item.id === addon.id)) return c;
           return [...c, {
             id: addon.id,
-            type: "service_item" as const,
+            type: "addon" as const,
             name: addon.name,
             price: Number(addon.price_usd) || 0,
             currency: addon.currency,
-            stripe_url: addon.stripe_payment_link_url || undefined,
+            stripe_url: stripeUrl,
           }];
         });
       }
@@ -424,64 +413,54 @@ export default function ClientUpgrades() {
     });
   }, []);
 
-  const addonSubtotal = useMemo(() => {
-    return selectableAddons
-      .filter(a => selectedAddonIds.has(a.id))
-      .reduce((sum, a) => sum + (Number(a.price_usd) || 0), 0);
-  }, [selectableAddons, selectedAddonIds]);
-
-  const addToCart = useCallback((item: CartItem) => {
+  const toggleCartItem = useCallback((item: CartItem) => {
     setCart(prev => {
-      if (prev.find(c => c.id === item.id)) return prev;
+      const existing = prev.find(c => c.id === item.id);
+      if (existing) return prev.filter(c => c.id !== item.id);
       return [...prev, item];
     });
   }, []);
 
   const removeFromCart = useCallback((id: string) => {
     setCart(prev => prev.filter(c => c.id !== id));
-    // Also deselect if it's an addon
     setSelectedAddonIds(prev => {
       const next = new Set(prev);
       next.delete(id);
       return next;
     });
+    setCheckoutError(null);
   }, []);
 
   const isInCart = useCallback((id: string) => cart.some(c => c.id === id), [cart]);
 
-  const selectedAddons = useMemo(() => {
-    return selectableAddons
-      .filter(a => selectedAddonIds.has(a.id))
-      .map(a => ({
-        service_key: a.service_key,
-        name: a.name,
-        price_usd: Number(a.price_usd) || 0,
-        stripe_name: a.stripe_name,
-      }));
-  }, [selectableAddons, selectedAddonIds]);
-
   const handleCheckout = async () => {
-    if (selectedAddons.length === 0) return;
+    if (cart.length === 0) return;
     setCheckoutLoading(true);
     setCheckoutError(null);
 
-    const payload = {
-      items: selectedAddons,
-      total: addonSubtotal,
-      currency: "USD",
-    };
+    if (cart.length > 1) {
+      setCheckoutError("Multi-item checkout is not enabled yet. Please complete one upgrade purchase at a time.");
+      setCheckoutLoading(false);
+      return;
+    }
 
-    console.log("=== CHECKOUT PAYLOAD ===", JSON.stringify(payload, null, 2));
+    const item = cart[0];
+    if (!item.stripe_url) {
+      setCheckoutError("Payment link is not available for this item. Please contact support.");
+      setCheckoutLoading(false);
+      return;
+    }
 
-    // Track purchase_started (non-blocking)
+    // Track
     if (accessLink) {
       supabase.from("upgrade_access_events").insert({
         access_link_id: accessLink.id,
         event_type: "purchase_started",
-        metadata_json: { token, items: selectedAddons.map(a => a.name), total: addonSubtotal }
+        metadata_json: { token, item: item.name, price: item.price }
       }).then(() => {});
     }
 
+    window.open(item.stripe_url, "_blank");
     setCheckoutLoading(false);
   };
 
@@ -490,218 +469,222 @@ export default function ClientUpgrades() {
   if (state === "loading") return <LoadingSkeleton />;
 
   return (
-    <div className="min-h-screen bg-background pb-24 lg:pb-0">
-      {/* ─── DEBUG BLOCK ─── */}
-      <div style={{padding:'20px',background:'#111',color:'#0f0',fontSize:'12px',fontFamily:'monospace',wordBreak:'break-all'}}>
-        <div>Token: {tokenFromUrl}</div>
-        <div>Supabase URL: {import.meta.env.VITE_SUPABASE_URL}</div>
-        <div>Data: {JSON.stringify(debugData)}</div>
-        <div>Error: {JSON.stringify(debugError)}</div>
-      </div>
-      {/* ─── HEADER ─── */}
-      <div className="bg-card border-b">
-        <div className="max-w-6xl mx-auto px-5 py-10 md:py-14">
-          <p className="text-xs font-semibold tracking-[0.2em] text-primary uppercase mb-3">Secure Client Access</p>
-          <h1 className="text-3xl md:text-4xl font-bold text-foreground mb-4">Upgrade Options for Your Website</h1>
-          <div className="flex flex-wrap gap-x-6 gap-y-1 text-sm text-muted-foreground mb-3">
-            {client && <span>Client: <strong className="text-foreground">{client.display_name}</strong></span>}
-            {project && <span>Project: <strong className="text-foreground">{project.project_code}</strong></span>}
+    <div className="min-h-screen pb-24 lg:pb-0" style={{ background: "hsl(var(--surface-sunken))" }}>
+      {/* ─── BRANDED HEADER ─── */}
+      <header className="bg-background border-b sticky top-0 z-40" style={{ borderColor: "hsl(var(--border))" }}>
+        <div className="max-w-5xl mx-auto px-5 h-16 flex items-center justify-between">
+          <img src={swiftsiteLogo} alt="SwiftLift Studio" className="h-12 w-auto" />
+          <div className="flex items-center gap-4">
+            <div className="hidden sm:flex items-center gap-1.5 text-xs font-medium text-muted-foreground">
+              <Shield className="w-3.5 h-3.5 text-primary" />
+              Secure Client Access
+            </div>
+            <a href="mailto:support@swiftlift.app" className="flex items-center gap-1.5 text-xs text-muted-foreground hover:text-foreground transition-colors">
+              <Mail className="w-3.5 h-3.5" />
+              <span className="hidden sm:inline">Support</span>
+            </a>
           </div>
-          <p className="text-sm text-muted-foreground max-w-xl">
+        </div>
+      </header>
+
+      {/* ─── HERO / CONTEXT ─── */}
+      <div className="bg-background border-b" style={{ borderColor: "hsl(var(--border))" }}>
+        <div className="max-w-5xl mx-auto px-5 py-8">
+          <p className="text-[0.7rem] font-bold tracking-[0.2em] uppercase mb-2" style={{ color: "hsl(var(--accent-purple))" }}>
+            Secure Client Access
+          </p>
+          <h1 className="text-2xl md:text-3xl font-bold text-foreground mb-2">
+            Upgrade Options for Your Website
+          </h1>
+          <p className="text-sm text-muted-foreground max-w-lg mb-3">
+            Enhance your current SwiftLift website with add-ons, bundles, hosting, and support options.
+          </p>
+          <div className="flex flex-wrap gap-x-5 gap-y-1 text-sm text-muted-foreground">
+            {project && (
+              <span>Project: <strong className="text-foreground">{project.project_code}</strong></span>
+            )}
+            {client && (
+              <span>Client: <strong className="text-foreground">{client.display_name}</strong></span>
+            )}
+          </div>
+          <p className="text-xs text-muted-foreground mt-2">
             Any upgrade selected here will be linked directly to your website project.
           </p>
         </div>
       </div>
 
       {/* ─── CONTENT ─── */}
-      <div className="max-w-6xl mx-auto px-5 py-10">
+      <div className="max-w-5xl mx-auto px-5 py-8">
         <div className="flex gap-8">
-          {/* LEFT: Products */}
-          <div className="flex-1 min-w-0">
-            <Tabs defaultValue="addons">
-              <TabsList className="w-full justify-start mb-8 bg-muted/50 sticky top-0 z-10">
-                <TabsTrigger value="addons" className="flex items-center gap-2">
-                  <Sparkles className="w-4 h-4" /> Add-ons
-                </TabsTrigger>
-                <TabsTrigger value="bundles" className="flex items-center gap-2">
-                  <Package className="w-4 h-4" /> Bundles
-                </TabsTrigger>
-                <TabsTrigger value="services" className="flex items-center gap-2">
-                  <Server className="w-4 h-4" /> Hosting & Support
-                </TabsTrigger>
-              </TabsList>
+          {/* LEFT: All Sections */}
+          <div className="flex-1 min-w-0 space-y-10">
 
-              {/* ADD-ONS (checkbox-based selection from service_items) */}
-              <TabsContent value="addons">
-                {selectableAddons.length === 0 ? (
-                  <p className="text-muted-foreground text-center py-12">No add-ons available at this time.</p>
-                ) : (
-                  <div className="space-y-6">
-                    <div className="space-y-3">
-                      {selectableAddons.map(addon => {
-                        const price = Number(addon.price_usd) || 0;
-                        const isSelected = selectedAddonIds.has(addon.id);
-                        return (
-                          <motion.div
-                            key={addon.id}
-                            initial={{ opacity: 0, y: 12 }}
-                            animate={{ opacity: 1, y: 0 }}
-                            onClick={() => toggleAddonSelection(addon)}
-                            className={`rounded-xl border p-5 cursor-pointer transition-all ${
-                              isSelected
-                                ? "border-primary bg-primary/5 shadow-md"
-                                : "bg-card hover:shadow-sm hover:border-muted-foreground/20"
-                            }`}
-                          >
-                            <div className="flex items-start gap-4">
-                              <div className={`mt-0.5 w-5 h-5 rounded border-2 flex items-center justify-center shrink-0 transition-colors ${
-                                isSelected ? "bg-primary border-primary" : "border-muted-foreground/30"
-                              }`}>
-                                {isSelected && <Check className="w-3.5 h-3.5 text-primary-foreground" />}
-                              </div>
-                              <div className="flex-1 min-w-0">
-                                <div className="flex items-center justify-between gap-3">
-                                  <h3 className="font-semibold text-foreground">{addon.name}</h3>
-                                  <span className="text-lg font-bold text-foreground shrink-0">
-                                    ${price} <span className="text-sm font-normal text-muted-foreground">USD</span>
-                                  </span>
-                                </div>
-                                {addon.description && (
-                                  <p className="text-sm text-muted-foreground mt-1">{addon.description}</p>
-                                )}
-                              </div>
-                            </div>
-                          </motion.div>
-                        );
-                      })}
-                    </div>
-
-                    {/* Live Subtotal */}
-                    <div className="rounded-xl border bg-card p-5">
-                      <div className="flex items-center justify-between">
-                        <div>
-                          <p className="text-sm text-muted-foreground">
-                            {selectedAddonIds.size} add-on{selectedAddonIds.size !== 1 ? "s" : ""} selected
-                          </p>
-                          <p className="text-2xl font-bold text-foreground mt-1">
-                            ${addonSubtotal} <span className="text-sm font-normal text-muted-foreground">USD</span>
-                          </p>
-                        </div>
-                        <Button
-                          onClick={handleCheckout}
-                          disabled={selectedAddonIds.size === 0 || checkoutLoading}
-                          className="bg-primary text-primary-foreground hover:bg-primary/90"
-                        >
-                          {checkoutLoading ? "Processing..." : "Continue to Checkout"}
-                        </Button>
-                      </div>
-                    </div>
-                  </div>
-                )}
-              </TabsContent>
-
-              {/* BUNDLES */}
-              <TabsContent value="bundles">
-                <div className="grid md:grid-cols-2 gap-5">
-                  {bundles.map(bundle => {
-                    const items = bundleItems
-                      .filter(bi => bi.bundle_id === bundle.id)
-                      .map(bi => addonMap[bi.addon_id]?.name)
-                      .filter(Boolean) as string[];
+            {/* ══ ADD-ONS ══ */}
+            <section>
+              <SectionHeader title="Add-ons" subtitle="Choose individual upgrades for your website." id="addons" />
+              {selectableAddons.length === 0 ? (
+                <p className="text-muted-foreground text-center py-8 text-sm">No add-ons available at this time.</p>
+              ) : (
+                <div className="grid md:grid-cols-2 gap-3">
+                  {selectableAddons.map(addon => {
+                    const price = Number(addon.price_usd) || 0;
+                    const isSelected = selectedAddonIds.has(addon.id);
                     return (
-                      <ProductCard
-                        key={bundle.id}
-                        name={bundle.name}
-                        description={bundle.description}
-                        price={Number(bundle.price) || 0}
-                        inCart={isInCart(bundle.id)}
-                        includedItems={items}
-                        onAdd={() => addToCart({
-                          id: bundle.id, type: "bundle",
-                          name: bundle.name,
-                          price: Number(bundle.price) || 0, currency: bundle.currency,
-                          stripe_url: bundle.stripe_payment_link_url || undefined,
-                        })}
-                      />
+                      <motion.div
+                        key={addon.id}
+                        initial={{ opacity: 0, y: 8 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        onClick={() => toggleAddonSelection(addon)}
+                        className={`rounded-xl border p-4 cursor-pointer transition-all ${
+                          isSelected
+                            ? "border-primary bg-primary/5 shadow-md"
+                            : "bg-background hover:shadow-sm hover:border-muted-foreground/20"
+                        }`}
+                      >
+                        <div className="flex items-start gap-3">
+                          <div className={`mt-0.5 w-[18px] h-[18px] rounded border-2 flex items-center justify-center shrink-0 transition-colors ${
+                            isSelected ? "bg-primary border-primary" : "border-muted-foreground/30"
+                          }`}>
+                            {isSelected && <Check className="w-3 h-3 text-primary-foreground" />}
+                          </div>
+                          <div className="flex-1 min-w-0">
+                            <div className="flex items-center justify-between gap-2">
+                              <h3 className="font-semibold text-sm text-foreground leading-tight">{addon.name}</h3>
+                              <span className="text-sm font-bold text-foreground shrink-0">
+                                ${price} <span className="text-xs font-normal text-muted-foreground">USD</span>
+                              </span>
+                            </div>
+                            {addon.description && (
+                              <p className="text-xs text-muted-foreground mt-1 leading-relaxed">{addon.description}</p>
+                            )}
+                          </div>
+                        </div>
+                      </motion.div>
                     );
                   })}
-                  {bundles.length === 0 && (
-                    <p className="text-muted-foreground col-span-2 text-center py-12">No bundles available at this time.</p>
-                  )}
                 </div>
-              </TabsContent>
+              )}
+            </section>
 
-              {/* HOSTING & SUPPORT */}
-              <TabsContent value="services">
-                <div className="space-y-8">
-                  {/* Explanation blocks */}
-                  <div className="rounded-xl border bg-card p-6 space-y-4">
-                    <p className="text-sm text-muted-foreground leading-relaxed">
-                      Every SwiftLift website includes free hosting by default.
-                      <br /><br />
-                      You are never locked into our system. If you prefer to host your website yourself, we can provide the full website files for you to manage independently at any time.
-                      <br /><br />
-                      Our managed hosting option is simply for convenience — for clients who prefer ongoing support and updates handled for them.
-                    </p>
-                    <p className="text-sm text-muted-foreground leading-relaxed border-t pt-4">
-                      Updates are handled directly to ensure performance and stability.
-                      <br /><br />
-                      You can request changes anytime, or choose a plan for ongoing support.
-                    </p>
-                  </div>
-
-                  {/* Service cards */}
-                  <div className="grid md:grid-cols-2 gap-5">
-                    {serviceItems.map(item => (
-                      <ProductCard
-                        key={item.id}
-                        name={item.name}
-                        description={item.description}
-                        price={Number(item.price) || 0}
-                        priceLabel={item.price_label}
-                        inCart={isInCart(item.id)}
-                        onAdd={() => addToCart({
-                          id: item.id, type: "service_item",
-                          name: item.name,
-                          price: Number(item.price) || 0, currency: item.currency,
-                          stripe_url: item.stripe_payment_link_url || undefined,
-                        })}
-                      />
-                    ))}
-                    {serviceItems.length === 0 && (
-                      <p className="text-muted-foreground col-span-2 text-center py-12">No services available at this time.</p>
-                    )}
-                  </div>
-
-                  <p className="text-center text-sm text-muted-foreground pt-2">
-                    You always have full control of your website. No contracts, no lock-in.
-                  </p>
-                </div>
-              </TabsContent>
-            </Tabs>
-
-            {/* Checkout error */}
-            {checkoutError && (
-              <div className="mt-6 rounded-lg border border-destructive/30 bg-destructive/5 p-4 text-sm text-destructive">
-                {checkoutError}
+            {/* ══ BUNDLES ══ */}
+            <section>
+              <SectionHeader title="Bundles" subtitle="Save more by choosing grouped upgrade packages." id="bundles" />
+              <div className="grid md:grid-cols-2 gap-3">
+                {HARDCODED_BUNDLES.map(bundle => {
+                  const info = BUNDLE_DESCRIPTIONS[bundle.id];
+                  const inCart = isInCart(bundle.id);
+                  return (
+                    <motion.div
+                      key={bundle.id}
+                      initial={{ opacity: 0, y: 8 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      onClick={() => toggleCartItem(bundle)}
+                      className={`rounded-xl border p-4 cursor-pointer transition-all ${
+                        inCart
+                          ? "border-primary bg-primary/5 shadow-md"
+                          : "bg-background hover:shadow-sm hover:border-muted-foreground/20"
+                      }`}
+                    >
+                      <div className="flex items-start gap-3">
+                        <div className={`mt-0.5 w-[18px] h-[18px] rounded border-2 flex items-center justify-center shrink-0 transition-colors ${
+                          inCart ? "bg-primary border-primary" : "border-muted-foreground/30"
+                        }`}>
+                          {inCart && <Check className="w-3 h-3 text-primary-foreground" />}
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <div className="flex items-center justify-between gap-2">
+                            <h3 className="font-semibold text-sm text-foreground leading-tight">{bundle.name}</h3>
+                            <span className="text-sm font-bold text-foreground shrink-0">
+                              ${bundle.price} <span className="text-xs font-normal text-muted-foreground">USD</span>
+                            </span>
+                          </div>
+                          {info && (
+                            <>
+                              <p className="text-xs text-muted-foreground mt-1.5">{info.desc}</p>
+                              <ul className="mt-2 space-y-0.5">
+                                {info.items.map((item, i) => (
+                                  <li key={i} className="text-xs text-muted-foreground flex items-center gap-1.5">
+                                    <Check className="w-3 h-3 text-primary shrink-0" />
+                                    {item}
+                                  </li>
+                                ))}
+                              </ul>
+                            </>
+                          )}
+                        </div>
+                      </div>
+                    </motion.div>
+                  );
+                })}
               </div>
-            )}
+            </section>
+
+            {/* ══ HOSTING & SUPPORT ══ */}
+            <section>
+              <SectionHeader title="Hosting & Support" subtitle="" id="hosting" />
+              <div className="rounded-xl border bg-background p-4 mb-4">
+                <p className="text-xs text-muted-foreground leading-relaxed">
+                  Every SwiftLift website includes free hosting by default. You are not locked in. If you prefer to host the website yourself later, your website files can be provided to you. Managed hosting is for clients who want convenience, support, and ongoing updates handled for them.
+                </p>
+              </div>
+              <div className="grid md:grid-cols-2 gap-3">
+                {HARDCODED_HOSTING.map(item => {
+                  const inCart = isInCart(item.id);
+                  const descriptions: Record<string, string> = {
+                    "hosting-monthly": "Managed hosting and ongoing support for your launched SwiftLift website.",
+                    "hosting-yearly": "Managed hosting and ongoing support billed yearly.",
+                    "revision-additional": "Request a one-time website update without a monthly hosting plan.",
+                    "reactivation-fee": "Restart a paused or inactive project.",
+                  };
+                  return (
+                    <motion.div
+                      key={item.id}
+                      initial={{ opacity: 0, y: 8 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      onClick={() => toggleCartItem(item)}
+                      className={`rounded-xl border p-4 cursor-pointer transition-all ${
+                        inCart
+                          ? "border-primary bg-primary/5 shadow-md"
+                          : "bg-background hover:shadow-sm hover:border-muted-foreground/20"
+                      }`}
+                    >
+                      <div className="flex items-start gap-3">
+                        <div className={`mt-0.5 w-[18px] h-[18px] rounded border-2 flex items-center justify-center shrink-0 transition-colors ${
+                          inCart ? "bg-primary border-primary" : "border-muted-foreground/30"
+                        }`}>
+                          {inCart && <Check className="w-3 h-3 text-primary-foreground" />}
+                        </div>
+                        <div className="flex-1 min-w-0">
+                          <div className="flex items-center justify-between gap-2">
+                            <h3 className="font-semibold text-sm text-foreground leading-tight">{item.name}</h3>
+                            <span className="text-sm font-bold text-foreground shrink-0">
+                              ${item.price} <span className="text-xs font-normal text-muted-foreground">USD{item.priceLabel ? ` / ${item.priceLabel}` : ""}</span>
+                            </span>
+                          </div>
+                          <p className="text-xs text-muted-foreground mt-1">{descriptions[item.id] || ""}</p>
+                        </div>
+                      </div>
+                    </motion.div>
+                  );
+                })}
+              </div>
+            </section>
           </div>
 
-          {/* RIGHT: Cart sidebar (desktop) */}
-          <div className="hidden lg:block w-80 shrink-0">
-            <CartSidebar items={cart} onRemove={removeFromCart} onCheckout={handleCheckout} loading={checkoutLoading} />
+          {/* RIGHT: Cart Sidebar (desktop) */}
+          <div className="hidden lg:block w-72 shrink-0">
+            <CartSidebar items={cart} onRemove={removeFromCart} onCheckout={handleCheckout} loading={checkoutLoading} error={checkoutError} />
           </div>
         </div>
       </div>
 
       {/* MOBILE CART */}
-      <MobileCartBar items={cart} onRemove={removeFromCart} onCheckout={handleCheckout} loading={checkoutLoading} />
+      <MobileCartBar items={cart} onRemove={removeFromCart} onCheckout={handleCheckout} loading={checkoutLoading} error={checkoutError} />
 
       {/* SUPPORT FOOTER */}
-      <div className="border-t bg-card">
-        <div className="max-w-6xl mx-auto px-5 py-8 text-center">
-          <p className="text-sm text-muted-foreground">
+      <div className="border-t bg-background">
+        <div className="max-w-5xl mx-auto px-5 py-6 text-center">
+          <p className="text-xs text-muted-foreground">
             Need help choosing? Contact us at{" "}
             <a href="mailto:support@swiftlift.app" className="text-primary hover:underline">support@swiftlift.app</a>
           </p>
