@@ -76,11 +76,13 @@ interface ServiceItem {
 
 interface SelectableAddon {
   id: string;
+  service_key: string;
   name: string;
-  price: number;
+  price_usd: number;
   currency: string;
   description: string | null;
-  price_label: string | null;
+  billing_type: string | null;
+  stripe_name: string | null;
   stripe_payment_link_url: string | null;
 }
 
