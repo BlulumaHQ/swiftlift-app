@@ -74,6 +74,16 @@ interface ServiceItem {
   sort_order: number;
 }
 
+interface SelectableAddon {
+  id: string;
+  name: string;
+  price: number;
+  currency: string;
+  description: string | null;
+  price_label: string | null;
+  stripe_payment_link_url: string | null;
+}
+
 interface BundleItem {
   id: string;
   bundle_id: string;
@@ -328,6 +338,8 @@ export default function ClientUpgrades() {
   const [bundles, setBundles] = useState<Bundle[]>([]);
   const [serviceItems, setServiceItems] = useState<ServiceItem[]>([]);
   const [bundleItems, setBundleItems] = useState<BundleItem[]>([]);
+  const [selectableAddons, setSelectableAddons] = useState<SelectableAddon[]>([]);
+  const [selectedAddonIds, setSelectedAddonIds] = useState<Set<string>>(new Set());
   const [cart, setCart] = useState<CartItem[]>([]);
   const [checkoutLoading, setCheckoutLoading] = useState(false);
   const [checkoutError, setCheckoutError] = useState<string | null>(null);
@@ -351,14 +363,16 @@ export default function ClientUpgrades() {
       if (data) {
         setAccessLink(data as AccessLink);
 
-        // Still fetch products for rendering
-        const [clientRes, projectRes, addonsRes, bundlesRes, serviceRes, bundleItemsRes] = await Promise.all([
+        // Fetch products + selectable addons from service_items
+        const [clientRes, projectRes, addonsRes, bundlesRes, serviceRes, bundleItemsRes, selectableRes] = await Promise.all([
           supabase.from("clients").select("display_name").eq("id", data.client_id).maybeSingle(),
           supabase.from("projects").select("project_code").eq("id", data.project_id).maybeSingle(),
           supabase.from("addons").select("*").eq("organization_id", data.organization_id).eq("is_active", true).order("sort_order"),
           supabase.from("bundles").select("*").eq("organization_id", data.organization_id).eq("is_active", true).order("sort_order"),
           supabase.from("service_items").select("*").eq("organization_id", data.organization_id).eq("is_active", true).order("sort_order"),
           supabase.from("bundle_items").select("*"),
+          // Selectable addons: from service_items for the specific org, sorted by price
+          supabase.from("service_items").select("id, name, description, price, currency, price_label, stripe_payment_link_url").eq("organization_id", "1e3bf8d7-5cbb-40e3-886c-ed18e554a741").eq("is_active", true).order("price", { ascending: true }),
         ]);
 
         if (clientRes.data) setClient(clientRes.data as ClientData);
@@ -367,6 +381,7 @@ export default function ClientUpgrades() {
         if (bundlesRes.data) setBundles(bundlesRes.data as Bundle[]);
         if (serviceRes.data) setServiceItems(serviceRes.data as ServiceItem[]);
         if (bundleItemsRes.data) setBundleItems(bundleItemsRes.data as BundleItem[]);
+        if (selectableRes.data) setSelectableAddons(selectableRes.data as SelectableAddon[]);
       }
 
       setState("ready");
@@ -381,6 +396,38 @@ export default function ClientUpgrades() {
     return m;
   }, [addons]);
 
+  const toggleAddonSelection = useCallback((addon: SelectableAddon) => {
+    setSelectedAddonIds(prev => {
+      const next = new Set(prev);
+      if (next.has(addon.id)) {
+        next.delete(addon.id);
+        // Also remove from cart
+        setCart(c => c.filter(item => item.id !== addon.id));
+      } else {
+        next.add(addon.id);
+        // Also add to cart
+        setCart(c => {
+          if (c.find(item => item.id === addon.id)) return c;
+          return [...c, {
+            id: addon.id,
+            type: "service_item" as const,
+            name: addon.name,
+            price: Number(addon.price) || 0,
+            currency: addon.currency,
+            stripe_url: addon.stripe_payment_link_url || undefined,
+          }];
+        });
+      }
+      return next;
+    });
+  }, []);
+
+  const addonSubtotal = useMemo(() => {
+    return selectableAddons
+      .filter(a => selectedAddonIds.has(a.id))
+      .reduce((sum, a) => sum + (Number(a.price) || 0), 0);
+  }, [selectableAddons, selectedAddonIds]);
+
   const addToCart = useCallback((item: CartItem) => {
     setCart(prev => {
       if (prev.find(c => c.id === item.id)) return prev;
@@ -390,6 +437,12 @@ export default function ClientUpgrades() {
 
   const removeFromCart = useCallback((id: string) => {
     setCart(prev => prev.filter(c => c.id !== id));
+    // Also deselect if it's an addon
+    setSelectedAddonIds(prev => {
+      const next = new Set(prev);
+      next.delete(id);
+      return next;
+    });
   }, []);
 
   const isInCart = useCallback((id: string) => cart.some(c => c.id === id), [cart]);
@@ -490,28 +543,75 @@ export default function ClientUpgrades() {
                 </TabsTrigger>
               </TabsList>
 
-              {/* ADD-ONS */}
+              {/* ADD-ONS (checkbox-based selection from service_items) */}
               <TabsContent value="addons">
-                <div className="grid md:grid-cols-2 gap-5">
-                  {addons.map(addon => (
-                    <ProductCard
-                      key={addon.id}
-                      name={addon.public_name || addon.name}
-                      description={addon.description}
-                      price={Number(addon.price) || 0}
-                      inCart={isInCart(addon.id)}
-                      onAdd={() => addToCart({
-                        id: addon.id, type: "addon",
-                        name: addon.public_name || addon.name,
-                        price: Number(addon.price) || 0, currency: addon.currency,
-                        stripe_url: addon.stripe_payment_link_url || undefined,
+                {selectableAddons.length === 0 ? (
+                  <p className="text-muted-foreground text-center py-12">No add-ons available at this time.</p>
+                ) : (
+                  <div className="space-y-6">
+                    <div className="space-y-3">
+                      {selectableAddons.map(addon => {
+                        const price = Number(addon.price) || 0;
+                        const isSelected = selectedAddonIds.has(addon.id);
+                        return (
+                          <motion.div
+                            key={addon.id}
+                            initial={{ opacity: 0, y: 12 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            onClick={() => toggleAddonSelection(addon)}
+                            className={`rounded-xl border p-5 cursor-pointer transition-all ${
+                              isSelected
+                                ? "border-primary bg-primary/5 shadow-md"
+                                : "bg-card hover:shadow-sm hover:border-muted-foreground/20"
+                            }`}
+                          >
+                            <div className="flex items-start gap-4">
+                              <div className={`mt-0.5 w-5 h-5 rounded border-2 flex items-center justify-center shrink-0 transition-colors ${
+                                isSelected ? "bg-primary border-primary" : "border-muted-foreground/30"
+                              }`}>
+                                {isSelected && <Check className="w-3.5 h-3.5 text-primary-foreground" />}
+                              </div>
+                              <div className="flex-1 min-w-0">
+                                <div className="flex items-center justify-between gap-3">
+                                  <h3 className="font-semibold text-foreground">{addon.name}</h3>
+                                  <span className="text-lg font-bold text-foreground shrink-0">
+                                    ${price} <span className="text-sm font-normal text-muted-foreground">USD</span>
+                                  </span>
+                                </div>
+                                {addon.description && (
+                                  <p className="text-sm text-muted-foreground mt-1">{addon.description}</p>
+                                )}
+                              </div>
+                            </div>
+                          </motion.div>
+                        );
                       })}
-                    />
-                  ))}
-                  {addons.length === 0 && (
-                    <p className="text-muted-foreground col-span-2 text-center py-12">No add-ons available at this time.</p>
-                  )}
-                </div>
+                    </div>
+
+                    {/* Live Subtotal */}
+                    <div className="rounded-xl border bg-card p-5">
+                      <div className="flex items-center justify-between">
+                        <div>
+                          <p className="text-sm text-muted-foreground">
+                            {selectedAddonIds.size} add-on{selectedAddonIds.size !== 1 ? "s" : ""} selected
+                          </p>
+                          <p className="text-2xl font-bold text-foreground mt-1">
+                            ${addonSubtotal} <span className="text-sm font-normal text-muted-foreground">USD</span>
+                          </p>
+                        </div>
+                        {selectedAddonIds.size > 0 && (
+                          <Button
+                            onClick={handleCheckout}
+                            disabled={checkoutLoading}
+                            className="bg-primary text-primary-foreground hover:bg-primary/90"
+                          >
+                            {checkoutLoading ? "Processing..." : "Continue to Checkout"}
+                          </Button>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                )}
               </TabsContent>
 
               {/* BUNDLES */}
