@@ -157,7 +157,7 @@ const ProductCard = ({
     )}
     <div className="mt-4 pt-4 border-t flex items-center justify-between">
       <span className="text-xl font-bold text-foreground">
-        ${price} <span className="text-sm font-normal text-muted-foreground">USD{priceLabel ? ` / ${priceLabel}` : ""}</span>
+        ${isNaN(price) ? 0 : price} <span className="text-sm font-normal text-muted-foreground">USD{priceLabel ? ` / ${priceLabel}` : ""}</span>
       </span>
       <Button
         onClick={onAdd}
@@ -206,7 +206,7 @@ const CartSidebar = ({
   onCheckout: () => void;
   loading: boolean;
 }) => {
-  const total = items.reduce((s, i) => s + i.price, 0);
+  const total = items.reduce((s, i) => s + (isNaN(i.price) ? 0 : i.price), 0);
   return (
     <div className="sticky top-8 rounded-xl border bg-card p-6 shadow-sm">
       <div className="flex items-center gap-2 mb-4">
@@ -222,7 +222,7 @@ const CartSidebar = ({
             <div key={item.id} className="flex items-start justify-between gap-2 py-2 border-b last:border-0">
               <div>
                 <p className="text-sm font-medium text-foreground">{item.name}</p>
-                <p className="text-sm text-muted-foreground">${item.price} USD</p>
+                <p className="text-sm text-muted-foreground">${isNaN(item.price) ? 0 : item.price} USD</p>
               </div>
               <button onClick={() => onRemove(item.id)} className="text-muted-foreground hover:text-destructive mt-1">
                 <X className="w-4 h-4" />
@@ -261,7 +261,7 @@ const MobileCartBar = ({
   loading: boolean;
 }) => {
   const [expanded, setExpanded] = useState(false);
-  const total = items.reduce((s, i) => s + i.price, 0);
+  const total = items.reduce((s, i) => s + (isNaN(i.price) ? 0 : i.price), 0);
 
   if (items.length === 0) return null;
 
@@ -278,7 +278,7 @@ const MobileCartBar = ({
                 <div key={item.id} className="flex items-center justify-between">
                   <div>
                     <p className="text-sm font-medium text-foreground">{item.name}</p>
-                    <p className="text-xs text-muted-foreground">${item.price} USD</p>
+                    <p className="text-xs text-muted-foreground">${isNaN(item.price) ? 0 : item.price} USD</p>
                   </div>
                   <button onClick={() => onRemove(item.id)} className="text-muted-foreground hover:text-destructive">
                     <X className="w-4 h-4" />
@@ -498,12 +498,12 @@ export default function ClientUpgrades() {
                       key={addon.id}
                       name={addon.public_name || addon.name}
                       description={addon.description}
-                      price={Number(addon.price)}
+                      price={Number(addon.price) || 0}
                       inCart={isInCart(addon.id)}
                       onAdd={() => addToCart({
                         id: addon.id, type: "addon",
                         name: addon.public_name || addon.name,
-                        price: Number(addon.price), currency: addon.currency,
+                        price: Number(addon.price) || 0, currency: addon.currency,
                         stripe_url: addon.stripe_payment_link_url || undefined,
                       })}
                     />
@@ -527,13 +527,13 @@ export default function ClientUpgrades() {
                         key={bundle.id}
                         name={bundle.name}
                         description={bundle.description}
-                        price={Number(bundle.price)}
+                        price={Number(bundle.price) || 0}
                         inCart={isInCart(bundle.id)}
                         includedItems={items}
                         onAdd={() => addToCart({
                           id: bundle.id, type: "bundle",
                           name: bundle.name,
-                          price: Number(bundle.price), currency: bundle.currency,
+                          price: Number(bundle.price) || 0, currency: bundle.currency,
                           stripe_url: bundle.stripe_payment_link_url || undefined,
                         })}
                       />
@@ -571,13 +571,13 @@ export default function ClientUpgrades() {
                         key={item.id}
                         name={item.name}
                         description={item.description}
-                        price={Number(item.price)}
+                        price={Number(item.price) || 0}
                         priceLabel={item.price_label}
                         inCart={isInCart(item.id)}
                         onAdd={() => addToCart({
                           id: item.id, type: "service_item",
                           name: item.name,
-                          price: Number(item.price), currency: item.currency,
+                          price: Number(item.price) || 0, currency: item.currency,
                           stripe_url: item.stripe_payment_link_url || undefined,
                         })}
                       />
