@@ -247,7 +247,7 @@ const CartSidebar = ({ items, onRemove, onCheckout, loading, error }: {
 }) => {
   const total = items.reduce((s, i) => s + (isNaN(i.price) ? 0 : i.price), 0);
   return (
-    <div className="sticky top-20 rounded-xl border bg-card shadow-sm overflow-hidden">
+    <div className="sticky top-[72px] rounded-xl border bg-card shadow-sm overflow-hidden">
       <div className="px-5 py-4 border-b bg-muted/30">
         <div className="flex items-center gap-2">
           <ShoppingCart className="w-4 h-4 text-primary" />
@@ -507,10 +507,10 @@ export default function ClientUpgrades() {
       </div>
 
       {/* ─── CONTENT ─── */}
-      <div className="max-w-5xl mx-auto px-5 py-8">
+      <div className="max-w-5xl mx-auto px-5 pt-8 pb-8">
         <div className="flex gap-7 items-start">
           {/* LEFT */}
-          <div className="flex-1 min-w-0 space-y-10">
+          <div className="flex-1 min-w-0 space-y-8">
 
             {/* ── ADD-ONS ── */}
             <section>
