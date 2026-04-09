@@ -22,6 +22,10 @@ interface CartItem {
   currency: string;
   stripe_url?: string;
   priceLabel?: string;
+  billing_type?: string;
+  service_key?: string;
+  stripe_name?: string;
+  service_type?: string;
 }
 
 interface AccessLink {
@@ -61,7 +65,7 @@ const STATIC_BUNDLES: CartItem[] = [
     name: "Conversion Essentials",
     price: 199,
     currency: "USD",
-    stripe_url: "https://buy.stripe.com/eVq7sK6WMbU95vmfelfw40E",
+    billing_type: "one_time",
   },
   {
     id: "bundle-lead-generation",
@@ -69,7 +73,7 @@ const STATIC_BUNDLES: CartItem[] = [
     name: "Lead Generation Pack",
     price: 249,
     currency: "USD",
-    stripe_url: "https://buy.stripe.com/dRmbJ0epe7DT4ri6HPfw40D",
+    billing_type: "one_time",
   },
   {
     id: "bundle-conversion-upgrade",
@@ -77,7 +81,7 @@ const STATIC_BUNDLES: CartItem[] = [
     name: "Conversion Upgrade Pack",
     price: 299,
     currency: "USD",
-    stripe_url: "https://buy.stripe.com/bJedR84OE5vLga0c29fw40C",
+    billing_type: "one_time",
   },
 ];
 
@@ -108,7 +112,7 @@ const STATIC_HOSTING: (CartItem & { description: string })[] = [
     price: 15,
     currency: "USD",
     priceLabel: "month",
-    stripe_url: "https://buy.stripe.com/dRmeVcch62jz0b20jrfw40z",
+    billing_type: "recurring_monthly",
     description: "Managed hosting and ongoing support for your launched SwiftLift website.",
   },
   {
@@ -118,7 +122,7 @@ const STATIC_HOSTING: (CartItem & { description: string })[] = [
     price: 135,
     currency: "USD",
     priceLabel: "year",
-    stripe_url: "https://buy.stripe.com/fZubJ0bd2e2hbTKd6dfw40y",
+    billing_type: "recurring_yearly",
     description: "Managed hosting and ongoing support billed yearly.",
   },
   {
@@ -127,7 +131,7 @@ const STATIC_HOSTING: (CartItem & { description: string })[] = [
     name: "Additional Revision",
     price: 45,
     currency: "USD",
-    stripe_url: "https://buy.stripe.com/4gM3cugxm1fv0b2c29fw40x",
+    billing_type: "one_time",
     description: "Request a one-time website update without a monthly hosting plan.",
   },
   {
@@ -136,33 +140,10 @@ const STATIC_HOSTING: (CartItem & { description: string })[] = [
     name: "Reactivation Fee",
     price: 50,
     currency: "USD",
-    stripe_url: "https://buy.stripe.com/00w14m2Gw1fv7Du1nvfw40d",
+    billing_type: "one_time",
     description: "Restart a paused or inactive project.",
   },
 ];
-
-/* ═══════════════════════════════════════════════
-   ADDON STRIPE LINK MAP
-   ═══════════════════════════════════════════════ */
-
-const ADDON_STRIPE_LINKS: Record<string, string> = {
-  "FAQ Section": "https://buy.stripe.com/cNifZg3KA2jz7Du2rzfw40U",
-  "Google Map & Business Info": "https://buy.stripe.com/4gM6oG4OE8HXga03vDfw40T",
-  "Analytics & Tracking Setup": "https://buy.stripe.com/6oU7sK0yo3nD0b2c29fw40S",
-  "Review & Testimonial Section": "https://buy.stripe.com/9B69AS5SI4rHf5WaY5fw40R",
-  "Gallery Section": "https://buy.stripe.com/4gM14m6WM5vLbTK0jrfw40Q",
-  "Blog Setup": "https://buy.stripe.com/dRmcN4gxm1fv1f69U1fw40P",
-  "Bilingual Content Switch": "https://buy.stripe.com/3cI4gya8Y1fvcXO0jrfw40O",
-  "Multi-Language SEO Pages": "https://buy.stripe.com/3cIeVc6WMgapcXO4zHfw40N",
-  "Advanced Contact Form": "https://buy.stripe.com/7sYdR82Gwf6lf5W3vDfw40M",
-  "Booking Request Form": "https://buy.stripe.com/bJeaEW94U4rH8Hy5DLfw40L",
-  "Multi-Step Quote Form": "https://buy.stripe.com/3cIbJ06WMbU98Hy2rzfw40K",
-  "Onsite SEO Optimization": "https://buy.stripe.com/9B6cN494UcYd7Dufelfw40J",
-  "Performance Optimization": "https://buy.stripe.com/9B67sK94U0bre1S9U1fw40I",
-  "Brand Identity Package": "https://buy.stripe.com/fZu14m80Qf6l4rieahfw40H",
-  "Payment Integration": "https://buy.stripe.com/4gMeVc80Qf6l1f63vDfw40G",
-  "Membership & Client Portal": "https://buy.stripe.com/9B63cu1Cs2jz5vmeahfw40F",
-};
 
 /* ═══════════════════════════════════════════════
    STATUS SCREENS
@@ -439,7 +420,7 @@ export default function ClientUpgrades() {
     setCheckoutLoading(true);
     setCheckoutError(null);
 
-    // Track
+    // Track event (non-blocking)
     if (accessLink) {
       supabase.from("upgrade_access_events").insert({
         access_link_id: accessLink.id,
@@ -448,12 +429,50 @@ export default function ClientUpgrades() {
       }).then(() => {});
     }
 
-    if (cart.length === 1 && cart[0].stripe_url) {
-      window.open(cart[0].stripe_url, "_blank");
-    } else if (cart.length > 1) {
-      setCheckoutError("Multi-item checkout is not enabled yet. Please complete one upgrade purchase at a time.");
+    try {
+      const payload = {
+        token: tokenFromUrl,
+        project_id: accessLink?.project_id,
+        client_uuid: accessLink?.client_id,
+        organization_id: accessLink?.organization_id,
+        access_link_id: accessLink?.id,
+        items: cart.map(item => ({
+          id: item.id,
+          type: item.type,
+          service_key: item.service_key || null,
+          name: item.name,
+          stripe_name: item.stripe_name || item.name,
+          price_usd: item.price,
+          currency: item.currency || "USD",
+          billing_type: item.billing_type || "one_time",
+          service_type: item.service_type || item.type,
+        })),
+      };
+
+      const supabaseUrl = import.meta.env.VITE_SUPABASE_URL;
+      const supabaseKey = import.meta.env.VITE_SUPABASE_PUBLISHABLE_KEY;
+
+      const response = await fetch(`${supabaseUrl}/functions/v1/create-upgrade-checkout`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "apikey": supabaseKey,
+        },
+        body: JSON.stringify(payload),
+      });
+
+      const data = await response.json();
+
+      if (!response.ok || !data.url) {
+        throw new Error(data.error || "Unable to start checkout. Please try again.");
+      }
+
+      window.location.href = data.url;
+    } catch (err) {
+      const msg = err instanceof Error ? err.message : "Unable to start checkout. Please try again.";
+      setCheckoutError(msg);
+      setCheckoutLoading(false);
     }
-    setCheckoutLoading(false);
   };
 
   /* ── renders ── */
@@ -468,7 +487,10 @@ export default function ClientUpgrades() {
     name: a.name,
     price: Number(a.price_usd) || 0,
     currency: a.currency,
-    stripe_url: ADDON_STRIPE_LINKS[a.name] || a.stripe_payment_link_url || undefined,
+    billing_type: a.billing_type || "one_time",
+    service_key: a.service_key,
+    stripe_name: a.stripe_name || undefined,
+    service_type: "addon",
   }));
 
   return (
