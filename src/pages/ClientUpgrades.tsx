@@ -65,7 +65,7 @@ const STATIC_BUNDLES: CartItem[] = [
     name: "Conversion Essentials",
     price: 199,
     currency: "USD",
-    stripe_url: "https://buy.stripe.com/eVq7sK6WMbU95vmfelfw40E",
+    billing_type: "one_time",
   },
   {
     id: "bundle-lead-generation",
@@ -73,7 +73,7 @@ const STATIC_BUNDLES: CartItem[] = [
     name: "Lead Generation Pack",
     price: 249,
     currency: "USD",
-    stripe_url: "https://buy.stripe.com/dRmbJ0epe7DT4ri6HPfw40D",
+    billing_type: "one_time",
   },
   {
     id: "bundle-conversion-upgrade",
@@ -81,7 +81,7 @@ const STATIC_BUNDLES: CartItem[] = [
     name: "Conversion Upgrade Pack",
     price: 299,
     currency: "USD",
-    stripe_url: "https://buy.stripe.com/bJedR84OE5vLga0c29fw40C",
+    billing_type: "one_time",
   },
 ];
 
@@ -112,7 +112,7 @@ const STATIC_HOSTING: (CartItem & { description: string })[] = [
     price: 15,
     currency: "USD",
     priceLabel: "month",
-    stripe_url: "https://buy.stripe.com/dRmeVcch62jz0b20jrfw40z",
+    billing_type: "recurring_monthly",
     description: "Managed hosting and ongoing support for your launched SwiftLift website.",
   },
   {
@@ -122,7 +122,7 @@ const STATIC_HOSTING: (CartItem & { description: string })[] = [
     price: 135,
     currency: "USD",
     priceLabel: "year",
-    stripe_url: "https://buy.stripe.com/fZubJ0bd2e2hbTKd6dfw40y",
+    billing_type: "recurring_yearly",
     description: "Managed hosting and ongoing support billed yearly.",
   },
   {
@@ -131,7 +131,7 @@ const STATIC_HOSTING: (CartItem & { description: string })[] = [
     name: "Additional Revision",
     price: 45,
     currency: "USD",
-    stripe_url: "https://buy.stripe.com/4gM3cugxm1fv0b2c29fw40x",
+    billing_type: "one_time",
     description: "Request a one-time website update without a monthly hosting plan.",
   },
   {
@@ -140,7 +140,7 @@ const STATIC_HOSTING: (CartItem & { description: string })[] = [
     name: "Reactivation Fee",
     price: 50,
     currency: "USD",
-    stripe_url: "https://buy.stripe.com/00w14m2Gw1fv7Du1nvfw40d",
+    billing_type: "one_time",
     description: "Restart a paused or inactive project.",
   },
 ];
