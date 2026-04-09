@@ -453,6 +453,8 @@ export default function ClientUpgrades() {
     }
   };
 
+  if (isSuccess) return <SuccessScreen />;
+  if (isCanceled) return <CancelScreen />;
   if (state === "loading") return <LoadingSkeleton />;
   if (state === "invalid") return <InvalidScreen />;
 
