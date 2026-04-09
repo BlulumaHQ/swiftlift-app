@@ -543,28 +543,75 @@ export default function ClientUpgrades() {
                 </TabsTrigger>
               </TabsList>
 
-              {/* ADD-ONS */}
+              {/* ADD-ONS (checkbox-based selection from service_items) */}
               <TabsContent value="addons">
-                <div className="grid md:grid-cols-2 gap-5">
-                  {addons.map(addon => (
-                    <ProductCard
-                      key={addon.id}
-                      name={addon.public_name || addon.name}
-                      description={addon.description}
-                      price={Number(addon.price) || 0}
-                      inCart={isInCart(addon.id)}
-                      onAdd={() => addToCart({
-                        id: addon.id, type: "addon",
-                        name: addon.public_name || addon.name,
-                        price: Number(addon.price) || 0, currency: addon.currency,
-                        stripe_url: addon.stripe_payment_link_url || undefined,
+                {selectableAddons.length === 0 ? (
+                  <p className="text-muted-foreground text-center py-12">No add-ons available at this time.</p>
+                ) : (
+                  <div className="space-y-6">
+                    <div className="space-y-3">
+                      {selectableAddons.map(addon => {
+                        const price = Number(addon.price) || 0;
+                        const isSelected = selectedAddonIds.has(addon.id);
+                        return (
+                          <motion.div
+                            key={addon.id}
+                            initial={{ opacity: 0, y: 12 }}
+                            animate={{ opacity: 1, y: 0 }}
+                            onClick={() => toggleAddonSelection(addon)}
+                            className={`rounded-xl border p-5 cursor-pointer transition-all ${
+                              isSelected
+                                ? "border-primary bg-primary/5 shadow-md"
+                                : "bg-card hover:shadow-sm hover:border-muted-foreground/20"
+                            }`}
+                          >
+                            <div className="flex items-start gap-4">
+                              <div className={`mt-0.5 w-5 h-5 rounded border-2 flex items-center justify-center shrink-0 transition-colors ${
+                                isSelected ? "bg-primary border-primary" : "border-muted-foreground/30"
+                              }`}>
+                                {isSelected && <Check className="w-3.5 h-3.5 text-primary-foreground" />}
+                              </div>
+                              <div className="flex-1 min-w-0">
+                                <div className="flex items-center justify-between gap-3">
+                                  <h3 className="font-semibold text-foreground">{addon.name}</h3>
+                                  <span className="text-lg font-bold text-foreground shrink-0">
+                                    ${price} <span className="text-sm font-normal text-muted-foreground">USD</span>
+                                  </span>
+                                </div>
+                                {addon.description && (
+                                  <p className="text-sm text-muted-foreground mt-1">{addon.description}</p>
+                                )}
+                              </div>
+                            </div>
+                          </motion.div>
+                        );
                       })}
-                    />
-                  ))}
-                  {addons.length === 0 && (
-                    <p className="text-muted-foreground col-span-2 text-center py-12">No add-ons available at this time.</p>
-                  )}
-                </div>
+                    </div>
+
+                    {/* Live Subtotal */}
+                    <div className="rounded-xl border bg-card p-5">
+                      <div className="flex items-center justify-between">
+                        <div>
+                          <p className="text-sm text-muted-foreground">
+                            {selectedAddonIds.size} add-on{selectedAddonIds.size !== 1 ? "s" : ""} selected
+                          </p>
+                          <p className="text-2xl font-bold text-foreground mt-1">
+                            ${addonSubtotal} <span className="text-sm font-normal text-muted-foreground">USD</span>
+                          </p>
+                        </div>
+                        {selectedAddonIds.size > 0 && (
+                          <Button
+                            onClick={handleCheckout}
+                            disabled={checkoutLoading}
+                            className="bg-primary text-primary-foreground hover:bg-primary/90"
+                          >
+                            {checkoutLoading ? "Processing..." : "Continue to Checkout"}
+                          </Button>
+                        )}
+                      </div>
+                    </div>
+                  </div>
+                )}
               </TabsContent>
 
               {/* BUNDLES */}
