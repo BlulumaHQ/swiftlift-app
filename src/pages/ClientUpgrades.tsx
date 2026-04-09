@@ -22,6 +22,10 @@ interface CartItem {
   currency: string;
   stripe_url?: string;
   priceLabel?: string;
+  billing_type?: string;
+  service_key?: string;
+  stripe_name?: string;
+  service_type?: string;
 }
 
 interface AccessLink {
