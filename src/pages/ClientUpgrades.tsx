@@ -338,6 +338,8 @@ export default function ClientUpgrades() {
   const [bundles, setBundles] = useState<Bundle[]>([]);
   const [serviceItems, setServiceItems] = useState<ServiceItem[]>([]);
   const [bundleItems, setBundleItems] = useState<BundleItem[]>([]);
+  const [selectableAddons, setSelectableAddons] = useState<SelectableAddon[]>([]);
+  const [selectedAddonIds, setSelectedAddonIds] = useState<Set<string>>(new Set());
   const [cart, setCart] = useState<CartItem[]>([]);
   const [checkoutLoading, setCheckoutLoading] = useState(false);
   const [checkoutError, setCheckoutError] = useState<string | null>(null);
