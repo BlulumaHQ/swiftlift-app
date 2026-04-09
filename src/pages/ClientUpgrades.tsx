@@ -414,7 +414,7 @@ export default function ClientUpgrades() {
             id: addon.id,
             type: "service_item" as const,
             name: addon.name,
-            price: Number(addon.price) || 0,
+            price: Number(addon.price_usd) || 0,
             currency: addon.currency,
             stripe_url: addon.stripe_payment_link_url || undefined,
           }];
