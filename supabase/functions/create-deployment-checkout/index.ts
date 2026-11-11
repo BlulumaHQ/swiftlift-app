@@ -24,12 +24,12 @@ serve(async (req) => {
     const effectiveHostingPlan = hostingPlan || "free";
 
     // Price mappings
-    // One-time add-ons, priced to match src/lib/pricing.ts (USD cents)
-    const ADDONS: Record<string, { name: string; amount: number }> = {
-      performance: { name: "SwiftLift – Add-On – Performance Optimization", amount: 19900 },
-      seo: { name: "SwiftLift – Add-On – SEO Optimization", amount: 29900 },
-      social: { name: "SwiftLift – Add-On – Social Media Launch Kit", amount: 29900 },
-      brand: { name: "SwiftLift – Add-On – Brand Identity Package", amount: 49900 },
+    // One-time add-ons — SWIFTLIFT DESIGN live Stripe prices
+    const ADDON_PRICES: Record<string, string> = {
+      performance: "price_1TJuONAAeDDkmZmNuOtNHNsv", // Performance Optimization $99
+      seo: "price_1TJuNqAAeDDkmZmNmoPuXUf3", // Onsite SEO Optimization $99
+      social: "price_1UaZrGAAeDDkmZmNmr0a98OK", // Social Media Launch Kit $299
+      brand: "price_1TJuPhAAeDDkmZmNfSmgb5O1", // Brand Identity Package $299
     };
 
     const HOSTING_PRICES: Record<string, string> = {
@@ -62,13 +62,9 @@ serve(async (req) => {
 
     // Build line items for one-time add-ons
     const addonLineItems = (selectedAddons || [])
-      .filter((id: string) => ADDONS[id])
+      .filter((id: string) => ADDON_PRICES[id])
       .map((id: string) => ({
-        price_data: {
-          currency: "usd",
-          product_data: { name: ADDONS[id].name },
-          unit_amount: ADDONS[id].amount,
-        },
+        price: ADDON_PRICES[id],
         quantity: 1,
       }));
 

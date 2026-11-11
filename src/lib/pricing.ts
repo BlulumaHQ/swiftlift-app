@@ -65,13 +65,13 @@ export const PRICING = {
     {
       key: "performance-optimization",
       name: "Performance Optimization",
-      price: 199,
+      price: 99,
       type: "one_time",
     },
     {
       key: "seo-optimization",
       name: "SEO Optimization",
-      price: 299,
+      price: 99,
       type: "one_time",
     },
     {
@@ -83,7 +83,7 @@ export const PRICING = {
     {
       key: "brand-identity-package",
       name: "Brand Identity Package",
-      price: 499,
+      price: 299,
       type: "one_time",
     },
   ],
@@ -256,10 +256,10 @@ export const STRIPE_LINKS: Record<string, string> = {
   "growth": "https://buy.stripe.com/dRm7sKgxm8HX2ja0jrfw40k",
 
   // Add-ons
-  "performance-optimization": "https://buy.stripe.com/8x2cN4fti3nD7Duc29fw40j",
-  "seo-optimization": "https://buy.stripe.com/5kQ4gy5SIgapga0eahfw40i",
-  "social-media-launch-kit": "https://buy.stripe.com/7sY9AS80Q6zP6zq2rzfw40r",
-  "brand-identity-package": "https://buy.stripe.com/28EaEWfti9M1bTK5DLfw40e",
+  "performance-optimization": "https://buy.stripe.com/9B67sK94U0bre1S9U1fw40I",
+  "seo-optimization": "https://buy.stripe.com/9B6cN494UcYd7Dufelfw40J",
+  "social-media-launch-kit": "https://buy.stripe.com/fZuaEW6WM1fv4rid6dfw40W",
+  "brand-identity-package": "https://buy.stripe.com/fZu14m80Qf6l4rieahfw40H",
 
   // Features
   "review-testimonial-section": "https://buy.stripe.com/aFa14m94U1fv9LC0jrfw40p",
