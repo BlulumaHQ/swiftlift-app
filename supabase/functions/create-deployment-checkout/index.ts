@@ -24,15 +24,17 @@ serve(async (req) => {
     const effectiveHostingPlan = hostingPlan || "free";
 
     // Price mappings
-    const ADDON_PRICES: Record<string, string> = {
-      brand: "price_1T4mVXAshElS4tkSnY5dpg7L",
-      seo: "price_1T4mVsAshElS4tkS2J8V3KQn",
-      performance: "price_1T4mWWAshElS4tkS3pywho2F",
+    // One-time add-ons, priced to match src/lib/pricing.ts (USD cents)
+    const ADDONS: Record<string, { name: string; amount: number }> = {
+      performance: { name: "SwiftLift – Add-On – Performance Optimization", amount: 19900 },
+      seo: { name: "SwiftLift – Add-On – SEO Optimization", amount: 29900 },
+      social: { name: "SwiftLift – Add-On – Social Media Launch Kit", amount: 29900 },
+      brand: { name: "SwiftLift – Add-On – Brand Identity Package", amount: 49900 },
     };
 
     const HOSTING_PRICES: Record<string, string> = {
-      monthly: "price_1T4mUwAshElS4tkSnm6D8ndo",
-      yearly: "price_1T4mVDAshElS4tkSNlGoTPei",
+      monthly: "price_1TEIOoAAeDDkmZmN8nWCNODo", // SwiftLift – Hosting – Managed Monthly $15
+      yearly: "price_1TEIPlAAeDDkmZmNf03uuZg2", // SwiftLift – Hosting – Managed Yearly $135
     };
 
     const origin = req.headers.get("origin") || "https://swiftlift.app";
@@ -60,9 +62,13 @@ serve(async (req) => {
 
     // Build line items for one-time add-ons
     const addonLineItems = (selectedAddons || [])
-      .filter((id: string) => ADDON_PRICES[id])
+      .filter((id: string) => ADDONS[id])
       .map((id: string) => ({
-        price: ADDON_PRICES[id],
+        price_data: {
+          currency: "usd",
+          product_data: { name: ADDONS[id].name },
+          unit_amount: ADDONS[id].amount,
+        },
         quantity: 1,
       }));
 

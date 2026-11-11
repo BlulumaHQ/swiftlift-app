@@ -8,8 +8,8 @@ const corsHeaders = {
 };
 
 const TIER_PRICES: Record<string, string> = {
-  starter: "price_1T4mJHAshElS4tkS4wn6RUDG",
-  growth: "price_1T56IAAshElS4tkSqFngKtYR",
+  starter: "price_1TDtS2AAeDDkmZmNXkqRAqOA", // SwiftLift – Version A Launch Ready Website $299
+  growth: "price_1TDtS1AAeDDkmZmNFtiteVM4", // SwiftLift – Version B Sales Focused Website $499
 };
 
 serve(async (req) => {
