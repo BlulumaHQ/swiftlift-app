@@ -13,8 +13,8 @@ serve(async (req) => {
   try {
     const { clientName, businessName, clientEmail, selectedAddons } = await req.json();
 
-    const RESEND_API_KEY = Deno.env.get("RESEND_API_KEY");
-    const ADMIN_EMAIL = Deno.env.get("ADMIN_EMAIL");
+    const RESEND_API_KEY = (Deno.env.get("RESEND_KEY_SWIFTLIFT") ?? Deno.env.get("RESEND_API_KEY"));
+    const ADMIN_EMAIL = (Deno.env.get("ADMIN_EMAIL") ?? "support@swiftlift.app");
 
     if (!RESEND_API_KEY || !ADMIN_EMAIL) {
       throw new Error("Missing email configuration");

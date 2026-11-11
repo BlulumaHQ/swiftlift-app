@@ -35,7 +35,7 @@ serve(async (req) => {
       throw new Error("No valid add-ons selected");
     }
 
-    const origin = req.headers.get("origin") || "https://preview--swift-rebuild-master.lovable.app";
+    const origin = req.headers.get("origin") || "https://swiftlift.app";
 
     const metadata = {
       payment_type: "revision",

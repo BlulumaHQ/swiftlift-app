@@ -5,7 +5,7 @@ import Footer from "@/components/Footer";
 import { motion } from "framer-motion";
 import { useState } from "react";
 import { Send, Check } from "lucide-react";
-import { supabase } from "@/integrations/supabase/client";
+import { externalSupabase as supabase } from "@/lib/externalSupabase";
 
 const SupportContent = () => {
   const { lang } = useLanguage();

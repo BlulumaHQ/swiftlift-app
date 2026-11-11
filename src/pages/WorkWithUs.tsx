@@ -2,7 +2,7 @@ import { useState } from "react";
 import { LanguageProvider, useLanguage } from "@/contexts/LanguageContext";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import { supabase } from "@/integrations/supabase/client";
+import { externalSupabase as supabase } from "@/lib/externalSupabase";
 
 const WorkWithUsContent = () => {
   const { lang } = useLanguage();

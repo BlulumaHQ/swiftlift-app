@@ -35,7 +35,7 @@ serve(async (req) => {
       yearly: "price_1T4mVDAshElS4tkSNlGoTPei",
     };
 
-    const origin = req.headers.get("origin") || "https://preview--swift-rebuild-master.lovable.app";
+    const origin = req.headers.get("origin") || "https://swiftlift.app";
     const billingInterval = effectiveHostingPlan === "monthly" ? "monthly" : effectiveHostingPlan === "yearly" ? "yearly" : "none";
 
     // ✅ Use one dynamic success page

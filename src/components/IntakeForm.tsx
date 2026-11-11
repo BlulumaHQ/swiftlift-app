@@ -6,7 +6,7 @@ import { motion, AnimatePresence, useMotionValue, useTransform, useSpring } from
 import { useState, useEffect, useRef } from "react";
 import { useSearchParams } from "react-router-dom";
 import { Info, X, Check } from "lucide-react";
-import { supabase } from "@/integrations/supabase/client";
+import { externalSupabase as supabase } from "@/lib/externalSupabase";
 import { externalSupabase } from "@/lib/externalSupabase";
 
 type FormSubmissionsDebug = {

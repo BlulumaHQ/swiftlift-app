@@ -8,7 +8,7 @@ import Footer from "@/components/Footer";
 import Preloader from "@/components/Preloader";
 import { Check, Plus, Star, ChevronLeft, ChevronRight as ChevronRightIcon, Shield, Loader2, CheckCircle2, Clock, Mail, Copy, Palette, Globe, ArrowRight } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
-import { supabase } from "@/integrations/supabase/client";
+import { externalSupabase as supabase } from "@/lib/externalSupabase";
 import { externalSupabase } from "@/lib/externalSupabase";
 import { getOrCreateProjectId } from "@/lib/projectId";
 

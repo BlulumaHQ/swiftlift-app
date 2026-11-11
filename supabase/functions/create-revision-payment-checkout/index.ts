@@ -24,7 +24,7 @@ serve(async (req) => {
     }
 
     const origin =
-      req.headers.get("origin") || "https://preview--swift-rebuild-master.lovable.app";
+      req.headers.get("origin") || "https://swiftlift.app";
 
     const metadata: Record<string, string> = {
       payment_type: "revision_payment",

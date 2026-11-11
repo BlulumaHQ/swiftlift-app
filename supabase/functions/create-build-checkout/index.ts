@@ -27,7 +27,7 @@ serve(async (req) => {
     const resolvedTier = tier === "starter" ? "starter" : "growth";
     const priceId = TIER_PRICES[resolvedTier];
 
-    const origin = req.headers.get("origin") || "https://preview--swift-rebuild-master.lovable.app";
+    const origin = req.headers.get("origin") || "https://swiftlift.app";
 
     const metadata: Record<string, string> = {
       payment_type: "build",

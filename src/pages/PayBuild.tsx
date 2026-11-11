@@ -1,6 +1,6 @@
 import { useState, useEffect, useMemo } from "react";
 import { useSearchParams } from "react-router-dom";
-import { supabase } from "@/integrations/supabase/client";
+import { externalSupabase as supabase } from "@/lib/externalSupabase";
 import { PRICING, formatPrice } from "@/lib/pricing";
 import { LanguageProvider } from "@/contexts/LanguageContext";
 import Header from "@/components/Header";

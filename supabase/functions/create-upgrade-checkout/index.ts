@@ -180,7 +180,7 @@ serve(async (req) => {
     }
 
     // Build success/cancel URLs
-    const origin = req.headers.get("origin") || Deno.env.get("PUBLIC_SITE_URL") || "https://swiftlift-conversion-version.lovable.app";
+    const origin = req.headers.get("origin") || (Deno.env.get("PUBLIC_SITE_URL") ?? "https://swiftlift.app") ;
     const successUrl = `${origin}/client-upgrades?token=${encodeURIComponent(token)}&success=true`;
     const cancelUrl = `${origin}/client-upgrades?token=${encodeURIComponent(token)}&canceled=true`;
 

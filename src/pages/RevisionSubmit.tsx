@@ -5,7 +5,7 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { Check, User, Mail, Hash, Link as LinkIcon, Upload, AlertCircle } from "lucide-react";
 import { motion } from "framer-motion";
-import { supabase } from "@/integrations/supabase/client";
+import { externalSupabase as supabase } from "@/lib/externalSupabase";
 
 type PlanTier = "L" | "LP" | "G" | "GP" | "C" | "unknown";
 
