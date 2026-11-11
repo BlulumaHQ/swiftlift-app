@@ -34,6 +34,7 @@ interface Bundle {
   price: string;
   originalPrice: string;
   badge?: string;
+  stripeKey: string;
 }
 
 const upgrades: Addon[] = [
@@ -88,46 +89,49 @@ const upgrades: Addon[] = [
 
 const bundles: Bundle[] = [
   {
-    icon: Target,
-    title: { en: "Lead Conversion Pack", zh: "潛在客戶轉化套餐" },
-    tagline: { en: "Turn visitors into leads", zh: "將訪客轉化為潛在客戶" },
-    desc: { en: "Everything you need to capture and convert website visitors into real inquiries. Best for service businesses that rely on inbound leads.", zh: "捕獲和轉化網站訪客為真實詢盤所需的一切。最適合依賴入站潛在客戶的服務型企業。" },
+    icon: Shield,
+    title: { en: "Conversion Essentials", zh: "轉化基礎套餐" },
+    tagline: { en: "Build trust and capture better inquiries", zh: "建立信任，獲取更好的詢問" },
+    desc: { en: "Essential features to improve trust and basic lead conversion. Ideal for any service business getting started.", zh: "提升信任度與基本潛客轉化的必備功能。適合剛起步的服務型企業。" },
     includes: [
-      { en: "Performance Optimization ($199)", zh: "性能優化（$199）" },
-      { en: "SEO Optimization ($299)", zh: "SEO優化（$299）" },
-      { en: "Advanced Contact Form ($149)", zh: "進階聯繫表單（$149）" },
+      { en: "Review / Testimonial Section ($49)", zh: "評價展示區塊（$49）" },
+      { en: "Advanced Contact Form ($129)", zh: "進階聯繫表單（$129）" },
+      { en: "FAQ Section ($49)", zh: "常見問題區塊（$49）" },
     ],
-    price: "$549 USD",
-    originalPrice: "$647 USD",
-    badge: "Save $98",
+    price: "$199 USD",
+    originalPrice: "$227 USD",
+    badge: "Save $28",
+    stripeKey: "bundle-conversion-essentials",
   },
   {
-    icon: Shield,
-    title: { en: "Trust Builder Pack", zh: "信任建設套餐" },
-    tagline: { en: "Build credibility from day one", zh: "從第一天就建立信譽" },
-    desc: { en: "Establish instant trust with reviews, brand consistency, and professional polish. Ideal for businesses in competitive industries.", zh: "通過評價、品牌一致性和專業打磨建立即時信任。適合競爭激烈行業的企業。" },
+    icon: Target,
+    title: { en: "Lead Generation Pack", zh: "潛客獲取套餐" },
+    tagline: { en: "Turn visitors into leads", zh: "將訪客轉化為潛在客戶" },
+    desc: { en: "Core system for capturing and managing incoming inquiries. Best for service businesses that rely on inbound leads.", zh: "捕獲和管理詢問的核心系統。最適合依賴入站潛在客戶的服務型企業。" },
     includes: [
-      { en: "Brand Identity Package ($499)", zh: "品牌形象套餐（$499）" },
-      { en: "Review / Testimonial Section ($99)", zh: "評價展示區塊（$99）" },
-      { en: "FAQ Section ($79)", zh: "常見問題區塊（$79）" },
+      { en: "Advanced Contact Form ($129)", zh: "進階聯繫表單（$129）" },
+      { en: "Booking Request Form ($149)", zh: "預約請求表單（$149）" },
+      { en: "Review / Testimonial Section ($49)", zh: "評價展示區塊（$49）" },
     ],
-    price: "$579 USD",
-    originalPrice: "$677 USD",
-    badge: "Save $98",
+    price: "$249 USD",
+    originalPrice: "$327 USD",
+    badge: "Save $78",
+    stripeKey: "bundle-lead-generation-pack",
   },
   {
     icon: Rocket,
-    title: { en: "Launch Upgrade Pack", zh: "上線升級套餐" },
-    tagline: { en: "Launch with maximum impact", zh: "以最大影響力上線" },
-    desc: { en: "The complete upgrade package for businesses that want to launch strong. Covers performance, visibility, and social presence.", zh: "適合想要強勢上線的企業的完整升級套餐。涵蓋性能、可見度和社交媒體存在。" },
+    title: { en: "Conversion Upgrade Pack", zh: "轉化升級套餐" },
+    tagline: { en: "Higher quality leads, better inquiry flow", zh: "更高質量的潛客，更順暢的詢問流程" },
+    desc: { en: "Advanced conversion setup for businesses that want higher quality leads and a better inquiry flow.", zh: "為想要更高質量潛客與更佳詢問流程的企業提供進階轉化設置。" },
     includes: [
-      { en: "Performance Optimization ($199)", zh: "性能優化（$199）" },
-      { en: "SEO Optimization ($299)", zh: "SEO優化（$299）" },
-      { en: "Social Media Launch Kit ($299)", zh: "社交媒體啟動套件（$299）" },
+      { en: "Advanced Contact Form ($129)", zh: "進階聯繫表單（$129）" },
+      { en: "Booking Request Form ($149)", zh: "預約請求表單（$149）" },
+      { en: "Multi-Step Quote Form ($149)", zh: "多步驟報價表單（$149）" },
     ],
-    price: "$699 USD",
-    originalPrice: "$797 USD",
-    badge: "Best Value — Save $98",
+    price: "$299 USD",
+    originalPrice: "$427 USD",
+    badge: "Best Value — Save $128",
+    stripeKey: "bundle-conversion-upgrade-pack",
   },
 ];
 
@@ -297,13 +301,15 @@ const AddonsContent = () => {
                     </div>
 
                     <div className="mt-5">
-                      <Link
-                        to="/#contact"
+                      <a
+                        href={STRIPE_LINKS[bundle.stripeKey]}
+                        target="_blank"
+                        rel="noopener noreferrer"
                         className="w-full inline-flex items-center justify-center rounded-full px-6 py-3 text-sm font-semibold text-white transition-all hover:scale-[1.02] active:scale-[0.97]"
                         style={{ backgroundColor: "#7F37AE" }}
                       >
                         {lang === "en" ? "Get This Bundle" : "獲取此套餐"}
-                      </Link>
+                      </a>
                     </div>
                   </div>
                 </ScrollReveal>

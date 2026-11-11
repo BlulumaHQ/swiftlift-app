@@ -91,19 +91,19 @@ export const PRICING = {
     {
       key: "review-testimonial-section",
       name: "Review / Testimonial Section",
-      price: 99,
+      price: 49,
       type: "one_time",
     },
     {
       key: "faq-section",
       name: "FAQ Section",
-      price: 79,
+      price: 49,
       type: "one_time",
     },
     {
       key: "advanced-contact-form",
       name: "Advanced Contact Form",
-      price: 149,
+      price: 129,
       type: "one_time",
     },
     {
@@ -115,31 +115,31 @@ export const PRICING = {
     {
       key: "multi-step-quote-form",
       name: "Multi-Step Quote Form",
-      price: 199,
+      price: 149,
       type: "one_time",
     },
     {
       key: "basic-bilingual-setup",
       name: "Basic Bilingual Setup",
-      price: 199,
+      price: 149,
       type: "one_time",
     },
     {
       key: "blog-setup",
       name: "Blog Setup",
-      price: 199,
+      price: 149,
       type: "one_time",
     },
     {
       key: "gallery-section",
       name: "Gallery Section",
-      price: 129,
+      price: 99,
       type: "one_time",
     },
     {
       key: "google-map-hours-service-area",
       name: "Google Map / Hours / Service Area",
-      price: 99,
+      price: 49,
       type: "one_time",
     },
     {
@@ -181,7 +181,7 @@ export const PRICING = {
     {
       key: "payment-integration",
       name: "Payment Integration",
-      price: 299,
+      price: 249,
       type: "starting_at",
     },
   ],
@@ -262,20 +262,20 @@ export const STRIPE_LINKS: Record<string, string> = {
   "brand-identity-package": "https://buy.stripe.com/fZu14m80Qf6l4rieahfw40H",
 
   // Features
-  "review-testimonial-section": "https://buy.stripe.com/aFa14m94U1fv9LC0jrfw40p",
-  "faq-section": "https://buy.stripe.com/8x2fZg0yof6l5vmd6dfw40c",
-  "advanced-contact-form": "https://buy.stripe.com/3cI6oGepe7DT1f6eahfw40b",
-  "booking-request-form": "https://buy.stripe.com/fZu3cua8YbU90b20jrfw408",
-  "multi-step-quote-form": "https://buy.stripe.com/3cI9ASgxm6zP2jac29fw40a",
-  "basic-bilingual-setup": "https://buy.stripe.com/4gMdR8bd2cYd1f6felfw406",
-  "blog-setup": "https://buy.stripe.com/bJecN42Gwf6lf5WaY5fw403",
-  "gallery-section": "https://buy.stripe.com/dRm7sK5SI1fv4rigipfw405",
-  "google-map-hours-service-area": "https://buy.stripe.com/dRmbJ0a8Ygap6zq8PXfw404",
-  "analytics-pixel-tag-setup": "https://buy.stripe.com/7sYdR8epe8HX0b2felfw407",
+  "review-testimonial-section": "https://buy.stripe.com/9B69AS5SI4rHf5WaY5fw40R",
+  "faq-section": "https://buy.stripe.com/cNifZg3KA2jz7Du2rzfw40U",
+  "advanced-contact-form": "https://buy.stripe.com/7sYdR82Gwf6lf5W3vDfw40M",
+  "booking-request-form": "https://buy.stripe.com/bJeaEW94U4rH8Hy5DLfw40L",
+  "multi-step-quote-form": "https://buy.stripe.com/3cIbJ06WMbU98Hy2rzfw40K",
+  "basic-bilingual-setup": "https://buy.stripe.com/3cI4gya8Y1fvcXO0jrfw40O",
+  "blog-setup": "https://buy.stripe.com/dRmcN4gxm1fv1f69U1fw40P",
+  "gallery-section": "https://buy.stripe.com/4gM14m6WM5vLbTK0jrfw40Q",
+  "google-map-hours-service-area": "https://buy.stripe.com/4gM6oG4OE8HXga03vDfw40T",
+  "analytics-pixel-tag-setup": "https://buy.stripe.com/6oU7sK0yo3nD0b2c29fw40S",
   "ecommerce-integration": "https://buy.stripe.com/dRmcN40yogap7Dufelfw409",
-  "membership-client-portal": "https://buy.stripe.com/8x29ASgxm6zP4ri5DLfw401",
+  "membership-client-portal": "https://buy.stripe.com/9B63cu1Cs2jz5vmeahfw40F",
   "inventory-directory-database": "https://buy.stripe.com/fZu28qepe7DT2jac29fw400",
-  "payment-integration": "https://buy.stripe.com/7sYaEW6WM4rHaPGd6dfw402",
+  "payment-integration": "https://buy.stripe.com/4gMeVc80Qf6l1f63vDfw40G",
 
   // Fees
   "reactivation-fee": "https://buy.stripe.com/00w14m2Gw1fv7Du1nvfw40d",
@@ -285,7 +285,11 @@ export const STRIPE_LINKS: Record<string, string> = {
   "managed-monthly": "https://buy.stripe.com/dRmeVcch62jz0b20jrfw40z",
   "managed-yearly": "https://buy.stripe.com/fZubJ0bd2e2hbTKd6dfw40y",
 
-  // Bundles
+  // Bundles (current, match /addons and /features)
+  "bundle-conversion-essentials": "https://buy.stripe.com/eVq7sK6WMbU95vmfelfw40E",
+  "bundle-lead-generation-pack": "https://buy.stripe.com/dRmbJ0epe7DT4ri6HPfw40D",
+  "bundle-conversion-upgrade-pack": "https://buy.stripe.com/bJedR84OE5vLga0c29fw40C",
+  // Bundles (legacy, inactive in Stripe)
   "bundle-website-essentials": "https://buy.stripe.com/28E7sK0yo5vLe1S0jrfw40w",
   "bundle-advanced-inquiry": "https://buy.stripe.com/fZucN45SI0braPG0jrfw40v",
   "bundle-conversion-booster": "https://buy.stripe.com/4gM28q4OE3nDaPG3vDfw40u",

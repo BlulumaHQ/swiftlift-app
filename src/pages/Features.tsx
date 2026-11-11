@@ -50,9 +50,9 @@ const advancedSystems = [
 ];
 
 const bundlesData = [
-  { icon: Package, title: { en: "Conversion Essentials", zh: "轉化基礎套餐" }, desc: { en: "FAQ Section · Review / Testimonial · Google Map / Hours · Analytics Setup", zh: "常見問題 · 評價展示 · Google地圖/營業時間 · 分析設置" }, price: "$199 USD", savings: { en: "Save $77", zh: "節省 $77" } },
-  { icon: Target, title: { en: "Lead Generation Pack", zh: "潛客獲取套餐" }, desc: { en: "Advanced Contact Form · Booking Request Form", zh: "進階聯繫表單 · 預約請求表單" }, price: "$249 USD", savings: { en: "Save $29", zh: "節省 $29" } },
-  { icon: TrendingUp, title: { en: "Conversion Upgrade Pack", zh: "轉化升級套餐" }, desc: { en: "Advanced Contact Form · Multi-Step Quote Form · Review / Testimonial · FAQ Section", zh: "進階聯繫表單 · 多步驟報價表單 · 評價展示 · 常見問題" }, price: "$299 USD", savings: { en: "Save $128", zh: "節省 $128" } },
+  { icon: Package, title: { en: "Conversion Essentials", zh: "轉化基礎套餐" }, desc: { en: "Review / Testimonial · Advanced Contact Form · FAQ Section", zh: "評價展示 · 進階聯繫表單 · 常見問題" }, price: "$199 USD", savings: { en: "Save $28", zh: "節省 $28" } },
+  { icon: Target, title: { en: "Lead Generation Pack", zh: "潛客獲取套餐" }, desc: { en: "Advanced Contact Form · Booking Request Form · Review / Testimonial", zh: "進階聯繫表單 · 預約請求表單 · 評價展示" }, price: "$249 USD", savings: { en: "Save $78", zh: "節省 $78" } },
+  { icon: TrendingUp, title: { en: "Conversion Upgrade Pack", zh: "轉化升級套餐" }, desc: { en: "Advanced Contact Form · Booking Request Form · Multi-Step Quote Form", zh: "進階聯繫表單 · 預約請求表單 · 多步驟報價表單" }, price: "$299 USD", savings: { en: "Save $128", zh: "節省 $128" } },
 ];
 
 const hostingSupport = [
