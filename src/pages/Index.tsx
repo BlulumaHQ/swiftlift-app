@@ -185,6 +185,7 @@ const SuccessSection = ({ email, clientId, isDark }: { email: string; clientId?:
 /* ── Multi-Step Intake Form ── */
 const MultiStepIntake = ({ variant = "hero" }: { variant?: "hero" | "cta" }) => {
   const { lang } = useLanguage();
+  const [formLoadedAt] = useState(() => Date.now());
   const [step, setStep] = useState(1);
   const [url, setUrl] = useState("");
   const [submitting, setSubmitting] = useState(false);
@@ -251,6 +252,7 @@ const MultiStepIntake = ({ variant = "hero" }: { variant?: "hero" | "cta" }) => 
     setSubmitting(true);
     setSubmitError("");
     const fd = new FormData(e.currentTarget);
+    const websiteHp = String(fd.get("website_hp") || "");
     const email = fd.get("email") as string;
     const businessName = fd.get("businessName") as string;
     const websiteYouLike = fd.get("websiteYouLike") as string;
@@ -310,6 +312,8 @@ const MultiStepIntake = ({ variant = "hero" }: { variant?: "hero" | "cta" }) => 
       try {
         await supabase.functions.invoke("send-intake-confirmation", {
           body: {
+            _t: formLoadedAt,
+            website_hp: websiteHp,
             client_name: businessName,
             business_name: businessName,
             client_email: email,
@@ -414,6 +418,10 @@ const MultiStepIntake = ({ variant = "hero" }: { variant?: "hero" | "cta" }) => 
           : "告訴我們將預覽發送到哪裡以及您喜歡的風格方向，以便我們為您的業務創建更量身定制的結果。"}
       </p>
       <form onSubmit={handleSubmit} className="space-y-4">
+        <div aria-hidden="true" style={{ position: "absolute", left: "-10000px", top: "auto", width: 1, height: 1, overflow: "hidden" }}>
+          <label htmlFor="website_hp">Leave this field empty</label>
+          <input type="text" id="website_hp" name="website_hp" tabIndex={-1} autoComplete="off" defaultValue="" />
+        </div>
         <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
           <div>
             <label className={`block text-xs font-medium mb-1.5 ${isDark ? "text-white/70" : "text-foreground"}`}>

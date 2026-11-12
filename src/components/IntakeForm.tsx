@@ -53,6 +53,7 @@ const IntakeForm = () => {
   const { lang } = useLanguage();
   const intake = translations.intake;
   const fields = intake.fields;
+  const [formLoadedAt] = useState(() => Date.now());
   const [submitted, setSubmitted] = useState(false);
   const [submittedClientId, setSubmittedClientId] = useState("");
   const [submitting, setSubmitting] = useState(false);
@@ -223,6 +224,8 @@ const IntakeForm = () => {
       try {
         await supabase.functions.invoke("send-intake-confirmation", {
           body: {
+            _t: formLoadedAt,
+            website_hp: (document.getElementById("website_hp") as HTMLInputElement | null)?.value || "",
             client_name: name,
             business_name: businessName,
             client_email: email,
@@ -382,6 +385,10 @@ const IntakeForm = () => {
               onSubmit={handleSubmit}
               className="mt-10 bg-background rounded-3xl p-8 md:p-10 border border-border/60 shadow-2xl"
             >
+              <div aria-hidden="true" style={{ position: "absolute", left: "-10000px", top: "auto", width: 1, height: 1, overflow: "hidden" }}>
+                <label htmlFor="website_hp">Leave this field empty</label>
+                <input type="text" id="website_hp" name="website_hp" tabIndex={-1} autoComplete="off" defaultValue="" />
+              </div>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
                 <div>
                   <label className="block text-sm font-medium text-foreground mb-1.5">

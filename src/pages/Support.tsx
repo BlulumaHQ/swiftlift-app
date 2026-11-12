@@ -9,6 +9,7 @@ import { externalSupabase as supabase } from "@/lib/externalSupabase";
 
 const SupportContent = () => {
   const { lang } = useLanguage();
+  const [formLoadedAt] = useState(() => Date.now());
   const [submitted, setSubmitted] = useState(false);
   const [submitting, setSubmitting] = useState(false);
   const [submitError, setSubmitError] = useState("");
@@ -26,6 +27,8 @@ const SupportContent = () => {
     try {
       const { error } = await supabase.functions.invoke("send-intake-confirmation", {
         body: {
+            _t: formLoadedAt,
+            website_hp: (document.getElementById("website_hp") as HTMLInputElement | null)?.value || "",
           client_name: formData.get("name") as string,
           business_name: formData.get("subject") as string || "Support Request",
           client_email: formData.get("email") as string,
@@ -108,6 +111,10 @@ const SupportContent = () => {
             </div>
           ) : (
             <form onSubmit={handleSubmit} className="space-y-5">
+              <div aria-hidden="true" style={{ position: "absolute", left: "-10000px", top: "auto", width: 1, height: 1, overflow: "hidden" }}>
+                <label htmlFor="website_hp">Leave this field empty</label>
+                <input type="text" id="website_hp" name="website_hp" tabIndex={-1} autoComplete="off" defaultValue="" />
+              </div>
               <div className="space-y-1.5">
                 <label className="text-sm font-medium text-foreground">
                   {lang === "en" ? "Full Name" : "姓名"} <span className="text-destructive">*</span>
