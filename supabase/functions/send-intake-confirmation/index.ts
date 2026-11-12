@@ -1,10 +1,5 @@
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
-
-const corsHeaders = {
-  "Access-Control-Allow-Origin": "*",
-  "Access-Control-Allow-Headers":
-    "authorization, x-client-info, apikey, content-type, x-supabase-client-platform, x-supabase-client-platform-version, x-supabase-client-runtime, x-supabase-client-runtime-version",
-};
+import { corsHeaders } from "npm:@supabase/supabase-js@2/cors";
 
 const FROM = "SwiftLift <support@swiftlift.app>";
 const REPLY_TO = "support@swiftlift.app";
@@ -153,6 +148,29 @@ function resolveFormType(formType?: string, service?: string): FormType {
   return "preview";
 }
 
+const MIN_FILL_MS = 3000;
+const MAX_FORM_AGE_MS = 24 * 60 * 60 * 1000;
+
+function looksLikeGibberish(name: unknown): boolean {
+  const value = String(name || "").trim();
+  if (value.length < 10 || /\s/.test(value)) return false;
+  // Only apply Latin-letter heuristics to Latin names.
+  if (!/^[a-zA-Z]+$/.test(value)) return false;
+  const innerCaps = (value.slice(1).match(/[A-Z]/g) || []).length;
+  const vowels = (value.match(/[aeiou]/gi) || []).length;
+  return innerCaps >= 2 || vowels / value.length < 0.2;
+}
+
+function spamReason(body: Record<string, unknown>, name: unknown): string | null {
+  if (String(body.website_hp || "").trim()) return "honeypot";
+  if (typeof body._t !== "number" || !Number.isFinite(body._t) || body._t <= 0) return "no_timestamp";
+  const elapsed = Date.now() - body._t;
+  if (elapsed < MIN_FILL_MS) return "too_fast";
+  if (elapsed > MAX_FORM_AGE_MS) return "stale_form";
+  if (looksLikeGibberish(name)) return "gibberish_name";
+  return null;
+}
+
 serve(async (req) => {
   if (req.method === "OPTIONS") {
     return new Response(null, { headers: corsHeaders });
@@ -186,6 +204,15 @@ serve(async (req) => {
     const finalPhone = phone || "";
 
     if (!finalEmail) throw new Error("Missing email");
+
+    const blocked = spamReason(body, finalName);
+    if (blocked) {
+      console.log(`[SEND-INTAKE-CONFIRMATION] Blocked spam (${blocked})`);
+      return new Response(JSON.stringify({ success: true }), {
+        headers: { ...corsHeaders, "Content-Type": "application/json" },
+        status: 200,
+      });
+    }
 
     const RESEND_API_KEY = (Deno.env.get("RESEND_KEY_SWIFTLIFT") ?? Deno.env.get("RESEND_API_KEY"));
     if (!RESEND_API_KEY) throw new Error("RESEND_API_KEY not configured");

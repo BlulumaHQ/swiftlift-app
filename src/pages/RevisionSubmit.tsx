@@ -57,6 +57,7 @@ const RevisionSubmitContent = () => {
     document.title = "Revision Request — SwiftLift";
   }, []);
 
+  const [formLoadedAt] = useState(() => Date.now());
   const [submitted, setSubmitted] = useState(false);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [error, setError] = useState("");
@@ -72,6 +73,8 @@ const RevisionSubmitContent = () => {
     try {
       const { error: fnError } = await supabase.functions.invoke("send-intake-confirmation", {
         body: {
+            _t: formLoadedAt,
+            website_hp: (document.getElementById("website_hp") as HTMLInputElement | null)?.value || "",
           client_name: formData.get("name") as string,
           client_email: formData.get("email") as string,
           business_name: formData.get("project_code") as string || "Revision",
@@ -208,6 +211,10 @@ const RevisionSubmitContent = () => {
 
           {/* Form */}
           <form onSubmit={handleSubmit} className="space-y-5">
+            <div aria-hidden="true" style={{ position: "absolute", left: "-10000px", top: "auto", width: 1, height: 1, overflow: "hidden" }}>
+              <label htmlFor="website_hp">Leave this field empty</label>
+              <input type="text" id="website_hp" name="website_hp" tabIndex={-1} autoComplete="off" defaultValue="" />
+            </div>
             <div>
               <label className="text-sm font-medium text-foreground flex items-center gap-2 mb-1.5">
                 <User size={14} className="text-muted-foreground" /> Full Name <span className="text-destructive">*</span>
