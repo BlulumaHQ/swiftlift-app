@@ -22,6 +22,7 @@ import Portfolio from "./pages/Portfolio";
 import WorkWithUs from "./pages/WorkWithUs";
 import About from "./pages/About";
 import Start from "./pages/Start";
+import RouteHead from "./components/RouteHead";
 import ClientUpgrades from "./pages/ClientUpgrades";
 import ScrollToTop from "./components/ScrollToTop";
 import CookieConsent from "./components/CookieConsent";
@@ -35,6 +36,7 @@ const App = () => (
       <Sonner />
       <BrowserRouter>
         <ScrollToTop />
+        <RouteHead />
         <Routes>
           <Route path="/" element={<Index />} />
           <Route path="/portfolio" element={<Portfolio />} />
