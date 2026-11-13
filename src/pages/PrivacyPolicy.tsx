@@ -3,12 +3,13 @@ import { LanguageProvider, useLanguage } from "@/contexts/LanguageContext";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { motion } from "framer-motion";
+import { SEO_ROUTES } from "@/lib/seoRoutes";
 
 const PrivacyContent = () => {
   const { lang } = useLanguage();
 
   useEffect(() => {
-    document.title = "Privacy Policy — SwiftLift";
+    document.title = SEO_ROUTES["/privacy"].title;
     let canonical = document.querySelector("link[rel='canonical']") as HTMLLinkElement | null;
     if (!canonical) {
       canonical = document.createElement("link");

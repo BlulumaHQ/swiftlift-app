@@ -9,6 +9,7 @@ import { ArrowRight, X, Check, Layout, Smartphone, Gauge, Sparkles } from "lucid
 import aboutHero from "@/assets/about-hero.jpg";
 import aboutTransform from "@/assets/about-transform.jpg";
 import aboutWorkspace from "@/assets/about-workspace.jpg";
+import { SEO_ROUTES } from "@/lib/seoRoutes";
 
 type TBlock = { en: string; zh: string };
 const T = (b: TBlock, lang: string) => (lang === "zh" ? b.zh : b.en);
@@ -137,7 +138,7 @@ const AboutContent = () => {
   useEffect(() => {
     document.title = lang === "zh"
       ? "關於 — SwiftLift | 我們升級您現有的網站"
-      : "About — SwiftLift | We Upgrade What You Already Have";
+      : SEO_ROUTES["/about"].title;
     window.scrollTo(0, 0);
     let canonical = document.querySelector("link[rel='canonical']") as HTMLLinkElement | null;
     if (!canonical) {

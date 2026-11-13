@@ -4,6 +4,7 @@ import Footer from "@/components/Footer";
 import { LanguageProvider, useLanguage } from "@/contexts/LanguageContext";
 import { motion, AnimatePresence } from "framer-motion";
 import { Plus } from "lucide-react";
+import { SEO_ROUTES } from "@/lib/seoRoutes";
 
 const faqItems = [
   {
@@ -57,7 +58,7 @@ const FaqContent = () => {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
 
   useEffect(() => {
-    document.title = "FAQ — SwiftLift";
+    document.title = SEO_ROUTES["/faq"].title;
     let canonical = document.querySelector("link[rel='canonical']") as HTMLLinkElement | null;
     if (!canonical) {
       canonical = document.createElement("link");

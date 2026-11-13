@@ -10,6 +10,7 @@ import {
   Mail, Calendar, List, Zap, Search, Palette, CreditCard, Lock,
   Package, Target, TrendingUp, Sparkles, ArrowRight, Server, RefreshCw, RotateCcw
 } from "lucide-react";
+import { SEO_ROUTES } from "@/lib/seoRoutes";
 
 type LangObj = { en: string; zh: string };
 const T = (obj: LangObj, lang: "en" | "zh") => obj[lang];
@@ -136,7 +137,7 @@ const FeaturesContent = () => {
   const { lang } = useLanguage();
 
   useEffect(() => {
-    document.title = "Features & Add-ons — SwiftLift";
+    document.title = SEO_ROUTES["/features"].title;
     let canonical = document.querySelector("link[rel='canonical']") as HTMLLinkElement | null;
     if (!canonical) {
       canonical = document.createElement("link");

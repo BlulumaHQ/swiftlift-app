@@ -25,6 +25,7 @@ function generateClientId(): string {
 import reviewSlideGenes from "@/assets/swiftlift-review-slide-genes.webp";
 import reviewSlideMuttpuddles from "@/assets/swiftlift-review-slide-muttpuddles.webp";
 import reviewSlideChicagoboxing from "@/assets/swiftlift-review-slide-chicagoboxing.webp";
+import { SEO_ROUTES } from "@/lib/seoRoutes";
 
 const PRELOADER_KEY = "swiftlift_visited";
 
@@ -490,7 +491,7 @@ const IndexContent = ({ variant = "home" }: { variant?: "home" | "start" }) => {
   const reviewAutoRef = useRef<ReturnType<typeof setInterval>>();
 
   useEffect(() => {
-    document.title = "SwiftLift — Website Makeover & Upgrade Service";
+    document.title = SEO_ROUTES["/"].title;
   }, []);
 
   // Desktop page count and mobile total

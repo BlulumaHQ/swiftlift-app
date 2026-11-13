@@ -5,12 +5,13 @@ import Footer from "@/components/Footer";
 import ScrollReveal from "@/components/ScrollReveal";
 import { motion } from "framer-motion";
 import { Check, ShieldCheck, Headphones, Zap, MonitorSmartphone, RefreshCw } from "lucide-react";
+import { SEO_ROUTES } from "@/lib/seoRoutes";
 
 const HostingGuideContent = () => {
   const { lang } = useLanguage();
 
   useEffect(() => {
-    document.title = lang === "en" ? "Managed Hosting — SwiftLift" : "托管主机 — SwiftLift";
+    document.title = lang === "en" ? SEO_ROUTES["/hosting-guide"].title : "托管主机 — SwiftLift";
     let canonical = document.querySelector("link[rel='canonical']") as HTMLLinkElement | null;
     if (!canonical) {
       canonical = document.createElement("link");

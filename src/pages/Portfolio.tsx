@@ -48,6 +48,7 @@ import portfolioWestsideA from "@/assets/portfolio-westside-medical-a.webp";
 import portfolioWestsideB from "@/assets/portfolio-westside-medical-b.webp";
 import portfolioYangHealthA from "@/assets/portfolio-yang-health-a.webp";
 import portfolioYangHealthB from "@/assets/portfolio-yang-health-b.webp";
+import { SEO_ROUTES } from "@/lib/seoRoutes";
 
 type TBlock = { en: string; zh: string };
 const T = (b: TBlock, lang: string) => (lang === "zh" ? b.zh : b.en);
@@ -507,7 +508,7 @@ const PortfolioContent = () => {
   useEffect(() => {
     document.title = lang === "zh"
       ? "作品集 — SwiftLift | 真實網站改版成果"
-      : "Portfolio — SwiftLift | Real Website Transformations";
+      : SEO_ROUTES["/portfolio"].title;
     let canonical = document.querySelector("link[rel='canonical']") as HTMLLinkElement | null;
     if (!canonical) {
       canonical = document.createElement("link");
