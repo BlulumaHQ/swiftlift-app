@@ -6,6 +6,7 @@ import fs from "node:fs";
 import path from "node:path";
 import type { Plugin, ResolvedConfig } from "vite";
 import { SEO_ROUTES, SITE } from "../src/lib/seoRoutes";
+import { INDUSTRY_PAGES } from "../src/lib/industryContent";
 
 const esc = (s: string) =>
   s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
@@ -58,7 +59,33 @@ export default function prerenderPlugin(): Plugin {
         html = setTag(html, /<link rel="canonical"[^>]*>/, `<link rel="canonical" href="${url}" />`);
         const graph: object[] = [ORG];
         if (route === "/") graph.push(SERVICE, { "@type": "WebSite", "@id": `${SITE}/#website`, name: "SwiftLift", url: SITE, publisher: { "@id": `${SITE}/#organization` } });
-        else
+        else {
+          const ind = INDUSTRY_PAGES.find((p) => route === `/website-redesign/${p.slug}`);
+          if (ind) {
+            graph.push(
+              {
+                "@type": "Service",
+                name: `Website Redesign for ${ind.label}`,
+                serviceType: "Website Redesign",
+                url,
+                description: ind.description,
+                provider: { "@id": `${SITE}/#organization` },
+                areaServed: { "@type": "Country", name: "United States" },
+                offers: [
+                  { "@type": "Offer", name: "Version A", price: "299", priceCurrency: "USD" },
+                  { "@type": "Offer", name: "Version B", price: "499", priceCurrency: "USD" },
+                ],
+              },
+              {
+                "@type": "FAQPage",
+                mainEntity: ind.faqs.map((f) => ({
+                  "@type": "Question",
+                  name: f.q,
+                  acceptedAnswer: { "@type": "Answer", text: f.a },
+                })),
+              },
+            );
+          }
           graph.push({
             "@type": "BreadcrumbList",
             itemListElement: [
@@ -66,9 +93,11 @@ export default function prerenderPlugin(): Plugin {
               { "@type": "ListItem", position: 2, name: m.title.split(/ [|—] /)[0], item: url },
             ],
           });
+        }
         const ld = JSON.stringify({ "@context": "https://schema.org", "@graph": graph }).replace(/</g, "\\u003c");
         html = html.replace("</head>", `    <script type="application/ld+json">${ld}</script>\n  </head>`);
         const file = route === "/" ? "index.html" : `${route.slice(1)}.html`;
+        fs.mkdirSync(path.dirname(path.join(out, file)), { recursive: true });
         fs.writeFileSync(path.join(out, file), html);
         n++;
       }

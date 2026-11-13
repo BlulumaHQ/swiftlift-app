@@ -24,6 +24,7 @@ import About from "./pages/About";
 import Start from "./pages/Start";
 import RouteHead from "./components/RouteHead";
 import ClientUpgrades from "./pages/ClientUpgrades";
+import IndustryPage from "./pages/IndustryPage";
 import ScrollToTop from "./components/ScrollToTop";
 import CookieConsent from "./components/CookieConsent";
 
@@ -57,6 +58,7 @@ const App = () => (
           <Route path="/about" element={<About />} />
           <Route path="/start" element={<Start />} />
           <Route path="/client-upgrades" element={<ClientUpgrades />} />
+          <Route path="/website-redesign/:slug" element={<IndustryPage />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>

@@ -1,6 +1,8 @@
 // Per-route <title>/description for indexable marketing pages.
 // Used at build time by scripts/prerenderPlugin.ts (static HTML per route) and
 // at runtime by the pages themselves, so both stay in sync. No "@/..." imports.
+import { INDUSTRY_PAGES } from "./industryContent";
+
 export const SITE = "https://swiftlift.app";
 
 export const SEO_ROUTES: Record<string, { title: string; description: string }> = {
@@ -42,4 +44,7 @@ export const SEO_ROUTES: Record<string, { title: string; description: string }> 
     title: "Terms of Service | SwiftLift",
     description: "The terms that apply to SwiftLift website redesign and hosting services.",
   },
+  ...Object.fromEntries(
+    INDUSTRY_PAGES.map((p) => [`/website-redesign/${p.slug}`, { title: p.title, description: p.description }]),
+  ),
 };

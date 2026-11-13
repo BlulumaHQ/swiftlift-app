@@ -3,6 +3,7 @@
 import fs from "node:fs";
 import path from "node:path";
 import type { Plugin, ResolvedConfig } from "vite";
+import { INDUSTRY_PAGES } from "../src/lib/industryContent";
 
 const SITE = "https://swiftlift.app";
 export const SITEMAP_ROUTES: { path: string; priority: number; changefreq: string }[] = [
@@ -12,6 +13,7 @@ export const SITEMAP_ROUTES: { path: string; priority: number; changefreq: strin
   { path: "/about", priority: 0.8, changefreq: "monthly" },
   { path: "/faq", priority: 0.7, changefreq: "monthly" },
   { path: "/hosting-guide", priority: 0.6, changefreq: "monthly" },
+  ...INDUSTRY_PAGES.map((p) => ({ path: `/website-redesign/${p.slug}`, priority: 0.8, changefreq: "monthly" })),
   { path: "/privacy", priority: 0.3, changefreq: "yearly" },
   { path: "/terms", priority: 0.3, changefreq: "yearly" },
 ];

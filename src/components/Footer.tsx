@@ -3,6 +3,7 @@ import { translations, t } from "@/lib/translations";
 import { ShieldCheck, Mail } from "lucide-react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import swiftsiteLogo from "@/assets/swiftsite-logo.svg";
+import { INDUSTRY_PAGES } from "@/lib/industryContent";
 
 const Footer = () => {
   const { lang } = useLanguage();
@@ -94,6 +95,16 @@ const Footer = () => {
               <Link to="/support" className="text-sm text-blue-200/70 hover:text-white transition-colors">
                 {lang === "en" ? "Support" : "聯繫客服"}
               </Link>
+            </div>
+            <h4 className="text-sm font-semibold text-white mb-3 mt-5">
+              {lang === "en" ? "Industries" : "產業"}
+            </h4>
+            <div className="flex flex-col gap-2">
+              {INDUSTRY_PAGES.map((p) => (
+                <Link key={p.slug} to={`/website-redesign/${p.slug}`} className="text-sm text-blue-200/70 hover:text-white transition-colors">
+                  {p.label}
+                </Link>
+              ))}
             </div>
           </div>
 
