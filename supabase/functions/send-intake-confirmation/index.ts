@@ -5,6 +5,7 @@ const FROM = "SwiftLift <support@swiftlift.app>";
 const REPLY_TO = "support@swiftlift.app";
 const ADMIN_TO = "support@swiftlift.app";
 const LOGO_URL = "https://swiftlift.app/swiftsite-logo.png";
+const N8N_LEAD_WEBHOOK = "https://n8n-production-69d1bdd4.up.railway.app/webhook/lead?brand=SwiftLift";
 
 function escapeHtml(str: string): string {
   return str
@@ -220,6 +221,31 @@ serve(async (req) => {
     const timestamp = new Date().toISOString();
     const resolvedType = resolveFormType(form_type, finalService);
     const content = getEmailContent(resolvedType, finalName, finalEmail);
+
+    // Log new leads (not revisions/support/designer applications) to the n8n lead sheet.
+    // This function keeps sending its own branded emails, so n8n is told to send none.
+    if (resolvedType === "preview" || resolvedType === "custom_quote") {
+      try {
+        const details = [
+          finalBusiness && `Business: ${finalBusiness}`,
+          finalWebsite && `Website: ${finalWebsite}`,
+          finalService && `Service: ${finalService}`,
+          finalMessage,
+        ].filter(Boolean).join("\n");
+        const n8n = await fetch(N8N_LEAD_WEBHOOK, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({
+            name: finalName, email: finalEmail, phone: finalPhone, message: details,
+            page: `swiftlift.app (${resolvedType})`, emails: false,
+          }),
+          signal: AbortSignal.timeout(5000),
+        });
+        if (!n8n.ok) console.error("[SEND-INTAKE-CONFIRMATION] n8n lead log failed:", n8n.status);
+      } catch (err) {
+        console.error("[SEND-INTAKE-CONFIRMATION] n8n lead log error:", err);
+      }
+    }
 
     // EMAIL 1 — Internal notification
     const internalHtml = buildInternalNotification({
