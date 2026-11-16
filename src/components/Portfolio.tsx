@@ -1,134 +1,86 @@
-import { useLanguage } from "@/contexts/LanguageContext";
-import { translations, t } from "@/lib/translations";
-import ScrollReveal from "./ScrollReveal";
-import { motion, AnimatePresence } from "framer-motion";
-import { useState, useEffect, useMemo, useCallback } from "react";
-import { ArrowLeft, ArrowRight } from "lucide-react";
-import portfolioTrade from "@/assets/portfolio-trade.jpg";
-import portfolioWellness from "@/assets/portfolio-wellness-new.jpg";
-import portfolioLaw from "@/assets/portfolio-law.jpg";
-import portfolioConstruction from "@/assets/portfolio-construction.jpg";
-import portfolioWholesale from "@/assets/portfolio-wholesale.jpg";
-import portfolioLogistics from "@/assets/portfolio-logistics.jpg";
-import portfolioRestaurant from "@/assets/portfolio-restaurant.jpg";
-import portfolioRealestate from "@/assets/portfolio-realestate.jpg";
-import portfolioDental from "@/assets/portfolio-dental.jpg";
+import type { ReactNode } from "react";
+import { Link } from "react-router-dom";
+import { ArrowRight, ExternalLink, ImageIcon } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import { homeStudies, useCmsPortfolio, type StudyVersion } from "@/lib/cmsPortfolio";
 
-const images = [
-  portfolioTrade, portfolioWellness, portfolioLaw,
-  portfolioConstruction, portfolioWholesale, portfolioLogistics,
-  portfolioRestaurant, portfolioRealestate, portfolioDental,
-];
+function PreviewImage({ image, alt }: { image: string | null; alt: string }) {
+  return (
+    <div className="aspect-[16/10] overflow-hidden bg-muted">
+      {image ? <img src={image} alt={alt} loading="lazy" decoding="async" className="h-full w-full object-cover object-top" />
+        : <div role="img" aria-label={alt} className="flex h-full items-center justify-center"><ImageIcon className="h-8 w-8 text-muted-foreground" aria-hidden="true" /></div>}
+    </div>
+  );
+}
 
-const AUTOPLAY_INTERVAL = 5000;
+function SiteLink({ url, children, className }: { url: string | null; children: ReactNode; className: string }) {
+  return url ? <a href={url} target="_blank" rel="noopener noreferrer" className={`${className} focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-4`}>{children}</a>
+    : <div className={className}>{children}</div>;
+}
 
-const Portfolio = () => {
-  const { lang } = useLanguage();
-  const portfolio = translations.portfolio;
+function VersionFrame({ title, version }: { title: string; version: StudyVersion }) {
+  const label = version.label.startsWith("Version ") ? version.label : `Version ${version.label}`;
+  return (
+    <SiteLink url={version.url} className="group relative block min-w-0 overflow-hidden rounded-xl border border-border bg-card text-card-foreground shadow-sm transition-shadow hover:shadow-lg">
+      <div className="flex h-11 items-center gap-3 border-b border-border bg-secondary px-4">
+        <span aria-hidden="true" className="flex shrink-0 gap-1.5">{[0, 1, 2].map((dot) => <span key={dot} className="h-2 w-2 rounded-full bg-muted-foreground/40" />)}</span>
+        <span className="truncate text-xs font-semibold">{label}</span>
+        {version.url && <ExternalLink className="ml-auto h-3.5 w-3.5 shrink-0 text-muted-foreground" aria-hidden="true" />}
+      </div>
+      <div className="relative">
+        <PreviewImage image={version.image} alt={`${title} website, ${label}`} />
+        {version.chosen && <span className="absolute bottom-3 left-3 right-3 w-fit max-w-[calc(100%-1.5rem)] rounded-md bg-brand px-3 py-2 text-xs font-semibold text-brand-foreground shadow-sm">Client chose {label}</span>}
+      </div>
+    </SiteLink>
+  );
+}
 
-  const initialGroup = useMemo(() => Math.floor(Math.random() * 3), []);
-  const [currentGroup, setCurrentGroup] = useState(initialGroup);
-
-  const groups = [
-    portfolio.items.slice(0, 3),
-    portfolio.items.slice(3, 6),
-    portfolio.items.slice(6, 9),
-  ];
-
-  const imageGroups = [
-    images.slice(0, 3),
-    images.slice(3, 6),
-    images.slice(6, 9),
-  ];
-
-  const [isPaused, setIsPaused] = useState(false);
-  const next = useCallback(() => setCurrentGroup((g) => (g === 2 ? 0 : g + 1)), []);
-  const prev = () => setCurrentGroup((g) => (g === 0 ? 2 : g - 1));
-
-  useEffect(() => {
-    if (isPaused) return;
-    const timer = setInterval(next, AUTOPLAY_INTERVAL);
-    return () => clearInterval(timer);
-  }, [next, isPaused]);
+export default function Portfolio({ variant }: { variant: "home" | "all" }) {
+  const { data, isPending, isError } = useCmsPortfolio();
+  const studies = data ? (variant === "home" ? homeStudies(data.studies) : data.studies) : [];
+  const singles = variant === "all" ? data?.singles ?? [] : [];
+  if (isError || (!isPending && studies.length === 0 && singles.length === 0)) return null;
 
   return (
-    <section id="portfolio" className="py-16 md:py-24 relative overflow-hidden bg-background">
-      <div
-        className="max-w-7xl mx-auto px-6 relative z-10"
-        onMouseEnter={() => setIsPaused(true)}
-        onMouseLeave={() => setIsPaused(false)}
-      >
-        <ScrollReveal>
-          <motion.h2
-            key={lang + "-port-h"}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            transition={{ duration: 0.3 }}
-            className="text-[clamp(2rem,4vw,3.5rem)] font-black text-foreground text-center font-display"
-          >
-            {t(portfolio.headline, lang)}
-          </motion.h2>
-        </ScrollReveal>
-
-        {/* Carousel */}
-        <div className="mt-10 relative">
-          <button
-            onClick={prev}
-            className="absolute -left-4 md:-left-12 top-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-full border border-border bg-background shadow-sm flex items-center justify-center hover:bg-muted transition-colors"
-            aria-label="Previous"
-          >
-            <ArrowLeft size={18} className="text-foreground" />
-          </button>
-          <button
-            onClick={next}
-            className="absolute -right-4 md:-right-12 top-1/2 -translate-y-1/2 z-20 w-10 h-10 rounded-full border border-border bg-background shadow-sm flex items-center justify-center hover:bg-muted transition-colors"
-            aria-label="Next"
-          >
-            <ArrowRight size={18} className="text-foreground" />
-          </button>
-
-          <AnimatePresence mode="wait">
-            <motion.div
-              key={currentGroup}
-              initial={{ opacity: 0, x: 40 }}
-              animate={{ opacity: 1, x: 0 }}
-              exit={{ opacity: 0, x: -40 }}
-              transition={{ duration: 0.4, ease: [0.25, 0.46, 0.45, 0.94] }}
-              className="grid grid-cols-1 md:grid-cols-3 gap-6"
-            >
-              {groups[currentGroup].map((item, i) => (
-                <div key={`${currentGroup}-${i}`}>
-                  <a
-                    href="#"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="group block cursor-pointer relative"
-                  >
-                    <div className="card-elevated rounded-2xl overflow-hidden border border-border relative">
-                      <div className="aspect-video overflow-hidden relative">
-                        <img
-                          src={imageGroups[currentGroup][i]}
-                          alt={t(item.title, lang)}
-                          className="w-full h-full object-cover transition-transform duration-500 group-hover:scale-[1.02]"
-                        />
-                        <div className="absolute inset-0 bg-primary/60 opacity-0 group-hover:opacity-100 transition-opacity duration-400 flex items-center justify-center">
-                          <span className="text-white font-semibold text-sm font-display">
-                            Visit Site →
-                          </span>
-                        </div>
-                      </div>
-                    </div>
-                    <h3 className="mt-3 text-sm font-semibold text-foreground font-display">{t(item.title, lang)}</h3>
-                    <p className="text-xs text-muted-foreground mt-0.5">{t(item.desc, lang)}</p>
-                  </a>
-                </div>
-              ))}
-            </motion.div>
-          </AnimatePresence>
+    <section id="portfolio" aria-labelledby={`portfolio-heading-${variant}`} className="bg-background py-20 md:py-24">
+      <div className="mx-auto max-w-6xl px-6">
+        <div className="mb-10 text-center md:mb-12">
+          <p className="mb-3 text-sm font-semibold text-[hsl(var(--accent-purple))]">Two directions</p>
+          <h2 id={`portfolio-heading-${variant}`} className="font-display text-3xl font-black leading-tight tracking-normal text-foreground md:text-4xl">Two designs, one business</h2>
         </div>
+        {isPending ? (
+          <div role="status" aria-label="Loading portfolio" className="space-y-10">
+            {[0, 1].map((study) => <div key={study} aria-hidden="true">
+              <div className="grid grid-cols-1 gap-5 md:grid-cols-2">{[0, 1].map((version) => <div key={version} className="overflow-hidden rounded-xl border border-border motion-safe:animate-pulse"><div className="h-11 bg-secondary" /><div className="aspect-[16/10] bg-muted" /></div>)}</div>
+              <div className="mt-5 h-5 w-40 rounded bg-muted motion-safe:animate-pulse" />
+            </div>)}
+          </div>
+        ) : (
+          <>
+            <div className="space-y-10 md:space-y-14">
+              {studies.map((study) => <article key={study.key}>
+                <div className="grid grid-cols-1 items-start gap-5 md:grid-cols-2">
+                  {study.versions.map((version, i) => <VersionFrame key={`${version.label}-${i}`} title={study.title} version={version} />)}
+                </div>
+                <div className="mt-5 flex flex-wrap items-baseline justify-between gap-x-5 gap-y-1">
+                  <h3 className="font-display text-lg font-bold tracking-normal text-foreground md:text-xl">{study.title}</h3>
+                  {study.category && <p className="text-sm text-muted-foreground">{study.category}</p>}
+                </div>
+              </article>)}
+            </div>
+            {singles.length > 0 && <div className={studies.length ? "mt-16 border-t border-border pt-12" : ""}>
+              <h3 className="mb-7 font-display text-2xl font-bold tracking-normal text-foreground">More launched sites</h3>
+              <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
+                {singles.map((item) => <SiteLink key={item.id} url={item.live_url} className="group block min-w-0 overflow-hidden rounded-xl border border-border bg-card text-card-foreground shadow-sm transition-shadow hover:shadow-lg">
+                  <PreviewImage image={item.featured_image_url ?? item.versions?.[0]?.screenshot_url ?? null} alt={`${item.title} website`} />
+                  <div className="p-5"><h4 className="flex items-start justify-between gap-3 font-display text-base font-bold tracking-normal">{item.title}{item.live_url && <ExternalLink className="mt-1 h-4 w-4 shrink-0 text-muted-foreground" aria-hidden="true" />}</h4>{item.category && <p className="mt-1 text-sm text-muted-foreground">{item.category}</p>}</div>
+                </SiteLink>)}
+              </div>
+            </div>}
+            {variant === "home" && <div className="mt-10 text-center"><Button asChild variant="link" className="font-semibold text-[hsl(var(--accent-purple))]"><Link to="/portfolio">See all work <ArrowRight aria-hidden="true" /></Link></Button></div>}
+          </>
+        )}
       </div>
     </section>
   );
-};
-
-export default Portfolio;
+}

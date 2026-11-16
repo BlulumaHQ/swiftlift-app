@@ -538,13 +538,6 @@ export const translations = {
       { title: { en: "Receive 2 Live Previews", zh: "收到2個即時預覽" }, desc: { en: "We build two fully working website directions within 48 hours.", zh: "48小時內我們建好兩個完全可運行的網站方向。" } },
       { title: { en: "Choose & Launch", zh: "選擇並上線" }, desc: { en: "Pick your favorite. We handle everything — hosting, setup, and launch.", zh: "選擇您喜歡的。我們處理一切 — 託管、設置和上線。" } },
     ],
-    portfolioTitle: { en: "Real Website Transformations", zh: "真實網站改造" },
-    portfolioSub: { en: "Built from real businesses like yours. Each preview is a real, working website — not a mockup.", zh: "為像您一樣的真實企業而建。每個預覽都是真正可運行的網站——不是模型。" },
-    portfolioItems: [
-      { name: { en: "Gene's Sausage Shop", zh: "Gene's Sausage Shop" }, desc: { en: "A cleaner, more premium food brand experience — built to attract more customers.", zh: "更清晰、更高端的食品品牌體驗——為吸引更多客戶而打造。" } },
-      { name: { en: "Mutt Puddles Dog Wash", zh: "Mutt Puddles Dog Wash" }, desc: { en: "A warmer, more polished grooming brand — built to stand out locally.", zh: "更溫暖、更精緻的寵物美容品牌——為在地脫穎而出而打造。" } },
-      { name: { en: "Chicago Boxing Club", zh: "Chicago Boxing Club" }, desc: { en: "A stronger, higher-impact fitness brand — built to drive more sign-ups.", zh: "更強大、更高影響力的健身品牌——為推動更多註冊而打造。" } },
-    ],
     testimonialItems: [
       { text: { en: "Our old website had character, but it felt crowded and outdated. SwiftLift gave us two very different directions to compare. Version A felt more classic and brand-focused, while Version B felt cleaner and easier for customers to browse. Seeing both options side by side made the decision much easier, and the new presentation feels far more aligned with the quality of our store.", zh: "我們的舊網站有特色，但感覺擁擠且過時。SwiftLift 給了我們兩個截然不同的方向進行比較。版本A感覺更經典、更注重品牌，而版本B感覺更簡潔、更方便客戶瀏覽。並排查看兩個選項讓決策變得容易得多，新的展示感覺與我們商店的品質更加一致。" }, name: { en: "Michael Nowak", zh: "Michael Nowak" }, company: { en: "Gene's Sausage Shop", zh: "Gene's Sausage Shop" } },
       { text: { en: "We wanted something that felt more modern and trustworthy without losing the friendly personality of our business. SwiftLift gave us two real preview versions instead of just talking about ideas. One was more clean and minimal, and the other felt a bit more conversion-focused. Both looked significantly better than what we had before, and it was helpful to see how the same business could be presented in two different ways.", zh: "我們想要更現代、更可信的東西，同時不失去業務的友好個性。SwiftLift 給了我們兩個真實的預覽版本，而不僅僅是討論想法。一個更簡潔、更簡約，另一個更注重轉化。兩者都比之前好得多，看到同一個業務可以以兩種不同方式呈現是很有幫助的。" }, name: { en: "Sarah Bennett", zh: "Sarah Bennett" }, company: { en: "Mutt Puddles Dog Wash", zh: "Mutt Puddles Dog Wash" } },
