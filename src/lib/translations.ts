@@ -88,20 +88,6 @@ export const translations = {
       },
     ],
   },
-  portfolio: {
-    headline: { en: "Real Website Transformations", zh: "真實網站改造" },
-    items: [
-      { title: { en: "Import/Export Trading Company", zh: "進出口貿易公司" }, desc: { en: "Products, about, contact", zh: "產品、關於、聯繫" } },
-      { title: { en: "Modern Wellness Clinic", zh: "現代健康診所" }, desc: { en: "Services, booking, team", zh: "服務、預約、團隊" } },
-      { title: { en: "Small Law Firm", zh: "小型律師事務所" }, desc: { en: "Practice areas, attorney profile, contact", zh: "業務領域、律師簡介、聯繫" } },
-      { title: { en: "Construction Contractor", zh: "建築裝修承包商" }, desc: { en: "Past projects, services, contact", zh: "過往項目、服務、聯繫" } },
-      { title: { en: "Wholesale Distributor", zh: "批發分銷商" }, desc: { en: "Product categories, about, contact", zh: "產品類別、關於、聯繫" } },
-      { title: { en: "Logistics Company", zh: "物流公司" }, desc: { en: "Services, routes, contact", zh: "服務、路線、聯繫" } },
-      { title: { en: "Restaurant & Bar", zh: "餐廳酒吧" }, desc: { en: "Menu, reservations, gallery", zh: "菜單、預訂、畫廊" } },
-      { title: { en: "Real Estate Agency", zh: "房地產中介" }, desc: { en: "Listings, agents, contact", zh: "房源、經紀人、聯繫" } },
-      { title: { en: "Dental Clinic", zh: "牙科診所" }, desc: { en: "Services, team, booking", zh: "服務、團隊、預約" } },
-    ],
-  },
   pricing: {
     headline: { en: "Simple,\nTransparent Pricing", zh: "簡單\n透明的價格" },
     buttonText: { en: "Get My 2 Free Previews", zh: "獲取我的2個免費預覽" },
