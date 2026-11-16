@@ -88,20 +88,6 @@ export const translations = {
       },
     ],
   },
-  portfolio: {
-    headline: { en: "Real Website Transformations", zh: "真實網站改造" },
-    items: [
-      { title: { en: "Import/Export Trading Company", zh: "進出口貿易公司" }, desc: { en: "Products, about, contact", zh: "產品、關於、聯繫" } },
-      { title: { en: "Modern Wellness Clinic", zh: "現代健康診所" }, desc: { en: "Services, booking, team", zh: "服務、預約、團隊" } },
-      { title: { en: "Small Law Firm", zh: "小型律師事務所" }, desc: { en: "Practice areas, attorney profile, contact", zh: "業務領域、律師簡介、聯繫" } },
-      { title: { en: "Construction Contractor", zh: "建築裝修承包商" }, desc: { en: "Past projects, services, contact", zh: "過往項目、服務、聯繫" } },
-      { title: { en: "Wholesale Distributor", zh: "批發分銷商" }, desc: { en: "Product categories, about, contact", zh: "產品類別、關於、聯繫" } },
-      { title: { en: "Logistics Company", zh: "物流公司" }, desc: { en: "Services, routes, contact", zh: "服務、路線、聯繫" } },
-      { title: { en: "Restaurant & Bar", zh: "餐廳酒吧" }, desc: { en: "Menu, reservations, gallery", zh: "菜單、預訂、畫廊" } },
-      { title: { en: "Real Estate Agency", zh: "房地產中介" }, desc: { en: "Listings, agents, contact", zh: "房源、經紀人、聯繫" } },
-      { title: { en: "Dental Clinic", zh: "牙科診所" }, desc: { en: "Services, team, booking", zh: "服務、團隊、預約" } },
-    ],
-  },
   pricing: {
     headline: { en: "Simple,\nTransparent Pricing", zh: "簡單\n透明的價格" },
     buttonText: { en: "Get My 2 Free Previews", zh: "獲取我的2個免費預覽" },
@@ -537,13 +523,6 @@ export const translations = {
       { title: { en: "Enter Your Website", zh: "輸入您的網站" }, desc: { en: "Share your current URL. Takes 30 seconds.", zh: "分享您的網站URL。僅需30秒。" } },
       { title: { en: "Receive 2 Live Previews", zh: "收到2個即時預覽" }, desc: { en: "We build two fully working website directions within 48 hours.", zh: "48小時內我們建好兩個完全可運行的網站方向。" } },
       { title: { en: "Choose & Launch", zh: "選擇並上線" }, desc: { en: "Pick your favorite. We handle everything — hosting, setup, and launch.", zh: "選擇您喜歡的。我們處理一切 — 託管、設置和上線。" } },
-    ],
-    portfolioTitle: { en: "Real Website Transformations", zh: "真實網站改造" },
-    portfolioSub: { en: "Built from real businesses like yours. Each preview is a real, working website — not a mockup.", zh: "為像您一樣的真實企業而建。每個預覽都是真正可運行的網站——不是模型。" },
-    portfolioItems: [
-      { name: { en: "Gene's Sausage Shop", zh: "Gene's Sausage Shop" }, desc: { en: "A cleaner, more premium food brand experience — built to attract more customers.", zh: "更清晰、更高端的食品品牌體驗——為吸引更多客戶而打造。" } },
-      { name: { en: "Mutt Puddles Dog Wash", zh: "Mutt Puddles Dog Wash" }, desc: { en: "A warmer, more polished grooming brand — built to stand out locally.", zh: "更溫暖、更精緻的寵物美容品牌——為在地脫穎而出而打造。" } },
-      { name: { en: "Chicago Boxing Club", zh: "Chicago Boxing Club" }, desc: { en: "A stronger, higher-impact fitness brand — built to drive more sign-ups.", zh: "更強大、更高影響力的健身品牌——為推動更多註冊而打造。" } },
     ],
     testimonialItems: [
       { text: { en: "Our old website had character, but it felt crowded and outdated. SwiftLift gave us two very different directions to compare. Version A felt more classic and brand-focused, while Version B felt cleaner and easier for customers to browse. Seeing both options side by side made the decision much easier, and the new presentation feels far more aligned with the quality of our store.", zh: "我們的舊網站有特色，但感覺擁擠且過時。SwiftLift 給了我們兩個截然不同的方向進行比較。版本A感覺更經典、更注重品牌，而版本B感覺更簡潔、更方便客戶瀏覽。並排查看兩個選項讓決策變得容易得多，新的展示感覺與我們商店的品質更加一致。" }, name: { en: "Michael Nowak", zh: "Michael Nowak" }, company: { en: "Gene's Sausage Shop", zh: "Gene's Sausage Shop" } },
