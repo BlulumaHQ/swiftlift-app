@@ -16,7 +16,13 @@ const db = createClient(Deno.env.get("SUPABASE_URL")!, Deno.env.get("SUPABASE_SE
   auth: { persistSession: false },
 });
 
-const TIER_LABEL: Record<string, string> = { starter: "Starter", growth: "Growth" };
+const TIER_LABEL: Record<string, string> = {
+  starter: "Version A – Launch Ready",
+  growth: "Version B – Sales Focused",
+  version_a: "Version A – Launch Ready",
+  version_b: "Version B – Sales Focused",
+};
+const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 
 function money(cents: number | null | undefined, currency?: string | null) {
   if (cents == null) return "";
@@ -34,7 +40,10 @@ async function handleCheckout(session: Stripe.Checkout.Session) {
 
   // 2) match a project (build payments)
   let project: Record<string, any> | null = null;
-  if (email) {
+  if (meta.project_id && UUID_RE.test(meta.project_id)) {
+    project = (await db.from("projects").select("*").eq("id", meta.project_id).maybeSingle()).data;
+  }
+  if (!project && email) {
     project = (
       await db.from("projects").select("*").ilike("client_email", email).order("created_at", { ascending: false }).limit(1).maybeSingle()
     ).data;

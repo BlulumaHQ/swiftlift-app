@@ -1,7 +1,9 @@
 // SwiftLift client email templates — single source of truth.
-// Prices follow Stripe (do not change here without changing Stripe):
-//   Starter build $299 · Growth build $499 · Hosting free or $15/mo · $135/yr
-//   Extra revision $45 · Onsite SEO $99 · Performance Optimization $99
+// Prices follow Stripe (Stripe is the source of truth — change Stripe first):
+//   Version A Launch Ready $299 · Version B Sales Focused $499 · each includes 2 rounds of revisions
+//   Extra revision round $45 · Hosting free, or Managed $15/mo · $135/yr
+//   Onsite SEO $99 · Performance Optimization $99
+export const PRICE = { A: 299, B: 499, extraRound: 45, includedRounds: 2 } as const;
 
 export const SITE = "https://swiftlift.app";
 export const FROM = "SwiftLift <support@swiftlift.app>";
@@ -58,6 +60,10 @@ export function payBuildUrl(tier: "starter" | "growth", d: TemplateData): string
   return u.toString();
 }
 
+export function reviewUrl(projectId?: string): string {
+  return projectId ? `${SITE}/review?p=${encodeURIComponent(projectId)}` : `${SITE}/review`;
+}
+
 export function goLiveUrl(projectId?: string): string {
   return projectId ? `${SITE}/go-live?p=${encodeURIComponent(projectId)}` : `${SITE}/go-live`;
 }
@@ -78,6 +84,10 @@ export interface TemplateData {
   amount?: string;
   selectedPreview?: string;
   roundsLeft?: number;
+  reportUrl?: string;
+  oldHost?: string;
+  round?: number;
+  paidRound?: boolean;
   note?: string;
   golive?: GoLiveAnswers;
 }
@@ -90,7 +100,7 @@ export interface GoLiveAnswers {
   emailProvider?: string; // google | microsoft | zoho | old_host | none | other | unsure
   emailProviderDetected?: string;
   currentHost?: string;
-  hostingPlan?: string; // free | monthly | yearly
+  hostingPlan?: string; // free | monthly | yearly | self
   notes?: string;
 }
 
@@ -183,9 +193,10 @@ export type TemplateKey =
   | "previews_ready"
   | "nudge_24h"
   | "expired_72h"
+  | "revision_received"
+  | "revision_done"
   | "payment_confirmed"
   | "golive_received"
-  | "revision_done"
   | "site_live";
 
 export interface RenderedEmail {
@@ -193,9 +204,28 @@ export interface RenderedEmail {
   html: string;
 }
 
+const previewCards = (d: TemplateData) =>
+  box(
+    `<b>Version A · Launch Ready</b> — $${PRICE.A}<br>${d.imgA ? `<a href="${esc(d.linkA)}"><img src="${esc(d.imgA)}" width="520" style="width:100%;max-width:520px;border-radius:8px;margin:8px 0;" alt="Version A"></a><br>` : ""}${link(d.linkA || "")}` +
+      `<br><br><b>Version B · Sales Focused</b> — $${PRICE.B}<br>${d.imgB ? `<a href="${esc(d.linkB)}"><img src="${esc(d.imgB)}" width="520" style="width:100%;max-width:520px;border-radius:8px;margin:8px 0;" alt="Version B"></a><br>` : ""}${link(d.linkB || "")}`,
+  );
+
+function hostingNote(d: TemplateData): string {
+  const host = d.oldHost ? esc(d.oldHost) : "";
+  return (
+    p(`<b>Hosting is free.</b> Once you're happy, we host your new site on our fast, secure servers at no monthly cost. Your domain stays in your name, and your email keeps working.`) +
+    p(
+      host
+        ? `Your current site runs on <b>${host}</b>. You don't need to cancel anything now — after your new site is live, we'll remind you to turn off <b>auto-renewal</b> for your ${host} website plan, so you stop paying for it.`
+        : `After your new site is live, we'll tell you exactly when it's safe to turn off auto-renewal at your current website host, so you stop paying twice.`,
+    )
+  );
+}
+
 export function render(key: TemplateKey, d: TemplateData): RenderedEmail {
   const hi = `Hi ${esc(firstName(d.name))},`;
   const biz = esc(d.business || "your business");
+  const review = reviewUrl(d.projectId);
   switch (key) {
     case "confirm":
       return {
@@ -203,14 +233,16 @@ export function render(key: TemplateKey, d: TemplateData): RenderedEmail {
         html: layout(
           "We got your request",
           p(hi) +
-            p(`Thanks for sending us ${d.website ? `<b>${esc(d.website)}</b>` : "your website"}. We're now building <b>2 different redesigns</b> of your site for ${biz}, using the content and photos you already have.`) +
+            p(`Thank you for sending us ${d.website ? `<b>${esc(d.website)}</b>` : "your website"}. We're excited to work on ${biz}.`) +
+            p(`Our team is now going through <b>every page</b> of your current site and building <b>2 different redesigns</b>, using the content, prices and photos you already have — so both versions feel like your business from day one.`) +
             h2("What happens next") +
             ul([
-              `Within <b>24–48 hours</b>, you'll get an email with links to both live previews.`,
-              `Open them on your phone and computer. Pick the one you love.`,
-              `Only then do you pay. Don't love either? You owe nothing.`,
+              `Within <b>24–48 hours</b>, you'll receive links to both live previews, plus a short report explaining what we designed and why.`,
+              `Open them on your phone and computer, pick your favorite, and tell us anything you'd like changed.`,
+              `You only pay once you're happy with it. Don't love either? You owe nothing.`,
             ]) +
-            p(`Want us to use a new logo or specific photos? Just reply to this email and attach them.`),
+            p(`Have a new logo or specific photos you'd like us to use? Simply reply to this email and attach them.`) +
+            p(`Talk soon,`),
         ),
       };
 
@@ -220,21 +252,23 @@ export function render(key: TemplateKey, d: TemplateData): RenderedEmail {
         html: layout(
           "Your previews are ready",
           p(hi) +
-            p(`We built 2 versions of a new website for ${biz}. Both are live, so you can click around them like a real site:`) +
-            box(
-              `<b>Preview A</b><br>${d.imgA ? `<a href="${esc(d.linkA)}"><img src="${esc(d.imgA)}" width="520" style="width:100%;max-width:520px;border-radius:8px;margin:8px 0;" alt="Preview A"></a><br>` : ""}${link(d.linkA || "")}` +
-                `<br><br><b>Preview B</b><br>${d.imgB ? `<a href="${esc(d.linkB)}"><img src="${esc(d.imgB)}" width="520" style="width:100%;max-width:520px;border-radius:8px;margin:8px 0;" alt="Preview B"></a><br>` : ""}${link(d.linkB || "")}`,
-            ) +
-            p(`Please check them on <b>both your phone and your computer</b>.`) +
-            h2("Pick your favorite, then choose a package") +
+            p(`Thank you for your patience — your two new website designs for ${biz} are ready. Both are fully live, so you can click through every page, button and photo just like a real site:`) +
+            previewCards(d) +
+            p(`Please take a look on <b>both your phone and your computer</b>.`) +
+            (d.reportUrl
+              ? p(`We've also attached a short <b>Website Preview Report</b> (PDF). It walks you through what each version does for your customers and why we designed it that way.`)
+              : "") +
+            h2("Pick your favorite and tell us what to change") +
+            p(`When you're ready, click the button below. You'll choose Version A or B, and you can tell us — page by page — anything you'd like adjusted. You can even mix and match, for example <i>"the colors of A with the layout of B"</i>, a different font, or new photos. Screenshots are welcome.`) +
+            btn(review, "Choose my favorite") +
+            p(`Both versions include <b>${PRICE.includedRounds} rounds of revisions</b>. There's <b>nothing to pay</b> while we refine it — you only pay once you approve the final design.`) +
             ul([
-              `<b>Starter — $299</b>: 1–2 pages, mobile-friendly, SEO-ready, contact form.`,
-              `<b>Growth — $499</b>: up to 7 pages, everything in Starter, plus 1 round of revisions.`,
+              `<b>Version A · Launch Ready — $${PRICE.A}</b>: clean, modern design, mobile-friendly, SEO-ready structure, contact form, free hosting.`,
+              `<b>Version B · Sales Focused — $${PRICE.B}</b>: everything in A, plus a conversion-focused layout, strategic call-to-action placement and trust-building sections designed to turn visitors into customers.`,
             ]) +
-            btn(payBuildUrl("growth", d), "Choose Growth – $499") +
-            p(`Prefer Starter? ${link(payBuildUrl("starter", d), "Choose Starter – $299")}`) +
-            p(`Hosting is free with SwiftLift. These previews stay online for <b>72 hours</b>.`) +
-            p(`Questions or small changes in mind? Just reply — we'll take care of them after you pick.`),
+            hostingNote(d) +
+            p(`These previews stay online for <b>72 hours</b>. As soon as you send us your choice or your changes, we'll keep them up while we work on it.`) +
+            p(`Any questions at all? Just reply — a real person on our team will get back to you.`),
         ),
       };
 
@@ -242,12 +276,13 @@ export function render(key: TemplateKey, d: TemplateData): RenderedEmail {
       return {
         subject: `Did you get a chance to look at your previews?`,
         html: layout(
-          "Quick reminder",
+          "A quick reminder",
           p(hi) +
-            p(`Just making sure our last email didn't get buried. Your 2 website previews for ${biz} are still live:`) +
-            ul([`Preview A: ${link(d.linkA || "")}`, `Preview B: ${link(d.linkB || "")}`]) +
-            btn(payBuildUrl("growth", d), "Pick my favorite") +
-            p(`They'll be taken down in about <b>48 hours</b>. Not quite right? Reply and tell us what you'd change — happy to adjust.`),
+            p(`Just checking in, in case our last email got buried. Your 2 website previews for ${biz} are still live:`) +
+            ul([`Version A · Launch Ready: ${link(d.linkA || "")}`, `Version B · Sales Focused: ${link(d.linkB || "")}`]) +
+            p(`If one of them feels close but not quite right, that's completely normal — that's what revisions are for. Tell us what you'd change and we'll adjust it for you, at no cost until you approve.`) +
+            btn(review, "Pick my favorite or request changes") +
+            p(`The previews will be taken down in about <b>48 hours</b>. Simply reply if you have any questions.`),
         ),
       };
 
@@ -257,8 +292,46 @@ export function render(key: TemplateKey, d: TemplateData): RenderedEmail {
         html: layout(
           "Your previews are offline",
           p(hi) +
-            p(`Your 2 preview sites for ${biz} were only available for 72 hours, so they're now offline.`) +
-            p(`No problem — if you're still interested, just reply "bring them back" and we'll put them up again. Or tell us what you'd like to see differently and we'll try a new direction.`),
+            p(`Your 2 preview sites for ${biz} were available for 72 hours, so we've taken them offline for now.`) +
+            p(`We'd still love to help you get a website that brings in more customers. If you're interested, just reply <b>"bring them back"</b> and we'll put them up again within a day.`) +
+            p(`If neither direction felt right, reply and tell us what you had in mind — a different style, colors, or a site you like — and we'll try a fresh approach. There's still nothing to pay until you're happy.`),
+        ),
+      };
+
+    case "revision_received":
+      return {
+        subject: `We got your changes for ${d.business || "your website"}`,
+        html: layout(
+          "Thank you — we're on it",
+          p(hi) +
+            p(`Thank you for your feedback on <b>Version ${esc(d.selectedPreview || "")}</b>. We've received your changes and our team is working on them now.`) +
+            ul([
+              `You'll get an email with the updated site within <b>1–2 business days</b>.`,
+              d.paidRound
+                ? `This is revision round ${d.round}. Your plan includes ${PRICE.includedRounds} rounds, so this round is <b>$${PRICE.extraRound}</b> — it will simply be added to your final payment. Nothing to pay now.`
+                : `This is revision round <b>${d.round} of ${PRICE.includedRounds}</b> included in your plan. Nothing to pay now.`,
+              `Your preview will stay online while we work on it.`,
+            ]) +
+            p(`Forgot something? ${link(review, "Open your review page")} or simply reply to this email.`),
+        ),
+      };
+
+    case "revision_done":
+      return {
+        subject: `Your changes are done — take a look`,
+        html: layout(
+          "Your updated site is ready",
+          p(hi) +
+            p(`Good news — we've made the changes you asked for on ${biz}. Please take another look on both your phone and computer:`) +
+            btn(d.previewUrl || d.liveUrl || SITE, "View your updated site") +
+            (d.note ? box(esc(d.note)) : "") +
+            p(
+              (d.roundsLeft ?? 0) > 0
+                ? `You have <b>${d.roundsLeft} more free revision round${d.roundsLeft === 1 ? "" : "s"}</b> left.`
+                : `You've used your ${PRICE.includedRounds} included revision rounds. Any further round is $${PRICE.extraRound}, added to your final payment.`,
+            ) +
+            p(`On your review page you can either send more changes, or <b>approve the design</b> — that's when you pay, and then we'll get your site live.`) +
+            btn(review, "Approve or send more changes"),
         ),
       };
 
@@ -266,19 +339,19 @@ export function render(key: TemplateKey, d: TemplateData): RenderedEmail {
       return {
         subject: `Payment received — let's get ${d.business || "your site"} live`,
         html: layout(
-          "Thank you — you're in!",
+          "Thank you — you're all set!",
           p(hi) +
-            p(`We received your payment${d.amount ? ` of <b>${esc(d.amount)}</b>` : ""}${d.packageLabel ? ` for the <b>${esc(d.packageLabel)}</b> package` : ""}${d.selectedPreview ? ` (Preview ${esc(d.selectedPreview)})` : ""}. Thank you!`) +
-            h2("2 quick steps from you") +
-            p(`<b>Step 1 — Tell us about your domain and email</b> (about 3 minutes).<br>Every business is set up a little differently, so this short form tells us exactly how to switch your site over safely, without touching your email.`) +
+            p(`We received your payment${d.amount ? ` of <b>${esc(d.amount)}</b>` : ""}${d.packageLabel ? ` for <b>${esc(d.packageLabel)}</b>` : ""}. Thank you so much for choosing SwiftLift!`) +
+            h2("One last step from you (about 3 minutes)") +
+            p(`Every business is set up a little differently, so this short form tells us exactly how to switch your new site over <b>safely</b> — your domain, your email, and your current website host. We'll explain everything in plain English, and nothing changes until we've checked it.`) +
             btn(goLiveUrl(d.projectId), "Start the go-live form") +
-            p(`<b>Step 2 — Send your changes</b> (optional).<br>Want to adjust text, photos or colors on the version you picked? ${link(`${SITE}/revision-request`, "Submit your changes here")}. Please send everything in one go.`) +
             h2("What happens after that") +
             ul([
-              `We finish your site and send you a final link to approve.`,
-              `We connect your domain. Your site is live within <b>3–5 business days</b> after we have your form.`,
+              `We send you a personalized go-live plan, so you know exactly what will happen.`,
+              `We connect your domain. Your site is live within <b>3–5 business days</b> after we receive your form.`,
               `Your email keeps working the whole time.`,
-            ]),
+            ]) +
+            p(`Questions? Just reply — we're happy to help.`),
         ),
       };
 
@@ -289,37 +362,22 @@ export function render(key: TemplateKey, d: TemplateData): RenderedEmail {
         html: layout(
           "Your go-live plan",
           p(hi) +
-            p(`Thanks — we have everything we need. Here's exactly what will happen, in plain English. Keep this email for reference.`) +
+            p(`Thank you — we have everything we need. Here's exactly what will happen, in plain English. Please keep this email for reference.`) +
             domainSection(g) +
             emailSection(g) +
             oldHostSection(g, false) +
             h2("4. Hosting") +
             p(
-              g.hostingPlan === "monthly" || g.hostingPlan === "yearly"
+              g.hostingPlan === "self"
+                ? `You'd like to host the site yourself. Your site is built in React, so we'll send you the <b>complete website files as a .zip</b>. It runs on modern static hosts like <b>Cloudflare Pages, Netlify or Vercel</b> (all have free plans). Traditional cPanel or shared hosting isn't supported for this type of site. Changes after handover are $45 per round.`
+                : g.hostingPlan === "monthly" || g.hostingPlan === "yearly"
                 ? `You chose <b>Managed Hosting</b> (${g.hostingPlan === "monthly" ? "$15/month" : "$135/year"}): we host your site and handle small updates for you. ${link(`${SITE}/deployment`, "Complete your hosting setup here")} if you haven't yet.`
                 : `Your site is hosted <b>free</b> on SwiftLift. If you'd ever like us to handle updates for you, Managed Hosting is $15/month or $135/year.`,
             ) +
-            p(`If anything here looks wrong, just reply and tell us.`),
+            p(`If anything here looks wrong, just reply and let us know.`),
         ),
       };
     }
-
-    case "revision_done":
-      return {
-        subject: `Your changes are done — take a look`,
-        html: layout(
-          "Your changes are ready",
-          p(hi) +
-            p(`We've made the changes you asked for. Please take another look on both your phone and computer:`) +
-            btn(d.previewUrl || d.liveUrl || SITE, "View your updated site") +
-            (d.note ? box(esc(d.note)) : "") +
-            p(
-              (d.roundsLeft ?? 0) > 0
-                ? `You have <b>${d.roundsLeft} more free round</b> of changes. ${link(`${SITE}/revision-request`, "Send more changes")}`
-                : `If it all looks good, just reply <b>"Approved"</b> and we'll take it live. Any further changes are $45 per round (${link(`${SITE}/revision-payment`, "request one here")}).`,
-            ),
-        ),
-      };
 
     case "site_live": {
       const g = d.golive || {};
@@ -328,9 +386,9 @@ export function render(key: TemplateKey, d: TemplateData): RenderedEmail {
         html: layout(
           "Your new website is live",
           p(hi) +
-            p(`Your new site is officially live:`) +
+            p(`Congratulations — your new website is officially live:`) +
             btn(d.liveUrl || SITE, d.liveUrl ? d.liveUrl.replace(/^https?:\/\//, "") : "View your site") +
-            p(`<b>Heads up:</b> it can take <b>2–72 hours</b> for every phone and computer to see the new site. If you still see the old one, that's normal — try again later or on mobile data.`) +
+            p(`<b>Heads up:</b> it can take <b>2–72 hours</b> for every phone and computer to see the new site. If you still see the old one, that's normal — please try again later or on mobile data.`) +
             oldHostSection(g, true) +
             h2("Want more customers from it?") +
             ul([
@@ -338,7 +396,8 @@ export function render(key: TemplateKey, d: TemplateData): RenderedEmail {
               `<b>Performance Optimization — $99</b>: make it load even faster.`,
               `<b>Managed Hosting — $15/month or $135/year</b>: we handle updates for you.`,
             ]) +
-            p(`Interested in any of these? Just reply. Thank you so much for choosing SwiftLift — we hope your new site brings you plenty of new business.`),
+            p(`Interested in any of these? Just reply.`) +
+            p(`Thank you so much for choosing SwiftLift. If you're happy with your new site, a quick review would mean a lot to our small team — and we hope your new website brings you plenty of new business.`),
         ),
       };
     }
@@ -348,7 +407,7 @@ export function render(key: TemplateKey, d: TemplateData): RenderedEmail {
 // ---------- admin notification ----------
 export function adminHtml(title: string, rows: Record<string, unknown>): string {
   const tr = Object.entries(rows)
-    .map(([k, v]) => `<tr><td style="padding:6px 10px;font-weight:bold;color:#555;vertical-align:top;">${esc(k)}</td><td style="padding:6px 10px;">${esc(v ?? "—")}</td></tr>`)
+    .map(([k, v]) => `<tr><td style="padding:6px 10px;font-weight:bold;color:#555;vertical-align:top;">${esc(k)}</td><td style="padding:6px 10px;white-space:pre-wrap;word-break:break-word;">${esc(v ?? "—")}</td></tr>`)
     .join("");
   return `<div style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto;padding:20px;"><h2 style="margin:0 0 12px 0;">${esc(title)}</h2><table style="border-collapse:collapse;width:100%;">${tr}</table></div>`;
 }
@@ -360,11 +419,20 @@ export function resendKey(): string {
   return k;
 }
 
-export async function sendEmail(to: string | string[], subject: string, html: string): Promise<string | null> {
+export type Attachment = { filename: string; path: string };
+
+export async function sendEmail(to: string | string[], subject: string, html: string, attachments?: Attachment[]): Promise<string | null> {
   const res = await fetch("https://api.resend.com/emails", {
     method: "POST",
     headers: { "Content-Type": "application/json", Authorization: `Bearer ${resendKey()}` },
-    body: JSON.stringify({ from: FROM, reply_to: REPLY_TO, to: Array.isArray(to) ? to : [to], subject, html }),
+    body: JSON.stringify({
+      from: FROM,
+      reply_to: REPLY_TO,
+      to: Array.isArray(to) ? to : [to],
+      subject,
+      html,
+      ...(attachments?.length ? { attachments } : {}),
+    }),
   });
   const txt = await res.text();
   if (!res.ok) throw new Error(`Resend ${res.status}: ${txt}`);

@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { Check, Loader2, LogOut, RefreshCw, Send } from "lucide-react";
 import { externalSupabase as supabase } from "@/lib/externalSupabase";
+import { JOURNEY_FN } from "@/lib/journey";
 
 // Internal page (not linked anywhere, noindex): send SwiftLift client emails by hand.
 // Protected by the admin key stored in Supabase (app_config.admin_send_key).
@@ -10,6 +11,7 @@ type Project = {
   id: string; lead_id: string | null; client_name: string | null; client_email: string | null; business_name: string | null; source_url: string | null;
   status: string | null; preview_a_url: string | null; preview_b_url: string | null; preview_a_image: string | null; preview_b_image: string | null;
   previews_sent_at: string | null; paid_at: string | null; live_url: string | null; selected_plan: string | null; selected_preview: string | null; created_at: string;
+  report_url?: string | null; review_pages?: string[] | null; old_host?: string | null; revision_rounds_used?: number | null;
 };
 type EmailLog = { project_id: string | null; lead_id: string | null; template: string; to_email: string; status: string; created_at: string };
 
@@ -29,6 +31,7 @@ const TEMPLATE_LABEL: Record<string, string> = {
   payment_confirmed: "E1 paid",
   golive_received: "Go-live plan",
   revision_done: "E2 changes done",
+  revision_received: "Changes received",
   site_live: "E3 live",
 };
 
@@ -39,6 +42,8 @@ const STATUS_STYLE: Record<string, string> = {
   paid: "bg-emerald-100 text-emerald-800",
   golive_received: "bg-emerald-100 text-emerald-800",
   revision_review: "bg-violet-100 text-violet-800",
+  revision_requested: "bg-violet-600 text-white",
+  approved: "bg-emerald-100 text-emerald-800",
   live: "bg-emerald-600 text-white",
 };
 
@@ -66,7 +71,8 @@ export default function AdminSend() {
   const [selected, setSelected] = useState<Row | null>(null);
 
   const [template, setTemplate] = useState<string>("previews_ready");
-  const [f, setF] = useState({ to: "", name: "", business: "", website: "", linkA: "", linkB: "", imgA: "", imgB: "", previewUrl: "", liveUrl: "", roundsLeft: "0", note: "" });
+  const [f, setF] = useState({ to: "", name: "", business: "", website: "", linkA: "", linkB: "", imgA: "", imgB: "", previewUrl: "", liveUrl: "", roundsLeft: "0", note: "", reportUrl: "", pages: "", oldHost: "" });
+  const [reportState, setReportState] = useState<"" | "uploading" | "done" | "error">("");
   const [sending, setSending] = useState(false);
   const [msg, setMsg] = useState<{ ok: boolean; text: string } | null>(null);
 
@@ -81,7 +87,7 @@ export default function AdminSend() {
 
   const load = useCallback(async (k: string) => {
     setLoading(true);
-    const { data, error } = await supabase.functions.invoke("client-journey", { body: { action: "list", key: k } });
+    const { data, error } = await supabase.functions.invoke(JOURNEY_FN, { body: { action: "list", key: k } });
     setLoading(false);
     if (error || data?.error) {
       setAuthed(false);
@@ -120,10 +126,27 @@ export default function AdminSend() {
       previewUrl: p?.selected_preview === "A" ? p?.preview_a_url || "" : p?.selected_preview === "B" ? p?.preview_b_url || "" : "",
       liveUrl: p?.live_url || (r.website ? `https://${r.website.replace(/^https?:\/\//, "").replace(/\/$/, "")}` : ""),
       roundsLeft: "0", note: "",
+      reportUrl: p?.report_url || "", pages: (p?.review_pages || []).join(", "), oldHost: p?.old_host || "",
     });
-    const next = !p || p.status === "new" ? "previews_ready" : p.status === "live" ? "site_live" : p.paid_at ? "revision_done" : "previews_ready";
+    setReportState(p?.report_url ? "done" : "");
+    const next = !p || p.status === "new" ? "previews_ready" : p.status === "live" ? "site_live" : p.status === "revision_requested" || p.paid_at ? "revision_done" : "previews_ready";
     setTemplate(next);
     window.scrollTo({ top: document.getElementById("composer")?.offsetTop ?? 0, behavior: "smooth" });
+  };
+
+  const uploadReport = async (file: File | undefined) => {
+    if (!file) return;
+    setReportState("uploading");
+    try {
+      const { data, error } = await supabase.functions.invoke(JOURNEY_FN, { body: { action: "report_upload_url", key, name: file.name } });
+      if (error || data?.error) throw new Error(data?.error || error?.message);
+      const up = await supabase.storage.from("client-reports").uploadToSignedUrl(data.path, data.token, file, { contentType: "application/pdf" });
+      if (up.error) throw up.error;
+      setF((s) => ({ ...s, reportUrl: data.publicUrl }));
+      setReportState("done");
+    } catch {
+      setReportState("error");
+    }
   };
 
   const tpl = TEMPLATES.find((t) => t.value === template)!;
@@ -134,9 +157,10 @@ export default function AdminSend() {
       setMsg({ ok: false, text: `Fill in: ${["to", ...missing].filter((k) => k !== "to" || !f.to).join(", ")}` });
       return;
     }
+    if (reportState === "uploading") { setMsg({ ok: false, text: "Wait for the PDF upload to finish" }); return; }
     if (!confirm(`Send "${tpl.label}" to ${f.to}?`)) return;
     setSending(true); setMsg(null);
-    const { data, error } = await supabase.functions.invoke("client-journey", {
+    const { data, error } = await supabase.functions.invoke(JOURNEY_FN, {
       body: {
         action: "send", key, template, projectId: selected?.project?.id, leadId: selected?.leadId,
         ...f, roundsLeft: Number(f.roundsLeft || 0),
@@ -261,19 +285,24 @@ export default function AdminSend() {
                 {field("linkB", "Preview B link *", "https://…-b.workers.dev")}
                 {field("imgA", "Preview A screenshot URL (optional)")}
                 {field("imgB", "Preview B screenshot URL (optional)")}
-                <p className="text-xs text-zinc-500">Starts the 24h reminder and 72h expiry timers automatically.</p>
+                <label className="block">
+                  <span className="text-xs font-semibold text-zinc-600">Preview report PDF (attached to the email)</span>
+                  <input id="report-pdf" type="file" accept="application/pdf" onChange={(e) => uploadReport(e.target.files?.[0])} className="mt-1 block w-full text-sm" />
+                  <span className="mt-1 block text-xs text-zinc-500">
+                    {reportState === "uploading" ? "Uploading…" : reportState === "done" ? `✓ Ready: ${f.reportUrl.split("/").pop()}` : reportState === "error" ? "Upload failed — try again" : "Optional"}
+                  </span>
+                </label>
+                {field("pages", "Pages on the review form", "Home, Services, About, Contact")}
+                {field("oldHost", "Current host (auto-detected if empty)", "Wix")}
+                <p className="text-xs text-zinc-500">Starts the 24h reminder and 72h expiry timers. The email links to the client's review page (pick A/B, send changes, approve &amp; pay).</p>
               </>
             )}
             {template === "revision_done" && (
               <>
                 {field("previewUrl", "Link to updated site *")}
-                <label className="block">
-                  <span className="text-xs font-semibold text-zinc-600">Free rounds left</span>
-                  <select value={f.roundsLeft} onChange={(e) => setF({ ...f, roundsLeft: e.target.value })} className={`${input} mt-1`}>
-                    <option value="0">0 — ask them to approve</option>
-                    <option value="1">1 more free round</option>
-                  </select>
-                </label>
+                <p className="text-xs text-zinc-500">
+                  Rounds used: {selected?.project?.revision_rounds_used ?? 0} of 2 — the email shows how many free rounds are left automatically.
+                </p>
                 <label className="block">
                   <span className="text-xs font-semibold text-zinc-600">Note (optional)</span>
                   <textarea value={f.note} onChange={(e) => setF({ ...f, note: e.target.value })} rows={3} className={`${input} mt-1`} placeholder="e.g. We swapped the hero photo and updated your hours." />

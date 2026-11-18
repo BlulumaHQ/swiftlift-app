@@ -3,9 +3,13 @@
 //   ingest_lead             → n8n (Meta Instant Form), needs ingest_secret
 //   reminders               → pg_cron hourly, needs cron_secret
 //   golive_get / golive_submit → public /go-live page, keyed by project id
+//   review_get / review_upload_url / review_submit / review_approve → public /review page, keyed by project id
+//   report_upload_url       → admin, signed upload URL for the preview report PDF
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.45.4";
 import {
   ADMIN_TO,
+  PRICE,
+  reviewUrl,
   adminHtml,
   render,
   sendEmail,
@@ -50,10 +54,11 @@ async function sendAndLog(
   to: string,
   data: TemplateData,
   ids: { projectId?: string | null; leadId?: string | null } = {},
+  attachments?: { filename: string; path: string }[],
 ) {
   const { subject, html } = render(template, data);
   try {
-    const resendId = await sendEmail(to, subject, html);
+    const resendId = await sendEmail(to, subject, html, attachments);
     await db.from("client_emails").insert({
       project_id: ids.projectId ?? null,
       lead_id: ids.leadId ?? null,
@@ -97,6 +102,9 @@ function projectData(p: Record<string, any>): TemplateData {
     imgA: p.preview_a_image,
     imgB: p.preview_b_image,
     liveUrl: p.live_url,
+    reportUrl: p.report_url,
+    oldHost: p.old_host,
+    selectedPreview: p.selected_preview,
   };
 }
 
@@ -115,7 +123,7 @@ async function latestGoLive(projectId: string): Promise<GoLiveAnswers | undefine
 async function actionList() {
   const [leads, projects, emails] = await Promise.all([
     db.from("leads").select("id,name,email,company_name,website_url,status,source_app,created_at").order("created_at", { ascending: false }).limit(40),
-    db.from("projects").select("id,lead_id,client_name,client_email,business_name,source_url,status,preview_a_url,preview_b_url,preview_a_image,preview_b_image,previews_sent_at,paid_at,live_url,selected_plan,selected_preview,created_at").order("created_at", { ascending: false }).limit(40),
+    db.from("projects").select("id,lead_id,client_name,client_email,business_name,source_url,status,preview_a_url,preview_b_url,preview_a_image,preview_b_image,previews_sent_at,paid_at,live_url,selected_plan,selected_preview,report_url,review_pages,old_host,revision_rounds_used,created_at").order("created_at", { ascending: false }).limit(40),
     db.from("client_emails").select("project_id,lead_id,template,to_email,status,created_at").order("created_at", { ascending: false }).limit(100),
   ]);
   return { leads: leads.data ?? [], projects: projects.data ?? [], emails: emails.data ?? [] };
@@ -147,7 +155,17 @@ async function actionSend(b: Record<string, any>) {
   if (b.leadId && UUID_RE.test(b.leadId)) patch.lead_id = b.leadId;
   if (template === "previews_ready") {
     if (!b.linkA || !b.linkB) throw new HttpError(400, "Preview A and B links are required");
+    const pages = String(b.pages || "")
+      .split(/[,\n]/)
+      .map((x: string) => x.trim())
+      .filter(Boolean);
     Object.assign(patch, {
+      report_url: b.reportUrl || project?.report_url || null,
+      review_pages: pages.length ? pages : project?.review_pages || null,
+      old_host: b.oldHost || project?.old_host || (await detectHost(patch.source_url)) || null,
+      selected_preview: null,
+      revision_rounds_used: 0,
+      approved_at: null,
       preview_a_url: b.linkA,
       preview_b_url: b.linkB,
       preview_a_image: b.imgA || null,
@@ -162,7 +180,14 @@ async function actionSend(b: Record<string, any>) {
     if (!b.liveUrl) throw new HttpError(400, "Live URL is required");
     Object.assign(patch, { live_url: b.liveUrl, live_at: new Date().toISOString(), status: "live" });
   }
-  if (template === "revision_done") patch.status = "revision_review";
+  if (template === "revision_done") {
+    patch.status = "revision_review";
+    if (b.previewUrl) {
+      // keep the updated link on the picked version so the review page shows it
+      const pick = project?.selected_preview === "B" ? "preview_b_url" : "preview_a_url";
+      patch[pick] = b.previewUrl;
+    }
+  }
 
   if (project) {
     project = (await db.from("projects").update(patch).eq("id", project.id).select("*").single()).data;
@@ -172,14 +197,22 @@ async function actionSend(b: Record<string, any>) {
   if (!project) throw new Error("could not save project");
   if (patch.lead_id) await db.from("leads").update({ status: patch.status || "in_progress" }).eq("id", patch.lead_id);
 
+  const used = Number(project.revision_rounds_used || 0);
   const data: TemplateData = {
     ...projectData(project),
     previewUrl: b.previewUrl,
-    roundsLeft: typeof b.roundsLeft === "number" ? b.roundsLeft : Number(b.roundsLeft || 0),
+    roundsLeft: Math.max(0, PRICE.includedRounds - used),
     note: b.note,
   };
   if (template === "site_live") data.golive = await latestGoLive(project.id);
-  const sent = await sendAndLog(template, to, data, { projectId: project.id, leadId: project.lead_id });
+  if (template === "revision_done") {
+    await db.from("revision_requests").update({ status: "done", completed_at: new Date().toISOString() }).eq("project_id", project.id).neq("status", "done");
+  }
+  const attachments =
+    template === "previews_ready" && project.report_url
+      ? [{ filename: `${(project.business_name || "Website").replace(/[^\w\- ]+/g, "")} - Website Preview Report.pdf`, path: project.report_url }]
+      : undefined;
+  const sent = await sendAndLog(template, to, data, { projectId: project.id, leadId: project.lead_id }, attachments);
   return { ok: true, projectId: project.id, ...sent };
 }
 
@@ -353,6 +386,201 @@ async function actionGoLiveSubmit(b: Record<string, any>) {
   return { ok: true };
 }
 
+// ---------------- review flow (client picks A/B, sends changes, approves → pays) ----------------
+const STRIPE_PRICE = {
+  A: "price_1TDtS2AAeDDkmZmNXkqRAqOA", // SwiftLift – Version A Launch Ready Website $299
+  B: "price_1TDtS1AAeDDkmZmNFtiteVM4", // SwiftLift – Version B Sales Focused Website $499
+  extraRound: "price_1TEIQQAAeDDkmZmNLBR0gmtZ", // SwiftLift – Fee – Additional Revision $45
+};
+const DEFAULT_PAGES = ["Home", "Other pages"];
+
+// Best-effort: which website builder/host the client's current site runs on.
+async function detectHost(url?: string | null): Promise<string | null> {
+  if (!url) return null;
+  try {
+    const res = await fetch(url.startsWith("http") ? url : `https://${url}`, {
+      redirect: "follow",
+      signal: AbortSignal.timeout(6000),
+      headers: { "user-agent": "Mozilla/5.0 SwiftLift preview bot" },
+    });
+    const html = (await res.text()).slice(0, 300_000).toLowerCase();
+    const h = [...res.headers.entries()].map(([k, v]) => `${k}:${v}`).join(" ").toLowerCase();
+    if (h.includes("x-wix") || html.includes("static.wixstatic.com") || html.includes("wix.com website builder")) return "Wix";
+    if (html.includes("squarespace.com") || html.includes("static1.squarespace")) return "Squarespace";
+    if (html.includes("img1.wsimg.com") || html.includes("godaddy")) return "GoDaddy";
+    if (html.includes("cdn.shopify.com")) return "Shopify";
+    if (html.includes("weebly") || html.includes("editmysite.com")) return "Weebly / Square Online";
+    if (html.includes("wp-content") || html.includes("wordpress")) return "WordPress hosting";
+    return null;
+  } catch {
+    return null;
+  }
+}
+
+async function reviewProject(projectId: unknown) {
+  if (!UUID_RE.test(String(projectId || ""))) throw new HttpError(404, "This link isn't valid. Please reply to our email and we'll send a new one.");
+  const { data: p } = await db.from("projects").select("*").eq("id", projectId).maybeSingle();
+  if (!p || !p.preview_a_url || !p.preview_b_url) throw new HttpError(404, "This link isn't valid. Please reply to our email and we'll send a new one.");
+  return p as Record<string, any>;
+}
+
+async function actionReviewGet(b: Record<string, any>) {
+  const p = await reviewProject(b.projectId);
+  const { data: last } = await db
+    .from("revision_requests")
+    .select("round,status,selected_preview,created_at")
+    .eq("project_id", p.id)
+    .order("created_at", { ascending: false })
+    .limit(1)
+    .maybeSingle();
+  return {
+    firstName: String(p.client_name || "").split(/\s+/)[0] || "",
+    business: p.business_name || "",
+    linkA: p.preview_a_url,
+    linkB: p.preview_b_url,
+    imgA: p.preview_a_image,
+    imgB: p.preview_b_image,
+    reportUrl: p.report_url,
+    pages: Array.isArray(p.review_pages) && p.review_pages.length ? p.review_pages : DEFAULT_PAGES,
+    selectedPreview: p.selected_preview,
+    roundsUsed: Number(p.revision_rounds_used || 0),
+    includedRounds: PRICE.includedRounds,
+    price: { A: PRICE.A, B: PRICE.B, extraRound: PRICE.extraRound },
+    status: p.status,
+    paid: !!p.paid_at,
+    pending: last && last.status !== "done" ? last : null,
+  };
+}
+
+async function actionReviewUploadUrl(b: Record<string, any>) {
+  const p = await reviewProject(b.projectId);
+  const name = String(b.name || "file").replace(/[^\w.\-]+/g, "_").slice(-80);
+  const path = `${p.id}/${Date.now()}-${crypto.randomUUID().slice(0, 8)}-${name}`;
+  const { data, error } = await db.storage.from("revision-uploads").createSignedUploadUrl(path);
+  if (error || !data) throw new Error(`upload url: ${error?.message}`);
+  return { path, token: data.token, signedUrl: data.signedUrl };
+}
+
+async function actionReportUploadUrl(b: Record<string, any>) {
+  const slug = String(b.name || "report").replace(/[^\w.\-]+/g, "_").slice(-80);
+  const path = `${new Date().toISOString().slice(0, 10)}/${crypto.randomUUID().slice(0, 8)}-${slug}`;
+  const { data, error } = await db.storage.from("client-reports").createSignedUploadUrl(path);
+  if (error || !data) throw new Error(`upload url: ${error?.message}`);
+  const publicUrl = db.storage.from("client-reports").getPublicUrl(path).data.publicUrl;
+  return { path, token: data.token, signedUrl: data.signedUrl, publicUrl };
+}
+
+type PageNote = { page: string; note?: string; useOther?: boolean };
+
+async function actionReviewSubmit(b: Record<string, any>) {
+  const p = await reviewProject(b.projectId);
+  if (p.paid_at) throw new HttpError(400, "Your site is already approved and paid. Please reply to our email for any further changes.");
+  const pick = b.preview === "B" ? "B" : b.preview === "A" ? "A" : null;
+  if (!pick) throw new HttpError(400, "Please choose Version A or Version B");
+
+  const pages: PageNote[] = (Array.isArray(b.pages) ? b.pages : [])
+    .map((x: PageNote) => ({ page: String(x.page || "").slice(0, 80), note: String(x.note || "").slice(0, 4000), useOther: !!x.useOther }))
+    .filter((x: PageNote) => x.note || x.useOther);
+  const o = (b.overall || {}) as Record<string, string>;
+  const overall: Record<string, string> = {};
+  for (const k of ["colors", "fonts", "photos", "logo", "other"]) if (o[k]) overall[k] = String(o[k]).slice(0, 4000);
+  const files = (Array.isArray(b.files) ? b.files : [])
+    .filter((f: { path?: string }) => typeof f?.path === "string" && f.path.startsWith(`${p.id}/`))
+    .slice(0, 10)
+    .map((f: { path: string; name?: string }) => ({ path: f.path, name: String(f.name || "").slice(0, 120) }));
+  if (!pages.length && !Object.keys(overall).length && !files.length) throw new HttpError(400, "Please tell us at least one thing you'd like changed");
+
+  // one submission per minute (double-clicks / bots)
+  const { data: recent } = await db.from("revision_requests").select("id").eq("project_id", p.id).gt("created_at", new Date(Date.now() - 60e3).toISOString()).limit(1).maybeSingle();
+  if (recent) throw new HttpError(429, "We already received your changes — thank you!");
+
+  const round = Number(p.revision_rounds_used || 0) + 1;
+  const isPaid = round > PRICE.includedRounds;
+  const { data: rr, error } = await db
+    .from("revision_requests")
+    .insert({ project_id: p.id, round, selected_preview: pick, pages, overall, files, is_paid_round: isPaid })
+    .select("id")
+    .single();
+  if (error) throw error;
+  await db
+    .from("projects")
+    .update({ selected_preview: pick, revision_rounds_used: round, status: "revision_requested", updated_at: new Date().toISOString() })
+    .eq("id", p.id);
+
+  await sendAndLog("revision_received", p.client_email, { ...projectData({ ...p, selected_preview: pick }), round, paidRound: isPaid }, { projectId: p.id, leadId: p.lead_id });
+
+  const signed = await Promise.all(
+    files.map(async (f: { path: string; name: string }) => {
+      const { data } = await db.storage.from("revision-uploads").createSignedUrl(f.path, 60 * 60 * 24 * 7);
+      return `${f.name || f.path}: ${data?.signedUrl || f.path}`;
+    }),
+  );
+  const rows: Record<string, unknown> = {
+    Client: p.client_name,
+    Email: p.client_email,
+    Business: p.business_name,
+    "Picked version": `Version ${pick} ($${pick === "A" ? PRICE.A : PRICE.B})`,
+    Round: `${round} of ${PRICE.includedRounds} included${isPaid ? ` — PAID round (+$${PRICE.extraRound} at checkout)` : ""}`,
+    "Preview link": pick === "A" ? p.preview_a_url : p.preview_b_url,
+  };
+  for (const x of pages) rows[`Page · ${x.page}`] = `${x.useOther ? `[use Version ${pick === "A" ? "B" : "A"}'s look] ` : ""}${x.note || ""}`;
+  for (const [k, v] of Object.entries(overall)) rows[`Overall · ${k}`] = v;
+  if (signed.length) rows["Screenshots (links valid 7 days)"] = signed.join("\n");
+  rows["Revision id"] = rr.id;
+  rows["When done"] = "Send E2 'Changes are done' from swiftlift.app/admin/send";
+  await notifyAdmin(`✏️ Revision round ${round}: ${p.business_name || p.client_email} (Version ${pick})`, rows);
+  return { ok: true, round, paidRound: isPaid };
+}
+
+async function actionReviewApprove(b: Record<string, any>, req: Request) {
+  const p = await reviewProject(b.projectId);
+  if (p.paid_at) throw new HttpError(400, "This site is already paid — thank you!");
+  const pick = b.preview === "B" ? "B" : b.preview === "A" ? "A" : null;
+  if (!pick) throw new HttpError(400, "Please choose Version A or Version B");
+  const extra = Math.max(0, Number(p.revision_rounds_used || 0) - PRICE.includedRounds);
+  const origin = req.headers.get("origin") || "https://swiftlift.app";
+
+  const form = new URLSearchParams();
+  form.set("mode", "payment");
+  form.set("line_items[0][price]", STRIPE_PRICE[pick]);
+  form.set("line_items[0][quantity]", "1");
+  if (extra > 0) {
+    form.set("line_items[1][price]", STRIPE_PRICE.extraRound);
+    form.set("line_items[1][quantity]", String(extra));
+  }
+  form.set("success_url", `${origin}/payment-success?type=build&tier=version_${pick.toLowerCase()}&session_id={CHECKOUT_SESSION_ID}`);
+  form.set("cancel_url", `${reviewUrl(p.id)}&canceled=1`);
+  if (p.client_email) form.set("customer_email", p.client_email);
+  const meta: Record<string, string> = {
+    payment_type: "build",
+    tier: `version_${pick.toLowerCase()}`,
+    project_id: p.id,
+    client_email: p.client_email || "",
+    client_name: p.client_name || "",
+    business_name: p.business_name || "",
+    selected_preview: pick,
+    preview_link: (pick === "A" ? p.preview_a_url : p.preview_b_url) || "",
+    extra_revision_rounds: String(extra),
+  };
+  for (const [k, v] of Object.entries(meta)) form.set(`metadata[${k}]`, v);
+
+  const res = await fetch("https://api.stripe.com/v1/checkout/sessions", {
+    method: "POST",
+    headers: { Authorization: `Bearer ${Deno.env.get("STRIPE_SECRET_KEY")}`, "Content-Type": "application/x-www-form-urlencoded" },
+    body: form,
+  });
+  const j = await res.json();
+  if (!res.ok) throw new Error(`stripe: ${j?.error?.message || res.status}`);
+  await db.from("projects").update({ selected_preview: pick, approved_at: new Date().toISOString(), status: "approved", updated_at: new Date().toISOString() }).eq("id", p.id);
+  await notifyAdmin(`👍 Approved: ${p.business_name || p.client_email} picked Version ${pick} — checkout opened`, {
+    Client: p.client_name,
+    Email: p.client_email,
+    Total: `$${(pick === "A" ? PRICE.A : PRICE.B) + extra * PRICE.extraRound}${extra ? ` (incl. ${extra} extra round${extra > 1 ? "s" : ""})` : ""}`,
+    Note: "You'll get a second email once the payment actually goes through.",
+  });
+  return { url: j.url };
+}
+
 Deno.serve(async (req) => {
   if (req.method === "OPTIONS") return new Response(null, { headers: cors });
   try {
@@ -377,6 +605,17 @@ Deno.serve(async (req) => {
         return json(await actionGoLiveGet(b));
       case "golive_submit":
         return json(await actionGoLiveSubmit(b));
+      case "review_get":
+        return json(await actionReviewGet(b));
+      case "review_upload_url":
+        return json(await actionReviewUploadUrl(b));
+      case "review_submit":
+        return json(await actionReviewSubmit(b));
+      case "review_approve":
+        return json(await actionReviewApprove(b, req));
+      case "report_upload_url":
+        await requireSecret("admin_send_key", b.key);
+        return json(await actionReportUploadUrl(b));
       default:
         return json({ error: "unknown action" }, 400);
     }
