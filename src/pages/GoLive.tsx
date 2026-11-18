@@ -6,6 +6,7 @@ import { LanguageProvider } from "@/contexts/LanguageContext";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import { externalSupabase as supabase } from "@/lib/externalSupabase";
+import { JOURNEY_FN } from "@/lib/journey";
 
 type Option = { value: string; label: string; hint?: string };
 
@@ -51,6 +52,7 @@ const PLANS: Option[] = [
   { value: "free", label: "Free hosting", hint: "$0 — you send us changes when you need them ($45 per round)" },
   { value: "monthly", label: "Managed Hosting — $15/month", hint: "We host it and handle small updates for you" },
   { value: "yearly", label: "Managed Hosting — $135/year", hint: "Same as monthly, 3 months free" },
+  { value: "self", label: "I'll host it myself", hint: "We send the full site as a .zip — needs Cloudflare Pages, Netlify or Vercel (not cPanel / shared hosting)" },
 ];
 
 function classifyMx(hosts: string[]): string {
@@ -179,7 +181,7 @@ const GoLiveContent = () => {
       return;
     }
     supabase.functions
-      .invoke("client-journey", { body: { action: "golive_get", projectId } })
+      .invoke(JOURNEY_FN, { body: { action: "golive_get", projectId } })
       .then(({ data, error }) => {
         if (error || !data || data.error) {
           setLoadError("We couldn't find your project. Please use the link in your payment email, or reply to it.");
@@ -221,7 +223,7 @@ const GoLiveContent = () => {
     setError("");
     setSubmitting(true);
     try {
-      const { data, error } = await supabase.functions.invoke("client-journey", {
+      const { data, error } = await supabase.functions.invoke(JOURNEY_FN, {
         body: {
           action: "golive_submit",
           projectId,
