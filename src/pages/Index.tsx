@@ -659,6 +659,15 @@ const IndexContent = ({ variant = "home" }: { variant?: "home" | "start" }) => {
       url: "https://kchencm.com/",
       domain: "kchencm.com",
     },
+    {
+      text: lang === "en"
+        ? <>Since the new website launched, <strong>our customers keep telling us how good it looks.</strong> Hearing that from them made me really happy — thank you for the professional design.</>
+        : <>新網站上線之後，<strong>我們的客戶一直跟我們說網站很好看。</strong>聽到他們這樣說，我真的超開心——謝謝你專業的設計。</>,
+      name: "Golden Chen",
+      company: "NuEra Nutraceuticals",
+      url: "https://nueranutra.com/",
+      domain: "nueranutra.com",
+    },
   ];
 
   const faqItems = [
@@ -1041,7 +1050,7 @@ const IndexContent = ({ variant = "home" }: { variant?: "home" | "start" }) => {
             {lang === "en" ? "What Our Clients Say" : "客戶評價"}
           </h2>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-5 items-stretch">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-5 items-stretch max-w-4xl mx-auto">
             {reviewItems.map((item, ci) => (
               <div key={ci} className="rounded-2xl border border-border bg-background p-6 md:p-7 shadow-sm flex flex-col">
                 <p className="text-base text-foreground leading-relaxed font-medium flex-1">
