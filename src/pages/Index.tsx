@@ -270,7 +270,7 @@ const MultiStepIntake = ({ variant = "hero" }: { variant?: "hero" | "cta" }) => 
         source_app: "landing_page",
       };
 
-      const { error: leadsError } = await externalSupabase.from("leads").insert(leadsPayload).select();
+      const { error: leadsError } = await externalSupabase.from("leads").insert(leadsPayload);
       if (leadsError) {
         const debugMsg = [
           `message: ${leadsError.message || "N/A"}`,

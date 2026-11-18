@@ -133,7 +133,7 @@ const IntakeForm = () => {
       };
       console.log("Leads payload:", leadsPayload);
 
-      const { data: leadsData, error: leadsError } = await externalSupabase.from("leads").insert(leadsPayload).select();
+      const { data: leadsData, error: leadsError } = await externalSupabase.from("leads").insert(leadsPayload);
       if (leadsError) {
         console.error("Leads insert error:", leadsError);
         throw new Error(leadsError.message);
