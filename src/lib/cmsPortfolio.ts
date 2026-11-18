@@ -30,6 +30,11 @@ export type PortfolioItem = {
 export type StudyVersion = { label: string; url: string | null; image: string | null; chosen: boolean };
 export type Study = { key: string; title: string; category: string | null; featured: boolean; versions: StudyVersion[] };
 const STAGING = [".netlify.app", ".workers.dev", ".pages.dev", ".lovable.app", ".bluluma.com"];
+// Version the client picked, for pairs where neither (or both) versions sit on a real domain yet.
+const CLIENT_CHOSE: Record<string, string> = {
+  "Mutt Puddles Dog Wash": "A",
+  "Gene's Sausage Shop": "B",
+};
 const isRealDomain = (u: string | null) => !!u && !STAGING.some((d) => u.toLowerCase().includes(d));
 
 export function buildPortfolio(rows: PortfolioItem[]) {
@@ -53,6 +58,7 @@ export function buildPortfolio(rows: PortfolioItem[]) {
     const sorted = [...g].sort((a, b) => (a.pair_label ?? "").localeCompare(b.pair_label ?? "")).slice(0, 2);
     const real = sorted.map((v) => isRealDomain(v.live_url));
     const one = real.filter(Boolean).length === 1;
+    const picked = CLIENT_CHOSE[title];
     studies.push({
       key: title, title,
       category: sorted.find((v) => v.category)?.category ?? null,
@@ -60,7 +66,7 @@ export function buildPortfolio(rows: PortfolioItem[]) {
       versions: sorted.map((v, i) => ({
         label: v.pair_label ?? "", url: v.live_url,
         image: v.featured_image_url ?? v.versions?.[0]?.screenshot_url ?? null,
-        chosen: one && real[i] === true,
+        chosen: picked ? v.pair_label === picked : one && real[i] === true,
       })),
     });
   }
