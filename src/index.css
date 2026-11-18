@@ -89,6 +89,23 @@
     letter-spacing: 0.01em;
   }
 
+  /* Never allow sideways panning on phones */
+  html,
+  body {
+    overflow-x: clip;
+    max-width: 100%;
+  }
+
+  /* iOS Safari zooms (and then pans sideways) when a focused field is < 16px.
+     Force 16px on touch-size screens for every form control. */
+  @media (max-width: 1023px) {
+    input,
+    select,
+    textarea {
+      font-size: 16px !important;
+    }
+  }
+
   /* Chinese font override */
   html[lang="zh"] body,
   .lang-zh {

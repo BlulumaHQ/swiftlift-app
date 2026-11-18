@@ -84,10 +84,10 @@ const Header = () => {
           >
             <Mail size={17} />
           </a>
-          <div className="flex items-center rounded-full border border-border overflow-hidden text-[0.85rem]">
+          <div className="flex shrink-0 items-center whitespace-nowrap rounded-full border border-border overflow-hidden text-[0.85rem]">
             <button
               onClick={() => setLang("en")}
-              className={`px-3 py-1.5 font-medium transition-colors ${
+              className={`px-2.5 sm:px-3 py-1.5 font-medium whitespace-nowrap transition-colors ${
                 lang === "en"
                   ? "bg-primary text-primary-foreground"
                   : "text-muted-foreground hover:text-foreground"
@@ -97,7 +97,7 @@ const Header = () => {
             </button>
             <button
               onClick={() => setLang("zh")}
-              className={`px-3 py-1.5 font-medium transition-colors ${
+              className={`px-2.5 sm:px-3 py-1.5 font-medium whitespace-nowrap transition-colors ${
                 lang === "zh"
                   ? "bg-primary text-primary-foreground"
                   : "text-muted-foreground hover:text-foreground"

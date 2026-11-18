@@ -382,7 +382,7 @@ const MultiStepIntake = ({ variant = "hero" }: { variant?: "hero" | "cta" }) => 
           {urlError && <p className={`text-xs ${isDark ? "text-red-300" : "text-destructive"}`}>{urlError}</p>}
           <button
             type="submit"
-            className="w-full rounded-full py-4 px-8 text-sm font-bold text-white whitespace-nowrap transition-all hover:opacity-90 hover:scale-[1.01]"
+            className="w-full rounded-full py-4 px-5 sm:px-8 text-sm font-bold leading-snug text-white text-balance transition-all hover:opacity-90 hover:scale-[1.01]"
             style={{ background: "hsl(275 51% 46%)" }}
           >
             {lang === "en" ? "Get My 2 Free Website Versions" : "獲取我的2個免費網站版本"}
@@ -460,7 +460,7 @@ const MultiStepIntake = ({ variant = "hero" }: { variant?: "hero" | "cta" }) => 
           <button
             type="submit"
             disabled={submitting}
-            className={`flex-1 rounded-full py-3.5 px-8 text-sm font-bold text-white transition-all hover:opacity-90 ${submitting ? "opacity-70 pointer-events-none" : ""}`}
+            className={`flex-1 rounded-full py-3.5 px-4 sm:px-8 text-sm font-bold leading-snug text-white transition-all hover:opacity-90 ${submitting ? "opacity-70 pointer-events-none" : ""}`}
             style={{ background: "hsl(275 51% 46%)" }}
           >
             {submitting ? (lang === "en" ? "Sending..." : "發送中...") : (lang === "en" ? "Get My 2 Free Website Versions" : "獲取我的2個免費網站版本")}
