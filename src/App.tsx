@@ -22,6 +22,8 @@ import Portfolio from "./pages/Portfolio";
 import WorkWithUs from "./pages/WorkWithUs";
 import About from "./pages/About";
 import Start from "./pages/Start";
+import GoLive from "./pages/GoLive";
+import AdminSend from "./pages/AdminSend";
 import RouteHead from "./components/RouteHead";
 import ClientUpgrades from "./pages/ClientUpgrades";
 import IndustryPage from "./pages/IndustryPage";
@@ -57,6 +59,8 @@ const App = () => (
           <Route path="/work-with-us" element={<WorkWithUs />} />
           <Route path="/about" element={<About />} />
           <Route path="/start" element={<Start />} />
+          <Route path="/go-live" element={<GoLive />} />
+          <Route path="/admin/send" element={<AdminSend />} />
           <Route path="/client-upgrades" element={<ClientUpgrades />} />
           <Route path="/website-redesign/:slug" element={<IndustryPage />} />
           <Route path="*" element={<NotFound />} />
