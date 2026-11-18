@@ -21,9 +21,14 @@ const NOINDEX = new Set([
 ]);
 
 /** Per-route canonical (index.html ships "/" for every page) and robots. */
+let firstRoute = true;
+
 export default function RouteHead() {
   const { pathname } = useLocation();
   useEffect(() => {
+    // Meta Pixel fires PageView on initial load (index.html); track SPA navigations here.
+    if (firstRoute) firstRoute = false;
+    else (window as unknown as { fbq?: (...a: unknown[]) => void }).fbq?.("track", "PageView");
     const clean = pathname !== "/" ? pathname.replace(/\/+$/, "") : "/";
     let link = document.head.querySelector<HTMLLinkElement>('link[rel="canonical"]');
     if (!link) {

@@ -498,7 +498,7 @@ const FounderPhoto = () => {
   const [failed, setFailed] = useState(false);
   return failed ? (
     <div
-      className="w-24 h-24 rounded-full flex items-center justify-center text-2xl font-black text-white flex-shrink-0"
+      className="w-28 h-28 rounded-full flex items-center justify-center text-2xl font-black text-white flex-shrink-0"
       style={{ background: "linear-gradient(135deg, hsl(275 51% 46%), hsl(214 58% 50%))" }}
     >
       SL
@@ -507,11 +507,11 @@ const FounderPhoto = () => {
     <img
       src="/images/sony-lin.jpg"
       alt="Sony Lin, founder of SwiftLift"
-      width={96}
-      height={96}
+      width={112}
+      height={112}
       loading="lazy"
       onError={() => setFailed(true)}
-      className="w-24 h-24 rounded-full object-cover flex-shrink-0"
+      className="w-28 h-28 rounded-full object-cover flex-shrink-0 shadow-md"
     />
   );
 };
