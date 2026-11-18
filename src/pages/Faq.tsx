@@ -29,7 +29,7 @@ const faqItems = [
   },
   {
     q: { en: "Where is my website hosted? Are there hidden fees?", zh: "我的網站託管在哪裡？有隱藏費用嗎？" },
-    a: { en: "All SwiftLift websites are hosted on Netlify — one of the most reliable hosting platforms available. Your hosting is completely free with no monthly fees, and we will never use hosting costs to lock you in. If you prefer to manage your own hosting, we'll deliver your complete website as a ZIP file. You can then deploy it yourself on either Netlify or Vercel — both are free platforms and fully compatible with your site files.", zh: "所有SwiftLift網站都託管在Netlify——最可靠的託管平台之一。您的託管完全免費，無月費，我們絕不會用託管費用來綁住您。如果您偏好自行管理託管，我們會將完整網站以ZIP檔案交付。您可以自行部署在Netlify或Vercel上——兩者都是免費平台，完全兼容您的網站檔案。" },
+    a: { en: "Every SwiftLift website comes with fast, secure hosting (SSL included) at no monthly cost, and we will never use hosting costs to lock you in. If you prefer to manage your own hosting, we'll deliver your complete website as a ZIP file you can deploy for free on Cloudflare, Netlify or Vercel.", zh: "每個 SwiftLift 網站都包含快速、安全的託管（含SSL），無月費，我們絕不會用託管費用來綁住您。如果您偏好自行管理託管，我們會將完整網站以ZIP檔案交付，您可以免費部署在 Cloudflare、Netlify 或 Vercel 上。" },
   },
   {
     q: { en: "Can I use my own domain name?", zh: "可以使用自己的網域嗎？" },

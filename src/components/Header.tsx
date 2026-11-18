@@ -52,7 +52,7 @@ const Header = () => {
     >
       <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between transition-all duration-500">
         <Link to="/" className="flex items-center py-[5px]">
-          <img src={swiftsiteLogo} alt="SwiftLift Studio" className="h-[calc(5rem-10px)] w-auto" />
+          <img src={swiftsiteLogo} alt="SwiftLift Studio" className="h-[calc(5rem-10px)] max-[359px]:h-12 w-auto" />
         </Link>
 
         <nav className="hidden md:flex items-center gap-8" aria-label="Main navigation">

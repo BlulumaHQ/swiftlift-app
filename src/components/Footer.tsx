@@ -46,13 +46,16 @@ const Footer = () => {
             </Link>
             <p className="mt-3 text-sm text-blue-200/70 leading-relaxed max-w-xs">
               {lang === "en"
-                ? "Faster than agencies. Easier than freelancers. Safer than traditional services."
-                : "比機構更快。比自由職業者更簡單。比傳統服務更安全。"}
+                ? "Real designer. Real websites. No templates."
+                : "真正的設計師。真正的網站。沒有模板。"}
             </p>
             <a href="mailto:support@swiftlift.app" className="mt-3 inline-flex items-center gap-1.5 text-sm text-blue-300 hover:text-white transition-colors">
               <Mail size={14} />
               support@swiftlift.app
             </a>
+            <p className="mt-1 text-xs text-blue-200/50">
+              {lang === "en" ? "We reply within 1 business day" : "1個工作天內回覆"}
+            </p>
           </div>
 
           {/* Column 2: Empty Spacer */}
@@ -155,13 +158,16 @@ const Footer = () => {
             </Link>
             <p className="mt-3 text-sm text-blue-200/70 leading-relaxed max-w-xs mx-auto">
               {lang === "en"
-                ? "Faster than agencies. Easier than freelancers. Safer than traditional services."
-                : "比機構更快。比自由職業者更簡單。比傳統服務更安全。"}
+                ? "Real designer. Real websites. No templates."
+                : "真正的設計師。真正的網站。沒有模板。"}
             </p>
-            <a href="mailto:support@swiftlift.app" className="mt-3 inline-flex items-center gap-1.5 text-sm text-blue-300 hover:text-white transition-colors">
+            <a href="mailto:support@swiftlift.app" className="mt-3 inline-flex items-center gap-1.5 py-2 text-sm text-blue-300 hover:text-white transition-colors">
               <Mail size={14} />
               support@swiftlift.app
             </a>
+            <p className="mt-1 text-xs text-blue-200/50">
+              {lang === "en" ? "We reply within 1 business day" : "1個工作天內回覆"}
+            </p>
           </div>
 
           <div className="grid grid-cols-3 gap-4">
@@ -169,13 +175,13 @@ const Footer = () => {
               <h4 className="text-sm font-semibold text-white mb-3">
                 {lang === "en" ? "Navigation" : "導航"}
               </h4>
-              <nav className="flex flex-col gap-2" aria-label="Footer navigation">
+              <nav className="flex flex-col" aria-label="Footer navigation">
                 {navItems.map((item) => (
                   <a
                     key={item.href}
                     href={item.href}
                     onClick={(e) => handleNavClick(e, item.href)}
-                    className="text-sm text-blue-200/70 hover:text-white transition-colors"
+                    className="text-sm text-blue-200/70 hover:text-white transition-colors py-2 block"
                   >
                     {item.label}
                   </a>
@@ -186,17 +192,17 @@ const Footer = () => {
               <h4 className="text-sm font-semibold text-white mb-3">
                 {lang === "en" ? "Resources" : "資源"}
               </h4>
-              <div className="flex flex-col gap-2">
-                <Link to="/faq" className="text-sm text-blue-200/70 hover:text-white transition-colors">
+              <div className="flex flex-col">
+                <Link to="/faq" className="text-sm text-blue-200/70 hover:text-white transition-colors py-2 block">
                   {lang === "en" ? "FAQ" : "常見問題"}
                 </Link>
-                <Link to="/features" className="text-sm text-blue-200/70 hover:text-white transition-colors">
+                <Link to="/features" className="text-sm text-blue-200/70 hover:text-white transition-colors py-2 block">
                   {lang === "en" ? "Add Features" : "追加功能"}
                 </Link>
-                <Link to="/hosting-guide" className="text-sm text-blue-200/70 hover:text-white transition-colors">
+                <Link to="/hosting-guide" className="text-sm text-blue-200/70 hover:text-white transition-colors py-2 block">
                   {lang === "en" ? "Hosting Guide" : "託管指南"}
                 </Link>
-              <Link to="/support" className="text-sm text-blue-200/70 hover:text-white transition-colors">
+              <Link to="/support" className="text-sm text-blue-200/70 hover:text-white transition-colors py-2 block">
                 {lang === "en" ? "Support" : "聯繫客服"}
               </Link>
               </div>
@@ -205,19 +211,19 @@ const Footer = () => {
               <h4 className="text-sm font-semibold text-white mb-3">
                 {lang === "en" ? "Legal" : "法律"}
               </h4>
-              <div className="flex flex-col gap-2">
-                <Link to="/privacy" className="text-sm text-blue-200/70 hover:text-white transition-colors">
+              <div className="flex flex-col">
+                <Link to="/privacy" className="text-sm text-blue-200/70 hover:text-white transition-colors py-2 block">
                   {t(footer.privacy, lang)}
                 </Link>
-                <Link to="/terms" className="text-sm text-blue-200/70 hover:text-white transition-colors">
+                <Link to="/terms" className="text-sm text-blue-200/70 hover:text-white transition-colors py-2 block">
                   {t(footer.terms, lang)}
                 </Link>
               </div>
               <h4 className="text-sm font-semibold text-white mb-3 mt-5">
                 {lang === "en" ? "White Label" : "白標"}
               </h4>
-              <div className="flex flex-col gap-2">
-                <Link to="/work-with-us" className="text-sm text-blue-200/70 hover:text-white transition-colors">
+              <div className="flex flex-col">
+                <Link to="/work-with-us" className="text-sm text-blue-200/70 hover:text-white transition-colors py-2 block">
                   {lang === "en" ? "For Designers" : "設計師專區"}
                 </Link>
               </div>

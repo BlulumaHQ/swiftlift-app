@@ -25,7 +25,7 @@ const CookieConsent = () => {
 
   useEffect(() => {
     if (getStoredConsent()) return;
-    const t = setTimeout(() => setVisible(true), 800);
+    const t = setTimeout(() => setVisible(true), 4000);
     return () => clearTimeout(t);
   }, []);
 
@@ -50,14 +50,15 @@ const CookieConsent = () => {
         className="fixed bottom-0 left-0 right-0 z-[9999] animate-in fade-in slide-in-from-bottom-4 duration-500"
         style={{ background: "#fff", borderTop: "1px solid #E5E7EB", boxShadow: "0 -2px 10px rgba(0,0,0,0.05)" }}
       >
-        <div className="max-w-7xl mx-auto px-4 py-3 flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
-          <p className="text-sm" style={{ color: "#333", lineHeight: 1.5 }}>
-            We use cookies to improve your experience and analyze traffic. You can accept all cookies or manage your preferences.
+        <div className="max-w-7xl mx-auto px-4 py-2.5 flex flex-row items-center justify-between gap-3">
+          <p className="text-xs sm:text-sm" style={{ color: "#333", lineHeight: 1.4 }}>
+            <span className="sm:hidden">We use cookies to improve your experience.</span>
+            <span className="hidden sm:inline">We use cookies to improve your experience and analyze traffic. You can accept all cookies or manage your preferences.</span>
           </p>
-          <div className="flex items-center gap-3 shrink-0">
+          <div className="flex items-center gap-2 sm:gap-3 shrink-0">
             <button
               onClick={accept}
-              className="text-sm font-medium px-4 py-2.5 rounded-md transition-colors w-full sm:w-auto"
+              className="text-sm font-medium px-4 py-2 rounded-md transition-colors whitespace-nowrap"
               style={{ background: "#5887DA", color: "#fff" }}
             >
               Accept All
