@@ -1,138 +1,169 @@
-import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
-import Stripe from "https://esm.sh/stripe@18.5.0";
+// Stripe webhook (live endpoint we_1TEQiY…):
+//  - verifies the signature (required)
+//  - records the payment once per checkout session
+//  - build payments: marks the project paid (stops preview reminders) and emails the client E1
+//  - every payment: emails Sony a summary
+import Stripe from "https://esm.sh/stripe@13.10.0?target=deno";
+import { createClient } from "https://esm.sh/@supabase/supabase-js@2.45.4";
+import { ADMIN_TO, adminHtml, render, sendEmail } from "../_shared/emails.ts";
 
-const corsHeaders = {
-  "Access-Control-Allow-Origin": "*",
-  "Access-Control-Allow-Headers": "authorization, x-client-info, apikey, content-type, x-supabase-client-platform, x-supabase-client-platform-version, x-supabase-client-runtime, x-supabase-client-runtime-version",
-};
+const stripe = new Stripe(Deno.env.get("STRIPE_SECRET_KEY")!, {
+  apiVersion: "2023-10-16",
+  httpClient: Stripe.createFetchHttpClient(),
+});
 
-const DEFAULT_ADMIN_EMAIL = "support@swiftlift.app";
+const db = createClient(Deno.env.get("SUPABASE_URL")!, Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!, {
+  auth: { persistSession: false },
+});
 
-function getAdminEmail(): string {
-  const envEmail = Deno.env.get("ADMIN_EMAIL");
-  if (envEmail && envEmail.includes("@")) {
-    return envEmail;
-  }
-  console.warn(`[STRIPE-WEBHOOK] ADMIN_EMAIL env missing or invalid ("${envEmail}"), using fallback: ${DEFAULT_ADMIN_EMAIL}`);
-  return DEFAULT_ADMIN_EMAIL;
+const TIER_LABEL: Record<string, string> = { starter: "Starter", growth: "Growth" };
+
+function money(cents: number | null | undefined, currency?: string | null) {
+  if (cents == null) return "";
+  return `$${(cents / 100).toFixed(2)} ${(currency || "usd").toUpperCase()}`;
 }
 
-async function sendAdminEmail(data: Record<string, string>) {
-  const RESEND_API_KEY = Deno.env.get("RESEND_API_KEY");
-  const ADMIN_EMAIL = getAdminEmail();
+async function handleCheckout(session: Stripe.Checkout.Session) {
+  const meta = (session.metadata || {}) as Record<string, string>;
+  const email = (meta.client_email || meta.customer_email || session.customer_details?.email || session.customer_email || "").toLowerCase();
+  const paymentType = meta.payment_type || "other";
 
-  console.log("[STRIPE-WEBHOOK] Admin notification recipient:", ADMIN_EMAIL);
+  // 1) record once
+  const { data: existing } = await db.from("payments").select("id").eq("stripe_session_id", session.id).maybeSingle();
+  if (existing) return; // Stripe retry — already processed
 
-  if (!RESEND_API_KEY) {
-    console.error("[STRIPE-WEBHOOK] Missing RESEND_API_KEY — cannot send admin email");
-    return;
+  // 2) match a project (build payments)
+  let project: Record<string, any> | null = null;
+  if (email) {
+    project = (
+      await db.from("projects").select("*").ilike("client_email", email).order("created_at", { ascending: false }).limit(1).maybeSingle()
+    ).data;
   }
 
-  const html = `
-    <div style="font-family: Arial, sans-serif; max-width: 600px; margin: 0 auto; padding: 20px;">
-      <h2 style="color: #7F37AE; border-bottom: 2px solid #7F37AE; padding-bottom: 10px;">
-        🚀 New Deployment Checkout Completed
-      </h2>
-      <table style="width: 100%; border-collapse: collapse; margin-top: 16px;">
-        ${Object.entries(data).map(([key, val]) => `
-          <tr style="border-bottom: 1px solid #eee;">
-            <td style="padding: 8px 12px; font-weight: bold; color: #555; width: 40%;">${key}</td>
-            <td style="padding: 8px 12px; color: #222;">${val || "N/A"}</td>
-          </tr>
-        `).join("")}
-      </table>
-      <p style="margin-top: 20px; font-size: 12px; color: #999;">
-        This is an automated notification from SwiftLift Deployment.
-      </p>
-    </div>
-  `;
-
-  const res = await fetch("https://api.resend.com/emails", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${RESEND_API_KEY}`,
-    },
-    body: JSON.stringify({
-      from: "SwiftLift <support@swiftlift.app>",
-      to: [ADMIN_EMAIL],
-      subject: `New Deployment: ${data["Client Name"] || "Unknown"} — ${data["Hosting Plan"] || ""}`,
-      html,
-    }),
+  const { error } = await db.from("payments").insert({
+    client_id: project?.client_id || "stripe-direct",
+    project_id: project?.id ?? null,
+    email: email || null,
+    amount: session.amount_total != null ? session.amount_total / 100 : null,
+    currency: session.currency || "usd",
+    status: session.payment_status || "paid",
+    stripe_session_id: session.id,
+    stripe_payment_intent_id: typeof session.payment_intent === "string" ? session.payment_intent : null,
+    stripe_customer_id: typeof session.customer === "string" ? session.customer : null,
+    stripe_customer_email: session.customer_details?.email || session.customer_email || null,
+    selected_plan: meta.tier || meta.hosting_plan || null,
+    source_app: "stripe_webhook",
+    payment_type: paymentType,
+    paid_at: new Date().toISOString(),
+    metadata_json: meta,
   });
+  if (error) throw new Error(`payments insert: ${error.message}`);
 
-  if (!res.ok) {
-    const errText = await res.text();
-    console.error("Resend error:", errText);
-  } else {
-    console.log("Admin email sent successfully");
+  const amount = money(session.amount_total, session.currency);
+
+  // 3) build payment → mark paid + E1 to the client
+  if (paymentType === "build") {
+    if (project) {
+      await db
+        .from("projects")
+        .update({
+          paid_at: new Date().toISOString(),
+          status: "paid",
+          selected_plan: meta.tier || null,
+          selected_preview: meta.selected_preview || null,
+          client_name: project.client_name || meta.client_name || null,
+          business_name: project.business_name || meta.business_name || null,
+          updated_at: new Date().toISOString(),
+        })
+        .eq("id", project.id);
+    } else if (email) {
+      project = (
+        await db
+          .from("projects")
+          .insert({
+            client_email: email,
+            client_name: meta.client_name || null,
+            business_name: meta.business_name || null,
+            status: "paid",
+            paid_at: new Date().toISOString(),
+            selected_plan: meta.tier || null,
+            selected_preview: meta.selected_preview || null,
+            brand: "swiftlift",
+            source_app: "stripe_webhook",
+            project_type: "redesign",
+          })
+          .select("*")
+          .single()
+      ).data;
+    }
+    if (email) {
+      const { subject, html } = render("payment_confirmed", {
+        name: meta.client_name || project?.client_name,
+        business: meta.business_name || project?.business_name,
+        projectId: project?.id,
+        amount,
+        packageLabel: TIER_LABEL[meta.tier] || undefined,
+        selectedPreview: meta.selected_preview,
+      });
+      try {
+        const id = await sendEmail(email, subject, html);
+        await db.from("client_emails").insert({ project_id: project?.id ?? null, to_email: email, template: "payment_confirmed", subject, resend_id: id });
+      } catch (e) {
+        await db.from("client_emails").insert({ project_id: project?.id ?? null, to_email: email, template: "payment_confirmed", subject, status: "failed", error: String(e) });
+        console.error("[stripe-webhook] E1 failed", e);
+      }
+    }
+  }
+
+  // 4) Sony gets every payment
+  const title =
+    paymentType === "build"
+      ? `💰 Website paid: ${meta.business_name || email} — ${TIER_LABEL[meta.tier] || ""} ${amount}`
+      : paymentType === "deployment"
+      ? `🚀 Hosting / deployment paid: ${meta.business_name || email} — ${amount}`
+      : `💳 Payment received: ${email} — ${amount}`;
+  try {
+    await sendEmail(
+      ADMIN_TO,
+      title,
+      adminHtml(title, {
+        Type: paymentType,
+        Client: meta.client_name,
+        Business: meta.business_name,
+        Email: email,
+        Amount: amount,
+        Package: meta.tier,
+        "Picked preview": meta.selected_preview,
+        "Preview link": meta.preview_link,
+        "Hosting plan": meta.hosting_plan,
+        "Add-ons": meta.selected_addons,
+        Domain: meta.domain_name,
+        "Matched project": project?.id || "none (check admin page)",
+        "Stripe session": session.id,
+      }),
+    );
+  } catch (e) {
+    console.error("[stripe-webhook] admin email failed", e);
   }
 }
 
-serve(async (req) => {
-  if (req.method === "OPTIONS") {
-    return new Response(null, { headers: corsHeaders });
-  }
-
+Deno.serve(async (req) => {
+  const signature = req.headers.get("stripe-signature");
+  if (!signature) return new Response("No signature", { status: 400 });
+  const body = await req.text();
+  let event: Stripe.Event;
   try {
-    const stripe = new Stripe(Deno.env.get("STRIPE_SECRET_KEY") || "", {
-      apiVersion: "2025-08-27.basil",
-    });
-
-    const body = await req.text();
-    const sig = req.headers.get("stripe-signature");
-
-    // If we have a webhook secret, verify signature; otherwise parse raw
-    const webhookSecret = Deno.env.get("STRIPE_WEBHOOK_SECRET");
-    let event: Stripe.Event;
-
-    if (webhookSecret && sig) {
-      event = await stripe.webhooks.constructEventAsync(body, sig, webhookSecret);
-    } else {
-      // Fallback: parse the body directly (for development/testing)
-      event = JSON.parse(body) as Stripe.Event;
-    }
-
-    console.log("[STRIPE-WEBHOOK] Event received:", event.type);
-
+    event = await stripe.webhooks.constructEventAsync(body, signature, Deno.env.get("STRIPE_WEBHOOK_SECRET")!);
+  } catch (err) {
+    return new Response(`Webhook Error: ${err instanceof Error ? err.message : err}`, { status: 400 });
+  }
+  try {
     if (event.type === "checkout.session.completed") {
-      console.log("[STRIPE-WEBHOOK] Checkout session completed — preparing admin notification");
-      const session = event.data.object as Stripe.Checkout.Session;
-      const meta = session.metadata || {};
-
-      // Fallback email: metadata → session.customer_email → customer_details.email
-      const customerEmail = meta.client_email || meta.customer_email || session.customer_email || (session as any).customer_details?.email || "";
-
-      // Fallback add-ons: metadata or summarize from line items
-      const addonsDisplay = meta.selected_addons || "None";
-
-      await sendAdminEmail({
-        "Client Name": meta.client_name || "N/A",
-        "Business Name": meta.business_name || "N/A",
-        "Client Email": customerEmail || "N/A",
-        "Domain Name": meta.domain_name || "Not provided",
-        "Hosting Plan": meta.hosting_plan || "N/A",
-        "Billing Interval": meta.billing_interval || "N/A",
-        "Selected Add-ons": addonsDisplay,
-        "Total Amount": session.amount_total
-          ? `$${(session.amount_total / 100).toFixed(2)} ${(session.currency || "usd").toUpperCase()}`
-          : "N/A",
-        "Stripe Payment ID": session.payment_intent as string || session.subscription as string || session.id,
-        "Project Source": "SwiftLift Deployment",
-        "Timestamp": meta.timestamp || new Date().toISOString(),
-      });
+      await handleCheckout(event.data.object as Stripe.Checkout.Session);
     }
-
-    return new Response(JSON.stringify({ received: true }), {
-      headers: { ...corsHeaders, "Content-Type": "application/json" },
-      status: 200,
-    });
-  } catch (error) {
-    const msg = error instanceof Error ? error.message : String(error);
-    console.error("[STRIPE-WEBHOOK] Error:", msg);
-    return new Response(
-      JSON.stringify({ error: msg }),
-      { headers: { ...corsHeaders, "Content-Type": "application/json" }, status: 400 }
-    );
+    return new Response("OK", { status: 200 });
+  } catch (err) {
+    console.error("[stripe-webhook]", err);
+    return new Response(JSON.stringify({ error: err instanceof Error ? err.message : String(err) }), { status: 500 });
   }
 });

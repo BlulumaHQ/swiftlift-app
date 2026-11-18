@@ -1,5 +1,6 @@
 import { serve } from "https://deno.land/std@0.190.0/http/server.ts";
 import { corsHeaders } from "npm:@supabase/supabase-js@2/cors";
+import { render } from "../_shared/emails.ts";
 
 const FROM = "SwiftLift <support@swiftlift.app>";
 const REPLY_TO = "support@swiftlift.app";
@@ -281,7 +282,14 @@ serve(async (req) => {
     }
 
     // EMAIL 2 — Client confirmation (branded)
-    const clientHtml = buildClientConfirmation(content.title, content.lines);
+    // Preview requests use the shared SwiftLift template (same email Meta ad leads get).
+    let clientSubject = content.subject;
+    let clientHtml = buildClientConfirmation(content.title, content.lines);
+    if (resolvedType === "preview") {
+      const r = render("confirm", { name: finalName, business: finalBusiness, website: finalWebsite });
+      clientSubject = r.subject;
+      clientHtml = r.html;
+    }
 
     const clientRes = await fetch("https://api.resend.com/emails", {
       method: "POST",
@@ -293,7 +301,7 @@ serve(async (req) => {
         from: FROM,
         reply_to: REPLY_TO,
         to: [finalEmail],
-        subject: content.subject,
+        subject: clientSubject,
         html: clientHtml,
       }),
     });
