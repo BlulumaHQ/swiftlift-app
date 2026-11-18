@@ -10,6 +10,7 @@ import {
   ADMIN_TO,
   PRICE,
   reviewUrl,
+  siteFrom,
   adminHtml,
   render,
   sendEmail,
@@ -201,6 +202,7 @@ async function actionSend(b: Record<string, any>) {
   const data: TemplateData = {
     ...projectData(project),
     previewUrl: b.previewUrl,
+    site: b._site,
     roundsLeft: Math.max(0, PRICE.includedRounds - used),
     note: b.note,
   };
@@ -367,7 +369,7 @@ async function actionGoLiveSubmit(b: Record<string, any>) {
   });
   if (project) await db.from("projects").update({ domain, status: "golive_received", updated_at: new Date().toISOString() }).eq("id", project.id);
 
-  const data: TemplateData = { ...(project ? projectData(project) : { name: a.contactName }), golive: a };
+  const data: TemplateData = { ...(project ? projectData(project) : { name: a.contactName }), golive: a, site: b._site };
   await sendAndLog("golive_received", email, data, { projectId: project?.id, leadId: project?.lead_id });
   await notifyAdmin(`Go-live form: ${domain}`, {
     Client: project?.client_name || a.contactName,
@@ -507,7 +509,7 @@ async function actionReviewSubmit(b: Record<string, any>) {
     .update({ selected_preview: pick, revision_rounds_used: round, status: "revision_requested", updated_at: new Date().toISOString() })
     .eq("id", p.id);
 
-  await sendAndLog("revision_received", p.client_email, { ...projectData({ ...p, selected_preview: pick }), round, paidRound: isPaid }, { projectId: p.id, leadId: p.lead_id });
+  await sendAndLog("revision_received", p.client_email, { ...projectData({ ...p, selected_preview: pick }), round, paidRound: isPaid, site: b._site }, { projectId: p.id, leadId: p.lead_id });
 
   const signed = await Promise.all(
     files.map(async (f: { path: string; name: string }) => {
@@ -549,7 +551,7 @@ async function actionReviewApprove(b: Record<string, any>, req: Request) {
     form.set("line_items[1][quantity]", String(extra));
   }
   form.set("success_url", `${origin}/payment-success?type=build&tier=version_${pick.toLowerCase()}&session_id={CHECKOUT_SESSION_ID}`);
-  form.set("cancel_url", `${reviewUrl(p.id)}&canceled=1`);
+  form.set("cancel_url", `${reviewUrl(p.id, b._site)}&canceled=1`);
   if (p.client_email) form.set("customer_email", p.client_email);
   const meta: Record<string, string> = {
     payment_type: "build",
@@ -585,6 +587,7 @@ Deno.serve(async (req) => {
   if (req.method === "OPTIONS") return new Response(null, { headers: cors });
   try {
     const b = await req.json();
+    b._site = siteFrom(req.headers.get("origin"));
     switch (b.action) {
       case "list":
         await requireSecret("admin_send_key", b.key);

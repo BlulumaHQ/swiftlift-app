@@ -105,6 +105,7 @@ const ReviewContent = () => {
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
   const [sent, setSent] = useState<{ round: number; paidRound: boolean } | null>(null);
+  const [confirming, setConfirming] = useState(false);
 
   useEffect(() => {
     document.title = "Review your website — SwiftLift";
@@ -168,10 +169,15 @@ const ReviewContent = () => {
     if (fileRef.current) fileRef.current.value = "";
   };
 
-  const submitChanges = async () => {
+  const askConfirm = () => {
     if (!pick) return setError("Please choose Version A or Version B first.");
     if (!hasChanges) return setError("Please tell us at least one thing you'd like changed.");
     setError("");
+    setConfirming(true);
+  };
+
+  const submitChanges = async () => {
+    setConfirming(false);
     setBusy(true);
     try {
       const res = await call<{ round: number; paidRound: boolean }>({
@@ -337,7 +343,9 @@ const ReviewContent = () => {
               {pick && mode === "changes" && (
                 <>
                   <Card n={3} title={`Changes to Version ${pick}, page by page`}>
-                    <p className="mb-4 text-sm text-muted-foreground">Leave a page empty if it's fine as it is.</p>
+                    <p className="mb-4 text-sm text-muted-foreground">
+                      Go through every page on your phone and computer and write down everything at once. Leave a page empty if it's fine as it is.
+                    </p>
                     <div className="space-y-5">
                       {info.pages.map((page) => (
                         <div key={page}>
@@ -432,25 +440,55 @@ const ReviewContent = () => {
                   {nextIsPaid ? (
                     <Note tone="warn">
                       You've used your {info.includedRounds} included revision rounds. This round is ${info.price.extraRound} and will be added to
-                      your final payment — nothing to pay now.
+                      your final payment — nothing to pay now. Please list <b>everything</b> you'd like changed.
                     </Note>
                   ) : (
-                    <Note>
-                      This is revision round {nextRound} of {info.includedRounds} included. Please put everything in this one form — it helps us get it
-                      right in one go.
+                    <Note tone="warn">
+                      <b>This is round {nextRound} of {info.includedRounds}.</b> Please list <b>everything</b> you'd like changed — every page, colors,
+                      fonts and photos. Small changes sent separately each use up a full round.
                     </Note>
                   )}
 
                   {error && <Note tone="warn">{error}</Note>}
-                  <button
-                    type="button"
-                    onClick={submitChanges}
-                    disabled={busy || uploading}
-                    className="w-full rounded-full px-8 py-4 text-base font-semibold text-white disabled:opacity-50"
-                    style={{ backgroundColor: "#7F37AE" }}
-                  >
-                    {busy ? <Loader2 size={18} className="mx-auto animate-spin" /> : uploading ? "Uploading files…" : "Send my changes"}
-                  </button>
+
+                  {confirming ? (
+                    <div className="rounded-2xl border-2 border-amber-300 bg-amber-50 p-5">
+                      <p className="text-base font-bold text-amber-950">Have you included everything?</p>
+                      <p className="mt-1 text-sm leading-relaxed text-amber-900">
+                        {nextIsPaid
+                          ? `This round adds $${info.price.extraRound} to your final payment.`
+                          : `After this, you'll have ${Math.max(0, info.includedRounds - nextRound)} free revision round${info.includedRounds - nextRound === 1 ? "" : "s"} left.`}{" "}
+                        Take one more look at every page before you send.
+                      </p>
+                      <div className="mt-4 grid gap-2 sm:grid-cols-2">
+                        <button
+                          type="button"
+                          onClick={() => setConfirming(false)}
+                          className="rounded-full border border-amber-400 bg-white px-6 py-3 text-sm font-semibold text-amber-950"
+                        >
+                          Let me add more
+                        </button>
+                        <button
+                          type="button"
+                          onClick={submitChanges}
+                          className="rounded-full px-6 py-3 text-sm font-semibold text-white"
+                          style={{ backgroundColor: "#7F37AE" }}
+                        >
+                          Yes, send it
+                        </button>
+                      </div>
+                    </div>
+                  ) : (
+                    <button
+                      type="button"
+                      onClick={askConfirm}
+                      disabled={busy || uploading}
+                      className="w-full rounded-full px-8 py-4 text-base font-semibold text-white disabled:opacity-50"
+                      style={{ backgroundColor: "#7F37AE" }}
+                    >
+                      {busy ? <Loader2 size={18} className="mx-auto animate-spin" /> : uploading ? "Uploading files…" : "Send my changes"}
+                    </button>
+                  )}
                 </>
               )}
 

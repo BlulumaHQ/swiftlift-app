@@ -60,12 +60,18 @@ export function payBuildUrl(tier: "starter" | "growth", d: TemplateData): string
   return u.toString();
 }
 
-export function reviewUrl(projectId?: string): string {
-  return projectId ? `${SITE}/review?p=${encodeURIComponent(projectId)}` : `${SITE}/review`;
+// Links point at the site the request came from (swiftlift.app, or a Netlify deploy preview while testing).
+const SITE_RE = /^https:\/\/((www\.)?swiftlift\.app|[a-z0-9-]+--swiftlift\.netlify\.app)$/i;
+export function siteFrom(origin?: string | null): string {
+  return origin && SITE_RE.test(origin) ? origin.replace(/^https:\/\/www\./i, "https://") : SITE;
 }
 
-export function goLiveUrl(projectId?: string): string {
-  return projectId ? `${SITE}/go-live?p=${encodeURIComponent(projectId)}` : `${SITE}/go-live`;
+export function reviewUrl(projectId?: string, site = SITE): string {
+  return projectId ? `${site}/review?p=${encodeURIComponent(projectId)}` : `${site}/review`;
+}
+
+export function goLiveUrl(projectId?: string, site = SITE): string {
+  return projectId ? `${site}/go-live?p=${encodeURIComponent(projectId)}` : `${site}/go-live`;
 }
 
 export interface TemplateData {
@@ -88,6 +94,7 @@ export interface TemplateData {
   oldHost?: string;
   round?: number;
   paidRound?: boolean;
+  site?: string;
   note?: string;
   golive?: GoLiveAnswers;
 }
@@ -225,7 +232,8 @@ function hostingNote(d: TemplateData): string {
 export function render(key: TemplateKey, d: TemplateData): RenderedEmail {
   const hi = `Hi ${esc(firstName(d.name))},`;
   const biz = esc(d.business || "your business");
-  const review = reviewUrl(d.projectId);
+  const S = d.site || SITE;
+  const review = reviewUrl(d.projectId, S);
   switch (key) {
     case "confirm":
       return {
@@ -260,6 +268,7 @@ export function render(key: TemplateKey, d: TemplateData): RenderedEmail {
               : "") +
             h2("Pick your favorite and tell us what to change") +
             p(`When you're ready, click the button below. You'll choose Version A or B, and you can tell us — page by page — anything you'd like adjusted. You can even mix and match, for example <i>"the colors of A with the layout of B"</i>, a different font, or new photos. Screenshots are welcome.`) +
+            box(`<b>Please take your time.</b> Your plan includes ${PRICE.includedRounds} revision rounds, so review <b>every page</b> on your phone and computer first, then send <b>all</b> your changes together in one go. Small changes sent one at a time each use up a full round.`, "#FFF4E5") +
             btn(review, "Choose my favorite") +
             p(`Both versions include <b>${PRICE.includedRounds} rounds of revisions</b>. There's <b>nothing to pay</b> while we refine it — you only pay once you approve the final design.`) +
             ul([
@@ -323,7 +332,7 @@ export function render(key: TemplateKey, d: TemplateData): RenderedEmail {
           "Your updated site is ready",
           p(hi) +
             p(`Good news — we've made the changes you asked for on ${biz}. Please take another look on both your phone and computer:`) +
-            btn(d.previewUrl || d.liveUrl || SITE, "View your updated site") +
+            btn(d.previewUrl || d.liveUrl || S, "View your updated site") +
             (d.note ? box(esc(d.note)) : "") +
             p(
               (d.roundsLeft ?? 0) > 0
@@ -344,7 +353,7 @@ export function render(key: TemplateKey, d: TemplateData): RenderedEmail {
             p(`We received your payment${d.amount ? ` of <b>${esc(d.amount)}</b>` : ""}${d.packageLabel ? ` for <b>${esc(d.packageLabel)}</b>` : ""}. Thank you so much for choosing SwiftLift!`) +
             h2("One last step from you (about 3 minutes)") +
             p(`Every business is set up a little differently, so this short form tells us exactly how to switch your new site over <b>safely</b> — your domain, your email, and your current website host. We'll explain everything in plain English, and nothing changes until we've checked it.`) +
-            btn(goLiveUrl(d.projectId), "Start the go-live form") +
+            btn(goLiveUrl(d.projectId, S), "Start the go-live form") +
             h2("What happens after that") +
             ul([
               `We send you a personalized go-live plan, so you know exactly what will happen.`,
@@ -371,7 +380,7 @@ export function render(key: TemplateKey, d: TemplateData): RenderedEmail {
               g.hostingPlan === "self"
                 ? `You'd like to host the site yourself. Your site is built in React, so we'll send you the <b>complete website files as a .zip</b>. It runs on modern static hosts like <b>Cloudflare Pages, Netlify or Vercel</b> (all have free plans). Traditional cPanel or shared hosting isn't supported for this type of site. Changes after handover are $45 per round.`
                 : g.hostingPlan === "monthly" || g.hostingPlan === "yearly"
-                ? `You chose <b>Managed Hosting</b> (${g.hostingPlan === "monthly" ? "$15/month" : "$135/year"}): we host your site and handle small updates for you. ${link(`${SITE}/deployment`, "Complete your hosting setup here")} if you haven't yet.`
+                ? `You chose <b>Managed Hosting</b> (${g.hostingPlan === "monthly" ? "$15/month" : "$135/year"}): we host your site and handle small updates for you. ${link(`${S}/deployment`, "Complete your hosting setup here")} if you haven't yet.`
                 : `Your site is hosted <b>free</b> on SwiftLift. If you'd ever like us to handle updates for you, Managed Hosting is $15/month or $135/year.`,
             ) +
             p(`If anything here looks wrong, just reply and let us know.`),
@@ -387,7 +396,7 @@ export function render(key: TemplateKey, d: TemplateData): RenderedEmail {
           "Your new website is live",
           p(hi) +
             p(`Congratulations — your new website is officially live:`) +
-            btn(d.liveUrl || SITE, d.liveUrl ? d.liveUrl.replace(/^https?:\/\//, "") : "View your site") +
+            btn(d.liveUrl || S, d.liveUrl ? d.liveUrl.replace(/^https?:\/\//, "") : "View your site") +
             p(`<b>Heads up:</b> it can take <b>2–72 hours</b> for every phone and computer to see the new site. If you still see the old one, that's normal — please try again later or on mobile data.`) +
             oldHostSection(g, true) +
             h2("Want more customers from it?") +
