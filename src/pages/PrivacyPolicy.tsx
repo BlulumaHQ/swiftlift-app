@@ -1,161 +1,65 @@
-import { useEffect } from "react";
-import { LanguageProvider, useLanguage } from "@/contexts/LanguageContext";
+import { LanguageProvider } from "@/contexts/LanguageContext";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import { motion } from "framer-motion";
-import { SEO_ROUTES } from "@/lib/seoRoutes";
+import { LegalDoc, type LegalSection } from "@/components/LegalDoc";
 
-const PrivacyContent = () => {
-  const { lang } = useLanguage();
-
-  useEffect(() => {
-    document.title = SEO_ROUTES["/privacy"].title;
-    let canonical = document.querySelector("link[rel='canonical']") as HTMLLinkElement | null;
-    if (!canonical) {
-      canonical = document.createElement("link");
-      canonical.setAttribute("rel", "canonical");
-      document.head.appendChild(canonical);
-    }
-    canonical.setAttribute("href", "https://swiftlift.app/privacy");
-    return () => { canonical?.setAttribute("href", "https://swiftlift.app/"); };
-  }, []);
-
-  return (
-    <main>
-      {/* Blue Hero */}
-      <section className="relative overflow-hidden pt-28 pb-14 md:pt-36 md:pb-20 section-brand-dark">
-        <div className="absolute inset-0 dot-grid opacity-40" />
-        <div className="relative z-10 max-w-3xl mx-auto px-6 text-center">
-          <motion.h1
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
-            className="text-[clamp(2rem,4.5vw,3rem)] font-black text-white font-display leading-tight"
-          >
-            {lang === "en" ? "Privacy Policy" : "隱私政策"}
-          </motion.h1>
-        </div>
-      </section>
-
-      {/* Content */}
-      <div className="py-16 md:py-20 max-w-3xl mx-auto px-6">
-        <h2 className="text-2xl md:text-3xl font-black text-foreground font-display">
-          {lang === "en" ? "Privacy Policy" : "隱私政策"}
-        </h2>
-        <p className="mt-2 text-sm text-muted-foreground">
-          {lang === "en" ? "Effective Date: March 24, 2026" : "生效日期：2026年3月24日"}
-        </p>
-
-        <div className="mt-10 space-y-8 text-sm text-muted-foreground leading-relaxed">
-          <p>
-            {lang === "en"
-              ? "SwiftLift is operated by Bluluma Design. This Privacy Policy explains how we collect, use, and protect your information."
-              : "SwiftLift 由 Bluluma Design 運營。本隱私政策說明我們如何收集、使用和保護您的資訊。"}
-          </p>
-
-          <section>
-            <h3 className="text-lg font-bold text-foreground mb-2">
-              {lang === "en" ? "1. Information We Collect" : "1. 我們收集的資訊"}
-            </h3>
-            <p>
-              {lang === "en"
-                ? "We may collect personal information such as your name, email address, business details, and website URL when you submit forms on our website."
-                : "當您在我們的網站上提交表單時，我們可能會收集個人資訊，例如您的姓名、電子郵件地址、業務詳情和網站網址。"}
-            </p>
-          </section>
-
-          <section>
-            <h3 className="text-lg font-bold text-foreground mb-2">
-              {lang === "en" ? "2. How We Use Information" : "2. 我們如何使用資訊"}
-            </h3>
-            <p className="mb-2">
-              {lang === "en" ? "We use your information to:" : "我們使用您的資訊來："}
-            </p>
-            <ul className="list-disc pl-5 space-y-1">
-              <li>{lang === "en" ? "Provide services" : "提供服務"}</li>
-              <li>{lang === "en" ? "Communicate with you" : "與您溝通"}</li>
-              <li>{lang === "en" ? "Improve our platform" : "改善我們的平台"}</li>
-            </ul>
-          </section>
-
-          <section>
-            <h3 className="text-lg font-bold text-foreground mb-2">
-              {lang === "en" ? "3. Payment Information" : "3. 付款資訊"}
-            </h3>
-            <p>
-              {lang === "en"
-                ? "All payments are processed securely through third-party providers. SwiftLift does not store your payment details."
-                : "所有付款均通過第三方提供商安全處理。SwiftLift 不會儲存您的付款詳情。"}
-            </p>
-          </section>
-
-          <section>
-            <h3 className="text-lg font-bold text-foreground mb-2">
-              {lang === "en" ? "4. Data Sharing" : "4. 資料共享"}
-            </h3>
-            <p>
-              {lang === "en"
-                ? "We do not sell or share your personal data with third parties, except as necessary to provide our services."
-                : "我們不會向第三方出售或分享您的個人資料，除非為提供服務所必需。"}
-            </p>
-          </section>
-
-          <section>
-            <h3 className="text-lg font-bold text-foreground mb-2">
-              {lang === "en" ? "5. Cookies" : "5. Cookies"}
-            </h3>
-            <p>
-              {lang === "en"
-                ? "Our website may use cookies to enhance user experience and track analytics."
-                : "我們的網站可能使用 Cookie 來增強用戶體驗和追蹤分析。"}
-            </p>
-          </section>
-
-          <section>
-            <h3 className="text-lg font-bold text-foreground mb-2">
-              {lang === "en" ? "6. Data Security" : "6. 資料安全"}
-            </h3>
-            <p>
-              {lang === "en"
-                ? "We implement reasonable security measures to protect your information."
-                : "我們實施合理的安全措施來保護您的資訊。"}
-            </p>
-          </section>
-
-          <section>
-            <h3 className="text-lg font-bold text-foreground mb-2">
-              {lang === "en" ? "7. Third-Party Services" : "7. 第三方服務"}
-            </h3>
-            <p>
-              {lang === "en"
-                ? "We may use third-party tools (e.g., analytics, payment processors) that have their own privacy policies."
-                : "我們可能使用具有自己隱私政策的第三方工具（例如分析工具、支付處理器）。"}
-            </p>
-          </section>
-
-          <section>
-            <h3 className="text-lg font-bold text-foreground mb-2">
-              {lang === "en" ? "8. Contact" : "8. 聯繫方式"}
-            </h3>
-            <p>
-              {lang === "en"
-                ? "If you have any questions, contact: "
-                : "如有任何問題，請聯繫："}
-              <a href="mailto:support@swiftlift.app" className="text-primary hover:underline">support@swiftlift.app</a>
-            </p>
-          </section>
-        </div>
-      </div>
-    </main>
-  );
-};
+const sections: LegalSection[] = [
+  {
+    title: { en: "What we collect", zh: "我們收集的資訊" },
+    list: [
+      { en: "What you give us: your name, email, phone, business details and website address from our forms, and anything you send us such as revision notes, screenshots and photos.", zh: "您提供的資訊：表單中的姓名、電子郵件、電話、業務資料與網站網址，以及您寄給我們的修改說明、截圖與照片。" },
+      { en: "Your public website content: to build your previews, we read the publicly available pages of the website you submit.", zh: "您網站的公開內容：為了製作預覽，我們會讀取您所提交網站的公開頁面。" },
+      { en: "Payment details: payments are processed by Stripe. We never see or store your full card number.", zh: "付款資料：付款由 Stripe 處理，我們不會看到或儲存您的完整卡號。" },
+      { en: "Usage data: pages visited, device and browser type, collected through cookies and analytics tools.", zh: "使用資料：透過 Cookie 與分析工具收集的瀏覽頁面、裝置與瀏覽器類型。" },
+    ],
+  },
+  {
+    title: { en: "How we use it", zh: "我們如何使用" },
+    list: [
+      { en: "To build, send and follow up on your website previews.", zh: "製作、寄送並追蹤您的網站預覽。" },
+      { en: "To launch, host and update your website, and to bill you.", zh: "讓網站上線、提供主機與更新服務，並向您收費。" },
+      { en: "To reply to your questions and revision requests.", zh: "回覆您的問題與修改需求。" },
+      { en: "To measure and improve our website and ads.", zh: "衡量並改善我們的網站與廣告成效。" },
+    ],
+    body: [{ en: "We do not sell or rent your personal information.", zh: "我們不會出售或出租您的個人資料。" }],
+  },
+  {
+    title: { en: "Cookies and analytics", zh: "Cookie 與分析工具" },
+    body: [
+      { en: "We use Google Analytics, Microsoft Clarity and the Meta Pixel to understand how visitors use our website and how our ads perform. You can block or delete cookies in your browser settings.", zh: "我們使用 Google Analytics、Microsoft Clarity 與 Meta Pixel 來了解訪客如何使用網站，以及廣告的成效。您可以在瀏覽器設定中封鎖或刪除 Cookie。" },
+    ],
+  },
+  {
+    title: { en: "Who we share it with", zh: "與誰分享" },
+    body: [
+      { en: "Only the service providers we need to run SwiftLift: Stripe (payments), Cloudflare (hosting), Supabase (secure data storage), our email providers, and the analytics tools above. They may only use your information to provide their service to us.", zh: "僅限營運 SwiftLift 所需的服務供應商：Stripe（付款）、Cloudflare（主機）、Supabase（資料安全儲存）、我們的電子郵件服務商，以及上述分析工具。他們只能為了向我們提供服務而使用您的資料。" },
+    ],
+  },
+  {
+    title: { en: "How long we keep it", zh: "保存期限" },
+    body: [
+      { en: "We keep your information while you are a client and afterwards only as long as needed for our records and legal obligations. If you don't go ahead after your previews, you can ask us to delete your previews and details at any time.", zh: "您是客戶期間我們會保存您的資料，之後只在記錄與法律義務所需期間內保存。若您看完預覽後決定不合作，可隨時要求我們刪除預覽與您的資料。" },
+    ],
+  },
+  {
+    title: { en: "Your choices", zh: "您的權利" },
+    body: [
+      { en: "You can ask to see, correct or delete the personal information we hold about you, and unsubscribe from our emails at any time.", zh: "您可以要求查看、更正或刪除我們持有的個人資料，也可以隨時取消訂閱我們的電子郵件。" },
+    ],
+  },
+];
 
 const PrivacyPolicy = () => (
   <LanguageProvider>
     <div className="min-h-screen bg-background scroll-smooth">
-      
       <Header />
-      <PrivacyContent />
+      <LegalDoc
+        path="/privacy"
+        title={{ en: "Privacy Policy", zh: "隱私政策" }}
+        effective={{ en: "Last updated: November 19, 2026", zh: "最後更新：2026年11月19日" }}
+        intro={[{ en: "This policy explains what information SwiftLift collects, why we collect it and how we look after it.", zh: "本政策說明 SwiftLift 收集哪些資訊、為何收集，以及我們如何保護這些資訊。" }]}
+        sections={sections}
+      />
       <Footer />
     </div>
   </LanguageProvider>

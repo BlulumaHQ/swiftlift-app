@@ -111,8 +111,7 @@ const Footer = () => {
         {/* Bottom bar */}
         <div className="mt-10 flex flex-col items-center gap-3 border-t border-white/10 pt-6 text-xs text-white/50 md:flex-row md:justify-between">
           <p className="text-center md:text-left">
-            © 2026 SwiftLift. All rights reserved. Operated by{" "}
-            <a href="https://www.bluluma.com" target="_blank" rel="noopener noreferrer" className="underline hover:text-white transition-colors">Bluluma Design</a>
+            © 2026 SwiftLift. All rights reserved.
             <span className="hidden md:inline"> · Payments securely processed by Stripe.</span>
           </p>
           <div className="flex items-center gap-4">
