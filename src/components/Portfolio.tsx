@@ -1,18 +1,9 @@
 import type { ReactNode } from "react";
 import { Link } from "react-router-dom";
-import { ArrowRight, ExternalLink, ImageIcon } from "lucide-react";
+import { ArrowRight, ExternalLink } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { homeStudies, useCmsPortfolio, type StudyVersion } from "@/lib/cmsPortfolio";
+import { fullShot, homeStudies, useCmsPortfolio, type StudyVersion } from "@/lib/cmsPortfolio";
 import { ScrollShot } from "@/components/ScrollShot";
-
-function PreviewImage({ image, alt }: { image: string | null; alt: string }) {
-  return (
-    <div className="aspect-[16/10] overflow-hidden bg-muted">
-      {image ? <img src={image} alt={alt} loading="lazy" decoding="async" className="h-full w-full object-cover object-top" />
-        : <div role="img" aria-label={alt} className="flex h-full items-center justify-center"><ImageIcon className="h-8 w-8 text-muted-foreground" aria-hidden="true" /></div>}
-    </div>
-  );
-}
 
 function SiteLink({ url, children, className }: { url: string | null; children: ReactNode; className: string }) {
   return url ? <a href={url} target="_blank" rel="noopener noreferrer" className={`${className} focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-4`}>{children}</a>
@@ -73,8 +64,8 @@ export default function Portfolio({ variant }: { variant: "home" | "all" }) {
             {singles.length > 0 && <div className={studies.length ? "mt-16 border-t border-border pt-12" : ""}>
               <h3 className="mb-7 font-display text-2xl font-bold tracking-normal text-foreground">More launched sites</h3>
               <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
-                {singles.map((item) => <SiteLink key={item.id} url={item.live_url} className="group block min-w-0 overflow-hidden rounded-xl border border-border bg-card text-card-foreground shadow-sm transition-shadow hover:shadow-lg">
-                  <PreviewImage image={item.featured_image_url ?? item.versions?.[0]?.screenshot_url ?? null} alt={`${item.title} website`} />
+                {singles.map((item) => <SiteLink key={item.id} url={item.live_url} className="ss-shot-card group block min-w-0 overflow-hidden rounded-2xl border border-border bg-card text-card-foreground shadow-sm hover:shadow-xl">
+                  <ScrollShot src={fullShot(item)} alt={`${item.title} website`} />
                   <div className="p-5"><h4 className="flex items-start justify-between gap-3 font-display text-base font-bold tracking-normal">{item.title}{item.live_url && <ExternalLink className="mt-1 h-4 w-4 shrink-0 text-muted-foreground" aria-hidden="true" />}</h4>{item.category && <p className="mt-1 text-sm text-muted-foreground">{item.category}</p>}</div>
                 </SiteLink>)}
               </div>

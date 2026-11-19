@@ -20,7 +20,7 @@ export type PortfolioItem = {
   category: string | null;
   live_url: string | null;
   project_year: number | null;
-  versions: { screenshot_url?: string | null }[] | null;
+  versions: { screenshot_url?: string | null; screenshot_full_url?: string | null }[] | null;
   version_count: number | null;
   featured_on: string[] | null;
   pair_title: string | null;
@@ -35,6 +35,9 @@ const CLIENT_CHOSE: Record<string, string> = {
   "Mutt Puddles Dog Wash": "A",
   "Gene's Sausage Shop": "B",
 };
+// Prefer the full-length homepage capture so the hover auto-scroll has the whole page to move through.
+export const fullShot = (v: PortfolioItem) =>
+  v.versions?.[0]?.screenshot_full_url ?? v.featured_image_url ?? v.versions?.[0]?.screenshot_url ?? null;
 const isRealDomain = (u: string | null) => !!u && !STAGING.some((d) => u.toLowerCase().includes(d));
 
 export function buildPortfolio(rows: PortfolioItem[]) {
@@ -65,7 +68,7 @@ export function buildPortfolio(rows: PortfolioItem[]) {
       featured: g.some((v) => v.featured_on?.includes("swiftlift")),
       versions: sorted.map((v, i) => ({
         label: v.pair_label ?? "", url: v.live_url,
-        image: v.featured_image_url ?? v.versions?.[0]?.screenshot_url ?? null,
+        image: fullShot(v),
         chosen: picked ? v.pair_label === picked : one && real[i] === true,
       })),
     });

@@ -12,6 +12,8 @@ import genesBefore from "@/assets/portfolio-genes-before.webp";
 import genesAfter from "@/assets/portfolio-genes-b.webp";
 import a57Before from "@/assets/portfolio-architect57-before.webp";
 import a57After from "@/assets/portfolio-architect57-b.webp";
+import beforeKchen from "@/assets/before-kchen.webp";
+import beforeLittleMountain from "@/assets/before-little-mountain.webp";
 import { Check, Plus, Star, ChevronLeft, ChevronRight as ChevronRightIcon, Shield, Loader2, CheckCircle2, Clock, Mail, Copy, Palette, Globe, ArrowRight } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { externalSupabase as supabase } from "@/lib/externalSupabase";
@@ -595,8 +597,35 @@ const HeroBeforeAfter = () => {
 };
 
 /* ── Before → After section (hover to scroll the full page) ── */
+const CMS_SHOTS = "https://uzdjwpkgldzhnoxjeyrw.supabase.co/storage/v1/object/public/content-images/b237218e-d944-4af0-87b2-09379102e53e/portfolio";
+const BA_CASES = [
+  {
+    key: "kchen",
+    name: "K. Chen Construction",
+    before: beforeKchen,
+    after: `${CMS_SHOTS}/kchenconstruction/live-netlify-full.jpg?v=1794399032723`,
+    url: "https://kchencm.com/",
+  },
+  {
+    key: "littlemountain",
+    name: "Little Mountain Dental",
+    before: beforeLittleMountain,
+    after: `${CMS_SHOTS}/littlemountaindental/live-netlify-full.jpg?v=1794399221721`,
+    url: "https://littlemountaindental.ca/",
+  },
+  {
+    key: "architect57",
+    name: "Architect 57",
+    before: a57Before,
+    after: a57After,
+    url: "https://architect57.com/",
+  },
+];
+
 const BeforeAfter = () => {
   const { lang } = useLanguage();
+  const [active, setActive] = useState(0);
+  const c = BA_CASES[active];
   return (
     <section className="bg-[hsl(var(--ink))] px-6 py-20 text-white md:py-24">
       <div className="mx-auto max-w-6xl">
@@ -606,19 +635,35 @@ const BeforeAfter = () => {
         <p className="mx-auto mt-3 max-w-xl text-center text-base text-white/75 md:text-lg">
           {lang === "en" ? "We keep your content and give your site the facelift it deserves." : "保留您的內容，給網站應有的改頭換面。"}
         </p>
-        <div className="mt-12 flex flex-col items-center gap-5 md:flex-row md:gap-6">
-          <figure className="ss-shot-card relative m-0 w-full min-w-0 flex-1 overflow-hidden rounded-2xl bg-white/5 [&_img]:grayscale-[85%]">
-            <ScrollShot src={a57Before} alt={lang === "en" ? "Architect 57 website before the SwiftLift facelift" : "Architect 57 改版前的網站"} wide />
+        <div className="mt-8 flex flex-wrap justify-center gap-2" role="group" aria-label={lang === "en" ? "Choose an example" : "選擇案例"}>
+          {BA_CASES.map((item, i) => (
+            <button
+              key={item.key}
+              type="button"
+              onClick={() => setActive(i)}
+              aria-pressed={i === active}
+              className={`min-h-11 rounded-full px-4 text-sm font-bold transition-colors ${i === active ? "bg-[hsl(var(--highlight))] text-foreground" : "border border-white/25 text-white/85 hover:bg-white/10"}`}
+            >
+              {item.name}
+            </button>
+          ))}
+        </div>
+        <div className="mt-8 flex flex-col items-center gap-5 md:flex-row md:gap-6">
+          <figure key={`${c.key}-before`} className="ss-shot-card relative m-0 w-full min-w-0 flex-1 overflow-hidden rounded-2xl bg-white/5 [&_img]:grayscale-[85%]">
+            <ScrollShot src={c.before} alt={lang === "en" ? `${c.name} website before the SwiftLift facelift` : `${c.name} 改版前的網站`} wide />
             <ShotTag lang={lang} className="left-4 top-4" />
           </figure>
           <div aria-hidden="true" className="flex h-14 w-14 flex-shrink-0 rotate-90 items-center justify-center rounded-full bg-[hsl(var(--highlight))] text-foreground md:rotate-0">
             <ArrowRight size={26} strokeWidth={2.8} />
           </div>
-          <figure className="ss-shot-card relative m-0 w-full min-w-0 flex-1 overflow-hidden rounded-2xl outline outline-[3px] outline-offset-4 outline-[#8B5CF6]">
-            <ScrollShot src={a57After} alt={lang === "en" ? "Architect 57 website after the SwiftLift facelift" : "Architect 57 改版後的網站"} wide />
+          <a key={`${c.key}-after`} href={c.url} target="_blank" rel="noopener noreferrer" className="ss-shot-card relative block w-full min-w-0 flex-1 overflow-hidden rounded-2xl outline outline-[3px] outline-offset-4 outline-[#8B5CF6] focus-visible:outline-[hsl(var(--highlight))]">
+            <ScrollShot src={c.after} alt={lang === "en" ? `${c.name} website after the SwiftLift facelift` : `${c.name} 改版後的網站`} wide />
             <ShotTag after lang={lang} className="left-4 top-4" />
-          </figure>
+          </a>
         </div>
+        <p className="mt-5 text-center text-sm text-white/60">
+          {lang === "en" ? "Hover a screenshot to scroll the full homepage." : "滑鼠移到截圖上可瀏覽完整首頁。"}
+        </p>
       </div>
     </section>
   );
