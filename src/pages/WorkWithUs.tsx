@@ -110,8 +110,8 @@ const WorkWithUsContent = () => {
       <section className="px-6 pb-16 pt-28 md:pb-20 md:pt-36">
         <div className="mx-auto max-w-4xl text-center">
           <p className="sl-eyebrow text-sm">{en ? "White label & partner program" : "白牌與合作夥伴計畫"}</p>
-          <h1 className="mt-4 font-display text-[2.2rem] font-black leading-[1.05] tracking-[-0.02em] text-foreground sm:text-5xl lg:text-[3.4rem]">
-            {en ? <>Your Clients. Your Brand. <span className="sl-highlight italic text-[hsl(var(--accent-purple))]">Our Build System.</span></> : <>你的客戶，你的品牌，<span className="sl-highlight italic text-[hsl(var(--accent-purple))]">我們的建站系統。</span></>}
+          <h1 className={`mt-4 font-display ${en ? "text-[2.2rem]" : "text-[1.85rem]"} font-black leading-[1.05] tracking-[-0.02em] text-foreground sm:text-5xl lg:text-[3.4rem]`}>
+            {en ? <>Your Clients. Your Brand. <span className="sl-highlight italic text-[hsl(var(--accent-purple))]">Our Build System.</span></> : <><span className="whitespace-nowrap">你的客戶，你的品牌，</span><br /><span className="sl-highlight italic whitespace-nowrap text-[hsl(var(--accent-purple))]">我們的建站系統。</span></>}
           </h1>
           <p className="mx-auto mt-5 max-w-2xl text-lg leading-relaxed text-foreground/80 md:text-xl">
             {en
