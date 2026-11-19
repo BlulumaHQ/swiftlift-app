@@ -171,8 +171,8 @@ const accent = "hsl(var(--accent-purple))";
 const CTA = ({ label = "Get My 2 Free Previews" }: { label?: string }) => (
   <a
     href="/#contact"
-    className="inline-flex items-center gap-2.5 rounded-xl px-8 py-4 text-sm font-bold text-white shadow-lg hover:scale-[1.02] transition-all"
-    style={{ background: accent }}
+    className="sl-cta font-display inline-flex items-center gap-2.5 rounded-2xl px-8 py-4 text-sm font-extrabold text-white transition-all"
+    
   >
     {label} <ArrowRight className="w-4 h-4" />
   </a>

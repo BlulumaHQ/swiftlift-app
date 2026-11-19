@@ -119,8 +119,8 @@ const RevisionSubmitContent = () => {
             <p className="mt-3 text-muted-foreground">We've received your revision request and will get started shortly. You'll hear from us within 48 hours.</p>
             <a
               href="/"
-              className="mt-8 inline-flex items-center justify-center rounded-full px-8 py-3.5 text-base font-semibold text-white transition-colors"
-              style={{ backgroundColor: "hsl(267 55% 45%)" }}
+              className="sl-cta font-display mt-8 inline-flex items-center justify-center rounded-2xl px-8 py-3.5 text-base font-extrabold text-white transition-colors"
+              
             >
               Back to Home
             </a>

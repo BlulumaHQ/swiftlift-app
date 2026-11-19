@@ -48,18 +48,18 @@ export const translations = {
         badge: { en: "Most Popular", zh: "最受歡迎" },
         features: {
           en: ["Everything in Starter", "Expanded Page Structure", "Enhanced Layout Customization", "Improved Conversion Structure", "2 Revision Rounds", "Priority Delivery"],
-          zh: ["包含入門版所有功能", "擴展頁面結構", "增強版面定制", "優化轉化結構", "2輪修改", "優先交付"],
+          zh: ["包含入門版所有功能", "擴展頁面結構", "增強版面客製", "優化轉化結構", "2輪修改", "優先交付"],
         },
         button: { en: "Reserve My Build", zh: "預約建設" },
       },
       {
-        title: { en: "Custom", zh: "定制版" },
+        title: { en: "Custom", zh: "客製版" },
         sub: { en: "Up to 20 Pages", zh: "最多20頁" },
         features: {
           en: ["Fully Tailored Site Structure", "Advanced Design Strategy", "Deep Copy Optimization", "Scalable Architecture", "Strategic Layout Planning", "Dedicated Build Timeline"],
-          zh: ["完全定制的站點結構", "高級設計策略", "深度文案優化", "可擴展架構", "戰略版面規劃", "專屬建設時間線"],
+          zh: ["完全客製的站點結構", "高級設計策略", "深度文案優化", "可擴展架構", "戰略版面規劃", "專屬建設時間線"],
         },
-        button: { en: "Request Custom Proposal", zh: "申請定制方案" },
+        button: { en: "Request Custom Proposal", zh: "申請客製方案" },
       },
     ],
     steps: [
@@ -197,7 +197,7 @@ export const translations = {
   },
   customBrief: {
     heroHeadline: { en: "Let's Build Something\nTailored to Your Business", zh: "讓我們為您的業務\n量身打造" },
-    heroSub: { en: "Tell us about your project and we'll prepare a custom proposal.", zh: "告訴我們您的項目需求，我們將為您準備定制方案。" },
+    heroSub: { en: "Tell us about your project and we'll prepare a custom proposal.", zh: "告訴我們您的項目需求，我們將為您準備客製方案。" },
     successTitle: { en: "Proposal Request Received", zh: "方案申請已收到" },
     successDesc: { en: "We'll review your details and get back to you within 48 hours.", zh: "我們將審核您的資訊，並在48小時內與您聯繫。" },
     businessDetails: { en: "Business Details", zh: "企業資訊" },
@@ -226,7 +226,7 @@ export const translations = {
       en: ["$1,500 – $3,000", "$3,000 – $5,000", "$5,000+"],
       zh: ["$1,500 – $3,000", "$3,000 – $5,000", "$5,000+"],
     },
-    submitButton: { en: "Request My Custom Proposal", zh: "申請我的定制方案" },
+    submitButton: { en: "Request My Custom Proposal", zh: "申請我的客製方案" },
     submitting: { en: "Sending...", zh: "發送中..." },
     toastTitle: { en: "Proposal request sent!", zh: "方案申請已發送！" },
     toastDesc: { en: "We'll be in touch within 48 hours.", zh: "我們將在48小時內與您聯繫。" },

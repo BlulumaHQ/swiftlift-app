@@ -1,16 +1,13 @@
-import { useEffect } from "react";
 import { LanguageProvider, useLanguage } from "@/contexts/LanguageContext";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import ScrollReveal from "@/components/ScrollReveal";
-import { motion } from "framer-motion";
 import { Link } from "react-router-dom";
 import {
   MessageCircle, Star, MapPin, BarChart, Image, Edit, Globe, Languages,
   Mail, Calendar, List, Zap, Search, Palette, CreditCard, Lock,
-  Package, Target, TrendingUp, Sparkles, ArrowRight, Server, RefreshCw, RotateCcw
+  Package, Target, FilePlus, TrendingUp, Sparkles, ArrowRight, Check, Server, RefreshCw, RotateCcw
 } from "lucide-react";
-import { SEO_ROUTES } from "@/lib/seoRoutes";
 
 type LangObj = { en: string; zh: string };
 const T = (obj: LangObj, lang: "en" | "zh") => obj[lang];
@@ -27,6 +24,7 @@ const trustEssentials = [
 ];
 
 const contentPresentation = [
+  { icon: FilePlus, title: { en: "Additional Page", zh: "額外頁面" }, desc: { en: "Add a new page — services, team, menu, locations — designed to match your new website.", zh: "新增一個頁面——服務、團隊、菜單、分店——設計與新網站一致。" }, price: "$99 USD / page" },
   { icon: Image, title: { en: "Gallery Section", zh: "圖庫區塊" }, desc: { en: "Showcase your work, products, or space with strong visual presentation.", zh: "透過強大的視覺呈現展示您的作品、產品或空間。" }, price: "$99 USD" },
   { icon: Edit, title: { en: "Blog Setup", zh: "部落格設置" }, desc: { en: "Publish content to improve SEO and build long-term authority.", zh: "發布內容以改善SEO並建立長期權威。" }, price: "$149 USD" },
   { icon: Globe, title: { en: "Basic Bilingual Setup", zh: "基礎雙語設置" }, desc: { en: "Allow visitors to switch between two languages on your site.", zh: "讓訪客在您的網站上切換兩種語言。" }, price: "$149 USD" },
@@ -34,13 +32,13 @@ const contentPresentation = [
 ];
 
 const leadConversion = [
-  { icon: Mail, title: { en: "Advanced Contact Form", zh: "進階聯繫表單" }, desc: { en: "Capture detailed inquiries with custom fields tailored to your business.", zh: "透過為您業務量身定制的自訂欄位捕獲詳細詢問。" }, price: "$129 USD" },
+  { icon: Mail, title: { en: "Advanced Contact Form", zh: "進階聯繫表單" }, desc: { en: "Capture detailed inquiries with custom fields tailored to your business.", zh: "透過為您業務量身客製的自訂欄位捕獲詳細詢問。" }, price: "$129 USD" },
   { icon: Calendar, title: { en: "Booking Request Form", zh: "預約請求表單" }, desc: { en: "Let customers request appointments directly from your website.", zh: "讓客戶直接從您的網站預約。" }, price: "$149 USD" },
   { icon: List, title: { en: "Multi-Step Quote Form", zh: "多步驟報價表單" }, desc: { en: "Guide users step-by-step to increase form completion and lead quality.", zh: "逐步引導用戶以提高表單完成率和潛客質量。" }, price: "$149 USD" },
 ];
 
 const growthOptimization = [
-  { icon: Zap, title: { en: "Performance Optimization", zh: "性能優化" }, desc: { en: "Improve website speed and overall user experience.", zh: "提升網站速度和整體用戶體驗。" }, price: "$99 USD" },
+  { icon: Zap, title: { en: "Performance Optimization", zh: "性能優化" }, desc: { en: "Deeper speed work — image compression, caching and Core Web Vitals tuning. Part of our SEO service.", zh: "更深入的速度優化——圖片壓縮、快取與 Core Web Vitals 調整，屬於我們 SEO 服務的一部分。" }, price: "$150 USD" },
   { icon: Search, title: { en: "Onsite SEO Optimization", zh: "站內SEO優化" }, desc: { en: "Optimize your site structure and content to improve search rankings.", zh: "優化網站結構和內容以提升搜索排名。" }, price: "$99 USD" },
 ];
 
@@ -59,7 +57,7 @@ const bundlesData = [
 const hostingSupport = [
   { icon: Server, title: { en: "Care Plan", zh: "Care Plan" }, desc: { en: "Up to 2 small edits every month, billed once a year. Excludes new pages, new features and blog posts.", zh: "每月最多 2 次小修改，按年計費。不含新頁面、新功能與 blog 文章。" }, price: "$135 USD / year", note: { en: "Available for launched SwiftLift websites.", zh: "適用於已上線的 SwiftLift 網站。" } },
   { icon: RefreshCw, title: { en: "Additional Revision", zh: "額外修改" }, desc: { en: "Request an extra round of updates after your included revisions are used.", zh: "在已包含的修改次數用完後，申請額外一輪更新。" }, price: "$45 USD", note: { en: "Available for existing SwiftLift website projects.", zh: "適用於現有的 SwiftLift 網站專案。" } },
-  { icon: RotateCcw, title: { en: "Reactivation Fee", zh: "重新啟動費" }, desc: { en: "For paused or delayed projects that need to be restarted and re-enter production.", zh: "適用於暫停或延遲的專案，需要重新啟動並重新進入生產。" }, price: "$50 USD", note: { en: "Available when restarting inactive SwiftLift projects.", zh: "適用於重新啟動不活躍的 SwiftLift 專案。" } },
+  { icon: RotateCcw, title: { en: "Reactivation Fee", zh: "重新啟動費" }, desc: { en: "Bring a launched website back online after its hosting was cancelled or paused.", zh: "網站託管取消或暫停後，讓已上線的網站重新恢復運作。" }, price: "$50 USD", note: { en: "For launched SwiftLift websites that went offline.", zh: "適用於曾上線、後來下線的 SwiftLift 網站。" } },
 ];
 
 const FOOTER_NOTE = { en: "Available as an upgrade for existing SwiftLift websites.", zh: "可作為現有 SwiftLift 網站的升級選項。" };
@@ -71,14 +69,14 @@ const FOOTER_NOTE = { en: "Available as an upgrade for existing SwiftLift websit
 const FeatureCard = ({ icon: Icon, title, desc, price, footerNote, lang, highlight }: {
   icon: any; title: LangObj; desc: LangObj; price: string; footerNote: LangObj; lang: "en" | "zh"; highlight?: boolean;
 }) => (
-  <div className={`rounded-2xl bg-white p-6 shadow-[0_1px_3px_rgba(0,0,0,0.06),0_4px_16px_rgba(0,0,0,0.04)] flex flex-col h-full border ${highlight ? "border-[hsl(267_55%_45%)/0.2]" : "border-black/[0.04]"}`}>
+  <div className={`rounded-[20px] bg-white p-6 shadow-[0_1px_3px_rgba(0,0,0,0.06),0_4px_16px_rgba(0,0,0,0.04)] flex flex-col h-full border ${highlight ? "border-[hsl(267_55%_45%)/0.2]" : "border-black/[0.04]"}`}>
     <div className="w-11 h-11 rounded-xl flex items-center justify-center mb-4" style={{ background: "hsl(267 55% 45% / 0.08)" }}>
       <Icon size={22} style={{ color: "hsl(267 55% 45%)" }} />
     </div>
     <h3 className="text-[1.05rem] font-bold text-foreground leading-snug">{T(title, lang)}</h3>
     <p className="mt-2 text-sm text-muted-foreground leading-relaxed flex-1">{T(desc, lang)}</p>
     <div className="mt-auto pt-5">
-      <span className="text-2xl font-black text-foreground">{price}</span>
+      <span className="font-display text-2xl font-black text-foreground">{price}</span>
       <p className="mt-3 text-[12px] text-muted-foreground/70 leading-snug">{T(footerNote, lang)}</p>
     </div>
   </div>
@@ -135,52 +133,32 @@ const FeatureSection = ({ title, subtitle, items, lang, bgClass, highlight, colu
 const FeaturesContent = () => {
   const { lang } = useLanguage();
 
-  useEffect(() => {
-    document.title = SEO_ROUTES["/features"].title;
-    let canonical = document.querySelector("link[rel='canonical']") as HTMLLinkElement | null;
-    if (!canonical) {
-      canonical = document.createElement("link");
-      canonical.setAttribute("rel", "canonical");
-      document.head.appendChild(canonical);
-    }
-    canonical.setAttribute("href", "https://swiftlift.app/features");
-    return () => { canonical?.setAttribute("href", "https://swiftlift.app/"); };
-  }, []);
 
   return (
     <main>
       {/* ── Hero ── */}
-      <section className="relative overflow-hidden pt-28 pb-14 md:pt-36 md:pb-20 section-brand-dark">
-        <div className="absolute inset-0 dot-grid opacity-40" />
-        <div className="relative z-10 max-w-3xl mx-auto px-6 text-center">
-          <motion.span
-            initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.4 }}
-            className="inline-block text-xs font-bold uppercase tracking-widest text-white/60 mb-4"
-          >
-            {lang === "en" ? "FEATURE CATALOG" : "功能目錄"}
-          </motion.span>
-          <motion.h1
-            initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5 }}
-            className="text-[clamp(2rem,4.5vw,3rem)] font-black text-white font-display leading-tight"
-          >
-            {lang === "en" ? "What You Can Add to Your Website" : "您可以為網站添加的功能"}
-          </motion.h1>
-          <motion.p
-            initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.1 }}
-            className="mt-5 text-white/80 text-[1.05rem] md:text-lg leading-relaxed max-w-xl mx-auto"
-          >
+      <section className="px-6 pb-12 pt-28 md:pb-16 md:pt-36">
+        <div className="mx-auto max-w-3xl text-center">
+          <p className="sl-eyebrow text-sm">{lang === "en" ? "Add-ons & price list" : "加購功能與價目表"}</p>
+          <h1 className="mt-4 font-display text-[2.2rem] font-black leading-[1.05] tracking-[-0.02em] sm:text-5xl lg:text-[3.4rem]">
+            {lang === "en" ? <>Add What Your Business <span className="sl-highlight italic text-[hsl(var(--accent-purple))]">Actually Needs.</span></> : <>只加您的生意<span className="sl-highlight italic text-[hsl(var(--accent-purple))]">真正需要的。</span></>}
+          </h1>
+          <p className="mx-auto mt-5 max-w-xl text-lg leading-relaxed text-foreground/80">
             {lang === "en"
-              ? "Enhance your website with features that build trust, increase inquiries, and support your business growth."
-              : "透過建立信任、增加詢問和支持業務成長的功能來增強您的網站。"}
-          </motion.p>
-          <motion.p
-            initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: 0.2 }}
-            className="mt-4 text-white/50 text-sm max-w-lg mx-auto"
-          >
-            {lang === "en"
-              ? "These features are available as part of custom quotes or as upgrade options for existing SwiftLift websites."
-              : "這些功能可作為定制報價的一部分或現有 SwiftLift 網站的升級選項。"}
-          </motion.p>
+              ? "Every facelift already comes ready to launch. Add any of these before launch or anytime after — one-time prices in USD, no subscriptions."
+              : "每個改版本身就可以直接上線。以下功能可在上線前或之後隨時加購——一次性美元價格，不用訂閱。"}
+          </p>
+        </div>
+        <div className="mx-auto mt-10 max-w-4xl rounded-[22px] border border-border bg-white p-6 md:p-8">
+          <p className="font-display text-lg font-extrabold">{lang === "en" ? "Included with every facelift" : "每個改版都包含"}</p>
+          <ul className="mt-4 grid grid-cols-1 gap-3 text-[0.95rem] sm:grid-cols-2">
+            {(lang === "en"
+              ? ["Your existing pages, redesigned", "Mobile-friendly on every device", "Basic SEO: favicon + homepage meta description", "Free hosting with SSL on our servers"]
+              : ["您現有的頁面全部重新設計", "所有裝置都適用的手機版", "基本 SEO：favicon + 首頁 meta description", "免費託管在我們的伺服器（含 SSL）"]
+            ).map((t) => (
+              <li key={t} className="flex items-start gap-2.5"><Check size={18} strokeWidth={2.8} className="mt-0.5 flex-shrink-0 text-[hsl(var(--accent-purple))]" aria-hidden="true" />{t}</li>
+            ))}
+          </ul>
         </div>
       </section>
 
@@ -188,19 +166,19 @@ const FeaturesContent = () => {
       <FeatureSection title={{ en: "Trust & Essentials", zh: "信任與基礎" }} items={trustEssentials} lang={lang} bgClass="bg-white" columns={2} />
 
       {/* ── Content & Presentation ── */}
-      <FeatureSection title={{ en: "Content & Presentation", zh: "內容與呈現" }} items={contentPresentation} lang={lang} bgClass="bg-[#F8F8FA]" columns={2} />
+      <FeatureSection title={{ en: "Content & Presentation", zh: "內容與呈現" }} items={contentPresentation} lang={lang} bgClass="bg-background" columns={2} />
 
       {/* ── Lead & Conversion (Highlighted) ── */}
       <FeatureSection title={{ en: "Lead & Conversion", zh: "潛客與轉化" }} items={leadConversion} lang={lang} bgClass="bg-white" highlight />
 
       {/* ── Growth & Optimization ── */}
-      <FeatureSection title={{ en: "Growth & Optimization", zh: "成長與優化" }} items={growthOptimization} lang={lang} bgClass="bg-[#F8F8FA]" columns={2} />
+      <FeatureSection title={{ en: "Growth & Optimization", zh: "成長與優化" }} items={growthOptimization} lang={lang} bgClass="bg-background" columns={2} />
 
       {/* ── Advanced Systems ── */}
       <FeatureSection title={{ en: "Advanced Systems", zh: "進階系統" }} items={advancedSystems} lang={lang} bgClass="bg-white" />
 
       {/* ── Bundle & Save ── */}
-      <section className="py-16 md:py-24 bg-[#F8F8FA]">
+      <section className="py-16 md:py-24 bg-background">
         <div className="max-w-6xl mx-auto px-6">
           <ScrollReveal>
             <div className="text-center mb-12">
@@ -232,7 +210,7 @@ const FeaturesContent = () => {
                     <p className="mt-2 text-sm text-muted-foreground leading-relaxed flex-1">{T(bundle.desc, lang)}</p>
                     <div className="mt-auto pt-5">
                       <div className="flex items-baseline gap-3">
-                        <span className="text-2xl font-black text-foreground">{bundle.price}</span>
+                        <span className="font-display text-2xl font-black text-foreground">{bundle.price}</span>
                         <span className="text-sm font-semibold" style={{ color: "hsl(267 55% 45%)" }}>{T(bundle.savings, lang)}</span>
                       </div>
                       <p className="mt-3 text-[12px] text-muted-foreground/70 leading-snug">
@@ -274,14 +252,14 @@ const FeaturesContent = () => {
               const Icon = item.icon;
               return (
                 <ScrollReveal key={i} delay={0.04 * i}>
-                  <div className="rounded-2xl bg-white p-6 shadow-[0_1px_3px_rgba(0,0,0,0.06),0_4px_16px_rgba(0,0,0,0.04)] flex flex-col h-full border border-black/[0.04]">
+                  <div className="rounded-[20px] bg-white p-6 shadow-[0_1px_3px_rgba(0,0,0,0.06),0_4px_16px_rgba(0,0,0,0.04)] flex flex-col h-full border border-black/[0.04]">
                     <div className="w-11 h-11 rounded-xl flex items-center justify-center mb-4" style={{ background: "hsl(267 55% 45% / 0.08)" }}>
                       <Icon size={22} style={{ color: "hsl(267 55% 45%)" }} />
                     </div>
                     <h3 className="text-[1.05rem] font-bold text-foreground leading-snug">{T(item.title, lang)}</h3>
                     <p className="mt-2 text-sm text-muted-foreground leading-relaxed flex-1">{T(item.desc, lang)}</p>
                     <div className="mt-auto pt-5">
-                      <span className="text-2xl font-black text-foreground">{item.price}</span>
+                      <span className="font-display text-2xl font-black text-foreground">{item.price}</span>
                       <p className="mt-3 text-[12px] text-muted-foreground/70 leading-snug">{T(item.note, lang)}</p>
                     </div>
                   </div>
@@ -307,8 +285,7 @@ const FeaturesContent = () => {
             <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
               <Link
                 to="/#contact"
-                className="inline-flex items-center justify-center gap-2 rounded-full px-10 py-4 text-base font-semibold text-white transition-all hover:scale-105"
-                style={{ backgroundColor: "hsl(267 55% 45%)" }}
+                className="sl-cta inline-flex min-h-14 items-center justify-center gap-2 rounded-2xl px-8 py-4 font-display text-lg font-extrabold"
               >
                 {lang === "en" ? "Get My 2 Free Previews" : "獲取我的2個免費預覽"}
                 <ArrowRight size={18} />
@@ -317,7 +294,7 @@ const FeaturesContent = () => {
                 to="https://sonykundesign.com/"
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center justify-center rounded-full px-10 py-4 text-base font-semibold border-2 border-white/30 text-white hover:bg-white/10 transition-colors"
+                className="inline-flex min-h-14 items-center justify-center rounded-2xl px-6 py-4 text-base font-bold border-2 border-white/30 text-white hover:bg-white/10 transition-colors"
               >
                 {lang === "en" ? "Custom Project? Visit Sonykun Design" : "客製化專案？前往 Sonykun Design"}
               </Link>

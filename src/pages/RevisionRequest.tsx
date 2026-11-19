@@ -170,8 +170,8 @@ const RevisionContent = () => {
             <p className="mt-3 text-muted-foreground">We'll review your submission and get back to you within 48 hours.</p>
             <a
               href="/"
-              className="mt-8 inline-flex items-center justify-center rounded-full px-8 py-3.5 text-base font-semibold text-white transition-colors"
-              style={{ backgroundColor: "#6A33B0" }}
+              className="sl-cta font-display mt-8 inline-flex items-center justify-center rounded-2xl px-8 py-3.5 text-base font-extrabold text-white transition-colors"
+              
             >
               Back to Home
             </a>
@@ -407,8 +407,8 @@ const RevisionContent = () => {
             <motion.button
               onClick={handleCheckout}
               disabled={!agreed || isSubmitting}
-              className="w-full inline-flex items-center justify-center gap-2 rounded-full px-8 py-3.5 text-base font-semibold text-white transition-colors focus:outline-none focus:ring-2 focus:ring-[hsl(267,55%,45%)]/50 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed"
-              style={{ backgroundColor: "#6A33B0" }}
+              className="sl-cta font-display w-full inline-flex items-center justify-center gap-2 rounded-2xl px-8 py-3.5 text-base font-extrabold text-white transition-colors focus:outline-none focus:ring-2 focus:ring-[hsl(267,55%,45%)]/50 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed"
+              
               whileHover={agreed ? { scale: 1.02 } : {}}
               whileTap={agreed ? { scale: 0.98 } : {}}
             >

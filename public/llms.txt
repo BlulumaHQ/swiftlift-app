@@ -21,7 +21,7 @@ Who it is for: small businesses that already have a website and want it to look 
 - Growth Facelift — $499: everything in Classic, plus a conversion-focused layout, strategic calls to action, trust-building sections and a stronger page flow.
 - Free Hosting — $0, forever: fast, secure hosting with SSL. No monthly fees and no lock-in. Edits after launch are $45 each. Clients can request the full site files at any time.
 - Care Plan — $135/year: up to 2 small edits every month (swap photos, update text, change the hero style, re-layout existing pages). Does not include new pages, new features or blog posts.
-- Extra revision rounds: $45 each. Advanced SEO and other upgrades are optional add-ons.
+- Extra revision rounds: $45 each. Additional pages: $99 per page. Basic SEO (favicon + homepage meta description) is included; deeper SEO and performance optimization ($150) are optional add-ons.
 - Payments are made by card through Stripe after the client approves the final site, so all payments are final (no refunds).
 
 ## Key pages

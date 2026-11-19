@@ -122,8 +122,8 @@ const SuccessSection = ({ email, clientId, isDark }: { email: string; clientId?:
         <a
           href="/"
           onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: "smooth" }); }}
-          className="inline-flex items-center justify-center rounded-full px-8 py-3.5 text-sm font-semibold text-white transition-all hover:opacity-90"
-          style={{ backgroundColor: "hsl(267 55% 45%)" }}
+          className="sl-cta font-display inline-flex items-center justify-center rounded-2xl px-8 py-3.5 text-sm font-extrabold text-white transition-all"
+          
         >
           {lang === "en" ? "Back to Home" : "返回首頁"}
         </a>
@@ -753,7 +753,7 @@ const IndexContent = ({ variant = "home" }: { variant?: "home" | "start" }) => {
     {
       text: lang === "en"
         ? <>We got two complete directions for our site before committing to anything. <strong>Seeing them side by side made it obvious which one fit how we talk to landowners and investors.</strong> The version we picked is the one live today.</>
-        : <>在做任何決定之前，我們就收到了兩個完整的網站方向。<strong>並排比較之後，哪一個更適合我們跟地主和投資人溝通的方式，一目了然。</strong>我們選的那個版本就是現在上線的網站。</>,
+        : <>在做任何決定之前，我們就收到了兩個完整的網站方向。<strong>並排比較之後，哪一個更適合我們跟地主和投資人溝通的方式，一目瞭然。</strong>我們選的那個版本就是現在上線的網站。</>,
       name: "Thomas Chen",
       company: "BTN Real Estate Services · Vancouver, BC",
       url: "https://btnpro.ca/",

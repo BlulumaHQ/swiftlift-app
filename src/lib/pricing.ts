@@ -65,7 +65,7 @@ export const PRICING = {
     {
       key: "performance-optimization",
       name: "Performance Optimization",
-      price: 99,
+      price: 150,
       type: "one_time",
     },
     {
@@ -84,6 +84,12 @@ export const PRICING = {
       key: "brand-identity-package",
       name: "Brand Identity Package",
       price: 299,
+      type: "one_time",
+    },
+    {
+      key: "additional-page",
+      name: "Additional Page",
+      price: 99,
       type: "one_time",
     },
   ],
@@ -256,6 +262,7 @@ export const STRIPE_LINKS: Record<string, string> = {
   "growth": "https://buy.stripe.com/dRm7sKgxm8HX2ja0jrfw40k",
 
   // Add-ons
+  "additional-page": "https://buy.stripe.com/7sY3cuepe6zPe1S1nvfw40Z",
   "performance-optimization": "https://buy.stripe.com/9B67sK94U0bre1S9U1fw40I",
   "seo-optimization": "https://buy.stripe.com/9B6cN494UcYd7Dufelfw40J",
   "social-media-launch-kit": "https://buy.stripe.com/fZuaEW6WM1fv4rid6dfw40W",

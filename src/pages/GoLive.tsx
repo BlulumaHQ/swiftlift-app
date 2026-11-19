@@ -288,8 +288,8 @@ const GoLiveContent = () => {
               {(hostingPlan === "monthly" || hostingPlan === "yearly") && (
                 <a
                   href="/deployment"
-                  className="mt-8 inline-flex items-center justify-center rounded-full px-8 py-3.5 text-base font-semibold text-white"
-                  style={{ backgroundColor: "#6A33B0" }}
+                  className="sl-cta font-display mt-8 inline-flex items-center justify-center rounded-2xl px-8 py-3.5 text-base font-extrabold text-white"
+                  
                 >
                   Set up Care Plan
                 </a>
@@ -430,8 +430,8 @@ const GoLiveContent = () => {
                   type="button"
                   onClick={submit}
                   disabled={submitting}
-                  className="w-full inline-flex items-center justify-center gap-2 rounded-full px-8 py-4 text-base font-semibold text-white disabled:opacity-50"
-                  style={{ backgroundColor: "#6A33B0" }}
+                  className="sl-cta font-display w-full inline-flex items-center justify-center gap-2 rounded-2xl px-8 py-4 text-base font-extrabold text-white disabled:opacity-50"
+                  
                 >
                   {submitting ? <Loader2 size={18} className="animate-spin" /> : <Check size={18} />}
                   {submitting ? "Sending…" : "Send my answers"}

@@ -57,8 +57,8 @@ const RevisionPaymentContent = () => {
             <p className="mt-3 text-muted-foreground">You may now submit your revision request.</p>
             <a
               href={`/revision-request?code=${encodeURIComponent(codeParam)}`}
-              className="mt-8 inline-flex items-center justify-center gap-2 rounded-full px-8 py-3.5 text-base font-semibold text-white transition-colors"
-              style={{ backgroundColor: "hsl(267 55% 45%)" }}
+              className="sl-cta font-display mt-8 inline-flex items-center justify-center gap-2 rounded-2xl px-8 py-3.5 text-base font-extrabold text-white transition-colors"
+              
             >
               Go to Revision Form <ArrowRight size={16} />
             </a>
@@ -166,8 +166,8 @@ const RevisionPaymentContent = () => {
           <button
             onClick={handlePay}
             disabled={isSubmitting}
-            className="w-full flex items-center justify-center gap-2 rounded-full px-8 py-4 text-base font-bold text-white transition-all hover:opacity-90 disabled:opacity-50"
-            style={{ backgroundColor: "hsl(267 55% 45%)" }}
+            className="sl-cta font-display w-full flex items-center justify-center gap-2 rounded-2xl px-8 py-4 text-base font-extrabold text-white transition-all disabled:opacity-50"
+            
           >
             <CreditCard size={18} />
             {isSubmitting ? "Redirecting…" : "Pay $45 USD & Continue"}

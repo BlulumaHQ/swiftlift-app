@@ -21,7 +21,7 @@ const Header = () => {
   }, []);
 
   const navItems = [
-    { label: lang === "en" ? "Home" : "首页", href: "/" },
+    { label: lang === "en" ? "Home" : "首頁", href: "/" },
     { label: t(nav.process, lang), href: "/#process" },
     { label: t(nav.pricing, lang), href: "/#pricing" },
     { label: t(nav.portfolio, lang), href: "/portfolio" },

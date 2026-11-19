@@ -260,7 +260,7 @@
 
   /* Dot grid background */
   .dot-grid {
-    background-image: radial-gradient(circle, hsl(209 66% 22% / 0.03) 1px, transparent 1px);
+    background-image: radial-gradient(circle, hsl(0 0% 100% / 0.06) 1px, transparent 1px);
     background-size: 24px 24px;
   }
 
@@ -446,3 +446,7 @@
 .sl-cta:hover { background: hsl(266 57% 40%); }
 .sl-cta:active { transform: translateY(4px); box-shadow: 0 2px 0 hsl(var(--accent-purple-dark)); }
 .sl-eyebrow { font-family: 'Archivo', 'Inter', sans-serif; font-weight: 800; font-style: italic; letter-spacing: .08em; text-transform: uppercase; color: hsl(var(--accent-purple)); }
+
+/* Interior page heroes (dark): brand headline + yellow accent bar */
+.section-brand-dark h1 { font-family: 'Archivo', 'Inter', sans-serif; font-weight: 900; letter-spacing: -0.02em; }
+.section-brand-dark h1::after { content: ""; display: block; width: 64px; height: 6px; margin: 18px auto 0; border-radius: 3px; background: hsl(var(--highlight)); }

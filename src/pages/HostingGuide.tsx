@@ -1,286 +1,160 @@
-import { useEffect } from "react";
+import { Link } from "react-router-dom";
 import { LanguageProvider, useLanguage } from "@/contexts/LanguageContext";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import ScrollReveal from "@/components/ScrollReveal";
-import { motion } from "framer-motion";
-import { Check, ShieldCheck, Headphones, Zap, MonitorSmartphone, RefreshCw } from "lucide-react";
-import { SEO_ROUTES } from "@/lib/seoRoutes";
+import { ArrowRight, Check, X, ShieldCheck, Zap, Globe, Mail, Package } from "lucide-react";
+
+const sectionTitle = "font-display text-[clamp(1.9rem,4vw,2.8rem)] font-black leading-[1.1] tracking-tight text-foreground";
 
 const HostingGuideContent = () => {
   const { lang } = useLanguage();
+  const en = lang === "en";
+  const check = (c: string) => <Check size={18} strokeWidth={2.8} className="mt-0.5 flex-shrink-0" style={{ color: c }} aria-hidden="true" />;
 
-  useEffect(() => {
-    document.title = lang === "en" ? SEO_ROUTES["/hosting-guide"].title : "托管主机 — SwiftLift";
-    let canonical = document.querySelector("link[rel='canonical']") as HTMLLinkElement | null;
-    if (!canonical) {
-      canonical = document.createElement("link");
-      canonical.setAttribute("rel", "canonical");
-      document.head.appendChild(canonical);
-    }
-    canonical.setAttribute("href", "https://swiftlift.app/hosting-guide");
-    return () => { canonical?.setAttribute("href", "https://swiftlift.app/"); };
-  }, [lang]);
+  const freeItems = en
+    ? ["Hosted on our fast global network (Cloudflare)", "SSL security certificate included", "No monthly bill — ever", "Need a change? $45 per edit, only when you want one"]
+    : ["放在我們快速的全球網路（Cloudflare）", "包含 SSL 安全憑證", "永遠沒有月費", "需要修改？每次 $45，有需要才付"];
+  const careItems = en
+    ? ["Everything in Free Hosting", "Up to 2 small edits every month — photos, text, hero style or re-layout of existing pages", "We make the changes for you — no dashboards", "Uptime monitoring and priority replies"]
+    : ["包含免費託管的所有內容", "每月最多 2 次小修改——照片、文字、Hero 樣式或重新排版現有頁面", "由我們幫您改，不用登入任何後台", "網站運作監控與優先回覆"];
+  const careExcludes = en ? "Not included: new pages, new features and blog posts (see the price list)." : "不包含：新頁面、新功能與 blog 文章（請見價目表）。";
+
+  const steps = en
+    ? [
+        ["You approve your new website", "Pay only once you're happy with it."],
+        ["Pick Free Hosting or the Care Plan", "One simple question before launch. You can switch later."],
+        ["We connect your domain and go live", "We walk you through the domain step and check how your email works first."],
+      ]
+    : [
+        ["您確認新網站", "滿意了才付款。"],
+        ["選擇免費託管或 Care Plan", "上線前只問這一個問題，之後也可以換。"],
+        ["我們連接網域並上線", "我們會一步步帶您完成網域設定，並先確認您的 email 怎麼運作。"],
+      ];
+
+  const facts = en
+    ? [
+        { icon: Globe, t: "Your domain stays yours", d: "We never take ownership of your domain. We only point it to your new site." },
+        { icon: Mail, t: "Your email keeps working", d: "Every email setup is different, so we check yours first and recommend the best option before launch." },
+        { icon: Package, t: "Want to host it yourself?", d: "No problem. We'll hand you the full website as a zip file, ready for Cloudflare, Netlify or Vercel." },
+        { icon: ShieldCheck, t: "No lock-in", d: "No contracts. Cancel the Care Plan anytime and stay on Free Hosting." },
+      ]
+    : [
+        { icon: Globe, t: "網域永遠是您的", d: "我們不會拿走您網域的所有權，只會把它指向您的新網站。" },
+        { icon: Mail, t: "Email 照常運作", d: "每個人的 email 設定都不同，所以上線前我們會先確認您的設定，再推薦最好的做法。" },
+        { icon: Package, t: "想自己託管？", d: "沒問題。我們會把完整網站打包成 zip 給您，可直接放到 Cloudflare、Netlify 或 Vercel。" },
+        { icon: ShieldCheck, t: "沒有綁約", d: "不用簽約。Care Plan 隨時可以取消，改回免費託管。" },
+      ];
 
   return (
     <main>
-      {/* SECTION 1 — HERO */}
-      <section className="relative overflow-hidden pt-32 pb-20 md:pt-44 md:pb-28 section-brand-dark">
-        <div className="absolute inset-0 dot-grid opacity-30" />
-        <div className="relative z-10 max-w-3xl mx-auto px-6 text-center">
-          <motion.h1
-            initial={{ opacity: 0, y: 24 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6 }}
-            className="text-[clamp(2.2rem,5vw,3.4rem)] font-black text-white font-display leading-[1.15] tracking-tight"
-          >
-            {lang === "en" ? "Stop Worrying About Hosting Forever" : "从此不再为托管烦恼"}
-          </motion.h1>
-          <motion.p
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.12 }}
-            className="mt-5 text-white/75 text-base md:text-lg leading-relaxed max-w-xl mx-auto"
-          >
-            {lang === "en"
-              ? "We handle everything behind the scenes — so you never have to deal with servers, updates, or technical issues."
-              : "我们在幕后处理一切 — 您无需面对服务器、更新或技术问题。"}
-          </motion.p>
-          <motion.div
-            initial={{ opacity: 0, y: 16 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.25 }}
-            className="mt-10"
-          >
-            <a
-              href="/#contact"
-              className="inline-flex items-center justify-center rounded-full px-8 py-3.5 text-base font-semibold text-white btn-brand"
-              style={{ backgroundColor: "hsl(267 55% 45%)" }}
-            >
-              {lang === "en" ? "Get My 2 Free Previews" : "获取我的2个免费预览"}
-            </a>
-          </motion.div>
+      {/* HERO */}
+      <section className="px-6 pb-14 pt-28 md:pb-20 md:pt-36">
+        <div className="mx-auto max-w-3xl text-center">
+          <p className="sl-eyebrow text-sm">{en ? "Hosting guide" : "託管說明"}</p>
+          <h1 className="mt-4 font-display text-[2.2rem] font-black leading-[1.05] tracking-[-0.02em] sm:text-5xl lg:text-[3.4rem]">
+            {en ? <>Free Hosting. <span className="sl-highlight italic text-[hsl(var(--accent-purple))]">No Monthly Bill.</span></> : <>免費託管，<span className="sl-highlight italic text-[hsl(var(--accent-purple))]">沒有月費。</span></>}
+          </h1>
+          <p className="mx-auto mt-5 max-w-xl text-lg leading-relaxed text-foreground/80">
+            {en
+              ? "Every SwiftLift website is hosted for free on our servers. No plugins to update, no dashboards to learn. Want us to handle your edits too? That's the Care Plan."
+              : "每個 SwiftLift 網站都免費託管在我們的伺服器上。不用更新外掛，也不用學後台。想連修改都交給我們？那就是 Care Plan。"}
+          </p>
         </div>
       </section>
 
-      {/* SECTION 2 — THE PROBLEM */}
-      <section className="py-20 md:py-28 bg-background">
-        <div className="max-w-2xl mx-auto px-6 text-center">
-          <ScrollReveal>
-            <h2 className="text-2xl md:text-3xl font-black text-foreground font-display tracking-tight">
-              {lang === "en" ? "Hosting Shouldn't Be Your Problem" : "托管不应该是您的问题"}
-            </h2>
-            <span className="section-underline section-underline--light mx-auto" />
-          </ScrollReveal>
-          <ScrollReveal delay={0.1}>
-            <div className="mt-10 space-y-5 text-muted-foreground text-base md:text-lg leading-relaxed text-left max-w-lg mx-auto">
-              <p>{lang === "en"
-                ? "Every website built with SwiftLift comes with free hosting — no monthly fees, no lock-in, no surprises."
-                : "每个SwiftLift建设的网站都附带免费托管 — 无月费、无锁定、无意外。"}</p>
-              <p>{lang === "en"
-                ? "Most business owners don't want to deal with hosting. And they shouldn't have to."
-                : "大多数企业主不想处理托管问题。他们也不应该处理。"}</p>
-              <p>{lang === "en"
-                ? "Confusing dashboards, plugin updates, security patches, random downtime — it all adds up to hours wasted on things that shouldn't break in the first place."
-                : "复杂的控制面板、插件更新、安全补丁、随机宕机 — 这些加起来浪费了大量时间在本不应该出问题的事情上。"}</p>
-              <p>{lang === "en"
-                ? "You started a business to serve your customers — not to babysit a server."
-                : "您创业是为了服务客户 — 而不是照看服务器。"}</p>
-            </div>
-          </ScrollReveal>
-        </div>
-      </section>
-
-      {/* SECTION 3 — THE SOLUTION */}
-      <section className="py-20 md:py-28" style={{ background: "hsl(var(--surface-sunken))" }}>
-        <div className="max-w-3xl mx-auto px-6">
-          <ScrollReveal>
-            <div className="text-center">
-              <h2 className="text-2xl md:text-3xl font-black text-foreground font-display tracking-tight">
-                {lang === "en" ? "We Take Care of Everything" : "我们负责一切"}
-              </h2>
-              <span className="section-underline section-underline--light mx-auto" />
-            </div>
-          </ScrollReveal>
-
-          <div className="mt-14 grid grid-cols-1 md:grid-cols-2 gap-6">
-            {(lang === "en"
-              ? [
-                  { icon: ShieldCheck, title: "Secure hosting environment", desc: "Your website runs on fast, reliable infrastructure with SSL built in." },
-                  { icon: RefreshCw, title: "Ongoing maintenance & updates", desc: "We keep everything running smoothly so you don't have to." },
-                  { icon: Zap, title: "Performance optimization", desc: "Fast load times. No bloat. Optimized for every device." },
-                  { icon: Headphones, title: "Monitoring & uptime support", desc: "We watch your site around the clock and fix issues before you notice." },
-                  { icon: MonitorSmartphone, title: "No setup required", desc: "We handle everything from migration to launch. Zero effort on your end." },
-                ]
-              : [
-                  { icon: ShieldCheck, title: "安全托管环境", desc: "您的网站运行在快速、可靠的基础设施上，内置SSL。" },
-                  { icon: RefreshCw, title: "持续维护和更新", desc: "我们确保一切顺利运行，您无需操心。" },
-                  { icon: Zap, title: "性能优化", desc: "快速加载。无冗余。针对每台设备优化。" },
-                  { icon: Headphones, title: "监控和正常运行支持", desc: "我们全天候监控您的网站，在您发现之前修复问题。" },
-                  { icon: MonitorSmartphone, title: "无需设置", desc: "我们处理从迁移到发布的一切。您零操作。" },
-                ]
-            ).map((item, i) => (
-              <ScrollReveal key={i} delay={i * 0.06}>
-                <div className="flex items-start gap-4 rounded-2xl border border-border bg-background p-6 shadow-sm">
-                  <div className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0" style={{ background: "hsl(267 55% 45% / 0.1)" }}>
-                    <item.icon size={20} style={{ color: "hsl(267 55% 45%)" }} />
-                  </div>
-                  <div>
-                    <h3 className="font-bold text-foreground text-sm">{item.title}</h3>
-                    <p className="text-sm text-muted-foreground mt-1 leading-relaxed">{item.desc}</p>
-                  </div>
-                </div>
-              </ScrollReveal>
-            ))}
+      {/* PLANS */}
+      <section className="px-6 pb-20">
+        <div className="mx-auto grid max-w-5xl grid-cols-1 items-stretch gap-6 md:grid-cols-2">
+          <div className="flex flex-col rounded-3xl border border-border bg-white p-7 md:p-9">
+            <p className="font-display text-xs font-extrabold italic tracking-[0.08em] text-muted-foreground">{en ? "INCLUDED" : "已包含"}</p>
+            <h2 className="mt-1.5 font-display text-[1.75rem] font-black">{en ? "Free Hosting" : "免費託管"}</h2>
+            <p className="mt-5 font-display text-5xl font-black leading-none">$0</p>
+            <p className="mt-2 text-sm text-muted-foreground">{en ? "with every website" : "每個網站都有"}</p>
+            <ul className="mt-6 flex-1 space-y-3 text-[0.95rem]">
+              {freeItems.map((t) => <li key={t} className="flex items-start gap-2.5">{check("hsl(var(--accent-purple))")}{t}</li>)}
+            </ul>
+          </div>
+          <div className="relative flex flex-col rounded-3xl bg-[hsl(var(--ink))] p-7 text-white shadow-[0_30px_60px_-24px_hsl(var(--accent-purple)/0.6)] md:p-9">
+            <span className="absolute -top-3.5 right-7 rounded-full bg-[hsl(var(--highlight))] px-3.5 py-1.5 font-display text-xs font-black italic tracking-[0.06em] text-foreground">
+              {en ? "MOST HANDS-OFF" : "最省事"}
+            </span>
+            <p className="font-display text-xs font-extrabold italic tracking-[0.08em] text-[#C4B1EE]">{en ? "OPTIONAL" : "可選"}</p>
+            <h2 className="mt-1.5 font-display text-[1.75rem] font-black">Care Plan</h2>
+            <p className="mt-5 font-display text-5xl font-black leading-none">$135<span className="text-xl font-bold text-white/60">/{en ? "year" : "年"}</span></p>
+            <p className="mt-2 text-sm text-white/60">{en ? "billed once a year" : "每年收費一次"}</p>
+            <ul className="mt-6 flex-1 space-y-3 text-[0.95rem]">
+              {careItems.map((t) => <li key={t} className="flex items-start gap-2.5">{check("hsl(var(--highlight))")}{t}</li>)}
+            </ul>
+            <p className="mt-6 text-xs leading-relaxed text-white/60">{careExcludes}</p>
           </div>
         </div>
-      </section>
-
-      {/* SECTION 4 — HOW IT WORKS */}
-      <section className="py-20 md:py-28 bg-background">
-        <div className="max-w-2xl mx-auto px-6 text-center">
-          <ScrollReveal>
-            <h2 className="text-2xl md:text-3xl font-black text-foreground font-display tracking-tight">
-              {lang === "en" ? "Simple and Automatic" : "简单且自动"}
-            </h2>
-            <span className="section-underline section-underline--light mx-auto" />
-          </ScrollReveal>
-
-          <div className="mt-14 space-y-10">
-            {(lang === "en"
-              ? [
-                  { step: "1", text: "We build your website" },
-                  { step: "2", text: "Before launch, we ask one simple question: free hosting or managed plan?" },
-                  { step: "3", text: "You focus on your business — we handle the rest" },
-                ]
-              : [
-                  { step: "1", text: "我们构建您的网站" },
-                  { step: "2", text: "启动前，我们只问一个简单的问题：免费托管还是托管计划？" },
-                  { step: "3", text: "您专注于您的业务 — 我们处理其余一切" },
-                ]
-            ).map((s, i) => (
-              <ScrollReveal key={i} delay={i * 0.1}>
-                <div className="flex items-center gap-5 max-w-sm mx-auto">
-                  <span
-                    className="inline-flex items-center justify-center w-11 h-11 rounded-full text-base font-black text-white flex-shrink-0"
-                    style={{ backgroundColor: "hsl(267 55% 45%)" }}
-                  >
-                    {s.step}
-                  </span>
-                  <p className="text-foreground font-semibold text-base md:text-lg text-left">{s.text}</p>
-                </div>
-              </ScrollReveal>
-            ))}
-          </div>
+        <div className="mx-auto mt-6 flex max-w-5xl items-start gap-3 rounded-2xl border border-[hsl(var(--highlight))] bg-[hsl(var(--highlight)/0.25)] px-5 py-4 text-[0.95rem]">
+          <Zap size={20} className="mt-0.5 flex-shrink-0 text-foreground" aria-hidden="true" />
+          <p>
+            {en
+              ? <>One-off edits are <strong>$45 each</strong>. Need just <strong>3 edits a year</strong> and the Care Plan has already paid for itself.</>
+              : <>單次修改每次 <strong>$45</strong>。一年只要改 <strong>3 次</strong>，Care Plan 就已經回本了。</>}
+          </p>
         </div>
       </section>
 
-      {/* SECTION 5 — PRICING (SUBTLE) */}
-      <section className="py-20 md:py-28" style={{ background: "hsl(var(--surface-sunken))" }}>
-        <div className="max-w-md mx-auto px-6 text-center">
-          <ScrollReveal>
-            <h2 className="text-2xl md:text-3xl font-black text-foreground font-display tracking-tight">
-              {lang === "en" ? "Simple, Transparent Pricing" : "简单透明的定价"}
-            </h2>
-            <span className="section-underline section-underline--light mx-auto" />
-          </ScrollReveal>
+      {/* HOW IT WORKS */}
+      <section className="border-y border-border bg-white px-6 py-20 md:py-24">
+        <div className="mx-auto max-w-6xl">
+          <h2 className={`text-center ${sectionTitle}`}>{en ? "How Launch Works" : "上線流程"}</h2>
+          <ol className="mt-10 grid grid-cols-1 gap-4 md:grid-cols-3">
+            {steps.map(([t, d], i) => (
+              <li key={i} className="flex flex-col gap-2 rounded-[20px] border border-border bg-background p-6">
+                <span className="font-display text-[2.6rem] font-black italic leading-none text-[hsl(var(--accent-purple))]">{String(i + 1).padStart(2, "0")}</span>
+                <h3 className="mt-2 font-display text-lg font-extrabold leading-snug">{t}</h3>
+                <p className="text-[0.95rem] leading-relaxed text-foreground/75">{d}</p>
+              </li>
+            ))}
+          </ol>
+        </div>
+      </section>
 
-          <ScrollReveal delay={0.1}>
-            <div className="mt-12 rounded-2xl border border-border bg-background p-8 shadow-sm">
-              <p className="text-sm font-bold text-foreground uppercase tracking-wider">
-                {lang === "en" ? "Free Hosting — Always Included" : "免费托管 — 始终包含"}
-              </p>
-              <p className="mt-3 text-muted-foreground text-sm leading-relaxed">
-                {lang === "en"
-                  ? "Every SwiftLift website comes with free hosting at no cost."
-                  : "每个SwiftLift网站都附带免费托管，无需任何费用。"}
-              </p>
-
-              <div className="mt-8 pt-8 border-t border-border">
-                <p className="text-xs text-muted-foreground uppercase tracking-wider font-medium">
-                  {lang === "en" ? "Want us to manage everything for you?" : "希望我们为您管理一切？"}
-                </p>
-                <p className="mt-3 text-sm font-bold text-foreground uppercase tracking-wider">
-                  {lang === "en" ? "Care Plan" : "Care Plan"}
-                </p>
-                <p className="mt-3 text-3xl font-black text-foreground font-display">$135<span className="text-lg font-medium text-muted-foreground">/{lang === "en" ? "year" : "年"}</span></p>
-
-                <ul className="mt-6 space-y-3 text-left text-sm text-muted-foreground leading-relaxed">
-                  <li className="flex items-start gap-2">
-                    <Check size={16} className="flex-shrink-0 mt-0.5" style={{ color: "hsl(267 55% 45%)" }} />
-                    <span>{lang === "en" ? "Up to 2 small edits every month — photos, text, hero style or re-layout of existing pages. We make the changes for you." : "每月最多 2 次小修改——照片、文字、Hero 样式或重新排版现有页面，由我们为您修改。"}</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <Check size={16} className="flex-shrink-0 mt-0.5" style={{ color: "hsl(267 55% 45%)" }} />
-                    <span>{lang === "en" ? "Monitoring, SSL, and uptime support included" : "包含监控、SSL和正常运行支持"}</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <Check size={16} className="flex-shrink-0 mt-0.5" style={{ color: "hsl(267 55% 45%)" }} />
-                    <span>{lang === "en" ? "No dashboards. No technical work. Ever." : "无控制面板。无技术工作。永远不需要。"}</span>
-                  </li>
-                </ul>
-
-                <p className="mt-6 text-xs text-muted-foreground leading-relaxed">
-                  {lang === "en"
-                    ? "Individual content updates available at $45/request — update 3+ times a month? The plan pays for itself."
-                    : "单次内容更新$45/次 — 每月更新3次以上？该计划物超所值。"}
-                </p>
+      {/* FACTS */}
+      <section className="px-6 py-20 md:py-24">
+        <div className="mx-auto max-w-5xl">
+          <h2 className={`text-center ${sectionTitle}`}>{en ? "Good to Know" : "您需要知道的"}</h2>
+          <div className="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-2">
+            {facts.map(({ icon: Icon, t, d }) => (
+              <div key={t} className="flex items-start gap-4 rounded-[20px] border border-border bg-white p-6">
+                <span className="flex h-11 w-11 flex-shrink-0 items-center justify-center rounded-xl bg-[hsl(var(--accent-purple)/0.1)]">
+                  <Icon size={22} className="text-[hsl(var(--accent-purple))]" aria-hidden="true" />
+                </span>
+                <div>
+                  <h3 className="font-display text-lg font-extrabold">{t}</h3>
+                  <p className="mt-1 text-[0.95rem] leading-relaxed text-foreground/75">{d}</p>
+                </div>
               </div>
-            </div>
-          </ScrollReveal>
-        </div>
-      </section>
-
-      {/* SECTION 6 — TRUST / REASSURANCE */}
-      <section className="py-20 md:py-28 bg-background">
-        <div className="max-w-2xl mx-auto px-6 text-center">
-          <ScrollReveal>
-            <h2 className="text-2xl md:text-3xl font-black text-foreground font-display tracking-tight">
-              {lang === "en" ? "No Hidden Costs. No Surprises." : "无隐藏费用。无意外。"}
-            </h2>
-            <span className="section-underline section-underline--light mx-auto" />
-          </ScrollReveal>
-
-          <ScrollReveal delay={0.1}>
-            <div className="mt-12 space-y-5 max-w-sm mx-auto">
-              {(lang === "en"
-                ? ["Free hosting included with every website — forever", "No setup fees", "No technical maintenance required", "No unexpected charges"]
-                : ["每个网站都包含免费托管 — 永远", "无设置费用", "无需技术维护", "无意外收费"]
-              ).map((item, i) => (
-                <div key={i} className="flex items-center gap-3">
-                  <Check size={20} className="flex-shrink-0" style={{ color: "hsl(267 55% 45%)" }} />
-                  <p className="text-foreground font-medium text-base">{item}</p>
-                </div>
+            ))}
+          </div>
+          <div className="mx-auto mt-10 max-w-3xl rounded-[20px] border border-border bg-white p-6">
+            <p className="font-display text-lg font-extrabold">{en ? "Compared to typical hosting" : "跟一般主機比較"}</p>
+            <ul className="mt-4 grid grid-cols-1 gap-2 text-[0.95rem] sm:grid-cols-2">
+              {(en
+                ? ["Monthly hosting bills", "Plugin and security updates", "Confusing control panels", "Surprise renewal charges"]
+                : ["每個月的主機費", "外掛與安全性更新", "複雜的控制面板", "意外的續約費用"]
+              ).map((t) => (
+                <li key={t} className="flex items-center gap-2.5 text-foreground/75"><X size={18} strokeWidth={2.6} className="flex-shrink-0 text-muted-foreground" aria-hidden="true" /><span className="line-through decoration-foreground/30">{t}</span></li>
               ))}
-            </div>
-          </ScrollReveal>
+            </ul>
+          </div>
         </div>
       </section>
 
-      {/* SECTION 7 — FINAL CTA */}
-      <section className="py-20 md:py-28 section-brand-dark">
-        <div className="max-w-2xl mx-auto px-6 text-center">
-          <ScrollReveal>
-            <h2 className="text-2xl md:text-3xl font-black text-white font-display tracking-tight">
-              {lang === "en" ? "Let SwiftLift Handle Everything" : "让SwiftLift处理一切"}
-            </h2>
-            <p className="mt-4 text-white/70 text-base leading-relaxed">
-              {lang === "en"
-                ? "We'll take care of everything — from design to hosting."
-                : "我们负责一切 — 从设计到托管。"}
-            </p>
-          </ScrollReveal>
-          <ScrollReveal delay={0.1}>
-            <div className="mt-10">
-              <a
-                href="/#contact"
-                className="inline-flex items-center justify-center rounded-full px-8 py-3.5 text-base font-semibold text-white transition-all hover:scale-105"
-                style={{ backgroundColor: "hsl(267 55% 45%)" }}
-              >
-                {lang === "en" ? "Get My 2 Free Previews" : "获取我的2个免费预览"}
-              </a>
-            </div>
-          </ScrollReveal>
+      {/* FINAL CTA */}
+      <section className="bg-[hsl(var(--ink))] px-6 py-20 text-center text-white md:py-24">
+        <div className="mx-auto max-w-2xl">
+          <h2 className="font-display text-[clamp(1.9rem,4vw,2.8rem)] font-black leading-[1.1]">
+            {en ? <>Your New Website, <span className="italic text-[hsl(var(--highlight))]">Hosted Free.</span></> : <>您的新網站，<span className="italic text-[hsl(var(--highlight))]">免費託管。</span></>}
+          </h2>
+          <p className="mt-4 text-lg text-white/75">{en ? "Start with 2 free previews. Decide on hosting later." : "先拿 2 個免費預覽，託管之後再決定。"}</p>
+          <Link to="/#contact" className="sl-cta mt-8 inline-flex min-h-14 items-center justify-center gap-2 rounded-2xl px-8 py-4 font-display text-lg font-extrabold">
+            {en ? "Get My 2 Free Previews" : "獲取我的 2 個免費預覽"} <ArrowRight size={20} strokeWidth={2.6} aria-hidden="true" />
+          </Link>
         </div>
       </section>
     </main>
@@ -289,7 +163,6 @@ const HostingGuideContent = () => {
 
 const HostingGuide = () => (
   <LanguageProvider>
-    
     <Header />
     <HostingGuideContent />
     <Footer />

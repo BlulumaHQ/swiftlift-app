@@ -211,8 +211,8 @@ const PayBuildContent = () => {
           <button
             onClick={handlePay}
             disabled={isSubmitting}
-            className="w-full flex items-center justify-center gap-2 rounded-full px-8 py-4 text-base font-bold text-white transition-all hover:opacity-90 disabled:opacity-50"
-            style={{ backgroundColor: "#6A33B0" }}
+            className="sl-cta font-display w-full flex items-center justify-center gap-2 rounded-2xl px-8 py-4 text-base font-extrabold text-white transition-all disabled:opacity-50"
+            
           >
             <CreditCard size={18} />
             {isSubmitting ? "Redirecting…" : `Pay ${config.priceLabel} with Stripe`}

@@ -107,7 +107,7 @@ const bundles: Bundle[] = [
     icon: Target,
     title: { en: "Lead Generation Pack", zh: "潛客獲取套餐" },
     tagline: { en: "Turn visitors into leads", zh: "將訪客轉化為潛在客戶" },
-    desc: { en: "Core system for capturing and managing incoming inquiries. Best for service businesses that rely on inbound leads.", zh: "捕獲和管理詢問的核心系統。最適合依賴入站潛在客戶的服務型企業。" },
+    desc: { en: "Core system for capturing and managing incoming inquiries. Best for service businesses that rely on inbound leads.", zh: "捕獲和管理詢問的核心繫統。最適合依賴入站潛在客戶的服務型企業。" },
     includes: [
       { en: "Advanced Contact Form ($129)", zh: "進階聯繫表單（$129）" },
       { en: "Booking Request Form ($149)", zh: "預約請求表單（$149）" },
@@ -231,8 +231,8 @@ const AddonsContent = () => {
                         href={STRIPE_LINKS[PRICING.addons[i].key]}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="w-full inline-flex items-center justify-center rounded-full px-6 py-3 text-sm font-semibold text-white transition-all hover:scale-[1.02] active:scale-[0.97]"
-                        style={{ backgroundColor: "#6A33B0" }}
+                        className="sl-cta font-display w-full inline-flex items-center justify-center rounded-2xl px-6 py-3 text-sm font-extrabold text-white transition-all active:scale-[0.97]"
+                        
                       >
                         {lang === "en" ? "Add to My Website" : "添加到我的網站"}
                       </a>
@@ -305,8 +305,8 @@ const AddonsContent = () => {
                         href={STRIPE_LINKS[bundle.stripeKey]}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="w-full inline-flex items-center justify-center rounded-full px-6 py-3 text-sm font-semibold text-white transition-all hover:scale-[1.02] active:scale-[0.97]"
-                        style={{ backgroundColor: "#6A33B0" }}
+                        className="sl-cta font-display w-full inline-flex items-center justify-center rounded-2xl px-6 py-3 text-sm font-extrabold text-white transition-all active:scale-[0.97]"
+                        
                       >
                         {lang === "en" ? "Get This Bundle" : "獲取此套餐"}
                       </a>

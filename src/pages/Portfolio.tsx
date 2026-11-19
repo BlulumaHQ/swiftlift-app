@@ -56,11 +56,9 @@ const PortfolioContent = () => {
       {/* SECTION 1 — HERO */}
       <section className="pt-28 pb-10 sm:pt-36 sm:pb-14 px-4">
         <div className="max-w-4xl mx-auto text-center">
-          <span className="inline-block rounded-full bg-[hsl(var(--accent-purple))]/10 px-4 py-1.5 text-xs font-semibold uppercase tracking-widest text-[hsl(var(--accent-purple))] mb-4">
-            {T(ptx.badge, lang)}
-          </span>
-          <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black leading-[1.1] tracking-tight text-foreground mb-3">
-            {T(ptx.heroH1, lang)}
+          <p className="sl-eyebrow mb-4 text-sm">{T(ptx.badge, lang)}</p>
+          <h1 className="mb-4 font-display text-[2.2rem] font-black leading-[1.05] tracking-[-0.02em] text-foreground sm:text-5xl lg:text-[3.4rem]">
+            {lang === "en" ? <>Real Website <span className="sl-highlight italic text-[hsl(var(--accent-purple))]">Transformations</span></> : <>真實網站<span className="sl-highlight italic text-[hsl(var(--accent-purple))]">改版成果</span></>}
           </h1>
           <p className="text-base sm:text-lg text-muted-foreground max-w-2xl mx-auto mb-2">
             {T(ptx.heroSub, lang)}
@@ -84,7 +82,7 @@ const PortfolioContent = () => {
           </p>
           <Link
             to="/#contact"
-            className="inline-flex items-center gap-2 rounded-xl bg-[hsl(var(--accent-purple))] px-8 py-3.5 text-sm font-bold text-white shadow-lg hover:opacity-90 transition-all"
+            className="sl-cta font-display inline-flex items-center gap-2 rounded-2xl px-8 py-3.5 text-sm font-extrabold text-white transition-all"
           >
             {T(ptx.ctaBtn, lang)}
             <ArrowRight className="w-4 h-4" />

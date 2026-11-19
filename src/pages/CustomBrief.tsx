@@ -26,22 +26,22 @@ const FEATURES_EN = [
 ];
 
 const FEATURES_ZH = [
-  "电子商务 / 在线商店",
-  "预约 / 预订系统",
-  "博客 / 内容管理",
-  "会员 / 登录区域",
-  "多语言支持",
-  "自定义计算器或工具",
+  "電子商務 / 在線商店",
+  "預約 / 預訂系統",
+  "博客 / 內容管理",
+  "會員 / 登錄區域",
+  "多語言支持",
+  "自定義計算器或工具",
   "CRM 集成",
   "IDX / MLS 集成",
-  "社交媒体集成",
-  "邮件营销设置",
-  "SEO 优化",
-  "数据分析与报告",
+  "社交媒體集成",
+  "郵件營銷設置",
+  "SEO 優化",
+  "數據分析與報告",
 ];
 
 const TIMELINE_OPTIONS_EN = ["2–3 weeks", "1 month", "2 months", "Flexible / No rush"];
-const TIMELINE_OPTIONS_ZH = ["2-3周", "1个月", "2个月", "灵活 / 不急"];
+const TIMELINE_OPTIONS_ZH = ["2-3周", "1個月", "2個月", "靈活 / 不急"];
 
 const CustomBriefContent = () => {
   const { lang } = useLanguage();
@@ -112,12 +112,12 @@ const CustomBriefContent = () => {
 
       setSubmitted(true);
       toast({
-        title: lang === "en" ? "Quote Request Submitted" : "报价请求已提交",
-        description: lang === "en" ? "We'll review your project and get back to you within 48 hours." : "我们将审核您的项目并在48小时内回复您。",
+        title: lang === "en" ? "Quote Request Submitted" : "報價請求已提交",
+        description: lang === "en" ? "We'll review your project and get back to you within 48 hours." : "我們將審核您的項目並在48小時內回覆您。",
       });
     } catch (err) {
       console.error("Submission error:", err);
-      setSubmitError(lang === "en" ? "Something went wrong. Please try again." : "出了点问题。请重试。");
+      setSubmitError(lang === "en" ? "Something went wrong. Please try again." : "出了點問題。請重試。");
     } finally {
       setSubmitting(false);
     }
@@ -137,7 +137,7 @@ const CustomBriefContent = () => {
             transition={{ duration: 0.5 }}
             className="text-[clamp(2rem,4.5vw,3rem)] font-black text-white font-display leading-tight"
           >
-            {lang === "en" ? "Tell Us About Your Project" : "告诉我们您的项目需求"}
+            {lang === "en" ? "Tell Us About Your Project" : "告訴我們您的項目需求"}
           </motion.h1>
           <motion.p
             initial={{ opacity: 0, y: 20 }}
@@ -147,7 +147,7 @@ const CustomBriefContent = () => {
           >
             {lang === "en"
               ? "Get a tailored website plan. We'll review your details and send you a custom proposal within 48 hours."
-              : "获取定制网站方案。我们将审核您的需求并在48小时内发送定制方案。"}
+              : "獲取客製網站方案。我們將審核您的需求並在48小時內發送客製方案。"}
           </motion.p>
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -157,7 +157,7 @@ const CustomBriefContent = () => {
           >
             {lang === "en"
               ? `Business websites starting from ${formatPrice(PRICING.customBrief.businessWebsite.startingAt)} · E-commerce from ${formatPrice(PRICING.customBrief.ecommerceWebsite.startingAt)}`
-              : `企业网站起价${formatPrice(PRICING.customBrief.businessWebsite.startingAt)} · 电商网站起价${formatPrice(PRICING.customBrief.ecommerceWebsite.startingAt)}`}
+              : `企業網站起價${formatPrice(PRICING.customBrief.businessWebsite.startingAt)} · 電商網站起價${formatPrice(PRICING.customBrief.ecommerceWebsite.startingAt)}`}
           </motion.div>
         </div>
       </section>
@@ -171,19 +171,19 @@ const CustomBriefContent = () => {
                 <Check size={32} className="text-primary" />
               </div>
               <h2 className="text-2xl font-bold text-foreground font-display">
-                {lang === "en" ? "Quote Request Submitted!" : "报价请求已提交！"}
+                {lang === "en" ? "Quote Request Submitted!" : "報價請求已提交！"}
               </h2>
               <p className="mt-3 text-muted-foreground max-w-md mx-auto">
                 {lang === "en"
                   ? "Thank you! We'll review your project details and send you a tailored proposal within 48 hours."
-                  : "谢谢！我们将审核您的项目详情并在48小时内发送定制方案。"}
+                  : "謝謝！我們將審核您的項目詳情並在48小時內發送客製方案。"}
               </p>
               <a
                 href="/"
-                className="mt-8 inline-flex items-center justify-center rounded-full px-8 py-3.5 text-base font-semibold text-white transition-colors"
-                style={{ backgroundColor: "#6A33B0" }}
+                className="sl-cta font-display mt-8 inline-flex items-center justify-center rounded-2xl px-8 py-3.5 text-base font-extrabold text-white transition-colors"
+                
               >
-                {lang === "en" ? "Back to Home" : "返回首页"}
+                {lang === "en" ? "Back to Home" : "返回首頁"}
               </a>
             </div>
           ) : (
@@ -191,18 +191,18 @@ const CustomBriefContent = () => {
               {/* Pricing context */}
               <div className="rounded-2xl border border-border bg-[hsl(var(--surface-sunken))] p-5 md:p-6 mb-8">
                 <h3 className="text-base font-bold text-foreground font-display mb-3">
-                  {lang === "en" ? "Custom Website Pricing" : "定制网站价格"}
+                  {lang === "en" ? "Custom Website Pricing" : "客製網站價格"}
                 </h3>
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 text-sm">
                   <div>
-                    <p className="font-semibold text-foreground">{lang === "en" ? "Business Website" : "企业网站"}</p>
-                    <p className="text-muted-foreground mt-0.5">{lang === "en" ? `Starting from ${formatPrice(PRICING.customBrief.businessWebsite.startingAt)}` : `起价${formatPrice(PRICING.customBrief.businessWebsite.startingAt)}`}</p>
-                    <p className="text-xs text-muted-foreground">{lang === "en" ? `Most projects: ${formatRange(PRICING.customBrief.businessWebsite.typicalRangeMin, PRICING.customBrief.businessWebsite.typicalRangeMax)}` : `大多数项目：${formatRange(PRICING.customBrief.businessWebsite.typicalRangeMin, PRICING.customBrief.businessWebsite.typicalRangeMax)}`}</p>
+                    <p className="font-semibold text-foreground">{lang === "en" ? "Business Website" : "企業網站"}</p>
+                    <p className="text-muted-foreground mt-0.5">{lang === "en" ? `Starting from ${formatPrice(PRICING.customBrief.businessWebsite.startingAt)}` : `起價${formatPrice(PRICING.customBrief.businessWebsite.startingAt)}`}</p>
+                    <p className="text-xs text-muted-foreground">{lang === "en" ? `Most projects: ${formatRange(PRICING.customBrief.businessWebsite.typicalRangeMin, PRICING.customBrief.businessWebsite.typicalRangeMax)}` : `大多數項目：${formatRange(PRICING.customBrief.businessWebsite.typicalRangeMin, PRICING.customBrief.businessWebsite.typicalRangeMax)}`}</p>
                   </div>
                   <div>
-                    <p className="font-semibold text-foreground">{lang === "en" ? "E-commerce Website" : "电商网站"}</p>
-                    <p className="text-muted-foreground mt-0.5">{lang === "en" ? `Starting from ${formatPrice(PRICING.customBrief.ecommerceWebsite.startingAt)}` : `起价${formatPrice(PRICING.customBrief.ecommerceWebsite.startingAt)}`}</p>
-                    <p className="text-xs text-muted-foreground">{lang === "en" ? `Most projects: ${formatRange(PRICING.customBrief.ecommerceWebsite.typicalRangeMin, PRICING.customBrief.ecommerceWebsite.typicalRangeMax)}` : `大多数项目：${formatRange(PRICING.customBrief.ecommerceWebsite.typicalRangeMin, PRICING.customBrief.ecommerceWebsite.typicalRangeMax)}`}</p>
+                    <p className="font-semibold text-foreground">{lang === "en" ? "E-commerce Website" : "電商網站"}</p>
+                    <p className="text-muted-foreground mt-0.5">{lang === "en" ? `Starting from ${formatPrice(PRICING.customBrief.ecommerceWebsite.startingAt)}` : `起價${formatPrice(PRICING.customBrief.ecommerceWebsite.startingAt)}`}</p>
+                    <p className="text-xs text-muted-foreground">{lang === "en" ? `Most projects: ${formatRange(PRICING.customBrief.ecommerceWebsite.typicalRangeMin, PRICING.customBrief.ecommerceWebsite.typicalRangeMax)}` : `大多數項目：${formatRange(PRICING.customBrief.ecommerceWebsite.typicalRangeMin, PRICING.customBrief.ecommerceWebsite.typicalRangeMax)}`}</p>
                   </div>
                 </div>
               </div>
@@ -232,7 +232,7 @@ const CustomBriefContent = () => {
                 <div className="space-y-6">
                   <div>
                     <h3 className="text-lg font-bold text-foreground font-display">
-                      {lang === "en" ? "Project Information" : "项目信息"}
+                      {lang === "en" ? "Project Information" : "項目信息"}
                     </h3>
                     <span className="section-underline section-underline--light" />
                   </div>
@@ -242,29 +242,29 @@ const CustomBriefContent = () => {
                       <input name="fullName" required placeholder={lang === "en" ? "John Lee" : "李明"} className={inputClass} />
                     </div>
                     <div className="space-y-1.5">
-                      <label className="text-sm font-medium text-foreground">{lang === "en" ? "Business Name" : "公司名称"} <span className="text-destructive">*</span></label>
-                      <input name="businessName" required placeholder={lang === "en" ? "Lee Construction" : "李氏建设"} className={inputClass} />
+                      <label className="text-sm font-medium text-foreground">{lang === "en" ? "Business Name" : "公司名稱"} <span className="text-destructive">*</span></label>
+                      <input name="businessName" required placeholder={lang === "en" ? "Lee Construction" : "李氏建設"} className={inputClass} />
                     </div>
                     <div className="space-y-1.5">
-                      <label className="text-sm font-medium text-foreground">{lang === "en" ? "Email" : "电子邮箱"} <span className="text-destructive">*</span></label>
+                      <label className="text-sm font-medium text-foreground">{lang === "en" ? "Email" : "電子郵箱"} <span className="text-destructive">*</span></label>
                       <input name="email" type="email" required placeholder="john@domain.com" className={inputClass} />
                     </div>
                     <div className="space-y-1.5">
-                      <label className="text-sm font-medium text-foreground">{lang === "en" ? "Phone" : "电话"} <span className="text-xs text-muted-foreground">({lang === "en" ? "optional" : "选填"})</span></label>
+                      <label className="text-sm font-medium text-foreground">{lang === "en" ? "Phone" : "電話"} <span className="text-xs text-muted-foreground">({lang === "en" ? "optional" : "選填"})</span></label>
                       <input name="phone" placeholder="(604) 555-1234" className={inputClass} />
                     </div>
                     <div className="space-y-1.5">
-                      <label className="text-sm font-medium text-foreground">{lang === "en" ? "Industry" : "行业"} <span className="text-destructive">*</span></label>
-                      <input name="industry" required placeholder={lang === "en" ? "e.g. Real Estate, Law, Restaurant" : "例如：房地产、法律、餐饮"} className={inputClass} />
+                      <label className="text-sm font-medium text-foreground">{lang === "en" ? "Industry" : "行業"} <span className="text-destructive">*</span></label>
+                      <input name="industry" required placeholder={lang === "en" ? "e.g. Real Estate, Law, Restaurant" : "例如：房地產、法律、餐飲"} className={inputClass} />
                     </div>
                     <div className="space-y-1.5">
-                      <label className="text-sm font-medium text-foreground">{lang === "en" ? "Current Website" : "当前网站"} <span className="text-xs text-muted-foreground">({lang === "en" ? "optional" : "选填"})</span></label>
+                      <label className="text-sm font-medium text-foreground">{lang === "en" ? "Current Website" : "當前網站"} <span className="text-xs text-muted-foreground">({lang === "en" ? "optional" : "選填"})</span></label>
                       <input name="currentWebsite" placeholder="https://..." className={inputClass} />
                     </div>
                   </div>
                   <div className="space-y-1.5">
-                    <label className="text-sm font-medium text-foreground">{lang === "en" ? "Project Description" : "项目描述"} <span className="text-destructive">*</span></label>
-                    <textarea name="projectDescription" required rows={4} placeholder={lang === "en" ? "Describe your project goals, target audience, and any specific requirements..." : "描述您的项目目标、目标受众和任何特定需求..."} className={`${inputClass} resize-y`} />
+                    <label className="text-sm font-medium text-foreground">{lang === "en" ? "Project Description" : "項目描述"} <span className="text-destructive">*</span></label>
+                    <textarea name="projectDescription" required rows={4} placeholder={lang === "en" ? "Describe your project goals, target audience, and any specific requirements..." : "描述您的項目目標、目標受眾和任何特定需求..."} className={`${inputClass} resize-y`} />
                   </div>
                 </div>
 
@@ -277,7 +277,7 @@ const CustomBriefContent = () => {
                       {lang === "en" ? "Required Features" : "所需功能"}
                     </h3>
                     <span className="section-underline section-underline--light" />
-                    <p className="mt-2 text-sm text-muted-foreground">{lang === "en" ? "Select all that apply to your project." : "选择适用于您项目的所有功能。"}</p>
+                    <p className="mt-2 text-sm text-muted-foreground">{lang === "en" ? "Select all that apply to your project." : "選擇適用於您項目的所有功能。"}</p>
                   </div>
                   <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
                     {features.map((feature) => (
@@ -311,7 +311,7 @@ const CustomBriefContent = () => {
                 <div className="space-y-6">
                   <div>
                     <h3 className="text-lg font-bold text-foreground font-display">
-                      {lang === "en" ? "Preferred Timeline" : "期望时间"}
+                      {lang === "en" ? "Preferred Timeline" : "期望時間"}
                     </h3>
                     <span className="section-underline section-underline--light" />
                   </div>
@@ -340,9 +340,9 @@ const CustomBriefContent = () => {
 
                 {/* Cloud Folder Link */}
                 <div className="space-y-2">
-                  <label className="text-sm font-medium text-foreground">{lang === "en" ? "Cloud Folder Link" : "云文件夹链接"} <span className="text-xs text-muted-foreground">({lang === "en" ? "optional" : "选填"})</span></label>
+                  <label className="text-sm font-medium text-foreground">{lang === "en" ? "Cloud Folder Link" : "雲文件夾鏈接"} <span className="text-xs text-muted-foreground">({lang === "en" ? "optional" : "選填"})</span></label>
                   <input name="cloudLink" placeholder="https://drive.google.com/... or https://dropbox.com/..." className={inputClass} />
-                  <p className="text-xs text-muted-foreground">{lang === "en" ? 'Share logos, brand assets, or reference materials. Ensure link access is set to "Anyone with the link can view."' : '分享标志、品牌素材或参考资料。请确保链接权限设置为"所有拥有链接的人都可以查看"。'}</p>
+                  <p className="text-xs text-muted-foreground">{lang === "en" ? 'Share logos, brand assets, or reference materials. Ensure link access is set to "Anyone with the link can view."' : '分享標誌、品牌素材或參考資料。請確保鏈接權限設置為"所有擁有鏈接的人都可以查看"。'}</p>
                 </div>
 
                 {/* Submit */}
@@ -353,13 +353,13 @@ const CustomBriefContent = () => {
                   <button
                     type="submit"
                     disabled={submitting}
-                    className="w-full inline-flex items-center justify-center gap-2 rounded-full px-8 py-3.5 text-base font-semibold text-white transition-colors disabled:opacity-60"
-                    style={{ backgroundColor: "#6A33B0" }}
+                    className="sl-cta font-display w-full inline-flex items-center justify-center gap-2 rounded-2xl px-8 py-3.5 text-base font-extrabold text-white transition-colors disabled:opacity-60"
+                    
                   >
                     <Send size={16} />
                     {submitting
                       ? (lang === "en" ? "Submitting..." : "提交中...")
-                      : (lang === "en" ? "Submit Quote Request" : "提交报价请求")}
+                      : (lang === "en" ? "Submit Quote Request" : "提交報價請求")}
                   </button>
                 </div>
               </form>

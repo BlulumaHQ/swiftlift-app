@@ -42,7 +42,7 @@ const SupportContent = () => {
       setSubmitted(true);
     } catch (err) {
       console.error("Submission error:", err);
-      setSubmitError(lang === "en" ? "Something went wrong. Please try again." : "出了点问题。请重试。");
+      setSubmitError(lang === "en" ? "Something went wrong. Please try again." : "出了點問題。請重試。");
     } finally {
       setSubmitting(false);
     }
@@ -83,9 +83,9 @@ const SupportContent = () => {
           <p className="text-sm text-muted-foreground mb-8 leading-relaxed">
             {lang === "en"
               ? "For general questions or help, use this form. If you want free previews, please use the "
-              : "如需一般问题或帮助，请使用此表单。如需免费预览，请使用首页的"}
+              : "如需一般問題或幫助，請使用此表單。如需免費預覽，請使用首頁的"}
             <a href="/#contact" className="text-primary hover:underline">
-              {lang === "en" ? "preview request form on the Home page" : "预览申请表单"}
+              {lang === "en" ? "preview request form on the Home page" : "預覽申請表單"}
             </a>
             {lang === "en" ? "." : "。"}
           </p>
@@ -96,17 +96,17 @@ const SupportContent = () => {
                 <Check size={32} className="text-primary" />
               </div>
               <h2 className="text-2xl font-bold text-foreground font-display">
-                {lang === "en" ? "Thanks — we received your message." : "谢谢 — 我们已收到您的消息。"}
+                {lang === "en" ? "Thanks — we received your message." : "謝謝 — 我們已收到您的消息。"}
               </h2>
               <p className="mt-3 text-muted-foreground">
-                {lang === "en" ? "We'll get back to you as soon as possible." : "我们会尽快回复您。"}
+                {lang === "en" ? "We'll get back to you as soon as possible." : "我們會盡快回復您。"}
               </p>
               <a
                 href="/"
-                className="mt-8 inline-flex items-center justify-center rounded-full px-8 py-3.5 text-base font-semibold text-white transition-colors"
-                style={{ backgroundColor: "#6A33B0" }}
+                className="sl-cta font-display mt-8 inline-flex items-center justify-center rounded-2xl px-8 py-3.5 text-base font-extrabold text-white transition-colors"
+                
               >
-                {lang === "en" ? "Back to Home" : "返回首页"}
+                {lang === "en" ? "Back to Home" : "返回首頁"}
               </a>
             </div>
           ) : (
@@ -124,23 +124,23 @@ const SupportContent = () => {
 
               <div className="space-y-1.5">
                 <label className="text-sm font-medium text-foreground">
-                  {lang === "en" ? "Email" : "电子邮箱"} <span className="text-destructive">*</span>
+                  {lang === "en" ? "Email" : "電子郵箱"} <span className="text-destructive">*</span>
                 </label>
                 <input name="email" type="email" required placeholder="you@email.com" className={inputClass} />
               </div>
 
               <div className="space-y-1.5">
                 <label className="text-sm font-medium text-foreground">
-                  {lang === "en" ? "Subject" : "主题"} <span className="text-xs text-muted-foreground">({lang === "en" ? "optional" : "选填"})</span>
+                  {lang === "en" ? "Subject" : "主題"} <span className="text-xs text-muted-foreground">({lang === "en" ? "optional" : "選填"})</span>
                 </label>
-                <input name="subject" placeholder={lang === "en" ? "What is this about?" : "关于什么问题？"} className={inputClass} />
+                <input name="subject" placeholder={lang === "en" ? "What is this about?" : "關於什麼問題？"} className={inputClass} />
               </div>
 
               <div className="space-y-1.5">
                 <label className="text-sm font-medium text-foreground">
                   {lang === "en" ? "Message" : "消息"} <span className="text-destructive">*</span>
                 </label>
-                <textarea name="message" required rows={5} placeholder={lang === "en" ? "How can we help?" : "我们能如何帮助您？"} className={`${inputClass} resize-y`} />
+                <textarea name="message" required rows={5} placeholder={lang === "en" ? "How can we help?" : "我們能如何幫助您？"} className={`${inputClass} resize-y`} />
               </div>
 
               {submitError && (
@@ -150,13 +150,13 @@ const SupportContent = () => {
               <button
                 type="submit"
                 disabled={submitting}
-                className="w-full inline-flex items-center justify-center gap-2 rounded-full px-8 py-3.5 text-base font-semibold text-white transition-colors disabled:opacity-50"
-                style={{ backgroundColor: "#6A33B0" }}
+                className="sl-cta font-display w-full inline-flex items-center justify-center gap-2 rounded-2xl px-8 py-3.5 text-base font-extrabold text-white transition-colors disabled:opacity-50"
+                
               >
                 <Send size={16} />
                 {submitting
-                  ? (lang === "en" ? "Sending..." : "发送中...")
-                  : (lang === "en" ? "Send Message" : "发送消息")}
+                  ? (lang === "en" ? "Sending..." : "發送中...")
+                  : (lang === "en" ? "Send Message" : "發送消息")}
               </button>
             </form>
           )}

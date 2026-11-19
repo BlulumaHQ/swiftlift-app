@@ -323,8 +323,8 @@ const DeploymentContent = () => {
       <motion.button
         onClick={handleCheckout}
         disabled={!planSelected || isSubmitting}
-        className="mt-5 w-full inline-flex items-center justify-center gap-2 rounded-full px-8 py-3.5 text-base font-bold text-white transition-colors focus:outline-none focus:ring-2 focus:ring-[hsl(267,55%,45%)]/50 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed"
-        style={{ backgroundColor: "#6A33B0" }}
+        className="sl-cta font-display mt-5 w-full inline-flex items-center justify-center gap-2 rounded-2xl px-8 py-3.5 text-base font-extrabold text-white transition-colors focus:outline-none focus:ring-2 focus:ring-[hsl(267,55%,45%)]/50 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed"
+        
         whileHover={planSelected ? { scale: 1.02 } : {}}
         whileTap={planSelected ? { scale: 0.98 } : {}}
       >
@@ -698,8 +698,8 @@ const DeploymentContent = () => {
           <motion.button
             onClick={handleCheckout}
             disabled={!planSelected || isSubmitting}
-            className="inline-flex items-center justify-center gap-1.5 rounded-full px-6 py-2.5 text-sm font-bold text-white transition-colors focus:outline-none disabled:opacity-50 disabled:cursor-not-allowed flex-shrink-0"
-            style={{ backgroundColor: "#6A33B0" }}
+            className="sl-cta font-display inline-flex items-center justify-center gap-1.5 rounded-2xl px-6 py-2.5 text-sm font-extrabold text-white transition-colors focus:outline-none disabled:opacity-50 disabled:cursor-not-allowed flex-shrink-0"
+            
             whileHover={planSelected ? { scale: 1.02 } : {}}
             whileTap={planSelected ? { scale: 0.98 } : {}}
           >
