@@ -38,7 +38,7 @@ export const INDUSTRY_PAGES: IndustryPage[] = [
     label: "Dentists",
     title: "Dental Website Redesign — See 2 Versions Free | SwiftLift",
     description:
-      "Dental practice website redesign for US dentists. Get two live redesign previews of your site in 48 hours, then pay only for the one you choose. From $299.",
+      "Dental practice website redesign for US dentists. Get two live redesign previews of your site in 48 hours, pay only when you're happy. From $299.",
     eyebrow: "Website redesign for dental practices",
     h1: "A dental website that turns visitors into booked patients",
     intro:
@@ -82,7 +82,7 @@ export const INDUSTRY_PAGES: IndustryPage[] = [
       },
       {
         q: "How much does a dental website redesign cost?",
-        a: "Version A starts at $299 USD and Version B, our conversion-focused layout, is $499 USD. You see both versions before you pay anything.",
+        a: "Classic Facelift is $299 USD and Growth Facelift, our conversion-focused layout, is $499 USD. You see both versions and only pay after your revisions, once you're happy.",
       },
       {
         q: "Will the new website store patient health information?",
@@ -95,7 +95,7 @@ export const INDUSTRY_PAGES: IndustryPage[] = [
     label: "Contractors",
     title: "Contractor Website Redesign — 2 Free Previews | SwiftLift",
     description:
-      "Website redesign for contractors, remodelers and builders. Two live previews of your new site in 48 hours — pay only for the one you choose. From $299.",
+      "Website redesign for contractors, remodelers and builders. Two live previews of your new site in 48 hours — pay only when you're happy. From $299.",
     eyebrow: "Website redesign for contractors & remodelers",
     h1: "A contractor website that wins more estimate requests",
     intro:
@@ -135,7 +135,7 @@ export const INDUSTRY_PAGES: IndustryPage[] = [
       },
       {
         q: "Can I add new project photos after launch?",
-        a: "Yes. Send us new photos and we will add them in a revision round ($45 USD), or choose Managed Hosting ($15 USD/month), which includes one free revision every month.",
+        a: "Yes. Send us new photos and we will add them for $45 USD per edit, or join the Care Plan ($135 USD/year), which includes up to 2 small edits every month.",
       },
       {
         q: "How long does a contractor website redesign take?",
@@ -143,7 +143,7 @@ export const INDUSTRY_PAGES: IndustryPage[] = [
       },
       {
         q: "Do I need to have a website already?",
-        a: "SwiftLift specializes in redesigning existing websites. If you are starting from scratch, use our Custom Quote page and we will put together a proposal.",
+        a: "SwiftLift specializes in redesigning existing websites. If you are starting from scratch, visit our Lead Designer at Sonykun Design (sonykundesign.com) for a custom quote.",
       },
     ],
   },
@@ -152,7 +152,7 @@ export const INDUSTRY_PAGES: IndustryPage[] = [
     label: "Restaurants",
     title: "Restaurant Website Redesign — See 2 Versions Free | SwiftLift",
     description:
-      "Restaurant and food business website redesign. Two live previews in 48 hours with your menu, hours and location up front — pay only for the one you choose. From $299.",
+      "Restaurant and food business website redesign. Two live previews in 48 hours with your menu, hours and location up front — pay only when you're happy. From $299.",
     eyebrow: "Website redesign for restaurants & food businesses",
     h1: "A restaurant website that gets people through the door",
     intro:
@@ -196,11 +196,11 @@ export const INDUSTRY_PAGES: IndustryPage[] = [
       },
       {
         q: "How do I update menu prices later?",
-        a: "Send us the changes. Revisions are $45 USD per round, or $15 USD/month with Managed Hosting, which includes one free revision every month.",
+        a: "Send us the changes. Edits are $45 USD each, or join the Care Plan ($135 USD/year), which includes up to 2 small edits every month.",
       },
       {
         q: "Can you build an online store for my food products?",
-        a: "SwiftLift sites are fast static websites and don't include shopping carts. For e-commerce, use our Custom Quote page.",
+        a: "SwiftLift sites are fast static websites and don't include shopping carts. For e-commerce, visit our Lead Designer at Sonykun Design (sonykundesign.com).",
       },
     ],
   },
@@ -209,7 +209,7 @@ export const INDUSTRY_PAGES: IndustryPage[] = [
     label: "Salons & Spas",
     title: "Salon & Spa Website Redesign — 2 Free Previews | SwiftLift",
     description:
-      "Website redesign for hair salons, beauty salons and spas. Two live previews of your new site in 48 hours — pay only for the one you choose. From $299.",
+      "Website redesign for hair salons, beauty salons and spas. Two live previews of your new site in 48 hours — pay only when you're happy. From $299.",
     eyebrow: "Website redesign for salons & spas",
     h1: "A salon website as polished as your work",
     intro:
@@ -253,7 +253,7 @@ export const INDUSTRY_PAGES: IndustryPage[] = [
       },
       {
         q: "How much does a salon website redesign cost?",
-        a: "Version A starts at $299 USD and Version B is $499 USD. You see both versions live before paying.",
+        a: "Classic Facelift is $299 USD and Growth Facelift, our conversion-focused layout, is $499 USD. You see both versions live and only pay once you're happy.",
       },
       {
         q: "What if I don't like either preview?",
@@ -266,7 +266,7 @@ export const INDUSTRY_PAGES: IndustryPage[] = [
     label: "Real Estate",
     title: "Realtor Website Redesign — 2 Free Previews | SwiftLift",
     description:
-      "Website redesign for realtors, real estate teams and property businesses. Two live previews in 48 hours — pay only for the one you choose. From $299.",
+      "Website redesign for realtors, real estate teams and property businesses. Two live previews in 48 hours — pay only when you're happy. From $299.",
     eyebrow: "Website redesign for realtors & real estate",
     h1: "A real estate website that makes you look like the obvious choice",
     intro:
@@ -302,7 +302,7 @@ export const INDUSTRY_PAGES: IndustryPage[] = [
     faqs: [
       {
         q: "Can the website show my MLS listings automatically?",
-        a: "SwiftLift sites showcase featured properties you select. Automatic MLS/IDX feeds require a custom integration — ask about it through our Custom Quote page.",
+        a: "SwiftLift sites showcase featured properties you select. Automatic MLS/IDX feeds require a custom integration — ask our Lead Designer at Sonykun Design (sonykundesign.com).",
       },
       {
         q: "Do you work with real estate teams and brokerages?",
@@ -310,7 +310,7 @@ export const INDUSTRY_PAGES: IndustryPage[] = [
       },
       {
         q: "How much does a realtor website redesign cost?",
-        a: "Version A starts at $299 USD and Version B is $499 USD. You see both versions before you pay.",
+        a: "Classic Facelift is $299 USD and Growth Facelift, our conversion-focused layout, is $499 USD. You see both versions and only pay once you're happy.",
       },
       {
         q: "Can I keep my current domain name?",
@@ -323,7 +323,7 @@ export const INDUSTRY_PAGES: IndustryPage[] = [
     label: "Auto Repair",
     title: "Auto Repair Shop Website Redesign — 2 Free Previews | SwiftLift",
     description:
-      "Website redesign for auto repair shops and mechanics. Two live previews of your new site in 48 hours — pay only for the one you choose. From $299.",
+      "Website redesign for auto repair shops and mechanics. Two live previews of your new site in 48 hours — pay only when you're happy. From $299.",
     eyebrow: "Website redesign for auto repair shops",
     h1: "An auto repair website that earns trust before the first call",
     intro:
@@ -367,11 +367,11 @@ export const INDUSTRY_PAGES: IndustryPage[] = [
       },
       {
         q: "How much does an auto repair website redesign cost?",
-        a: "Version A starts at $299 USD and Version B is $499 USD. You only pay for the version you choose.",
+        a: "Classic Facelift is $299 USD and Growth Facelift, our conversion-focused layout, is $499 USD. You only pay for the version you choose, once you're happy.",
       },
       {
         q: "Is hosting included?",
-        a: "Yes. Hosting is free with no monthly fees. Optional Managed Hosting is $15 USD/month and includes a monthly revision and priority support.",
+        a: "Yes. Hosting is free forever with no monthly fees. The optional Care Plan is $135 USD/year and includes up to 2 small edits every month.",
       },
     ],
   },

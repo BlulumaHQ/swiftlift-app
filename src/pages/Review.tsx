@@ -32,8 +32,8 @@ type ReviewInfo = {
 type Upload = { name: string; path?: string; state: "uploading" | "done" | "error"; preview?: string };
 
 const VERSION = {
-  A: { title: "Version A · Launch Ready", blurb: "Clean, modern design, mobile-friendly, SEO-ready, contact form, free hosting." },
-  B: { title: "Version B · Sales Focused", blurb: "Everything in A, plus a conversion-focused layout, strategic call-to-action placement and trust-building sections." },
+  A: { title: "A · Classic Facelift", blurb: "Clean, modern design, mobile-friendly, SEO-ready, contact form, free hosting." },
+  B: { title: "B · Growth Facelift", blurb: "Everything in Classic, plus a conversion-focused layout, strategic call-to-action placement and trust-building sections." },
 } as const;
 
 const OVERALL: { key: "colors" | "fonts" | "photos" | "logo" | "other"; label: string; placeholder: string }[] = [
@@ -170,7 +170,7 @@ const ReviewContent = () => {
   };
 
   const askConfirm = () => {
-    if (!pick) return setError("Please choose Version A or Version B first.");
+    if (!pick) return setError("Please choose A (Classic) or B (Growth) first.");
     if (!hasChanges) return setError("Please tell us at least one thing you'd like changed.");
     setError("");
     setConfirming(true);
@@ -198,7 +198,7 @@ const ReviewContent = () => {
   };
 
   const approve = async () => {
-    if (!pick) return setError("Please choose Version A or Version B first.");
+    if (!pick) return setError("Please choose A (Classic) or B (Growth) first.");
     setError("");
     setBusy(true);
     try {

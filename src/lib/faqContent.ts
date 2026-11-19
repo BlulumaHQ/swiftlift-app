@@ -181,8 +181,8 @@ export const FAQ_CATEGORIES: FaqCategory[] = [
       {
         q: { en: "Will my business email be affected?", zh: "我的企業郵箱會受影響嗎？" },
         a: {
-          en: "Not if we plan it right — and we do. We keep your email settings in place when we connect your domain. One thing to know: our websites don't include email hosting. If your current host also runs your email (like info@yourbusiness.com), don't cancel it until your email has moved to a provider like Google Workspace. We'll flag this during launch.",
-          zh: "只要事先規劃好就不會——我們會幫您規劃。連接網域時我們會保留您的郵箱設定。需要注意：我們的網站不含郵箱託管。如果目前的主機商同時提供您的郵箱（例如 info@yourbusiness.com），在郵箱搬到 Google Workspace 等服務之前，請不要取消。上線時我們會提醒您。",
+          en: "Every business sets up email differently, so before we connect your domain, we check exactly how your email works today. Then we recommend the best option for you, so your email keeps running without interruption.",
+          zh: "每家企業的郵箱設定都不一樣，所以在連接網域之前，我們會先確認您目前的郵箱是怎麼運作的，再為您推薦最好的方案，確保郵箱不中斷。",
         },
       },
       {

@@ -49,9 +49,9 @@ const HOSTS: Option[] = [
 ];
 
 const PLANS: Option[] = [
-  { value: "free", label: "Free hosting", hint: "$0 — you send us changes when you need them ($45 per round)" },
-  { value: "monthly", label: "Managed Hosting — $15/month", hint: "We host it and handle small updates for you" },
-  { value: "yearly", label: "Managed Hosting — $135/year", hint: "Same as monthly, 3 months free" },
+  { value: "free", label: "Free hosting", hint: "$0 forever — send us changes when you need them ($45 per edit)" },
+  { value: "monthly", label: "Care Plan — $15/month", hint: "Up to 2 small edits every month, handled for you" },
+  { value: "yearly", label: "Care Plan — $135/year", hint: "Same as monthly, 3 months free" },
   { value: "self", label: "I'll host it myself", hint: "We send the full site as a .zip — needs Cloudflare Pages, Netlify or Vercel (not cPanel / shared hosting)" },
 ];
 
@@ -292,7 +292,7 @@ const GoLiveContent = () => {
                   className="mt-8 inline-flex items-center justify-center rounded-full px-8 py-3.5 text-base font-semibold text-white"
                   style={{ backgroundColor: "#7F37AE" }}
                 >
-                  Set up Managed Hosting
+                  Set up Care Plan
                 </a>
               )}
             </div>

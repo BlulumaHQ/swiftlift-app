@@ -100,7 +100,7 @@ const HOSTING_OPTIONS = [
   },
   {
     value: "monthly" as const,
-    label: "Managed Hosting",
+    label: "Care Plan",
     price: formatPrice(PRICING.hosting.managedMonthly.price),
     period: "/month",
     badge: null,
@@ -108,14 +108,14 @@ const HOSTING_OPTIONS = [
     details: [
       "SSL certificate included",
       "Security monitoring",
-      "3 minor content edits per year included",
+      "Up to 2 small edits every month included",
       "48-hour response time",
       "Ongoing deployment support",
     ],
   },
   {
     value: "yearly" as const,
-    label: "Managed Hosting",
+    label: "Care Plan",
     price: formatPrice(PRICING.hosting.managedYearly.price),
     period: "/year",
     badge: `Best Value — Save $${PRICING.hosting.managedMonthly.price * 12 - PRICING.hosting.managedYearly.price}/yr`,
@@ -123,7 +123,7 @@ const HOSTING_OPTIONS = [
     details: [
       "SSL certificate included",
       "Security monitoring",
-      "3 minor content edits per year included",
+      "Up to 2 small edits every month included",
       "48-hour response time",
       "Ongoing deployment support",
     ],
@@ -137,12 +137,12 @@ const COMPARE_ROWS = [
     value: "free",
   },
   {
-    label: `Managed Monthly (${formatPrice(PRICING.hosting.managedMonthly.price)}/mo)`,
+    label: `Care Plan Monthly (${formatPrice(PRICING.hosting.managedMonthly.price)}/mo)`,
     note: "Best for flexibility • cancel anytime",
     value: "monthly",
   },
   {
-    label: `Managed Yearly (${formatPrice(PRICING.hosting.managedYearly.price)}/yr)`,
+    label: `Care Plan Yearly (${formatPrice(PRICING.hosting.managedYearly.price)}/yr)`,
     note: `Best value • save $${PRICING.hosting.managedMonthly.price * 12 - PRICING.hosting.managedYearly.price} vs monthly`,
     value: "yearly",
     badge: "Best Value",
@@ -276,9 +276,9 @@ const DeploymentContent = () => {
   const hostingLabel = hostingPlan === "free"
     ? "Included (Free)"
     : hostingPlan === "monthly"
-    ? `Managed – ${formatPrice(PRICING.hosting.managedMonthly.price)}/mo`
+    ? `Care Plan – ${formatPrice(PRICING.hosting.managedMonthly.price)}/mo`
     : hostingPlan === "yearly"
-    ? `Managed – ${formatPrice(PRICING.hosting.managedYearly.price)}/yr`
+    ? `Care Plan – ${formatPrice(PRICING.hosting.managedYearly.price)}/yr`
     : "Not selected";
 
   const OrderSummary = ({ compact = false }: { compact?: boolean }) => (

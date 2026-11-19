@@ -163,7 +163,7 @@ const CASES: Record<CaseKey, CaseData> = {
 const STEPS = [
   { n: "01", title: "Send your current website", body: "Share your web address and a few details about your business. Free, no commitment." },
   { n: "02", title: "Get 2 live previews in 48 hours", body: "Two complete, clickable redesigns — not mockups. Browse both on your phone and desktop." },
-  { n: "03", title: "Pick one and launch", body: "Pay only for the version you choose. We connect your domain and go live." },
+  { n: "03", title: "Pick one and launch", body: "Revise it twice, then pay only once you're happy. We connect your domain and go live." },
 ];
 
 const accent = "hsl(var(--accent-purple))";
@@ -262,15 +262,15 @@ const IndustryContent = () => {
         <div className="max-w-6xl mx-auto">
             <h2 className="text-3xl sm:text-4xl font-black text-foreground leading-[1.1]">Two versions. Real projects.</h2>
             <p className="mt-4 text-lg text-muted-foreground max-w-2xl">
-              Every client receives a Version A and a Version B. Open any preview to click through the live site.
+              Every client receives a Classic Facelift (A) and a Growth Facelift (B). Open any preview to click through the live site.
             </p>
           <div className="mt-12 space-y-14">
             {page.cases.map((key) => {
               const c = CASES[key];
               const shots = [
                 ...(c.before ? [{ label: "Before", src: c.before, href: undefined as string | undefined }] : []),
-                { label: "Version A", src: c.imageA, href: c.previewA },
-                { label: "Version B", src: c.imageB, href: c.previewB },
+                { label: "A · Classic Facelift", src: c.imageA, href: c.previewA },
+                { label: "B · Growth Facelift", src: c.imageB, href: c.previewB },
               ];
               return (
                 <article key={key}>
@@ -330,12 +330,12 @@ const IndustryContent = () => {
           </div>
           <div className="grid md:grid-cols-2 gap-5 mt-8">
             <div className="rounded-2xl border border-border bg-card p-6">
-              <p className="text-sm font-bold uppercase tracking-[0.2em] text-muted-foreground">Version A</p>
+              <p className="text-sm font-bold uppercase tracking-[0.2em] text-muted-foreground">A · Classic Facelift</p>
               <p className="mt-2 text-4xl font-black text-foreground">$299 <span className="text-base font-bold text-muted-foreground">USD</span></p>
               <p className="mt-3 text-base text-muted-foreground">A clean, professional website — up to 5–7 pages, mobile responsive, contact form, free hosting, 2 rounds of revisions.</p>
             </div>
             <div className="rounded-2xl border-2 bg-card p-6" style={{ borderColor: accent }}>
-              <p className="text-sm font-bold uppercase tracking-[0.2em]" style={{ color: accent }}>Version B</p>
+              <p className="text-sm font-bold uppercase tracking-[0.2em]" style={{ color: accent }}>B · Growth Facelift</p>
               <p className="mt-2 text-4xl font-black text-foreground">$499 <span className="text-base font-bold text-muted-foreground">USD</span></p>
               <p className="mt-3 text-base text-muted-foreground">Everything in A, plus a conversion-focused layout, trust-building sections, strategic calls to action and a priority build slot.</p>
             </div>

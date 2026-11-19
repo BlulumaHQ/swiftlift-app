@@ -201,14 +201,14 @@ const HostingGuideContent = () => {
                   {lang === "en" ? "Want us to manage everything for you?" : "希望我们为您管理一切？"}
                 </p>
                 <p className="mt-3 text-sm font-bold text-foreground uppercase tracking-wider">
-                  {lang === "en" ? "Managed Hosting Plan" : "托管主机计划"}
+                  {lang === "en" ? "Care Plan" : "Care Plan"}
                 </p>
                 <p className="mt-3 text-3xl font-black text-foreground font-display">$15<span className="text-lg font-medium text-muted-foreground">/mo</span> <span className="text-sm text-muted-foreground font-normal">{lang === "en" ? "or" : "或"} <span className="font-semibold text-foreground">$135/year</span></span></p>
 
                 <ul className="mt-6 space-y-3 text-left text-sm text-muted-foreground leading-relaxed">
                   <li className="flex items-start gap-2">
                     <Check size={16} className="flex-shrink-0 mt-0.5" style={{ color: "hsl(275 51% 46%)" }} />
-                    <span>{lang === "en" ? "1 free content update included every month — we make the changes for you" : "每月包含1次免费内容更新 — 我们为您进行更改"}</span>
+                    <span>{lang === "en" ? "Up to 2 small edits every month — photos, text, hero style or re-layout of existing pages. We make the changes for you." : "每月最多 2 次小修改——照片、文字、Hero 样式或重新排版现有页面，由我们为您修改。"}</span>
                   </li>
                   <li className="flex items-start gap-2">
                     <Check size={16} className="flex-shrink-0 mt-0.5" style={{ color: "hsl(275 51% 46%)" }} />

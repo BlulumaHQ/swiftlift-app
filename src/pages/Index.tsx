@@ -640,7 +640,7 @@ const IndexContent = ({ variant = "home" }: { variant?: "home" | "start" }) => {
           "Up to 7 pages",
           "Basic SEO-ready structure",
           "Contact form included",
-          "Fast 3-day turnaround",
+          "Live within 7 days of approval",
           "Free hosting (no monthly fees)",
           "2 rounds of revisions included",
         ]
@@ -650,7 +650,7 @@ const IndexContent = ({ variant = "home" }: { variant?: "home" | "start" }) => {
           "最多 7 個頁面",
           "基本 SEO 就緒結構",
           "包含聯絡表單",
-          "3 天快速交付",
+          "確認後 7 天內上線",
           "免費託管（無月費）",
           "包含 2 輪修改",
         ],

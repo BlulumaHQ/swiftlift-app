@@ -145,11 +145,11 @@ export const translations = {
         },
       },
       {
-        title: { en: "Managed Hosting & Maintenance", zh: "託管主機與維護" },
+        title: { en: "Care Plan", zh: "Care Plan" },
         price: "$135/yr",
         altPrice: "or $15/mo",
         paragraph: { en: "We handle everything. You focus on your business.", zh: "我們處理一切。您專注於業務。" },
-        button: { en: "Choose Managed Hosting", zh: "選擇託管主機" },
+        button: { en: "Choose Care Plan", zh: "選擇 Care Plan" },
         features: {
           en: ["Managed hosting environment", "SSL & deployment handled", "Domain setup assistance", "3 minor content edits per year", "Basic monitoring"],
           zh: ["託管式主機環境", "SSL和部署處理", "網域設置協助", "每年3次小更新", "基礎監控"],

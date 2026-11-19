@@ -73,8 +73,8 @@ export default function prerenderPlugin(): Plugin {
                 provider: { "@id": `${SITE}/#organization` },
                 areaServed: { "@type": "Country", name: "United States" },
                 offers: [
-                  { "@type": "Offer", name: "Version A", price: "299", priceCurrency: "USD" },
-                  { "@type": "Offer", name: "Version B", price: "499", priceCurrency: "USD" },
+                  { "@type": "Offer", name: "Classic Facelift", price: "299", priceCurrency: "USD" },
+                  { "@type": "Offer", name: "Growth Facelift", price: "499", priceCurrency: "USD" },
                 ],
               },
               {

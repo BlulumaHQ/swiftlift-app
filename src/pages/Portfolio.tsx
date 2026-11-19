@@ -27,8 +27,8 @@ const ptx = {
   finalVersion: { en: "Final Selected Version", zh: "最終選定版本" },
   openA: { en: "Open Live Preview A", zh: "開啟即時 Preview A" },
   openB: { en: "Open Live Preview B", zh: "開啟即時 Preview B" },
-  versionA: { en: "Version A", zh: "Version A" },
-  versionB: { en: "Version B", zh: "Version B" },
+  versionA: { en: "A · Classic Facelift", zh: "A · Classic Facelift" },
+  versionB: { en: "B · Growth Facelift", zh: "B · Growth Facelift" },
 };
 
 const PortfolioContent = () => {

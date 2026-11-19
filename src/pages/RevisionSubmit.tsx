@@ -28,13 +28,13 @@ function normalizePlan(raw: string): PlanTier {
 function getRevisionRules(plan: PlanTier) {
   switch (plan) {
     case "L":
-      return { included: "Includes 1 free revision.", showExtra: true };
+      return { included: "Includes 2 revision rounds.", showExtra: true };
     case "LP":
-      return { included: "Includes 2 free revisions.", showExtra: true };
+      return { included: "Includes 2 revision rounds.", showExtra: true };
     case "G":
-      return { included: "Includes 1 free revision.", showExtra: true };
+      return { included: "Includes 2 revision rounds.", showExtra: true };
     case "GP":
-      return { included: "Includes 2 free revisions.", showExtra: true };
+      return { included: "Includes 2 revision rounds.", showExtra: true };
     case "C":
       return {
         included:
@@ -186,11 +186,7 @@ const RevisionSubmitContent = () => {
               <ul className="space-y-2 text-sm text-muted-foreground mb-3">
                 <li className="flex items-start gap-2">
                   <span className="mt-0.5 w-1.5 h-1.5 rounded-full bg-primary flex-shrink-0" />
-                  Launch Ready plan includes 1 free revision.
-                </li>
-                <li className="flex items-start gap-2">
-                  <span className="mt-0.5 w-1.5 h-1.5 rounded-full bg-primary flex-shrink-0" />
-                  Growth Optimized plan includes 2 free revisions.
+                  Classic and Growth Facelift both include 2 revision rounds.
                 </li>
                 <li className="flex items-start gap-2">
                   <span className="mt-0.5 w-1.5 h-1.5 rounded-full bg-primary flex-shrink-0" />
