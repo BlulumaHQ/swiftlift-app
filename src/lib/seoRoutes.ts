@@ -9,7 +9,7 @@ export const SEO_ROUTES: Record<string, { title: string; description: string }> 
   "/": {
     title: "Website Redesign Service for Small Businesses | SwiftLift",
     description:
-      "See your new website before you pay. SwiftLift delivers 2 live website redesigns in 48 hours for US small businesses. Starting at $299.",
+      "Your old website is costing you customers. Get 2 live website facelifts in 48 hours and pay only when you're happy. From $299 with free hosting.",
   },
   "/portfolio": {
     title: "Website Redesign Portfolio — Before & After | SwiftLift",
