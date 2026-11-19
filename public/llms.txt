@@ -42,6 +42,13 @@ Who it is for: small businesses that already have a website and want it to look 
 - [Real estate](https://swiftlift.app/website-redesign/real-estate)
 - [Auto repair](https://swiftlift.app/website-redesign/auto-repair)
 
+## Partner Program (white label)
+
+For web designers, agencies, marketing/SEO companies and consultants who sell websites: https://swiftlift.app/work-with-us
+
+- Option A — Build Partner: SwiftLift builds, the partner sells under their own brand at 30% off the public price list (Classic $209, Growth $349, add-ons 30% off). Unbranded previews on a neutral domain; SwiftLift never contacts the partner's clients. No setup or monthly fee.
+- Option B — White-label System: $2,500 setup + $99/month. The partner gets their own branded copy of the SwiftLift website, intake, preview pipeline, automated emails, Stripe payments and a Studio console to edit client sites. Partner connects their own AI and hosting accounts. Can still send builds to SwiftLift at Build Partner rates.
+
 ## Contact
 
 - Email: support@swiftlift.app (reply within 1 business day)

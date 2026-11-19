@@ -17,7 +17,6 @@ const NOINDEX = new Set([
   "/client-upgrades",
   "/start",
   "/support",
-  "/work-with-us",
   "/addons",
   "/go-live",
   "/review",

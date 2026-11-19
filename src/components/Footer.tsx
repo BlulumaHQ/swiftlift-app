@@ -129,7 +129,7 @@ const Footer = () => {
             </h4>
             <div className="flex flex-col gap-2">
               <Link to="/work-with-us" className="text-sm text-white/70 hover:text-white transition-colors">
-                {lang === "en" ? "For Designers" : "設計師專區"}
+                {lang === "en" ? "Partner Program" : "合作夥伴計畫"}
               </Link>
             </div>
           </div>
@@ -224,7 +224,7 @@ const Footer = () => {
               </h4>
               <div className="flex flex-col">
                 <Link to="/work-with-us" className="text-sm text-white/70 hover:text-white transition-colors py-2 block">
-                  {lang === "en" ? "For Designers" : "設計師專區"}
+                  {lang === "en" ? "Partner Program" : "合作夥伴計畫"}
                 </Link>
               </div>
             </div>

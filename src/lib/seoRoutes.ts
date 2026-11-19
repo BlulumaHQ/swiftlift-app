@@ -26,6 +26,11 @@ export const SEO_ROUTES: Record<string, { title: string; description: string }> 
     description:
       "SwiftLift is run by Lead Designer Sony Lin: 20 years and 500+ websites, plus an AI system that rebuilds your existing site fast and affordably.",
   },
+  "/work-with-us": {
+    title: "White Label Website Partner Program for Designers & Agencies | SwiftLift",
+    description:
+      "Sell website facelifts under your own brand. Build Partner: we build at 30% off. White-label System: your own SwiftLift pipeline for $2,500 setup + $99/month.",
+  },
   "/faq": {
     title: "Website Facelift FAQ — Pricing, Timeline & Hosting | SwiftLift",
     description:
