@@ -29,7 +29,7 @@ export const SEO_ROUTES: Record<string, { title: string; description: string }> 
   "/faq": {
     title: "Website Redesign FAQ — Pricing, Timeline & Hosting | SwiftLift",
     description:
-      "Answers about SwiftLift website redesigns: how the free preview works, pricing from $299, 48-hour delivery, revisions, domains and hosting.",
+      "Why SwiftLift is so affordable, how free previews and revisions work, pricing from $299, free hosting, domains, email and the Care Plan.",
   },
   "/hosting-guide": {
     title: "Managed Website Hosting for Small Businesses | SwiftLift",

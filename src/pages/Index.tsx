@@ -24,6 +24,7 @@ function generateClientId(): string {
 
 
 import { SEO_ROUTES } from "@/lib/seoRoutes";
+import { HOME_FAQS } from "@/lib/faqContent";
 
 const PRELOADER_KEY = "swiftlift_visited";
 
@@ -757,32 +758,8 @@ const IndexContent = ({ variant = "home" }: { variant?: "home" | "start" }) => {
     },
   ];
 
-  const faqItems = [
-    {
-      q: lang === "en" ? "Is it really free to start?" : "真的可以免費開始嗎？",
-      a: lang === "en"
-        ? "Yes. Submitting your website costs nothing. We build two complete, live versions of your site — a Classic Facelift and a Growth Facelift — and you review both on desktop and mobile. You only pay after your revisions, once you're happy."
-        : "是的。提交網站完全免費。我們會建好兩個完整的即時版本——Classic Facelift 和 Growth Facelift——讓您在桌面和手機上檢視。修改完、滿意之後才付款。",
-    },
-    {
-      q: lang === "en" ? "What if I don't like either version?" : "如果兩個版本我都不喜歡呢？",
-      a: lang === "en"
-        ? "Then you walk away and pay nothing. No contract, no questions asked."
-        : "那您可以直接離開，不用付任何費用。沒有合約，也不會追問。",
-    },
-    {
-      q: lang === "en" ? "What's included in hosting?" : "主機託管包含什麼？",
-      a: lang === "en"
-        ? "Fast, secure hosting with SSL is free, forever — no monthly fees and no lock-in. Your site has no complicated back end, so when you need a change, we make it for you at $45 per edit. Prefer to manage it yourself? We'll send you the complete site files."
-        : "快速、安全、含 SSL 的託管永久免費——沒有月費，也不綁約。網站沒有複雜的後台，需要修改時由我們幫您改，每次 $45。想自己管理？我們會把完整網站檔案交給您。",
-    },
-    {
-      q: lang === "en" ? "What does the Care Plan cover?" : "Care Plan 包含什麼？",
-      a: lang === "en"
-        ? "For $135/year, you get up to 2 small edits every month: swap photos, update text, change your hero style, or even re-layout an existing page. It doesn't include new pages, new features, or blog posts. It pays for itself after 3 edits."
-        : "每年 $135，每月最多 2 次小修改：換照片、改文字、換 Hero 樣式，甚至重新排版現有頁面。不包含新頁面、新功能或 blog 文章。改 3 次就回本。",
-    },
-  ];
+  const faqItems = HOME_FAQS.map((f) => ({ q: f.q[lang], a: f.a[lang] }));
+
 
   return (
     <main>

@@ -7,6 +7,7 @@ import path from "node:path";
 import type { Plugin, ResolvedConfig } from "vite";
 import { SEO_ROUTES, SITE } from "../src/lib/seoRoutes";
 import { INDUSTRY_PAGES } from "../src/lib/industryContent";
+import { ALL_FAQS } from "../src/lib/faqContent";
 
 const esc = (s: string) =>
   s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
@@ -85,6 +86,16 @@ export default function prerenderPlugin(): Plugin {
                 })),
               },
             );
+          }
+          if (route === "/faq") {
+            graph.push({
+              "@type": "FAQPage",
+              mainEntity: ALL_FAQS.map((f) => ({
+                "@type": "Question",
+                name: f.q.en,
+                acceptedAnswer: { "@type": "Answer", text: f.a.en },
+              })),
+            });
           }
           graph.push({
             "@type": "BreadcrumbList",
