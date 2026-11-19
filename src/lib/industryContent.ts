@@ -135,7 +135,7 @@ export const INDUSTRY_PAGES: IndustryPage[] = [
       },
       {
         q: "Can I add new project photos after launch?",
-        a: "Yes. Send us new photos and we will add them for $45 USD per edit, or join the Care Plan ($135 USD/year), which includes up to 2 small edits every month.",
+        a: "Yes. Send us new photos and we will add them for $45 USD per edit, or join the Care Plan ($135 USD/year or $15 USD/month), which includes up to 2 small edits every month.",
       },
       {
         q: "How long does a contractor website redesign take?",
@@ -196,7 +196,7 @@ export const INDUSTRY_PAGES: IndustryPage[] = [
       },
       {
         q: "How do I update menu prices later?",
-        a: "Send us the changes. Edits are $45 USD each, or join the Care Plan ($135 USD/year), which includes up to 2 small edits every month.",
+        a: "Send us the changes. Edits are $45 USD each, or join the Care Plan ($135 USD/year or $15 USD/month), which includes up to 2 small edits every month.",
       },
       {
         q: "Can you build an online store for my food products?",
@@ -371,7 +371,7 @@ export const INDUSTRY_PAGES: IndustryPage[] = [
       },
       {
         q: "Is hosting included?",
-        a: "Yes. Hosting is free forever with no monthly fees. The optional Care Plan is $135 USD/year and includes up to 2 small edits every month.",
+        a: "Yes. Hosting is free forever with no monthly fees. The optional Care Plan is $135 USD/year or $15 USD/month and includes up to 2 small edits every month.",
       },
     ],
   },

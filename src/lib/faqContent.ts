@@ -153,15 +153,15 @@ export const FAQ_CATEGORIES: FaqCategory[] = [
         home: 5,
         q: { en: "What if I need changes later? Can I reach you?", zh: "之後需要修改怎麼辦？找得到你們嗎？" },
         a: {
-          en: "Always. Changes run through our automated system, so your requests are handled quickly — you're never stuck waiting on a busy freelancer who stopped replying. Edits are $45 each, or $135/year with the Care Plan (up to 2 small edits every month).",
-          zh: "隨時都找得到。修改透過我們的自動化系統處理，速度很快——不會遇到忙碌的接案者不回訊息。每次修改 $45，或每年 $135 加入 Care Plan（每月最多 2 次小修改）。",
+          en: "Always. Changes run through our automated system, so your requests are handled quickly — you're never stuck waiting on a busy freelancer who stopped replying. Edits are $45 each, or join the Care Plan — $135/year or $15/month (up to 2 small edits every month).",
+          zh: "隨時都找得到。修改透過我們的自動化系統處理，速度很快——不會遇到忙碌的接案者不回訊息。每次修改 $45，或加入 Care Plan——每年 $135 或每月 $15（每月最多 2 次小修改）。",
         },
       },
       {
         q: { en: "What does the Care Plan cover?", zh: "Care Plan 包含什麼？" },
         a: {
-          en: "For $135/year, you get up to 2 small edits every month: swap photos, update text, change your hero style, or even re-layout an existing page. It doesn't include new pages, new features or blog posts. It pays for itself after 3 edits.",
-          zh: "每年 $135，每月最多 2 次小修改：換照片、改文字、換 Hero 樣式，甚至重新排版現有頁面。不包含新頁面、新功能或 blog 文章。改 3 次就回本。",
+          en: "For $135/year (or $15/month), you get up to 2 small edits every month: swap photos, update text, change your hero style, or even re-layout an existing page. It doesn't include new pages, new features or blog posts. It pays for itself after 3 edits.",
+          zh: "每年 $135（或每月 $15），每月最多 2 次小修改：換照片、改文字、換 Hero 樣式，甚至重新排版現有頁面。不包含新頁面、新功能或 blog 文章。改 3 次就回本。",
         },
       },
       {

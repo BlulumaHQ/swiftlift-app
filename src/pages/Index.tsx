@@ -978,6 +978,9 @@ const IndexContent = ({ variant = "home" }: { variant?: "home" | "start" }) => {
                 <p className="text-3xl font-black text-foreground font-display mt-2">
                   $135<span className="text-base font-medium text-muted-foreground">/{lang === "en" ? "year" : "年"}</span>
                 </p>
+                <p className="text-sm text-muted-foreground mt-1">
+                  {lang === "en" ? "or $15/month · yearly saves $45" : "或 $15/月 · 年付省 $45"}
+                </p>
                 <ul className="mt-4 space-y-2 flex-1">
                   {(lang === "en"
                     ? ["Everything in Free Hosting", "Up to 2 small edits every month", "Swap photos, update text, change your hero style, re-layout existing pages", "Pays for itself after 3 edits"]
