@@ -53,6 +53,11 @@ const CASES: Record<CaseKey, CaseData> = {
     imageB: dentalB,
     previewA: "https://friendly-dental-centre-preview.lovable.app/",
     previewB: "https://friendly-dental-preview-02.lovable.app/",
+    testimonial: {
+      quote:
+        "Sony Lin has managed our professional websites for years, and he’s always been punctual, dependable, and professional. Thank you, Sony, for taking such good care of our websites. I’d recommend him without hesitation to anyone looking for a web designer.",
+      author: "Patrick Wu, Friendly Dental Centre",
+    },
   },
   westsideMedical: {
     company: "Westside Medical Associates",
