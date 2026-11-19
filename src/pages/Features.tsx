@@ -57,8 +57,7 @@ const bundlesData = [
 ];
 
 const hostingSupport = [
-  { icon: Server, title: { en: "Care Plan — Monthly", zh: "Care Plan — 月付" }, desc: { en: "Up to 2 small edits every month (photos, text, hero style, re-layout of existing pages).", zh: "每月最多 2 次小修改（照片、文字、Hero 樣式、重新排版現有頁面）。" }, price: "$15 USD / month", note: { en: "Available for launched SwiftLift websites.", zh: "適用於已上線的 SwiftLift 網站。" } },
-  { icon: Server, title: { en: "Care Plan — Yearly", zh: "Care Plan — 年付" }, desc: { en: "Same as monthly, billed yearly. Up to 2 small edits every month. Excludes new pages, new features and blog posts.", zh: "與月付相同，按年計費。每月最多 2 次小修改。不含新頁面、新功能與 blog 文章。" }, price: "$135 USD / year", note: { en: "Available for launched SwiftLift websites.", zh: "適用於已上線的 SwiftLift 網站。" } },
+  { icon: Server, title: { en: "Care Plan", zh: "Care Plan" }, desc: { en: "Up to 2 small edits every month, billed once a year. Excludes new pages, new features and blog posts.", zh: "每月最多 2 次小修改，按年計費。不含新頁面、新功能與 blog 文章。" }, price: "$135 USD / year", note: { en: "Available for launched SwiftLift websites.", zh: "適用於已上線的 SwiftLift 網站。" } },
   { icon: RefreshCw, title: { en: "Additional Revision", zh: "額外修改" }, desc: { en: "Request an extra round of updates after your included revisions are used.", zh: "在已包含的修改次數用完後，申請額外一輪更新。" }, price: "$45 USD", note: { en: "Available for existing SwiftLift website projects.", zh: "適用於現有的 SwiftLift 網站專案。" } },
   { icon: RotateCcw, title: { en: "Reactivation Fee", zh: "重新啟動費" }, desc: { en: "For paused or delayed projects that need to be restarted and re-enter production.", zh: "適用於暫停或延遲的專案，需要重新啟動並重新進入生產。" }, price: "$50 USD", note: { en: "Available when restarting inactive SwiftLift projects.", zh: "適用於重新啟動不活躍的 SwiftLift 專案。" } },
 ];

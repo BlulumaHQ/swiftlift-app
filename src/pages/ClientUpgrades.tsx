@@ -106,24 +106,14 @@ const BUNDLE_DESCRIPTIONS: Record<string, { desc: string; items: string[] }> = {
 
 const STATIC_HOSTING: (CartItem & { description: string })[] = [
   {
-    id: "hosting-monthly",
-    type: "service_item",
-    name: "Managed Monthly Hosting",
-    price: 15,
-    currency: "USD",
-    priceLabel: "month",
-    billing_type: "recurring_monthly",
-    description: "Managed hosting and ongoing support for your launched SwiftLift website.",
-  },
-  {
     id: "hosting-yearly",
     type: "service_item",
-    name: "Managed Yearly Hosting",
+    name: "Care Plan (Yearly)",
     price: 135,
     currency: "USD",
     priceLabel: "year",
     billing_type: "recurring_yearly",
-    description: "Managed hosting and ongoing support billed yearly.",
+    description: "Up to 2 small edits every month, billed once a year.",
   },
   {
     id: "additional-revision",
@@ -132,7 +122,7 @@ const STATIC_HOSTING: (CartItem & { description: string })[] = [
     price: 45,
     currency: "USD",
     billing_type: "one_time",
-    description: "Request a one-time website update without a monthly hosting plan.",
+    description: "A one-time website edit without the Care Plan.",
   },
   {
     id: "reactivation-fee",

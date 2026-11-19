@@ -203,7 +203,7 @@ const HostingGuideContent = () => {
                 <p className="mt-3 text-sm font-bold text-foreground uppercase tracking-wider">
                   {lang === "en" ? "Care Plan" : "Care Plan"}
                 </p>
-                <p className="mt-3 text-3xl font-black text-foreground font-display">$15<span className="text-lg font-medium text-muted-foreground">/mo</span> <span className="text-sm text-muted-foreground font-normal">{lang === "en" ? "or" : "或"} <span className="font-semibold text-foreground">$135/year</span></span></p>
+                <p className="mt-3 text-3xl font-black text-foreground font-display">$135<span className="text-lg font-medium text-muted-foreground">/{lang === "en" ? "year" : "年"}</span></p>
 
                 <ul className="mt-6 space-y-3 text-left text-sm text-muted-foreground leading-relaxed">
                   <li className="flex items-start gap-2">

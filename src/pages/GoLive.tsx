@@ -50,8 +50,7 @@ const HOSTS: Option[] = [
 
 const PLANS: Option[] = [
   { value: "free", label: "Free hosting", hint: "$0 forever — send us changes when you need them ($45 per edit)" },
-  { value: "monthly", label: "Care Plan — $15/month", hint: "Up to 2 small edits every month, handled for you" },
-  { value: "yearly", label: "Care Plan — $135/year", hint: "Same as monthly, 3 months free" },
+  { value: "yearly", label: "Care Plan — $135/year", hint: "Up to 2 small edits every month, handled for you" },
   { value: "self", label: "I'll host it myself", hint: "We send the full site as a .zip — needs Cloudflare Pages, Netlify or Vercel (not cPanel / shared hosting)" },
 ];
 

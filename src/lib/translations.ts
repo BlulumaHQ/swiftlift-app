@@ -147,7 +147,7 @@ export const translations = {
       {
         title: { en: "Care Plan", zh: "Care Plan" },
         price: "$135/yr",
-        altPrice: "or $15/mo",
+        altPrice: null,
         paragraph: { en: "We handle everything. You focus on your business.", zh: "我們處理一切。您專注於業務。" },
         button: { en: "Choose Care Plan", zh: "選擇 Care Plan" },
         features: {
