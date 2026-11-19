@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import { ArrowRight, ExternalLink, ImageIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { homeStudies, useCmsPortfolio, type StudyVersion } from "@/lib/cmsPortfolio";
+import { ScrollShot } from "@/components/ScrollShot";
 
 function PreviewImage({ image, alt }: { image: string | null; alt: string }) {
   return (
@@ -19,17 +20,18 @@ function SiteLink({ url, children, className }: { url: string | null; children: 
 }
 
 function VersionFrame({ title, version }: { title: string; version: StudyVersion }) {
-  const label = version.label.startsWith("Version ") ? version.label : `Version ${version.label}`;
+  const raw = version.label.replace(/^Version\s+/i, "").trim();
+  const label = raw === "A" ? "A · Classic Facelift" : raw === "B" ? "B · Growth Facelift" : version.label;
   return (
-    <SiteLink url={version.url} className="group relative block min-w-0 overflow-hidden rounded-xl border border-border bg-card text-card-foreground shadow-sm transition-shadow hover:shadow-lg">
+    <SiteLink url={version.url} className={`ss-shot-card group relative block min-w-0 overflow-hidden rounded-2xl border bg-card text-card-foreground shadow-sm hover:shadow-xl ${version.chosen ? "border-2 border-[hsl(var(--accent-purple))]" : "border-border"}`}>
       <div className="flex h-11 items-center gap-3 border-b border-border bg-secondary px-4">
         <span aria-hidden="true" className="flex shrink-0 gap-1.5">{[0, 1, 2].map((dot) => <span key={dot} className="h-2 w-2 rounded-full bg-muted-foreground/40" />)}</span>
-        <span className="truncate text-xs font-semibold">{label}</span>
+        <span className="truncate text-xs font-bold">{label}</span>
         {version.url && <ExternalLink className="ml-auto h-3.5 w-3.5 shrink-0 text-muted-foreground" aria-hidden="true" />}
       </div>
       <div className="relative">
-        <PreviewImage image={version.image} alt={`${title} website, ${label}`} />
-        {version.chosen && <span className="absolute bottom-3 left-3 right-3 w-fit max-w-[calc(100%-1.5rem)] rounded-md bg-brand px-3 py-2 text-xs font-semibold text-brand-foreground shadow-sm">Client chose {label}</span>}
+        <ScrollShot src={version.image} alt={`${title} website, ${label}`} />
+        {version.chosen && <span className="pointer-events-none absolute left-3 top-3 w-fit rounded-full bg-[hsl(var(--accent-purple))] px-3 py-1.5 text-xs font-bold text-white shadow-sm">Client chose {raw === "A" || raw === "B" ? raw : label}</span>}
       </div>
     </SiteLink>
   );
@@ -42,11 +44,11 @@ export default function Portfolio({ variant }: { variant: "home" | "all" }) {
   if (isError || (!isPending && studies.length === 0 && singles.length === 0)) return null;
 
   return (
-    <section id="portfolio" aria-labelledby={`portfolio-heading-${variant}`} className="bg-background py-20 md:py-24">
+    <section id="portfolio" aria-labelledby={`portfolio-heading-${variant}`} className="border-y border-border bg-white py-20 md:py-28">
       <div className="mx-auto max-w-6xl px-6">
         <div className="mb-10 text-center md:mb-12">
-          <p className="mb-3 text-sm font-semibold text-[hsl(var(--accent-purple))]">Two directions</p>
-          <h2 id={`portfolio-heading-${variant}`} className="font-display text-3xl font-black leading-tight tracking-normal text-foreground md:text-4xl">Two designs, one business</h2>
+          <p className="sl-eyebrow mb-3 text-sm">Two directions</p>
+          <h2 id={`portfolio-heading-${variant}`} className="font-display text-3xl font-black leading-tight tracking-tight text-foreground md:text-[2.6rem]">Two designs, one business</h2>
         </div>
         {isPending ? (
           <div role="status" aria-label="Loading portfolio" className="space-y-10">

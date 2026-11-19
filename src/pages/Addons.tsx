@@ -198,11 +198,11 @@ const AddonsContent = () => {
                 <ScrollReveal key={i} delay={0.08 * i}>
                   <div className="rounded-2xl border border-border bg-background p-6 md:p-8 shadow-sm h-full flex flex-col card-elevated">
                     <div className="flex items-start justify-between mb-4">
-                      <div className="w-12 h-12 rounded-xl flex items-center justify-center" style={{ background: "hsl(275 51% 46% / 0.1)" }}>
-                        <Icon size={24} style={{ color: "hsl(275 51% 46%)" }} />
+                      <div className="w-12 h-12 rounded-xl flex items-center justify-center" style={{ background: "hsl(267 55% 45% / 0.1)" }}>
+                        <Icon size={24} style={{ color: "hsl(267 55% 45%)" }} />
                       </div>
                       {item.badge && (
-                        <span className="text-xs font-semibold px-3 py-1 rounded-full" style={{ background: "hsl(275 51% 46% / 0.1)", color: "hsl(275 51% 46%)" }}>
+                        <span className="text-xs font-semibold px-3 py-1 rounded-full" style={{ background: "hsl(267 55% 45% / 0.1)", color: "hsl(267 55% 45%)" }}>
                           {item.badge}
                         </span>
                       )}
@@ -220,7 +220,7 @@ const AddonsContent = () => {
                     <ul className="space-y-2 flex-1 mt-5">
                       {item.features[lang].map((f, fi) => (
                         <li key={fi} className="flex items-start gap-2.5 text-sm">
-                          <Check size={15} className="mt-0.5 flex-shrink-0" style={{ color: "hsl(275 51% 46%)" }} />
+                          <Check size={15} className="mt-0.5 flex-shrink-0" style={{ color: "hsl(267 55% 45%)" }} />
                           <span className="text-muted-foreground">{f}</span>
                         </li>
                       ))}
@@ -232,7 +232,7 @@ const AddonsContent = () => {
                         target="_blank"
                         rel="noopener noreferrer"
                         className="w-full inline-flex items-center justify-center rounded-full px-6 py-3 text-sm font-semibold text-white transition-all hover:scale-[1.02] active:scale-[0.97]"
-                        style={{ backgroundColor: "#7F37AE" }}
+                        style={{ backgroundColor: "#6A33B0" }}
                       >
                         {lang === "en" ? "Add to My Website" : "添加到我的網站"}
                       </a>
@@ -268,18 +268,18 @@ const AddonsContent = () => {
                   <div className="rounded-2xl border border-border bg-background p-6 md:p-8 shadow-sm h-full flex flex-col card-elevated relative">
                     {bundle.badge && (
                       <div className="absolute -top-3 left-6">
-                        <span className="text-xs font-bold px-4 py-1.5 rounded-full text-white" style={{ backgroundColor: "#7F37AE" }}>
+                        <span className="text-xs font-bold px-4 py-1.5 rounded-full text-white" style={{ backgroundColor: "#6A33B0" }}>
                           {bundle.badge}
                         </span>
                       </div>
                     )}
 
-                    <div className="w-12 h-12 rounded-xl flex items-center justify-center mb-4" style={{ background: "hsl(275 51% 46% / 0.1)" }}>
-                      <Icon size={24} style={{ color: "hsl(275 51% 46%)" }} />
+                    <div className="w-12 h-12 rounded-xl flex items-center justify-center mb-4" style={{ background: "hsl(267 55% 45% / 0.1)" }}>
+                      <Icon size={24} style={{ color: "hsl(267 55% 45%)" }} />
                     </div>
 
                     <h3 className="text-xl font-bold text-foreground font-display">{T(bundle.title, lang)}</h3>
-                    <p className="text-sm font-medium mt-1" style={{ color: "hsl(275 51% 46%)" }}>{T(bundle.tagline, lang)}</p>
+                    <p className="text-sm font-medium mt-1" style={{ color: "hsl(267 55% 45%)" }}>{T(bundle.tagline, lang)}</p>
                     <p className="mt-3 text-sm text-muted-foreground leading-relaxed">{T(bundle.desc, lang)}</p>
 
                     <div className="mt-5 pt-4 border-t border-border">
@@ -289,7 +289,7 @@ const AddonsContent = () => {
                       <ul className="space-y-2">
                         {bundle.includes.map((inc, ii) => (
                           <li key={ii} className="flex items-start gap-2 text-sm">
-                            <Package size={14} className="mt-0.5 flex-shrink-0" style={{ color: "hsl(275 51% 46%)" }} />
+                            <Package size={14} className="mt-0.5 flex-shrink-0" style={{ color: "hsl(267 55% 45%)" }} />
                             <span className="text-muted-foreground">{T(inc, lang)}</span>
                           </li>
                         ))}
@@ -306,7 +306,7 @@ const AddonsContent = () => {
                         target="_blank"
                         rel="noopener noreferrer"
                         className="w-full inline-flex items-center justify-center rounded-full px-6 py-3 text-sm font-semibold text-white transition-all hover:scale-[1.02] active:scale-[0.97]"
-                        style={{ backgroundColor: "#7F37AE" }}
+                        style={{ backgroundColor: "#6A33B0" }}
                       >
                         {lang === "en" ? "Get This Bundle" : "獲取此套餐"}
                       </a>

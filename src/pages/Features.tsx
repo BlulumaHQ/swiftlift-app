@@ -71,9 +71,9 @@ const FOOTER_NOTE = { en: "Available as an upgrade for existing SwiftLift websit
 const FeatureCard = ({ icon: Icon, title, desc, price, footerNote, lang, highlight }: {
   icon: any; title: LangObj; desc: LangObj; price: string; footerNote: LangObj; lang: "en" | "zh"; highlight?: boolean;
 }) => (
-  <div className={`rounded-2xl bg-white p-6 shadow-[0_1px_3px_rgba(0,0,0,0.06),0_4px_16px_rgba(0,0,0,0.04)] flex flex-col h-full border ${highlight ? "border-[hsl(275_51%_46%)/0.2]" : "border-black/[0.04]"}`}>
-    <div className="w-11 h-11 rounded-xl flex items-center justify-center mb-4" style={{ background: "hsl(275 51% 46% / 0.08)" }}>
-      <Icon size={22} style={{ color: "hsl(275 51% 46%)" }} />
+  <div className={`rounded-2xl bg-white p-6 shadow-[0_1px_3px_rgba(0,0,0,0.06),0_4px_16px_rgba(0,0,0,0.04)] flex flex-col h-full border ${highlight ? "border-[hsl(267_55%_45%)/0.2]" : "border-black/[0.04]"}`}>
+    <div className="w-11 h-11 rounded-xl flex items-center justify-center mb-4" style={{ background: "hsl(267 55% 45% / 0.08)" }}>
+      <Icon size={22} style={{ color: "hsl(267 55% 45%)" }} />
     </div>
     <h3 className="text-[1.05rem] font-bold text-foreground leading-snug">{T(title, lang)}</h3>
     <p className="mt-2 text-sm text-muted-foreground leading-relaxed flex-1">{T(desc, lang)}</p>
@@ -96,7 +96,7 @@ const FeatureSection = ({ title, subtitle, items, lang, bgClass, highlight, colu
       <ScrollReveal>
         <div className="text-center mb-12">
           {highlight && (
-            <span className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest mb-3" style={{ color: "hsl(275 51% 46%)" }}>
+            <span className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest mb-3" style={{ color: "hsl(267 55% 45%)" }}>
               <Sparkles size={14} />
               {lang === "en" ? "HIGH IMPACT" : "高影響力"}
             </span>
@@ -204,7 +204,7 @@ const FeaturesContent = () => {
         <div className="max-w-6xl mx-auto px-6">
           <ScrollReveal>
             <div className="text-center mb-12">
-              <span className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest mb-3" style={{ color: "hsl(275 51% 46%)" }}>
+              <span className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest mb-3" style={{ color: "hsl(267 55% 45%)" }}>
                 <Sparkles size={14} />
                 {lang === "en" ? "BUNDLE & SAVE" : "套餐優惠"}
               </span>
@@ -225,15 +225,15 @@ const FeaturesContent = () => {
               return (
                 <ScrollReveal key={i} delay={0.06 * i}>
                   <div className="rounded-2xl bg-white p-6 md:p-8 shadow-[0_1px_3px_rgba(0,0,0,0.06),0_4px_16px_rgba(0,0,0,0.04)] flex flex-col h-full border border-black/[0.04]">
-                    <div className="w-11 h-11 rounded-xl flex items-center justify-center mb-4" style={{ background: "hsl(275 51% 46% / 0.08)" }}>
-                      <Icon size={22} style={{ color: "hsl(275 51% 46%)" }} />
+                    <div className="w-11 h-11 rounded-xl flex items-center justify-center mb-4" style={{ background: "hsl(267 55% 45% / 0.08)" }}>
+                      <Icon size={22} style={{ color: "hsl(267 55% 45%)" }} />
                     </div>
                     <h3 className="text-lg font-bold text-foreground">{T(bundle.title, lang)}</h3>
                     <p className="mt-2 text-sm text-muted-foreground leading-relaxed flex-1">{T(bundle.desc, lang)}</p>
                     <div className="mt-auto pt-5">
                       <div className="flex items-baseline gap-3">
                         <span className="text-2xl font-black text-foreground">{bundle.price}</span>
-                        <span className="text-sm font-semibold" style={{ color: "hsl(275 51% 46%)" }}>{T(bundle.savings, lang)}</span>
+                        <span className="text-sm font-semibold" style={{ color: "hsl(267 55% 45%)" }}>{T(bundle.savings, lang)}</span>
                       </div>
                       <p className="mt-3 text-[12px] text-muted-foreground/70 leading-snug">
                         {lang === "en"
@@ -254,7 +254,7 @@ const FeaturesContent = () => {
         <div className="max-w-6xl mx-auto px-6">
           <ScrollReveal>
             <div className="text-center mb-12">
-              <span className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest mb-3" style={{ color: "hsl(275 51% 46%)" }}>
+              <span className="inline-flex items-center gap-2 text-xs font-bold uppercase tracking-widest mb-3" style={{ color: "hsl(267 55% 45%)" }}>
                 <Sparkles size={14} />
                 {lang === "en" ? "POST-LAUNCH SERVICES" : "上線後服務"}
               </span>
@@ -275,8 +275,8 @@ const FeaturesContent = () => {
               return (
                 <ScrollReveal key={i} delay={0.04 * i}>
                   <div className="rounded-2xl bg-white p-6 shadow-[0_1px_3px_rgba(0,0,0,0.06),0_4px_16px_rgba(0,0,0,0.04)] flex flex-col h-full border border-black/[0.04]">
-                    <div className="w-11 h-11 rounded-xl flex items-center justify-center mb-4" style={{ background: "hsl(275 51% 46% / 0.08)" }}>
-                      <Icon size={22} style={{ color: "hsl(275 51% 46%)" }} />
+                    <div className="w-11 h-11 rounded-xl flex items-center justify-center mb-4" style={{ background: "hsl(267 55% 45% / 0.08)" }}>
+                      <Icon size={22} style={{ color: "hsl(267 55% 45%)" }} />
                     </div>
                     <h3 className="text-[1.05rem] font-bold text-foreground leading-snug">{T(item.title, lang)}</h3>
                     <p className="mt-2 text-sm text-muted-foreground leading-relaxed flex-1">{T(item.desc, lang)}</p>
@@ -308,7 +308,7 @@ const FeaturesContent = () => {
               <Link
                 to="/#contact"
                 className="inline-flex items-center justify-center gap-2 rounded-full px-10 py-4 text-base font-semibold text-white transition-all hover:scale-105"
-                style={{ backgroundColor: "hsl(275 51% 46%)" }}
+                style={{ backgroundColor: "hsl(267 55% 45%)" }}
               >
                 {lang === "en" ? "Get My 2 Free Previews" : "獲取我的2個免費預覽"}
                 <ArrowRight size={18} />

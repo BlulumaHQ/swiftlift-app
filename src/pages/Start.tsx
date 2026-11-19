@@ -21,7 +21,7 @@ const MinimalHeader = () => {
 
 const MinimalFooter = () => {
   return (
-    <footer className="py-8" style={{ background: "#0f172a" }}>
+    <footer className="py-8" style={{ background: "#0E1424" }}>
       <div className="max-w-7xl mx-auto px-6">
         <div className="text-center text-xs text-blue-200/50 space-y-1">
           <p>© 2026 SwiftLift. All rights reserved.<span className="hidden md:inline"> | </span><br className="md:hidden" />Operated by{" "}

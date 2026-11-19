@@ -55,7 +55,7 @@ const HostingGuideContent = () => {
             <a
               href="/#contact"
               className="inline-flex items-center justify-center rounded-full px-8 py-3.5 text-base font-semibold text-white btn-brand"
-              style={{ backgroundColor: "hsl(275 51% 46%)" }}
+              style={{ backgroundColor: "hsl(267 55% 45%)" }}
             >
               {lang === "en" ? "Get My 2 Free Previews" : "获取我的2个免费预览"}
             </a>
@@ -122,8 +122,8 @@ const HostingGuideContent = () => {
             ).map((item, i) => (
               <ScrollReveal key={i} delay={i * 0.06}>
                 <div className="flex items-start gap-4 rounded-2xl border border-border bg-background p-6 shadow-sm">
-                  <div className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0" style={{ background: "hsl(275 51% 46% / 0.1)" }}>
-                    <item.icon size={20} style={{ color: "hsl(275 51% 46%)" }} />
+                  <div className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0" style={{ background: "hsl(267 55% 45% / 0.1)" }}>
+                    <item.icon size={20} style={{ color: "hsl(267 55% 45%)" }} />
                   </div>
                   <div>
                     <h3 className="font-bold text-foreground text-sm">{item.title}</h3>
@@ -163,7 +163,7 @@ const HostingGuideContent = () => {
                 <div className="flex items-center gap-5 max-w-sm mx-auto">
                   <span
                     className="inline-flex items-center justify-center w-11 h-11 rounded-full text-base font-black text-white flex-shrink-0"
-                    style={{ backgroundColor: "hsl(275 51% 46%)" }}
+                    style={{ backgroundColor: "hsl(267 55% 45%)" }}
                   >
                     {s.step}
                   </span>
@@ -207,15 +207,15 @@ const HostingGuideContent = () => {
 
                 <ul className="mt-6 space-y-3 text-left text-sm text-muted-foreground leading-relaxed">
                   <li className="flex items-start gap-2">
-                    <Check size={16} className="flex-shrink-0 mt-0.5" style={{ color: "hsl(275 51% 46%)" }} />
+                    <Check size={16} className="flex-shrink-0 mt-0.5" style={{ color: "hsl(267 55% 45%)" }} />
                     <span>{lang === "en" ? "Up to 2 small edits every month — photos, text, hero style or re-layout of existing pages. We make the changes for you." : "每月最多 2 次小修改——照片、文字、Hero 样式或重新排版现有页面，由我们为您修改。"}</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <Check size={16} className="flex-shrink-0 mt-0.5" style={{ color: "hsl(275 51% 46%)" }} />
+                    <Check size={16} className="flex-shrink-0 mt-0.5" style={{ color: "hsl(267 55% 45%)" }} />
                     <span>{lang === "en" ? "Monitoring, SSL, and uptime support included" : "包含监控、SSL和正常运行支持"}</span>
                   </li>
                   <li className="flex items-start gap-2">
-                    <Check size={16} className="flex-shrink-0 mt-0.5" style={{ color: "hsl(275 51% 46%)" }} />
+                    <Check size={16} className="flex-shrink-0 mt-0.5" style={{ color: "hsl(267 55% 45%)" }} />
                     <span>{lang === "en" ? "No dashboards. No technical work. Ever." : "无控制面板。无技术工作。永远不需要。"}</span>
                   </li>
                 </ul>
@@ -248,7 +248,7 @@ const HostingGuideContent = () => {
                 : ["每个网站都包含免费托管 — 永远", "无设置费用", "无需技术维护", "无意外收费"]
               ).map((item, i) => (
                 <div key={i} className="flex items-center gap-3">
-                  <Check size={20} className="flex-shrink-0" style={{ color: "hsl(275 51% 46%)" }} />
+                  <Check size={20} className="flex-shrink-0" style={{ color: "hsl(267 55% 45%)" }} />
                   <p className="text-foreground font-medium text-base">{item}</p>
                 </div>
               ))}
@@ -275,7 +275,7 @@ const HostingGuideContent = () => {
               <a
                 href="/#contact"
                 className="inline-flex items-center justify-center rounded-full px-8 py-3.5 text-base font-semibold text-white transition-all hover:scale-105"
-                style={{ backgroundColor: "hsl(275 51% 46%)" }}
+                style={{ backgroundColor: "hsl(267 55% 45%)" }}
               >
                 {lang === "en" ? "Get My 2 Free Previews" : "获取我的2个免费预览"}
               </a>

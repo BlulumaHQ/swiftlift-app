@@ -43,7 +43,7 @@ const WorkWithUsContent = () => {
   };
 
   const inputClass =
-    "w-full rounded-xl border border-border bg-background px-5 py-4 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-[hsl(275_51%_46%)]/30 focus:border-[hsl(275_51%_46%)] transition-all";
+    "w-full rounded-xl border border-border bg-background px-5 py-4 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-[hsl(267_55%_45%)]/30 focus:border-[hsl(267_55%_45%)] transition-all";
 
   return (
     <main className="pt-28 pb-20">
@@ -59,8 +59,8 @@ const WorkWithUsContent = () => {
 
         {submitted ? (
           <div className="mt-12 rounded-2xl border border-border bg-secondary/50 p-10 text-center">
-            <div className="w-14 h-14 rounded-full mx-auto mb-4 flex items-center justify-center" style={{ background: "hsl(275 51% 46% / 0.1)" }}>
-              <svg className="w-7 h-7" style={{ color: "hsl(275 51% 46%)" }} fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
+            <div className="w-14 h-14 rounded-full mx-auto mb-4 flex items-center justify-center" style={{ background: "hsl(267 55% 45% / 0.1)" }}>
+              <svg className="w-7 h-7" style={{ color: "hsl(267 55% 45%)" }} fill="none" viewBox="0 0 24 24" stroke="currentColor"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
             </div>
             <h2 className="text-lg font-bold text-foreground">
               {lang === "en" ? "Thanks for reaching out." : "感謝您的聯繫。"}
@@ -108,7 +108,7 @@ const WorkWithUsContent = () => {
               type="submit"
               disabled={submitting}
               className="w-full rounded-xl py-4 text-sm font-semibold text-white transition-all hover:opacity-90 disabled:opacity-50"
-              style={{ background: "hsl(275 51% 46%)" }}
+              style={{ background: "hsl(267 55% 45%)" }}
             >
               {submitting
                 ? (lang === "en" ? "Submitting…" : "提交中…")

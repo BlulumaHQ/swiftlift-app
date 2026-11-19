@@ -47,7 +47,7 @@ const Header = () => {
 
   return (
     <header
-      className="fixed top-0 left-0 right-0 z-50 bg-white border-b border-gray-100"
+      className="fixed top-0 left-0 right-0 z-50 border-b border-border bg-[hsl(var(--paper)/0.94)] backdrop-blur-md"
       style={{ boxShadow: scrolled ? '0 1px 12px hsl(0 0% 0% / 0.06)' : 'none' }}
     >
       <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between transition-all duration-500">
@@ -61,7 +61,7 @@ const Header = () => {
               key={item.href}
               href={item.href}
               onClick={(e) => handleNavClick(e, item.href)}
-              className="text-[0.9rem] font-bold transition-colors duration-300 text-[#1a1a1a] hover:text-primary"
+              className="text-[0.9rem] font-bold transition-colors duration-300 text-foreground hover:text-[hsl(var(--accent-purple))]"
             >
               {item.label}
             </a>
@@ -69,8 +69,7 @@ const Header = () => {
           <a
             href="/#contact"
             onClick={(e) => handleNavClick(e, "/#contact")}
-            className="rounded-xl px-5 py-2 text-[0.85rem] font-bold text-white transition-all hover:opacity-90"
-            style={{ background: "hsl(var(--accent-purple))" }}
+            className="sl-cta inline-flex min-h-11 items-center rounded-xl px-5 py-2 font-display text-[0.9rem] font-extrabold"
           >
             {lang === "en" ? "Get My 2 Free Previews" : "獲取我的2個免費預覽"}
           </a>
@@ -108,7 +107,7 @@ const Header = () => {
           </div>
 
           <button
-            className="md:hidden text-foreground"
+            className="md:hidden inline-flex h-11 w-11 items-center justify-center text-foreground"
             onClick={() => setMobileOpen(!mobileOpen)}
             aria-label="Toggle menu"
           >
@@ -118,12 +117,12 @@ const Header = () => {
       </div>
 
       {mobileOpen && (
-        <nav className="md:hidden bg-background border-t border-border px-6 py-4 space-y-3" aria-label="Mobile navigation">
+        <nav className="md:hidden bg-background border-t border-border px-6 py-4 space-y-1" aria-label="Mobile navigation">
           {navItems.map((item) => (
             <a
               key={item.href}
               href={item.href}
-              className="block text-sm font-medium text-muted-foreground hover:text-primary"
+              className="block py-2 text-base font-semibold text-foreground hover:text-[hsl(var(--accent-purple))]"
               onClick={(e) => handleNavClick(e, item.href)}
             >
               {item.label}

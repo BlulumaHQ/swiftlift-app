@@ -472,7 +472,7 @@ const ReviewContent = () => {
                           type="button"
                           onClick={submitChanges}
                           className="rounded-full px-6 py-3 text-sm font-semibold text-white"
-                          style={{ backgroundColor: "#7F37AE" }}
+                          style={{ backgroundColor: "#6A33B0" }}
                         >
                           Yes, send it
                         </button>
@@ -484,7 +484,7 @@ const ReviewContent = () => {
                       onClick={askConfirm}
                       disabled={busy || uploading}
                       className="w-full rounded-full px-8 py-4 text-base font-semibold text-white disabled:opacity-50"
-                      style={{ backgroundColor: "#7F37AE" }}
+                      style={{ backgroundColor: "#6A33B0" }}
                     >
                       {busy ? <Loader2 size={18} className="mx-auto animate-spin" /> : uploading ? "Uploading files…" : "Send my changes"}
                     </button>
@@ -523,7 +523,7 @@ const ReviewContent = () => {
                     onClick={approve}
                     disabled={busy}
                     className="mt-5 w-full rounded-full px-8 py-4 text-base font-semibold text-white disabled:opacity-50"
-                    style={{ backgroundColor: "#7F37AE" }}
+                    style={{ backgroundColor: "#6A33B0" }}
                   >
                     {busy ? <Loader2 size={18} className="mx-auto animate-spin" /> : `Approve Version ${pick} & pay $${total}`}
                   </button>

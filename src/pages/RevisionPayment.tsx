@@ -34,7 +34,7 @@ const RevisionPaymentContent = () => {
   };
 
   const inputClass =
-    "w-full rounded-lg border border-border bg-background px-4 py-2.5 text-sm text-foreground placeholder:text-muted-foreground/60 focus:outline-none focus:ring-2 focus:ring-[hsl(275,51%,46%)]/40 transition-colors";
+    "w-full rounded-lg border border-border bg-background px-4 py-2.5 text-sm text-foreground placeholder:text-muted-foreground/60 focus:outline-none focus:ring-2 focus:ring-[hsl(267,55%,45%)]/40 transition-colors";
 
   /* ── Success state ── */
   if (paid) {
@@ -58,7 +58,7 @@ const RevisionPaymentContent = () => {
             <a
               href={`/revision-request?code=${encodeURIComponent(codeParam)}`}
               className="mt-8 inline-flex items-center justify-center gap-2 rounded-full px-8 py-3.5 text-base font-semibold text-white transition-colors"
-              style={{ backgroundColor: "hsl(275 51% 46%)" }}
+              style={{ backgroundColor: "hsl(267 55% 45%)" }}
             >
               Go to Revision Form <ArrowRight size={16} />
             </a>
@@ -167,7 +167,7 @@ const RevisionPaymentContent = () => {
             onClick={handlePay}
             disabled={isSubmitting}
             className="w-full flex items-center justify-center gap-2 rounded-full px-8 py-4 text-base font-bold text-white transition-all hover:opacity-90 disabled:opacity-50"
-            style={{ backgroundColor: "hsl(275 51% 46%)" }}
+            style={{ backgroundColor: "hsl(267 55% 45%)" }}
           >
             <CreditCard size={18} />
             {isSubmitting ? "Redirecting…" : "Pay $45 USD & Continue"}

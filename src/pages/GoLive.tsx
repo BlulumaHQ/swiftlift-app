@@ -289,7 +289,7 @@ const GoLiveContent = () => {
                 <a
                   href="/deployment"
                   className="mt-8 inline-flex items-center justify-center rounded-full px-8 py-3.5 text-base font-semibold text-white"
-                  style={{ backgroundColor: "#7F37AE" }}
+                  style={{ backgroundColor: "#6A33B0" }}
                 >
                   Set up Care Plan
                 </a>
@@ -431,7 +431,7 @@ const GoLiveContent = () => {
                   onClick={submit}
                   disabled={submitting}
                   className="w-full inline-flex items-center justify-center gap-2 rounded-full px-8 py-4 text-base font-semibold text-white disabled:opacity-50"
-                  style={{ backgroundColor: "#7F37AE" }}
+                  style={{ backgroundColor: "#6A33B0" }}
                 >
                   {submitting ? <Loader2 size={18} className="animate-spin" /> : <Check size={18} />}
                   {submitting ? "Sending…" : "Send my answers"}

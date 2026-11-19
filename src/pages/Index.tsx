@@ -7,6 +7,11 @@ import Header from "@/components/Header";
 import Footer from "@/components/Footer";
 import Preloader from "@/components/Preloader";
 import Portfolio from "@/components/Portfolio";
+import { ScrollShot } from "@/components/ScrollShot";
+import genesBefore from "@/assets/portfolio-genes-before.webp";
+import genesAfter from "@/assets/portfolio-genes-b.webp";
+import a57Before from "@/assets/portfolio-architect57-before.webp";
+import a57After from "@/assets/portfolio-architect57-b.webp";
 import { Check, Plus, Star, ChevronLeft, ChevronRight as ChevronRightIcon, Shield, Loader2, CheckCircle2, Clock, Mail, Copy, Palette, Globe, ArrowRight } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import { externalSupabase as supabase } from "@/lib/externalSupabase";
@@ -53,9 +58,9 @@ const SuccessSection = ({ email, clientId, isDark }: { email: string; clientId?:
       <div className="text-center mb-8">
         <div
           className="w-16 h-16 rounded-full mx-auto mb-5 flex items-center justify-center"
-          style={{ background: "hsl(275 51% 46% / 0.15)" }}
+          style={{ background: "hsl(267 55% 45% / 0.15)" }}
         >
-          <CheckCircle2 size={32} style={{ color: "hsl(275 51% 46%)" }} />
+          <CheckCircle2 size={32} style={{ color: "hsl(267 55% 45%)" }} />
         </div>
         <h2 className={`text-2xl md:text-3xl font-black font-display leading-tight ${isDark ? "text-white" : "text-foreground"}`}>
           {lang === "en" ? "Your Preview Request Is In" : "您的預覽請求已收到"}
@@ -86,7 +91,7 @@ const SuccessSection = ({ email, clientId, isDark }: { email: string; clientId?:
 
       <div className={`rounded-2xl border p-6 space-y-4 ${isDark ? "border-white/15 bg-white/5" : "border-border bg-background"}`}>
         <div className="flex items-center gap-3 text-sm">
-          <Mail size={16} style={{ color: "hsl(275 51% 46%)" }} className="flex-shrink-0" />
+          <Mail size={16} style={{ color: "hsl(267 55% 45%)" }} className="flex-shrink-0" />
           <span className={isDark ? "text-white/70" : "text-muted-foreground"}>
             {lang === "en" ? "Previews will be sent to:" : "預覽將發送至："}{" "}
             <span className={`font-medium ${isDark ? "text-white" : "text-foreground"}`}>{email}</span>
@@ -98,7 +103,7 @@ const SuccessSection = ({ email, clientId, isDark }: { email: string; clientId?:
             lang === "en" ? "Growth Facelift — Conversion Focused" : "Growth Facelift — 轉化導向",
           ].map((label, i) => (
             <div key={i} className="flex items-start gap-3">
-              <CheckCircle2 size={16} className="flex-shrink-0 mt-0.5" style={{ color: "hsl(275 51% 46%)" }} />
+              <CheckCircle2 size={16} className="flex-shrink-0 mt-0.5" style={{ color: "hsl(267 55% 45%)" }} />
               <p className={`text-sm font-semibold ${isDark ? "text-white" : "text-foreground"}`}>{label}</p>
             </div>
           ))}
@@ -116,7 +121,7 @@ const SuccessSection = ({ email, clientId, isDark }: { email: string; clientId?:
           href="/"
           onClick={(e) => { e.preventDefault(); window.scrollTo({ top: 0, behavior: "smooth" }); }}
           className="inline-flex items-center justify-center rounded-full px-8 py-3.5 text-sm font-semibold text-white transition-all hover:opacity-90"
-          style={{ backgroundColor: "hsl(275 51% 46%)" }}
+          style={{ backgroundColor: "hsl(267 55% 45%)" }}
         >
           {lang === "en" ? "Back to Home" : "返回首頁"}
         </a>
@@ -134,7 +139,7 @@ const SuccessSection = ({ email, clientId, isDark }: { email: string; clientId?:
             const Icon = item.icon;
             return (
               <li key={i} className={`flex items-start gap-3 text-sm ${isDark ? "text-white/60" : "text-muted-foreground"}`}>
-                <Icon size={16} className="flex-shrink-0 mt-0.5" style={{ color: "hsl(275 51% 46%)" }} />
+                <Icon size={16} className="flex-shrink-0 mt-0.5" style={{ color: "hsl(267 55% 45%)" }} />
                 {item.text}
               </li>
             );
@@ -149,7 +154,7 @@ const SuccessSection = ({ email, clientId, isDark }: { email: string; clientId?:
             value={cloudLink}
             onChange={(e) => setCloudLink(e.target.value)}
             placeholder="https://drive.google.com/..."
-            className={`w-full rounded-lg border px-4 py-2.5 text-sm focus:outline-none focus:ring-2 transition-colors ${isDark ? "border-white/15 bg-white/5 text-white placeholder:text-white/30 focus:ring-[hsl(275_51%_46%)]/40" : "border-border bg-background text-foreground placeholder:text-muted-foreground/60 focus:ring-[hsl(275,51%,46%)]/40"}`}
+            className={`w-full rounded-lg border px-4 py-2.5 text-sm focus:outline-none focus:ring-2 transition-colors ${isDark ? "border-white/15 bg-white/5 text-white placeholder:text-white/30 focus:ring-[hsl(267_55%_45%)]/40" : "border-border bg-background text-foreground placeholder:text-muted-foreground/60 focus:ring-[hsl(267,55%,45%)]/40"}`}
           />
         </div>
         <p className={`mt-3 text-xs text-center italic ${isDark ? "text-white/30" : "text-muted-foreground"}`}>
@@ -192,16 +197,16 @@ const MultiStepIntake = ({ variant = "hero" }: { variant?: "hero" | "cta" }) => 
   const [submittedClientId, setSubmittedClientId] = useState("");
   const [submitError, setSubmitError] = useState("");
 
-  const isDark = variant === "cta";
+  // Both intake forms now sit in white cards (hero and final CTA), so always use the light styling.
+  const isDark = false;
 
-  const isNarrow = typeof window !== "undefined" && window.innerWidth < 640;
-  const inputBase = isDark
-    ? "w-full rounded-xl border border-white/15 bg-white/5 px-5 py-4 text-sm text-white placeholder:text-white/40 focus:outline-none focus:ring-2 focus:ring-[hsl(275_51%_46%)]/40 focus:border-white/30 transition-all"
-    : "w-full rounded-xl border border-border bg-background px-5 py-4 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-[hsl(275_51%_46%)]/30 focus:border-[hsl(275_51%_46%)] transition-all";
+    const inputBase = isDark
+    ? "w-full rounded-xl border border-white/15 bg-white/5 px-5 py-4 text-sm text-white placeholder:text-white/40 focus:outline-none focus:ring-2 focus:ring-[hsl(267_55%_45%)]/40 focus:border-white/30 transition-all"
+    : "w-full rounded-xl border-[1.5px] border-input bg-[#FBFAF7] px-4 py-3.5 text-base font-medium text-foreground placeholder:text-muted-foreground/70 focus:outline-none focus:ring-2 focus:ring-[hsl(267_55%_45%)]/30 focus:border-[hsl(267_55%_45%)] transition-all";
 
   const selectBase = isDark
-    ? "w-full rounded-xl border border-white/15 bg-white/5 px-5 py-4 text-sm text-white placeholder:text-white/40 focus:outline-none focus:ring-2 focus:ring-[hsl(275_51%_46%)]/40 focus:border-white/30 transition-all [&>option]:bg-[hsl(209_66%_18%)] [&>option]:text-white"
-    : "w-full rounded-xl border border-border bg-background px-5 py-4 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-[hsl(275_51%_46%)]/30 focus:border-[hsl(275_51%_46%)] transition-all";
+    ? "w-full rounded-xl border border-white/15 bg-white/5 px-5 py-4 text-sm text-white placeholder:text-white/40 focus:outline-none focus:ring-2 focus:ring-[hsl(267_55%_45%)]/40 focus:border-white/30 transition-all [&>option]:bg-[hsl(209_66%_18%)] [&>option]:text-white"
+    : "w-full rounded-xl border-[1.5px] border-input bg-[#FBFAF7] px-4 py-3.5 text-base font-medium text-foreground placeholder:text-muted-foreground/70 focus:outline-none focus:ring-2 focus:ring-[hsl(267_55%_45%)]/30 focus:border-[hsl(267_55%_45%)] transition-all";
 
   const normalizeUrl = (val: string): string => {
     let v = val.trim().toLowerCase();
@@ -363,7 +368,7 @@ const MultiStepIntake = ({ variant = "hero" }: { variant?: "hero" | "cta" }) => 
   if (showProcessing) {
     return (
       <div className="flex flex-col items-center justify-center py-12 gap-4">
-        <Loader2 size={32} className="animate-spin" style={{ color: "hsl(275 51% 46%)" }} />
+        <Loader2 size={32} className="animate-spin" style={{ color: "hsl(267 55% 45%)" }} />
         <AnimatePresence mode="wait">
           <motion.p
             key={processingStep}
@@ -382,40 +387,46 @@ const MultiStepIntake = ({ variant = "hero" }: { variant?: "hero" | "cta" }) => 
   if (step === 1) {
     return (
       <form onSubmit={handleStep1} className="w-full">
-        <div className="flex flex-col gap-3">
-          <input
-            type="text"
-            inputMode="url"
-            value={url}
-            onChange={e => { setUrl(e.target.value); setUrlError(""); }}
-            placeholder={isNarrow ? (lang === "en" ? "yourbusiness.com" : "您的網址，如 yourbusiness.com") : (lang === "en" ? "Enter your website URL (e.g. yourbusiness.com)" : "輸入您的網站網址（例如 yourbusiness.com）")}
-            className={`${inputBase}${urlError ? " border-red-400 focus:ring-red-400/30" : ""}`}
-            onKeyDown={e => { if (e.key === "Enter") { e.preventDefault(); submitStep1(); } }}
-          />
-          {urlError && <p className={`text-xs ${isDark ? "text-red-300" : "text-destructive"}`}>{urlError}</p>}
-          <input
-            type="email"
-            inputMode="email"
-            autoComplete="email"
-            value={email}
-            onChange={e => { setEmail(e.target.value); setEmailError(""); }}
-            placeholder={lang === "en" ? "Your email (where we send your previews)" : "您的電子郵箱（預覽寄送地址）"}
-            className={`${inputBase}${emailError ? " border-red-400 focus:ring-red-400/30" : ""}`}
-          />
-          {emailError && <p className={`text-xs ${isDark ? "text-red-300" : "text-destructive"}`}>{emailError}</p>}
-          <button
-            type="submit"
-            className="w-full rounded-full py-4 px-5 sm:px-8 text-sm font-bold leading-snug text-white text-balance transition-all hover:opacity-90 hover:scale-[1.01]"
-            style={{ background: "hsl(275 51% 46%)" }}
-          >
-            {lang === "en" ? "Get My 2 Free Previews" : "獲取我的2個免費預覽"}
-          </button>
-          <p className={`text-[11px] text-center mt-2 ${isDark ? "text-white/35" : "text-muted-foreground/60"}`}>
-            {lang === "en"
-              ? "No credit card · No calls · Just your URL & email"
-              : "無需信用卡 · 無需通話 · 只需網址和郵箱"}
-          </p>
+        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+          <label className="flex flex-col gap-1.5 text-xs font-semibold text-muted-foreground">
+            {lang === "en" ? "Your website" : "您的網站"}
+            <input
+              type="text"
+              inputMode="url"
+              value={url}
+              onChange={e => { setUrl(e.target.value); setUrlError(""); }}
+              placeholder="yourbusiness.com"
+              className={`${inputBase}${urlError ? " border-red-400 focus:ring-red-400/30" : ""}`}
+              onKeyDown={e => { if (e.key === "Enter") { e.preventDefault(); submitStep1(); } }}
+            />
+            {urlError && <span className="text-xs font-normal text-destructive">{urlError}</span>}
+          </label>
+          <label className="flex flex-col gap-1.5 text-xs font-semibold text-muted-foreground">
+            {lang === "en" ? "Your email" : "您的電子郵箱"}
+            <input
+              type="email"
+              inputMode="email"
+              autoComplete="email"
+              value={email}
+              onChange={e => { setEmail(e.target.value); setEmailError(""); }}
+              placeholder="you@business.com"
+              className={`${inputBase}${emailError ? " border-red-400 focus:ring-red-400/30" : ""}`}
+            />
+            {emailError && <span className="text-xs font-normal text-destructive">{emailError}</span>}
+          </label>
         </div>
+        <button
+          type="submit"
+          className="sl-cta mt-4 flex min-h-14 w-full items-center justify-center gap-2 rounded-2xl px-5 py-4 font-display text-[1.05rem] font-extrabold leading-snug text-balance"
+        >
+          {lang === "en" ? "Get My 2 Free Previews" : "獲取我的2個免費預覽"}
+          <ArrowRight size={20} strokeWidth={2.6} aria-hidden="true" />
+        </button>
+        <p className="mt-3 text-center text-xs text-muted-foreground">
+          {lang === "en"
+            ? "No credit card · No calls · Just your URL & email"
+            : "無需信用卡 · 無需通話 · 只需網址和郵箱"}
+        </p>
       </form>
     );
   }
@@ -475,8 +486,7 @@ const MultiStepIntake = ({ variant = "hero" }: { variant?: "hero" | "cta" }) => 
           <button
             type="submit"
             disabled={submitting}
-            className={`flex-1 rounded-full py-3.5 px-4 sm:px-8 text-sm font-bold leading-snug text-white transition-all hover:opacity-90 ${submitting ? "opacity-70 pointer-events-none" : ""}`}
-            style={{ background: "hsl(275 51% 46%)" }}
+            className={`sl-cta flex-1 rounded-2xl py-3.5 px-4 sm:px-8 font-display text-base font-extrabold leading-snug ${submitting ? "opacity-70 pointer-events-none" : ""}`}
           >
             {submitting ? (lang === "en" ? "Sending..." : "發送中...") : (lang === "en" ? "Get My 2 Free Previews" : "獲取我的2個免費預覽")}
           </button>
@@ -488,40 +498,34 @@ const MultiStepIntake = ({ variant = "hero" }: { variant?: "hero" | "cta" }) => 
 
 /* ── Guarantee badge ── */
 const GuaranteeBadge = ({ lang, dark, className = "" }: { lang: string; dark?: boolean; className?: string }) => (
-  <div className={`flex items-center justify-center gap-3 text-left ${className}`}>
-    <div className={`w-11 h-11 rounded-full flex items-center justify-center flex-shrink-0 border-2 ${dark ? "border-[hsl(275_51%_60%)]" : "border-[hsl(275_51%_46%)]"}`}>
-      <Shield size={20} style={{ color: dark ? "hsl(275 51% 70%)" : "hsl(275 51% 46%)" }} />
-    </div>
-    <div>
-      <p className={`text-sm font-bold ${dark ? "text-white" : "text-foreground"}`}>
-        {lang === "en" ? "100% Satisfaction Guarantee" : "100% 滿意保證"}
-      </p>
-      <p className={`text-xs ${dark ? "text-white/60" : "text-muted-foreground"}`}>
-        {lang === "en" ? "Preview first. Pay only if you love it." : "先看預覽。喜歡才付款。"}
-      </p>
-    </div>
+  <div className={`flex flex-wrap items-center justify-center gap-x-2 gap-y-1 text-center text-[0.95rem] ${className}`}>
+    <Shield size={20} strokeWidth={2.2} aria-hidden="true" style={{ color: dark ? "hsl(var(--highlight))" : "hsl(var(--accent-purple))" }} />
+    <span className={`font-bold ${dark ? "text-white" : "text-foreground"}`}>
+      {lang === "en" ? "100% Satisfaction Guarantee" : "100% 滿意保證"}
+    </span>
+    <span className={dark ? "text-white/70" : "text-muted-foreground"}>
+      · {lang === "en" ? "Preview first. Pay only if you love it." : "先看預覽。喜歡才付款。"}
+    </span>
   </div>
 );
 
-/* ── Founder photo (falls back to initials until /images/sony-lin.jpg is added) ── */
-const FounderPhoto = () => {
+/* ── Founder photo (falls back to initials if /images/sony-lin.jpg is missing) ── */
+const FounderPhoto = ({ size = "lg" }: { size?: "sm" | "lg" }) => {
   const [failed, setFailed] = useState(false);
+  const cls = size === "sm"
+    ? "w-10 h-10 rounded-full border-2 border-white shadow-[0_0_0_1px_hsl(var(--border))]"
+    : "w-36 h-36 rounded-3xl -rotate-3 shadow-[0_14px_30px_-14px_rgba(14,20,36,0.45)]";
   return failed ? (
-    <div
-      className="w-28 h-28 rounded-full flex items-center justify-center text-2xl font-black text-white flex-shrink-0"
-      style={{ background: "linear-gradient(135deg, hsl(275 51% 46%), hsl(214 58% 50%))" }}
-    >
-      SL
-    </div>
+    <div className={`${cls} flex flex-shrink-0 items-center justify-center bg-[hsl(var(--accent-purple))] font-display font-black text-white`}>SL</div>
   ) : (
     <img
       src="/images/sony-lin.jpg"
       alt="Sony Lin, founder of SwiftLift"
-      width={112}
-      height={112}
-      loading="lazy"
+      width={size === "sm" ? 40 : 144}
+      height={size === "sm" ? 40 : 144}
+      loading={size === "sm" ? "eager" : "lazy"}
       onError={() => setFailed(true)}
-      className="w-28 h-28 rounded-full object-cover flex-shrink-0 shadow-md"
+      className={`${cls} flex-shrink-0 object-cover`}
     />
   );
 };
@@ -544,16 +548,15 @@ const StickyMobileCta = () => {
   }, []);
   return (
     <div
-      className={`md:hidden fixed inset-x-0 bottom-0 z-40 px-4 pt-3 bg-background/95 backdrop-blur border-t border-border transition-transform duration-300 ${show ? "translate-y-0" : "translate-y-full"}`}
-      style={{ paddingBottom: "max(0.75rem, env(safe-area-inset-bottom))" }}
+      className={`md:hidden fixed inset-x-0 bottom-0 z-40 px-4 pt-3 bg-[hsl(var(--paper)/0.96)] backdrop-blur border-t border-border transition-transform duration-300 ${show ? "translate-y-0" : "translate-y-full"}`}
+      style={{ paddingBottom: "max(0.9rem, env(safe-area-inset-bottom))" }}
       aria-hidden={!show}
     >
       <button
         type="button"
         tabIndex={show ? 0 : -1}
         onClick={() => document.getElementById("contact")?.scrollIntoView({ behavior: "smooth" })}
-        className="w-full rounded-full py-3.5 px-5 text-sm font-bold text-white leading-snug"
-        style={{ background: "hsl(275 51% 46%)" }}
+        className="sl-cta w-full min-h-[52px] rounded-2xl px-5 font-display text-base font-extrabold leading-snug"
       >
         {lang === "en" ? "Get My 2 Free Previews" : "獲取我的2個免費預覽"}
       </button>
@@ -561,50 +564,60 @@ const StickyMobileCta = () => {
   );
 };
 
-/* ── Before → After (drop images into /public/images/before-after/before.jpg & after.jpg) ── */
-const BeforeAfterImage = ({ src, label, after }: { src: string; label: string; after?: boolean }) => {
-  const [failed, setFailed] = useState(false);
+/* ── Before / After tags ── */
+const ShotTag = ({ after, lang, className = "" }: { after?: boolean; lang: string; className?: string }) => (
+  <span
+    className={`pointer-events-none absolute z-10 rounded-full px-3 py-1 font-display text-[0.72rem] font-extrabold tracking-[0.08em] ${after ? "bg-[hsl(var(--accent-purple))] text-white" : "border border-input bg-white text-foreground"} ${className}`}
+  >
+    {after ? (lang === "en" ? "AFTER" : "改版後") : (lang === "en" ? "BEFORE" : "改版前")}
+  </span>
+);
+
+/* ── Hero visual: stacked before / after with the 48-hour sticker ── */
+const HeroBeforeAfter = () => {
+  const { lang } = useLanguage();
   return (
-    <figure className="flex-1 min-w-0">
-      <div
-        className={`relative aspect-[4/3] rounded-2xl overflow-hidden border ${after ? "border-[hsl(275_51%_46%)] shadow-xl" : "border-border"}`}
-        style={{ background: after ? "hsl(275 51% 46% / 0.08)" : "#E5E7EB" }}
-      >
-        {!failed && (
-          <img
-            src={src}
-            alt={label}
-            loading="lazy"
-            onError={() => setFailed(true)}
-            className={`absolute inset-0 w-full h-full object-cover object-top ${after ? "" : "grayscale-[60%]"}`}
-          />
-        )}
-        <span
-          className={`absolute top-3 left-3 rounded-full px-3 py-1 text-xs font-bold tracking-wide ${after ? "text-white" : "text-foreground bg-white/90"}`}
-          style={after ? { background: "hsl(275 51% 46%)" } : {}}
-        >
-          {label}
-        </span>
+    <div className="relative mx-auto h-[380px] w-full max-w-[560px] sm:h-[520px]" aria-label={lang === "en" ? "Gene's Sausage Shop website, before and after" : "Gene's Sausage Shop 網站改版前後"} role="img">
+      <figure className="absolute left-0 top-6 m-0 w-[58%] -rotate-[4deg] rounded-2xl bg-white p-2 shadow-[0_12px_30px_-12px_rgba(14,20,36,0.35)]">
+        <img src={genesBefore} alt="" width={720} height={900} className="block h-[270px] w-full rounded-xl object-cover object-top grayscale-[85%] contrast-[0.9] sm:h-[380px]" />
+        <ShotTag lang={lang} className="left-4 top-4" />
+      </figure>
+      <figure className="absolute right-0 top-0 m-0 w-[66%] rotate-2 rounded-[18px] border-2 border-[hsl(var(--accent-purple))] bg-white p-2 shadow-[0_30px_60px_-20px_hsl(var(--accent-purple)/0.45)]">
+        <img src={genesAfter} alt="" width={720} height={900} className="block h-[320px] w-full rounded-xl object-cover object-top sm:h-[470px]" />
+        <ShotTag after lang={lang} className="left-4 top-4" />
+      </figure>
+      <div aria-hidden="true" className="absolute bottom-0 left-[30%] flex h-[88px] w-[88px] -rotate-[10deg] flex-col items-center justify-center rounded-full bg-[hsl(var(--highlight))] font-display italic leading-none text-foreground shadow-[0_10px_24px_-10px_rgba(14,20,36,0.4)] sm:h-28 sm:w-28">
+        <span className="text-[1.9rem] font-black sm:text-[2.4rem]">48</span>
+        <span className="mt-0.5 text-[0.62rem] font-extrabold tracking-[0.06em] sm:text-xs">{lang === "en" ? "HOURS" : "小時"}</span>
       </div>
-    </figure>
+    </div>
   );
 };
 
+/* ── Before → After section (hover to scroll the full page) ── */
 const BeforeAfter = () => {
   const { lang } = useLanguage();
   return (
-    <section className="py-14 md:py-20 bg-white">
-      <div className="max-w-5xl mx-auto px-6">
-        <h2 className="text-center text-[clamp(1.6rem,3.5vw,2.4rem)] lg:text-[2rem] font-black text-foreground font-display">
-          {lang === "en" ? "Same Business. Brand-New Website." : "同一家店，全新的網站。"}
+    <section className="bg-[hsl(var(--ink))] px-6 py-20 text-white md:py-24">
+      <div className="mx-auto max-w-6xl">
+        <h2 className="text-center font-display text-[clamp(1.9rem,4vw,2.9rem)] font-black leading-tight">
+          {lang === "en" ? <>Same Business. <span className="italic text-[hsl(var(--highlight))]">Brand-New Website.</span></> : <>同一家店，<span className="italic text-[hsl(var(--highlight))]">全新的網站。</span></>}
         </h2>
-        <p className="mt-3 text-center text-muted-foreground text-sm md:text-base max-w-xl mx-auto">
+        <p className="mx-auto mt-3 max-w-xl text-center text-base text-white/75 md:text-lg">
           {lang === "en" ? "We keep your content and give your site the facelift it deserves." : "保留您的內容，給網站應有的改頭換面。"}
         </p>
-        <div className="mt-10 flex flex-col sm:flex-row items-center gap-4 sm:gap-6">
-          <BeforeAfterImage src="/images/before-after/before.jpg" label={lang === "en" ? "BEFORE" : "改版前"} />
-          <ArrowRight size={28} className="flex-shrink-0 rotate-90 sm:rotate-0" style={{ color: "hsl(275 51% 46%)" }} />
-          <BeforeAfterImage src="/images/before-after/after.jpg" label={lang === "en" ? "AFTER" : "改版後"} after />
+        <div className="mt-12 flex flex-col items-center gap-5 md:flex-row md:gap-6">
+          <figure className="ss-shot-card relative m-0 w-full min-w-0 flex-1 overflow-hidden rounded-2xl bg-white/5 [&_img]:grayscale-[85%]">
+            <ScrollShot src={a57Before} alt={lang === "en" ? "Architect 57 website before the SwiftLift facelift" : "Architect 57 改版前的網站"} wide />
+            <ShotTag lang={lang} className="left-4 top-4" />
+          </figure>
+          <div aria-hidden="true" className="flex h-14 w-14 flex-shrink-0 rotate-90 items-center justify-center rounded-full bg-[hsl(var(--highlight))] text-foreground md:rotate-0">
+            <ArrowRight size={26} strokeWidth={2.8} />
+          </div>
+          <figure className="ss-shot-card relative m-0 w-full min-w-0 flex-1 overflow-hidden rounded-2xl outline outline-[3px] outline-offset-4 outline-[#8B5CF6]">
+            <ScrollShot src={a57After} alt={lang === "en" ? "Architect 57 website after the SwiftLift facelift" : "Architect 57 改版後的網站"} wide />
+            <ShotTag after lang={lang} className="left-4 top-4" />
+          </figure>
         </div>
       </div>
     </section>
@@ -761,164 +774,148 @@ const IndexContent = ({ variant = "home" }: { variant?: "home" | "start" }) => {
   const faqItems = HOME_FAQS.map((f) => ({ q: f.q[lang], a: f.a[lang] }));
 
 
+  const sectionTitle = "font-display text-[clamp(1.9rem,4vw,2.9rem)] font-black leading-[1.1] tracking-tight text-foreground";
+  const check = (color: string) => <Check size={18} strokeWidth={2.8} className="mt-0.5 flex-shrink-0" style={{ color }} aria-hidden="true" />;
+
   return (
-    <main>
+    <main className="bg-background">
       {/* ═══ 1. HERO ═══ */}
-      <section
-        id="contact"
-        className="relative pt-28 pb-16 md:pt-36 md:pb-24 overflow-hidden"
-        style={{ background: "#0f172a" }}
-      >
-
-        <div className="relative z-10 max-w-6xl mx-auto px-6">
-          <div className="grid grid-cols-1 lg:grid-cols-[3fr_2fr] gap-10 lg:gap-14 items-center">
-            {/* Left: Copy */}
-            <div className="text-white pt-2 lg:pt-6">
-              <h1 className="text-[1.85rem] md:text-[clamp(2.8rem,5.5vw,4.2rem)] lg:text-[clamp(2.8rem,4.5vw,3.6rem)] font-black leading-[1.08] lg:leading-[1.15] font-display tracking-tight">
-                {variant === "start"
-                  ? (lang === "en" ? (<>Your Website Exists.<br />Your Phone Should Be<br /><span className="text-transparent bg-clip-text bg-gradient-to-r from-[hsl(var(--accent-purple))] to-[hsl(210,100%,65%)]">Ringing More.</span></>) : (<>您的網站已存在。<br /><span className="text-transparent bg-clip-text bg-gradient-to-r from-[hsl(var(--accent-purple))] to-[hsl(210,100%,65%)]">您的電話應該響更多。</span></>))
-                  : (lang === "en" ? (<>Your Old Website Is Costing You Customers.<br /><span className="text-transparent bg-clip-text bg-gradient-to-r from-[hsl(var(--accent-purple))] to-[hsl(210,100%,65%)]">Get a Facelift in 48 Hours.</span></>) : (<>您的舊網站正在讓您流失客戶。<br /><span className="text-transparent bg-clip-text bg-gradient-to-r from-[hsl(var(--accent-purple))] to-[hsl(210,100%,65%)]">48 小時幫您改頭換面。</span></>))
-                }
-              </h1>
-
-              <div className="mt-5 lg:mt-7 space-y-4 max-w-lg">
-                <p className="text-lg md:text-xl lg:text-[1.25rem] font-medium text-white leading-[1.5] lg:leading-[1.6]">
-                  {variant === "start"
-                    ? (lang === "en"
-                      ? "If your website isn't bringing in new customers every week, it's not doing its job. We rebuild what you already have — 2 complete, live versions ready in 48 hours. You pick the one you love. You only pay then."
-                      : "如果您的網站沒有每週帶來新客戶，那它就沒有發揮作用。我們重建您已有的網站——48小時內準備好2個完整的即時版本。您選擇喜歡的那個。然後才付款。")
-                    : (lang === "en"
-                      ? "We rebuild your outdated site into 2 new versions. Love one? Pay. Don't? Walk away free."
-                      : "我們把您過時的網站重建成 2 個全新版本。喜歡就付款，不喜歡就免費離開。")
-                  }
-                </p>
-              </div>
-
-              <p className="mt-4 text-sm text-white/50 lg:text-left text-center">
-                {lang === "en"
-                  ? "Built by a designer with 500+ websites and 20 years of experience"
-                  : "由打造過500+個網站、擁有20年經驗的設計師親手製作"}
-              </p>
-
+      <section id="contact" className="relative overflow-hidden px-6 pb-16 pt-28 md:pb-20 md:pt-36">
+        <div className="mx-auto grid max-w-6xl grid-cols-1 items-center gap-12 lg:grid-cols-[1.08fr_1fr] lg:gap-14">
+          <div className="min-w-0">
+            <div className="inline-flex items-center gap-2 rounded-full border border-border bg-white py-1.5 pl-1.5 pr-3.5 text-[0.8rem] font-semibold">
+              <span className="flex-shrink-0 whitespace-nowrap rounded-full bg-[hsl(var(--highlight))] px-2.5 py-0.5 font-display font-extrabold italic">{lang === "en" ? "48 HRS" : "48 小時"}</span>
+              <span>{lang === "en" ? "Your 2 free previews — in 48 hours" : "48小時內收到您的2個免費預覽"}</span>
             </div>
+            <h1 className="mt-5 font-display text-[2.15rem] font-black leading-[1.04] tracking-[-0.02em] text-foreground sm:text-5xl lg:text-[3.15rem] xl:text-[3.4rem]">
+              {variant === "start"
+                ? (lang === "en" ? <>Your Website Exists. Your Phone Should Be <span className="sl-highlight italic text-[hsl(var(--accent-purple))]">Ringing More.</span></> : <>您的網站已存在。<span className="sl-highlight italic text-[hsl(var(--accent-purple))]">您的電話應該響更多。</span></>)
+                : (lang === "en" ? <>Your Old Website Is Costing You Customers. <span className="sl-highlight italic text-[hsl(var(--accent-purple))]">Get a Facelift in 48 Hours.</span></> : <>您的舊網站正在讓您流失客戶。<span className="sl-highlight italic text-[hsl(var(--accent-purple))]">48 小時幫您改頭換面。</span></>)}
+            </h1>
+            <p className="mt-5 max-w-xl text-lg leading-relaxed text-foreground/80 md:text-xl">
+              {variant === "start"
+                ? (lang === "en"
+                  ? "If your website isn't bringing in new customers every week, it's not doing its job. We rebuild what you already have — 2 complete, live versions ready in 48 hours. You pick the one you love. You only pay then."
+                  : "如果您的網站沒有每週帶來新客戶，那它就沒有發揮作用。我們重建您已有的網站——48小時內準備好2個完整的即時版本。您選擇喜歡的那個。然後才付款。")
+                : (lang === "en"
+                  ? "We rebuild your outdated site into 2 new versions. Love one? Pay. Don't? Walk away free."
+                  : "我們把您過時的網站重建成 2 個全新版本。喜歡就付款，不喜歡就免費離開。")}
+            </p>
 
-            {/* Right: Intake Form */}
-            <div className="bg-background rounded-2xl p-7 md:p-10 border border-border/50 shadow-[0_25px_60px_-12px_rgba(0,0,0,0.35)] lg:mt-2">
-              <h3 className="text-lg font-bold text-foreground font-display mb-1">
-                {lang === "en" ? "Your 2 free previews — in 48 hours" : "48小時內收到您的2個免費預覽"}
-              </h3>
-              <p className="text-xs text-muted-foreground mb-5">
+            <div className="mt-7 max-w-xl rounded-[20px] border border-border bg-white p-4 shadow-[0_18px_40px_-18px_rgba(14,20,36,0.25)] sm:p-5">
+              <p className="mb-3 text-sm text-muted-foreground">
                 {lang === "en" ? "See your new website before you pay. Takes 30 seconds." : "付款前先看到新網站。只需30秒。"}
               </p>
               <MultiStepIntake variant="hero" />
             </div>
+
+            <div className="mt-5 flex flex-col gap-3 text-sm text-foreground/75 sm:flex-row sm:flex-wrap sm:items-center sm:gap-x-7">
+              <div className="flex items-center gap-2.5">
+                <FounderPhoto size="sm" />
+                <span>{lang === "en" ? "Built by a designer with 500+ websites and 20 years of experience" : "由打造過500+個網站、擁有20年經驗的設計師親手製作"}</span>
+              </div>
+              <div className="flex items-center gap-2 font-semibold text-foreground">
+                <Shield size={18} strokeWidth={2.2} className="text-[hsl(var(--accent-purple))]" aria-hidden="true" />
+                {lang === "en" ? "Preview first. Pay only if you love it." : "先看預覽。喜歡才付款。"}
+              </div>
+            </div>
           </div>
+
+          <HeroBeforeAfter />
         </div>
       </section>
 
-      {/* ═══ BEFORE → AFTER ═══ */}
+      {/* ═══ 2. BEFORE → AFTER ═══ */}
       <BeforeAfter />
 
-      {/* ═══ 2. HOW IT WORKS ═══ */}
-      <section id="process" className="py-16 md:py-24 lg:py-28" style={{ background: "#F5F5F5" }}>
-        <div className="max-w-6xl mx-auto px-6 text-center">
-          <h2 className="text-[clamp(1.8rem,4vw,2.8rem)] lg:text-[2rem] font-black text-foreground font-display">
-            {lang === "en" ? "How It Works" : "如何運作"}
-          </h2>
-          <p className="mt-6 text-muted-foreground text-sm md:text-base text-center max-w-2xl mx-auto leading-relaxed">
-            {lang === "en"
-              ? "6 simple steps. You only pay at step 5 — once you're happy."
-              : "6 個簡單步驟。您只在第 5 步、滿意之後才付款。"}
-          </p>
-
-          <ol className="mt-12 md:mt-16 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 text-left">
+      {/* ═══ 3. HOW IT WORKS ═══ */}
+      <section id="process" className="px-6 py-20 md:py-28">
+        <div className="mx-auto max-w-6xl">
+          <div className="flex flex-col gap-4 md:flex-row md:items-end md:justify-between md:gap-10">
+            <div>
+              <p className="sl-eyebrow text-sm">{lang === "en" ? "The process" : "流程"}</p>
+              <h2 className={`mt-2 ${sectionTitle}`}>{lang === "en" ? "How It Works" : "如何運作"}</h2>
+            </div>
+            <p className="max-w-md text-base text-foreground/75 md:text-lg">
+              {lang === "en" ? "6 simple steps. You only pay at step 5 — once you're happy." : "6 個簡單步驟。您只在第 5 步、滿意之後才付款。"}
+            </p>
+          </div>
+          <ol className="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 md:mt-12">
             {howSteps.map((s, i) => (
               <li
                 key={i}
-                className={`rounded-2xl border bg-background p-5 md:p-6 flex items-start gap-4 ${s.highlight ? "border-[hsl(275_51%_46%)] shadow-md" : "border-border"}`}
+                className={`flex flex-col gap-2 rounded-[20px] border p-6 md:min-h-[200px] md:p-7 ${s.highlight ? "border-[hsl(var(--ink))] bg-[hsl(var(--ink))] text-white" : "border-border bg-white text-foreground"}`}
               >
-                <div
-                  className="w-12 h-12 rounded-full flex items-center justify-center text-base font-black text-white flex-shrink-0 shadow-md"
-                  style={{ background: "linear-gradient(135deg, hsl(275 51% 46%), hsl(214 58% 50%))" }}
-                >
-                  {i + 1}
+                <div className="flex items-center justify-between gap-3">
+                  <span className={`font-display text-[2.6rem] font-black italic leading-none md:text-5xl ${s.highlight ? "text-[hsl(var(--highlight))]" : "text-[hsl(var(--accent-purple))]"}`}>
+                    {String(i + 1).padStart(2, "0")}
+                  </span>
+                  {s.highlight && (
+                    <span className="rounded-full bg-[hsl(var(--highlight))] px-2.5 py-1 font-display text-[0.7rem] font-extrabold tracking-[0.06em] text-foreground">
+                      {lang === "en" ? "YOU PAY HERE" : "在這一步付款"}
+                    </span>
+                  )}
                 </div>
-                <div className="pt-0.5">
-                  <h3 className="text-[17px] md:text-lg font-bold text-foreground font-display leading-snug">{s.title}</h3>
-                  <p className="mt-1.5 text-[15px] text-muted-foreground leading-relaxed">{s.desc}</p>
-                </div>
+                <h3 className="mt-2 font-display text-xl font-extrabold leading-snug">{s.title}</h3>
+                <p className={`text-[0.95rem] leading-relaxed ${s.highlight ? "text-white/75" : "text-foreground/75"}`}>{s.desc}</p>
               </li>
             ))}
           </ol>
         </div>
       </section>
 
+      {/* ═══ 4. PORTFOLIO (hover a preview to scroll the whole homepage) ═══ */}
       <Portfolio variant="home" />
 
-      {/* ═══ PRICING SECTION ═══ */}
-      <section id="pricing" className="py-16 md:py-24 lg:py-28 bg-white">
-        <div className="max-w-5xl mx-auto px-6">
-          {/* Headline */}
-          <h2 className="text-[clamp(1.8rem,4vw,2.8rem)] lg:text-[2rem] font-black text-foreground font-display text-center">
-            {lang === "en" ? "Simple, Transparent Pricing" : "簡單透明的定價"}
-          </h2>
-          <p className="mt-4 text-base md:text-lg text-muted-foreground text-center max-w-2xl mx-auto leading-relaxed">
+      {/* ═══ 5. PRICING ═══ */}
+      <section id="pricing" className="px-6 py-20 md:py-28">
+        <div className="mx-auto max-w-5xl">
+          <h2 className={`text-center ${sectionTitle}`}>{lang === "en" ? "Simple, Transparent Pricing" : "簡單透明的定價"}</h2>
+          <p className="mx-auto mt-4 max-w-2xl text-center text-base text-foreground/75 md:text-lg">
             {lang === "en"
               ? "You'll see both versions. Pick one — pay only that price, only when you're happy."
               : "兩個版本您都會看到。選一個——只付那個價格，而且滿意了才付。"}
           </p>
-          <p className="mt-3 text-sm text-muted-foreground text-center">
+          <p className="mt-3 text-center text-sm text-muted-foreground">
             {lang === "en" ? "Typical agency redesign: " : "一般 agency 改版："}
             <span className="line-through">$1,500–3,000</span>
           </p>
 
-          {/* 2-column pricing table */}
-          <div className="mt-12 grid grid-cols-1 md:grid-cols-2 gap-6 md:gap-8 items-stretch">
-
-            {/* Version A */}
-            <div className="order-1 rounded-2xl border border-border bg-background p-6 md:p-8 flex flex-col transition-shadow duration-300 hover:shadow-md">
-              <h3 className="font-bold text-foreground font-display text-xl">{versionA.title}</h3>
-              <p className="text-sm font-medium mt-2" style={{ color: "hsl(275 51% 46%)" }}>{versionA.description}</p>
-              <p className="text-4xl font-black text-foreground font-display mt-3">{versionA.price}</p>
-              <ul className="mt-6 space-y-3 flex-1">
+          <div className="mt-12 grid grid-cols-1 items-stretch gap-6 md:grid-cols-2 md:gap-7">
+            {/* Classic */}
+            <div className="order-2 flex flex-col rounded-3xl border border-border bg-white p-7 md:order-1 md:p-9">
+              <p className="font-display text-xs font-extrabold italic tracking-[0.08em] text-muted-foreground">{lang === "en" ? "VERSION A" : "版本 A"}</p>
+              <h3 className="mt-1.5 font-display text-[1.75rem] font-black">{versionA.title}</h3>
+              <p className="mt-2 text-[0.95rem] text-foreground/75">{versionA.description}</p>
+              <p className="mt-6 font-display text-5xl font-black leading-none">$299 <span className="text-base font-bold text-muted-foreground">USD</span></p>
+              <ul className="mt-7 flex-1 space-y-3">
                 {(showAllFeatures ? versionA.features : versionA.features.slice(0, 5)).map((f, fi) => (
-                  <li key={fi} className="flex items-start gap-2.5 text-[15px] text-muted-foreground">
-                    <Check size={16} className="flex-shrink-0 mt-0.5" style={{ color: "hsl(275 51% 46%)" }} />
-                    {f}
-                  </li>
+                  <li key={fi} className="flex items-start gap-2.5 text-[0.95rem]">{check("hsl(var(--accent-purple))")}{f}</li>
                 ))}
               </ul>
             </div>
-
-            {/* Version B — Most Popular */}
-            <div className="order-2 relative rounded-2xl border border-border bg-background p-6 md:p-8 flex flex-col transition-shadow duration-300 hover:shadow-md">
-              <div
-                className="absolute -top-3.5 left-1/2 -translate-x-1/2 px-4 py-1 rounded-full text-xs font-bold text-white tracking-wide"
-                style={{ backgroundColor: "hsl(275 51% 46%)" }}
-              >
+            {/* Growth — Most Popular */}
+            <div className="relative order-1 flex flex-col rounded-3xl bg-[hsl(var(--ink))] p-7 text-white shadow-[0_30px_60px_-24px_hsl(var(--accent-purple)/0.6)] md:order-2 md:p-9">
+              <span className="absolute -top-3.5 right-7 rounded-full bg-[hsl(var(--highlight))] px-3.5 py-1.5 font-display text-xs font-black italic tracking-[0.06em] text-foreground">
                 {lang === "en" ? "MOST POPULAR" : "最受歡迎"}
-              </div>
-              <h3 className="font-bold text-foreground font-display text-xl mt-2">{versionB.title}</h3>
-              <p className="text-sm font-medium mt-2" style={{ color: "hsl(275 51% 46%)" }}>{versionB.description}</p>
-              <p className="text-4xl font-black text-foreground font-display mt-3">{versionB.price}</p>
-              <ul className="mt-6 space-y-3 flex-1">
+              </span>
+              <p className="font-display text-xs font-extrabold italic tracking-[0.08em] text-[#C4B1EE]">{lang === "en" ? "VERSION B" : "版本 B"}</p>
+              <h3 className="mt-1.5 font-display text-[1.75rem] font-black">{versionB.title}</h3>
+              <p className="mt-2 text-[0.95rem] text-white/75">{versionB.description}</p>
+              <p className="mt-6 font-display text-5xl font-black leading-none">$499 <span className="text-base font-bold text-white/60">USD</span></p>
+              <ul className="mt-7 flex-1 space-y-3">
                 {(showAllFeatures ? versionB.features : versionB.features.slice(0, 5)).map((f, fi) => (
-                  <li key={fi} className="flex items-start gap-2.5 text-[15px] text-muted-foreground">
-                    <Check size={16} className="flex-shrink-0 mt-0.5" style={{ color: "hsl(275 51% 46%)" }} />
-                    {f}
-                  </li>
+                  <li key={fi} className="flex items-start gap-2.5 text-[0.95rem]">{check("hsl(var(--highlight))")}{f}</li>
                 ))}
               </ul>
             </div>
           </div>
 
-          {/* Show all features toggle */}
           <div className="mt-6 flex justify-center">
             <button
               type="button"
               onClick={() => setShowAllFeatures((v) => !v)}
-              className="text-sm font-semibold hover:underline py-2 px-3"
-              style={{ color: "hsl(275 51% 46%)" }}
+              className="min-h-11 px-3 py-2 text-sm font-bold text-[hsl(var(--accent-purple))] hover:underline"
             >
               {showAllFeatures
                 ? (lang === "en" ? "Show fewer features" : "收起")
@@ -926,67 +923,51 @@ const IndexContent = ({ variant = "home" }: { variant?: "home" | "start" }) => {
             </button>
           </div>
 
-          {/* Bottom Note */}
-          <p className="text-center text-muted-foreground mt-10 text-sm md:text-base max-w-xl mx-auto leading-relaxed">
+          <p className="mx-auto mt-6 max-w-xl text-center text-[0.95rem] leading-relaxed text-foreground/75">
             {lang === "en"
               ? "Both versions are included in your free preview. Pay only for the one you launch — after your revisions."
               : "兩個版本都包含在免費預覽中。只為您上線的版本付費——而且是修改完之後。"}
           </p>
-
-          {/* Single centered CTA */}
           <div className="mt-6 flex justify-center">
-            <button
-              onClick={scrollToForm}
-              className="inline-flex items-center justify-center rounded-full px-8 py-4 text-base font-semibold text-white transition-all duration-200 active:scale-[0.97]"
-              style={{ backgroundColor: "hsl(275 51% 46%)" }}
-              onMouseEnter={(e) => (e.currentTarget.style.backgroundColor = "hsl(275 51% 38%)")}
-              onMouseLeave={(e) => (e.currentTarget.style.backgroundColor = "hsl(275 51% 46%)")}
-            >
+            <button onClick={scrollToForm} className="sl-cta inline-flex min-h-14 items-center gap-2 rounded-2xl px-8 py-4 font-display text-lg font-extrabold">
               {lang === "en" ? "Get My 2 Free Previews" : "獲取我的2個免費預覽"}
+              <ArrowRight size={20} strokeWidth={2.6} aria-hidden="true" />
             </button>
           </div>
-          <GuaranteeBadge lang={lang} className="mt-8" />
-
-
+          <GuaranteeBadge lang={lang} className="mt-6" />
 
           {/* Hosting */}
-          <div className="mt-16 pt-12 border-t border-border">
-            <h3 className="text-center text-2xl md:text-[1.75rem] font-black text-foreground font-display">
-              {lang === "en" ? "Free Hosting. Forever." : "主機託管，永久免費。"}
+          <div className="mt-16 rounded-[28px] border border-border bg-white px-6 py-10 md:mt-20 md:px-10 md:py-12">
+            <h3 className="text-center font-display text-[1.9rem] font-black md:text-[2.2rem]">
+              {lang === "en" ? <>Free Hosting. <span className="italic text-[hsl(var(--accent-purple))]">Forever.</span></> : <>主機託管，<span className="italic text-[hsl(var(--accent-purple))]">永久免費。</span></>}
             </h3>
-            <p className="mt-3 text-center text-muted-foreground text-base max-w-xl mx-auto leading-relaxed">
+            <p className="mx-auto mt-3 max-w-xl text-center text-base leading-relaxed text-foreground/75">
               {lang === "en" ? "No monthly fees. No lock-in. Need a change? We make it for you." : "沒有月費，不綁約。需要修改？我們幫您改。"}
             </p>
-            <div className="mt-8 grid grid-cols-1 md:grid-cols-2 gap-5 max-w-3xl mx-auto">
-              <div className="rounded-2xl border border-border bg-background p-6 flex flex-col">
-                <h4 className="font-bold text-foreground font-display text-lg">{lang === "en" ? "Free Hosting" : "免費託管"}</h4>
-                <p className="text-3xl font-black text-foreground font-display mt-2">$0</p>
-                <ul className="mt-4 space-y-2 flex-1">
+            <div className="mx-auto mt-8 grid max-w-3xl grid-cols-1 gap-5 md:grid-cols-2">
+              <div className="flex flex-col rounded-[20px] border border-border bg-background p-6">
+                <h4 className="font-display text-lg font-extrabold">{lang === "en" ? "Free Hosting" : "免費託管"}</h4>
+                <p className="mt-1 font-display text-4xl font-black">$0</p>
+                <ul className="mt-4 flex-1 space-y-2.5">
                   {(lang === "en"
                     ? ["Fast, secure hosting with SSL", "Edits: $45 each, whenever you need them", "Want your files? We'll send the full site"]
                     : ["快速、安全、含 SSL", "修改：每次 $45，需要時再付", "想要檔案？我們交付完整網站"]
                   ).map((b, bi) => (
-                    <li key={bi} className="flex items-start gap-2 text-[15px] text-muted-foreground">
-                      <Check size={16} className="flex-shrink-0 mt-0.5" style={{ color: "hsl(275 51% 46%)" }} />
-                      {b}
-                    </li>
+                    <li key={bi} className="flex items-start gap-2 text-[0.95rem] text-foreground/80">{check("hsl(var(--accent-purple))")}{b}</li>
                   ))}
                 </ul>
               </div>
-              <div className="relative rounded-2xl border-2 bg-background p-6 flex flex-col" style={{ borderColor: "hsl(275 51% 46%)" }}>
-                <h4 className="font-bold text-foreground font-display text-lg">Care Plan</h4>
-                <p className="text-3xl font-black text-foreground font-display mt-2">
-                  $135<span className="text-base font-medium text-muted-foreground">/{lang === "en" ? "year" : "年"}</span>
+              <div className="flex flex-col rounded-[20px] border-2 border-[hsl(var(--accent-purple))] bg-white p-6">
+                <h4 className="font-display text-lg font-extrabold">Care Plan</h4>
+                <p className="mt-1 font-display text-4xl font-black">
+                  $135<span className="text-base font-bold text-muted-foreground">/{lang === "en" ? "year" : "年"}</span>
                 </p>
-                <ul className="mt-4 space-y-2 flex-1">
+                <ul className="mt-4 flex-1 space-y-2.5">
                   {(lang === "en"
                     ? ["Everything in Free Hosting", "Up to 2 small edits every month", "Swap photos, update text, change your hero style, re-layout existing pages", "Pays for itself after 3 edits"]
                     : ["包含免費託管的所有內容", "每月最多 2 次小修改", "換照片、改文字、換 Hero 樣式、重新排版現有頁面", "改 3 次就回本"]
                   ).map((b, bi) => (
-                    <li key={bi} className="flex items-start gap-2 text-[15px] text-muted-foreground">
-                      <Check size={16} className="flex-shrink-0 mt-0.5" style={{ color: "hsl(275 51% 46%)" }} />
-                      {b}
-                    </li>
+                    <li key={bi} className="flex items-start gap-2 text-[0.95rem] text-foreground/80">{check("hsl(var(--accent-purple))")}{b}</li>
                   ))}
                 </ul>
                 <p className="mt-4 text-xs text-muted-foreground">
@@ -994,9 +975,9 @@ const IndexContent = ({ variant = "home" }: { variant?: "home" | "start" }) => {
                 </p>
               </div>
             </div>
-            <p className="mt-10 text-center text-sm text-muted-foreground">
+            <p className="mt-8 text-center text-sm text-foreground/75">
               {lang === "en" ? "Need something custom? Our Lead Designer takes custom projects at " : "需要客製化？我們的首席設計師在 "}
-              <a href="https://sonykundesign.com/" target="_blank" rel="noopener noreferrer" className="font-semibold hover:underline" style={{ color: "hsl(275 51% 46%)" }}>
+              <a href="https://sonykundesign.com/" target="_blank" rel="noopener noreferrer" className="font-bold text-[hsl(var(--accent-purple))] hover:underline">
                 Sonykun Design →
               </a>
               {lang === "en" ? "" : " 接客製化專案。"}
@@ -1005,137 +986,102 @@ const IndexContent = ({ variant = "home" }: { variant?: "home" | "start" }) => {
         </div>
       </section>
 
-      {/* ═══ 4. TURN YOUR CURRENT WEBSITE INTO SOMETHING BETTER ═══ */}
-      <section className="pt-4 pb-16 md:pt-8 md:pb-24 lg:pb-28" style={{ background: "#FFFFFF" }}>
-        <div className="max-w-3xl mx-auto px-6 text-center">
-          <h2 className="text-[clamp(1.8rem,4vw,2.8rem)] lg:text-[2rem] font-black text-foreground font-display">
-            {lang === "en" ? (<>We Work With What<br className="md:hidden" /> You Already Have</>) : "我們在您現有的基礎上改版"}
-          </h2>
-          <p className="mt-3 text-base md:text-lg lg:text-base text-muted-foreground max-w-xl mx-auto leading-relaxed">
-            {lang === "en"
-              ? "No need to start from scratch — we upgrade what's already there."
-              : "無需從頭開始——我們升級您已有的內容。"}
-          </p>
-          <p className="mt-4 text-base md:text-lg lg:text-base text-muted-foreground max-w-xl mx-auto leading-relaxed">
-            {lang === "en"
-              ? "Wix and Squarespace give you a template and leave you to figure it out. We don't. We build a custom website for you — no templates, no guesswork. You just choose."
-              : "Wix 和 Squarespace 給你一個模板，然後讓你自己摸索。我們不一樣。我們為您量身打造網站——沒有模板、沒有猜測。您只需選擇。"}
-          </p>
-
-          <ul className="mt-8 space-y-4 text-left max-w-xl mx-auto">
+      {/* ═══ 6. WE WORK WITH WHAT YOU ALREADY HAVE ═══ */}
+      <section className="bg-[hsl(var(--accent-purple))] px-6 py-20 text-white md:py-24">
+        <div className="mx-auto grid max-w-6xl grid-cols-1 items-center gap-10 lg:grid-cols-2 lg:gap-16">
+          <div>
+            <h2 className="font-display text-[clamp(1.9rem,4vw,2.8rem)] font-black leading-[1.1]">
+              {lang === "en" ? "We Work With What You Already Have" : "我們在您現有的基礎上改版"}
+            </h2>
+            <p className="mt-4 text-lg text-white/85">
+              {lang === "en" ? "No need to start from scratch — we upgrade what's already there." : "無需從頭開始——我們升級您已有的內容。"}
+            </p>
+            <p className="mt-3 text-base leading-relaxed text-white/85 md:text-lg">
+              {lang === "en"
+                ? "Wix and Squarespace give you a template and leave you to figure it out. We don't. We build a custom website for you — no templates, no guesswork. You just choose."
+                : "Wix 和 Squarespace 給你一個模板，然後讓你自己摸索。我們不一樣。我們為您量身打造網站——沒有模板、沒有猜測。您只需選擇。"}
+            </p>
+          </div>
+          <ul className="space-y-3">
             {[
-              {
-                en: "We rebuild your existing site into a better version",
-                zh: "將您現有的網站重建為更好的版本",
-              },
-              {
-                en: "No complicated migration or technical hassle",
-                zh: "無複雜的搬遷或技術問題",
-              },
-              {
-                en: "No hidden hosting fees — ever",
-                zh: "永遠不收隱藏代管費用",
-              },
-              {
-                en: "We guide the full setup, launch, and transition",
-                zh: "全程協助設定、上線與切換",
-              },
+              { en: "We rebuild your existing site into a better version", zh: "將您現有的網站重建為更好的版本" },
+              { en: "No complicated migration or technical hassle", zh: "無複雜的搬遷或技術問題" },
+              { en: "No hidden hosting fees — ever", zh: "永遠不收隱藏代管費用" },
+              { en: "We guide the full setup, launch, and transition", zh: "全程協助設定、上線與切換" },
             ].map((item, i) => (
-              <li key={i} className="flex items-start gap-3">
-                <Check size={18} className="flex-shrink-0 mt-1" style={{ color: "hsl(275 51% 46%)" }} />
-                <span className="text-base md:text-lg text-foreground leading-relaxed">
-                  {lang === "en" ? item.en : item.zh}
+              <li key={i} className="flex items-center gap-3 rounded-2xl border border-white/25 bg-white/10 px-5 py-4 text-base font-semibold md:text-lg">
+                <span className="flex h-7 w-7 flex-shrink-0 items-center justify-center rounded-full bg-[hsl(var(--highlight))] text-foreground" aria-hidden="true">
+                  <Check size={16} strokeWidth={3} />
                 </span>
+                {lang === "en" ? item.en : item.zh}
               </li>
             ))}
           </ul>
         </div>
       </section>
 
-      {/* ═══ 5. REVIEWS ═══ */}
-      <section className="py-16 md:py-24 lg:py-28" style={{ background: "#F5F5F5" }}>
-        <div className="max-w-6xl mx-auto px-6">
-          <h2 className="text-[clamp(1.8rem,4vw,2.8rem)] lg:text-[2rem] font-black text-foreground font-display text-center mb-10">
-            {lang === "en" ? "What Our Clients Say" : "客戶評價"}
-          </h2>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-5 items-stretch max-w-4xl mx-auto">
+      {/* ═══ 7. REVIEWS ═══ */}
+      <section className="px-6 py-20 md:py-28">
+        <div className="mx-auto max-w-6xl">
+          <h2 className={`mb-10 text-center md:mb-12 ${sectionTitle}`}>{lang === "en" ? "What Our Clients Say" : "客戶評價"}</h2>
+          <div className="mx-auto grid max-w-5xl grid-cols-1 items-stretch gap-5 md:grid-cols-2">
             {reviewItems.map((item, ci) => (
-              <div key={ci} className="rounded-2xl border border-border bg-background p-6 md:p-7 shadow-sm flex flex-col">
-                <p className="text-base text-foreground leading-relaxed font-medium flex-1">
-                  "{item.text}"
-                </p>
-                <div className="mt-5 pt-4 border-t border-border">
+              <figure key={ci} className="m-0 flex flex-col rounded-[22px] border border-border bg-white p-6 md:p-7">
+                <blockquote className="m-0 flex-1 text-base leading-relaxed text-foreground">“{item.text}”</blockquote>
+                <figcaption className="mt-5 border-t border-border pt-4">
                   <p className="text-sm font-bold text-foreground">{item.name}</p>
-                  <p className="text-xs text-muted-foreground mt-0.5">{item.company}</p>
-                  <a
-                    href={item.url}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="mt-3 inline-flex items-center gap-1.5 text-sm font-semibold hover:underline py-1"
-                    style={{ color: "hsl(275 51% 46%)" }}
-                  >
+                  <p className="mt-0.5 text-xs text-muted-foreground">{item.company}</p>
+                  <a href={item.url} target="_blank" rel="noopener noreferrer" className="mt-2 inline-flex min-h-9 items-center gap-1.5 text-sm font-bold text-[hsl(var(--accent-purple))] hover:underline">
                     {lang === "en" ? `See the live site · ${item.domain}` : `查看上線網站 · ${item.domain}`}
-                    <ArrowRight size={14} />
+                    <ArrowRight size={14} aria-hidden="true" />
                   </a>
-                </div>
-              </div>
+                </figcaption>
+              </figure>
             ))}
           </div>
         </div>
       </section>
 
-      {/* ═══ 6. FOUNDER ═══ */}
-      <section className="py-16 md:py-20" style={{ background: "#FFFFFF" }}>
-        <div className="max-w-3xl mx-auto px-6">
-          <div className="flex flex-col sm:flex-row items-center sm:items-start gap-6 text-center sm:text-left">
-            <FounderPhoto />
-            <div>
-              <p className="text-xl md:text-2xl font-bold text-foreground font-display leading-snug">
-                {lang === "en"
-                  ? "\u201CI personally review every website before you see it.\u201D"
-                  : "「每一個網站在您看到之前，我都會親自檢查。」"}
-              </p>
-              <p className="mt-3 text-base text-muted-foreground leading-relaxed">
-                {lang === "en"
-                  ? "SwiftLift is run by a real designer, not a template factory. I've built 500+ websites over 20 years for small businesses, clinics, contractors and restaurants — every SwiftLift preview gets the same care."
-                  : "SwiftLift 由真正的設計師經營，不是模板工廠。20年來我為小企業、診所、營造商和餐廳打造了500+個網站——每一個 SwiftLift 預覽都用同樣的用心製作。"}
-              </p>
-              <p className="mt-4 text-sm font-bold text-foreground">Sony Lin <span className="font-normal text-muted-foreground">· {lang === "en" ? "Founder & Lead Designer" : "創辦人暨首席設計師"}</span></p>
-            </div>
+      {/* ═══ 8. FOUNDER ═══ */}
+      <section className="px-6 pb-20 md:pb-28">
+        <div className="mx-auto flex max-w-4xl flex-col items-center gap-7 rounded-[28px] border border-border bg-white p-7 text-center sm:flex-row sm:items-center sm:text-left md:p-10">
+          <FounderPhoto />
+          <div>
+            <p className="font-display text-2xl font-black italic leading-snug md:text-[1.75rem]">
+              {lang === "en" ? "“I personally review every website before you see it.”" : "「每一個網站在您看到之前，我都會親自檢查。」"}
+            </p>
+            <p className="mt-3 text-base leading-relaxed text-foreground/75">
+              {lang === "en"
+                ? "SwiftLift is run by a real designer, not a template factory. I've built 500+ websites over 20 years for small businesses, clinics, contractors and restaurants — every SwiftLift preview gets the same care."
+                : "SwiftLift 由真正的設計師經營，不是模板工廠。20年來我為小企業、診所、營造商和餐廳打造了500+個網站——每一個 SwiftLift 預覽都用同樣的用心製作。"}
+            </p>
+            <p className="mt-4 text-sm font-bold text-foreground">Sony Lin <span className="font-normal text-muted-foreground">· {lang === "en" ? "Founder & Lead Designer" : "創辦人暨首席設計師"}</span></p>
           </div>
         </div>
       </section>
 
-      {/* ═══ 7. FAQ ═══ */}
-      <section className="py-16 md:py-24 lg:py-28" style={{ background: "#FFFFFF" }}>
-        <div className="max-w-3xl mx-auto px-6">
-          <h2 className="text-[clamp(1.8rem,4vw,2.8rem)] lg:text-[2rem] font-black text-foreground font-display text-center">
-            {lang === "en" ? "Still Have Questions?" : "還有疑問？"}
-          </h2>
+      {/* ═══ 9. FAQ ═══ */}
+      <section className="border-t border-border bg-white px-6 py-20 md:py-28">
+        <div className="mx-auto max-w-3xl">
+          <h2 className={`text-center ${sectionTitle}`}>{lang === "en" ? "Still Have Questions?" : "還有疑問？"}</h2>
           <div className="mt-10 space-y-3">
             {faqItems.map((item, i) => {
               const isOpen = faqOpen === i;
               return (
-                <div
-                  key={i}
-                  className={`rounded-xl border border-border overflow-hidden bg-background transition-all ${isOpen ? "border-l-4 faq-expanded-bg" : ""}`}
-                  style={isOpen ? { borderLeftColor: "hsl(275 51% 46%)" } : {}}
-                >
+                <div key={i} className={`overflow-hidden rounded-[18px] border-[1.5px] transition-colors ${isOpen ? "border-[hsl(var(--accent-purple))] bg-[#F7F2FD]" : "border-border bg-white"}`}>
                   <button
                     onClick={() => setFaqOpen(isOpen ? null : i)}
-                    className="w-full flex items-center justify-between p-5 text-left"
+                    aria-expanded={isOpen}
+                    className="flex min-h-14 w-full items-center justify-between gap-4 p-5 text-left"
                   >
-                    <span className="font-semibold text-foreground pr-4 text-base">{item.q}</span>
-                    <motion.div
-                      animate={{ rotate: isOpen ? 45 : 0 }}
-                      transition={{ duration: 0.3, type: "spring", stiffness: 300 }}
-                      className="flex-shrink-0"
-                    >
-                      <Plus size={18} style={{ color: "hsl(275 51% 46%)" }} />
-                    </motion.div>
+                    <span className="text-base font-bold text-foreground md:text-[1.05rem]">{item.q}</span>
+                    <span aria-hidden="true" className={`flex h-8 w-8 flex-shrink-0 items-center justify-center rounded-full transition-colors ${isOpen ? "bg-[hsl(var(--accent-purple))] text-white" : "bg-background text-foreground"}`}>
+                      <motion.span animate={{ rotate: isOpen ? 45 : 0 }} transition={{ duration: 0.25 }} className="flex">
+                        <Plus size={18} strokeWidth={2.6} />
+                      </motion.span>
+                    </span>
                   </button>
-                  <AnimatePresence>
+                  <AnimatePresence initial={false}>
                     {isOpen && (
                       <motion.div
                         initial={{ height: 0, opacity: 0 }}
@@ -1143,9 +1089,7 @@ const IndexContent = ({ variant = "home" }: { variant?: "home" | "start" }) => {
                         exit={{ height: 0, opacity: 0 }}
                         transition={{ type: "spring", stiffness: 300, damping: 30 }}
                       >
-                        <div className="px-5 pb-5 text-muted-foreground text-base leading-relaxed">
-                          {item.a}
-                        </div>
+                        <div className="px-5 pb-5 text-base leading-relaxed text-foreground/75">{item.a}</div>
                       </motion.div>
                     )}
                   </AnimatePresence>
@@ -1154,11 +1098,7 @@ const IndexContent = ({ variant = "home" }: { variant?: "home" | "start" }) => {
             })}
           </div>
           <div className="mt-6 text-center">
-            <Link
-              to="/faq"
-              className="text-sm font-semibold hover:underline transition-all"
-              style={{ color: "hsl(275 51% 46%)" }}
-            >
+            <Link to="/faq" className="inline-flex min-h-11 items-center text-sm font-bold text-[hsl(var(--accent-purple))] hover:underline">
               {lang === "en" ? "View Full FAQ →" : "查看完整FAQ →"}
             </Link>
           </div>
@@ -1166,25 +1106,21 @@ const IndexContent = ({ variant = "home" }: { variant?: "home" | "start" }) => {
       </section>
 
       {/* ═══ FINAL CTA ═══ */}
-      <section
-        id="final-cta"
-        className="relative py-20 md:py-28 overflow-hidden"
-        style={{ background: "#0f172a" }}
-      >
-        <div className="absolute inset-0 pointer-events-none" style={{ background: "radial-gradient(ellipse 60% 50% at 50% 40%, hsl(209 70% 30% / 0.25), transparent)" }} />
-        <div className="relative max-w-2xl mx-auto px-6 text-center">
-          <h2 className="text-[clamp(1.7rem,4.5vw,2.8rem)] lg:text-[2rem] font-black text-white font-display leading-tight">
-            {lang === "en" ? "We Build First. You Decide After." : "我們先建站。您再決定。"}
+      <section id="final-cta" className="bg-[hsl(var(--ink))] px-6 py-20 text-white md:py-28">
+        <div className="mx-auto max-w-2xl text-center">
+          <img src="/images/swiftlift-logo-white.png" alt="" aria-hidden="true" width={130} height={54} loading="lazy" className="mx-auto h-12 w-auto opacity-90" />
+          <h2 className="mt-6 font-display text-[clamp(2rem,5vw,3.2rem)] font-black leading-[1.05]">
+            {lang === "en" ? <>We Build First. <span className="italic text-[hsl(var(--highlight))]">You Decide After.</span></> : <>我們先建站。<span className="italic text-[hsl(var(--highlight))]">您再決定。</span></>}
           </h2>
-          <p className="mt-4 text-white/60 text-base md:text-lg lg:text-base max-w-md mx-auto leading-relaxed">
+          <p className="mx-auto mt-4 max-w-md text-base leading-relaxed text-white/75 md:text-lg">
             {lang === "en"
               ? "Get 2 free website versions and decide with confidence — before spending a dollar."
               : "獲取2個免費網站版本，在花一分錢之前自信決策。"}
           </p>
-          <div className="mt-10 max-w-xl mx-auto text-left">
+          <div className="mx-auto mt-9 max-w-xl rounded-[20px] bg-white p-4 text-left text-foreground sm:p-5">
             <MultiStepIntake variant="cta" />
           </div>
-          <GuaranteeBadge lang={lang} dark className="mt-10" />
+          <GuaranteeBadge lang={lang} dark className="mt-8" />
         </div>
       </section>
       <StickyMobileCta />

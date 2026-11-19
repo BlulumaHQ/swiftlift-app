@@ -171,7 +171,7 @@ const RevisionContent = () => {
             <a
               href="/"
               className="mt-8 inline-flex items-center justify-center rounded-full px-8 py-3.5 text-base font-semibold text-white transition-colors"
-              style={{ backgroundColor: "#7F37AE" }}
+              style={{ backgroundColor: "#6A33B0" }}
             >
               Back to Home
             </a>
@@ -213,7 +213,7 @@ const RevisionContent = () => {
           <div ref={step1Ref} className="scroll-mt-24">
             <div className="rounded-2xl border-2 border-border bg-background p-5 md:p-6 shadow-sm">
               <div className="flex items-center gap-2 mb-1">
-                <span className="inline-flex items-center justify-center w-7 h-7 rounded-full text-xs font-bold text-white" style={{ backgroundColor: "#7F37AE" }}>1</span>
+                <span className="inline-flex items-center justify-center w-7 h-7 rounded-full text-xs font-bold text-white" style={{ backgroundColor: "#6A33B0" }}>1</span>
                 <h2 className="text-lg md:text-xl font-black text-foreground font-display">Project Info</h2>
               </div>
               <p className="text-sm text-muted-foreground mb-5 ml-9">Identify your project so we can match this submission.</p>
@@ -234,19 +234,19 @@ const RevisionContent = () => {
                   <label className="text-sm font-medium text-foreground flex items-center gap-2 mb-1.5">
                     <User size={14} className="text-muted-foreground" /> Full Name <span className="text-destructive text-xs font-semibold">*</span>
                   </label>
-                  <input type="text" value={clientName} onChange={(e) => { setClientName(e.target.value); if (showRequiredError) setShowRequiredError(false); }} placeholder="John Lee" className={`w-full rounded-lg border bg-background px-4 py-2.5 text-sm text-foreground placeholder:text-muted-foreground/60 focus:outline-none focus:ring-2 focus:ring-[hsl(275,51%,46%)]/40 transition-colors ${showRequiredError && !clientName.trim() ? "border-destructive" : "border-border"}`} />
+                  <input type="text" value={clientName} onChange={(e) => { setClientName(e.target.value); if (showRequiredError) setShowRequiredError(false); }} placeholder="John Lee" className={`w-full rounded-lg border bg-background px-4 py-2.5 text-sm text-foreground placeholder:text-muted-foreground/60 focus:outline-none focus:ring-2 focus:ring-[hsl(267,55%,45%)]/40 transition-colors ${showRequiredError && !clientName.trim() ? "border-destructive" : "border-border"}`} />
                 </div>
                 <div>
                   <label className="text-sm font-medium text-foreground flex items-center gap-2 mb-1.5">
                     <Building2 size={14} className="text-muted-foreground" /> Business Name <span className="text-destructive text-xs font-semibold">*</span>
                   </label>
-                  <input type="text" value={businessName} onChange={(e) => { setBusinessName(e.target.value); if (showRequiredError) setShowRequiredError(false); }} placeholder="Lee Construction" className={`w-full rounded-lg border bg-background px-4 py-2.5 text-sm text-foreground placeholder:text-muted-foreground/60 focus:outline-none focus:ring-2 focus:ring-[hsl(275,51%,46%)]/40 transition-colors ${showRequiredError && !businessName.trim() ? "border-destructive" : "border-border"}`} />
+                  <input type="text" value={businessName} onChange={(e) => { setBusinessName(e.target.value); if (showRequiredError) setShowRequiredError(false); }} placeholder="Lee Construction" className={`w-full rounded-lg border bg-background px-4 py-2.5 text-sm text-foreground placeholder:text-muted-foreground/60 focus:outline-none focus:ring-2 focus:ring-[hsl(267,55%,45%)]/40 transition-colors ${showRequiredError && !businessName.trim() ? "border-destructive" : "border-border"}`} />
                 </div>
                 <div>
                   <label className="text-sm font-medium text-foreground flex items-center gap-2 mb-1.5">
                     <Mail size={14} className="text-muted-foreground" /> Email <span className="text-destructive text-xs font-semibold">*</span>
                   </label>
-                  <input type="email" value={clientEmail} onChange={(e) => { setClientEmail(e.target.value); if (showRequiredError) setShowRequiredError(false); }} placeholder="john@domain.com" className={`w-full rounded-lg border bg-background px-4 py-2.5 text-sm text-foreground placeholder:text-muted-foreground/60 focus:outline-none focus:ring-2 focus:ring-[hsl(275,51%,46%)]/40 transition-colors ${showRequiredError && !clientEmail.trim() ? "border-destructive" : "border-border"}`} />
+                  <input type="email" value={clientEmail} onChange={(e) => { setClientEmail(e.target.value); if (showRequiredError) setShowRequiredError(false); }} placeholder="john@domain.com" className={`w-full rounded-lg border bg-background px-4 py-2.5 text-sm text-foreground placeholder:text-muted-foreground/60 focus:outline-none focus:ring-2 focus:ring-[hsl(267,55%,45%)]/40 transition-colors ${showRequiredError && !clientEmail.trim() ? "border-destructive" : "border-border"}`} />
                 </div>
               </div>
             </div>
@@ -257,7 +257,7 @@ const RevisionContent = () => {
           {/* Section 2 — Revision Notes */}
           <div>
             <div className="flex items-center gap-2 mb-1">
-              <span className="inline-flex items-center justify-center w-7 h-7 rounded-full text-xs font-bold text-white" style={{ backgroundColor: "#7F37AE" }}>2</span>
+              <span className="inline-flex items-center justify-center w-7 h-7 rounded-full text-xs font-bold text-white" style={{ backgroundColor: "#6A33B0" }}>2</span>
               <h2 className="text-lg md:text-xl font-black text-foreground font-display">Revision Notes</h2>
             </div>
             <p className="text-sm text-muted-foreground mb-5 ml-9">Describe all changes in one consolidated submission.</p>
@@ -265,7 +265,7 @@ const RevisionContent = () => {
             <div className="space-y-4">
               <div>
                 <label className="text-sm font-medium text-foreground mb-1.5 block">Revision Details <span className="text-destructive">*</span></label>
-                <textarea rows={5} placeholder="Describe all changes you'd like made to your website. Be as specific as possible — reference page names, sections, colors, text changes, etc." className="w-full rounded-lg border border-border bg-background px-4 py-2.5 text-sm text-foreground placeholder:text-muted-foreground/60 focus:outline-none focus:ring-2 focus:ring-[hsl(275,51%,46%)]/40 transition-colors resize-y" required />
+                <textarea rows={5} placeholder="Describe all changes you'd like made to your website. Be as specific as possible — reference page names, sections, colors, text changes, etc." className="w-full rounded-lg border border-border bg-background px-4 py-2.5 text-sm text-foreground placeholder:text-muted-foreground/60 focus:outline-none focus:ring-2 focus:ring-[hsl(267,55%,45%)]/40 transition-colors resize-y" required />
               </div>
 
               <div>
@@ -287,7 +287,7 @@ const RevisionContent = () => {
                 <label className="text-sm font-medium text-foreground mb-1.5 flex items-center gap-2">
                   <LinkIcon size={14} className="text-muted-foreground" /> Cloud Link <span className="text-xs text-muted-foreground">(optional)</span>
                 </label>
-                <input type="url" placeholder="https://drive.google.com/..." className="w-full rounded-lg border border-border bg-background px-4 py-2.5 text-sm text-foreground placeholder:text-muted-foreground/60 focus:outline-none focus:ring-2 focus:ring-[hsl(275,51%,46%)]/40 transition-colors" />
+                <input type="url" placeholder="https://drive.google.com/..." className="w-full rounded-lg border border-border bg-background px-4 py-2.5 text-sm text-foreground placeholder:text-muted-foreground/60 focus:outline-none focus:ring-2 focus:ring-[hsl(267,55%,45%)]/40 transition-colors" />
                 <p className="text-xs text-muted-foreground mt-1">Share screenshots, reference images, or documents. Ensure link access is set to "Anyone with the link can view."</p>
               </div>
             </div>
@@ -298,7 +298,7 @@ const RevisionContent = () => {
           {/* Section 3 — Fixed-Price Add-Ons */}
           <div>
             <div className="flex items-center gap-2 mb-1">
-              <span className="inline-flex items-center justify-center w-7 h-7 rounded-full text-xs font-bold text-white" style={{ backgroundColor: "#7F37AE" }}>3</span>
+              <span className="inline-flex items-center justify-center w-7 h-7 rounded-full text-xs font-bold text-white" style={{ backgroundColor: "#6A33B0" }}>3</span>
               <h2 className="text-lg md:text-xl font-black text-foreground font-display">Fixed-Price Add-Ons</h2>
             </div>
             <p className="text-sm text-muted-foreground mb-5 ml-9">Optional feature upgrades — select any that apply.</p>
@@ -313,15 +313,15 @@ const RevisionContent = () => {
                     onClick={() => toggleAddon(addon.id)}
                     className={`rounded-xl border-2 p-4 cursor-pointer transition-all flex items-start gap-4 ${
                       isSelected
-                        ? "border-[hsl(275,51%,46%)] bg-[hsl(275,51%,46%,0.04)]"
+                        ? "border-[hsl(267,55%,45%)] bg-[hsl(267,55%,45%,0.04)]"
                         : "border-border bg-background hover:border-muted-foreground/30"
                     }`}
                   >
-                    <span className={`flex-shrink-0 w-5 h-5 rounded border-2 flex items-center justify-center transition-colors mt-0.5 ${isSelected ? "border-[hsl(275,51%,46%)] bg-[hsl(275,51%,46%)]" : "border-muted-foreground/40"}`}>
+                    <span className={`flex-shrink-0 w-5 h-5 rounded border-2 flex items-center justify-center transition-colors mt-0.5 ${isSelected ? "border-[hsl(267,55%,45%)] bg-[hsl(267,55%,45%)]" : "border-muted-foreground/40"}`}>
                       {isSelected && <Check size={13} className="text-white" />}
                     </span>
-                    <div className="flex-shrink-0 w-9 h-9 rounded-lg flex items-center justify-center mt-0.5" style={{ background: "hsl(275 51% 46% / 0.08)" }}>
-                      <Icon size={18} style={{ color: "hsl(275 51% 46%)" }} />
+                    <div className="flex-shrink-0 w-9 h-9 rounded-lg flex items-center justify-center mt-0.5" style={{ background: "hsl(267 55% 45% / 0.08)" }}>
+                      <Icon size={18} style={{ color: "hsl(267 55% 45%)" }} />
                     </div>
                     <div className="flex-1 min-w-0">
                       <span className="font-semibold text-foreground">{addon.name}</span>
@@ -348,11 +348,11 @@ const RevisionContent = () => {
           {/* Section 4 — Complex Feature Request */}
           <div>
             <div className="flex items-center gap-2 mb-1">
-              <span className="inline-flex items-center justify-center w-7 h-7 rounded-full text-xs font-bold text-white" style={{ backgroundColor: "#7F37AE" }}>4</span>
+              <span className="inline-flex items-center justify-center w-7 h-7 rounded-full text-xs font-bold text-white" style={{ backgroundColor: "#6A33B0" }}>4</span>
               <h2 className="text-lg md:text-xl font-black text-foreground font-display">Complex Feature Request</h2>
             </div>
             <p className="text-sm text-muted-foreground mb-5 ml-9">Need something not listed above? Describe it here and we'll provide a custom quote.</p>
-            <textarea rows={3} placeholder="Describe any complex features or custom requirements..." className="w-full rounded-lg border border-border bg-background px-4 py-2.5 text-sm text-foreground placeholder:text-muted-foreground/60 focus:outline-none focus:ring-2 focus:ring-[hsl(275,51%,46%)]/40 transition-colors resize-y" />
+            <textarea rows={3} placeholder="Describe any complex features or custom requirements..." className="w-full rounded-lg border border-border bg-background px-4 py-2.5 text-sm text-foreground placeholder:text-muted-foreground/60 focus:outline-none focus:ring-2 focus:ring-[hsl(267,55%,45%)]/40 transition-colors resize-y" />
           </div>
 
           <div className="form-divider" />
@@ -360,11 +360,11 @@ const RevisionContent = () => {
           {/* Section 5 — Agreement */}
           <div>
             <div className="flex items-center gap-2 mb-4">
-              <span className="inline-flex items-center justify-center w-7 h-7 rounded-full text-xs font-bold text-white" style={{ backgroundColor: "#7F37AE" }}>5</span>
+              <span className="inline-flex items-center justify-center w-7 h-7 rounded-full text-xs font-bold text-white" style={{ backgroundColor: "#6A33B0" }}>5</span>
               <h2 className="text-lg md:text-xl font-black text-foreground font-display">Agreement</h2>
             </div>
             <label className="flex items-start gap-3 cursor-pointer" onClick={() => setAgreed(!agreed)}>
-              <span className={`flex-shrink-0 w-5 h-5 rounded border-2 flex items-center justify-center transition-colors mt-0.5 ${agreed ? "border-[hsl(275,51%,46%)] bg-[hsl(275,51%,46%)]" : "border-muted-foreground/40"}`}>
+              <span className={`flex-shrink-0 w-5 h-5 rounded border-2 flex items-center justify-center transition-colors mt-0.5 ${agreed ? "border-[hsl(267,55%,45%)] bg-[hsl(267,55%,45%)]" : "border-muted-foreground/40"}`}>
                 {agreed && <Check size={13} className="text-white" />}
               </span>
               <span className="text-sm text-muted-foreground leading-relaxed">
@@ -378,7 +378,7 @@ const RevisionContent = () => {
           {/* Section 6 — Checkout */}
           <div>
             <div className="flex items-center gap-2 mb-4">
-              <span className="inline-flex items-center justify-center w-7 h-7 rounded-full text-xs font-bold text-white" style={{ backgroundColor: "#7F37AE" }}>6</span>
+              <span className="inline-flex items-center justify-center w-7 h-7 rounded-full text-xs font-bold text-white" style={{ backgroundColor: "#6A33B0" }}>6</span>
               <h2 className="text-lg md:text-xl font-black text-foreground font-display">
                 {total > 0 ? "Checkout" : "Submit"}
               </h2>
@@ -407,8 +407,8 @@ const RevisionContent = () => {
             <motion.button
               onClick={handleCheckout}
               disabled={!agreed || isSubmitting}
-              className="w-full inline-flex items-center justify-center gap-2 rounded-full px-8 py-3.5 text-base font-semibold text-white transition-colors focus:outline-none focus:ring-2 focus:ring-[hsl(275,51%,46%)]/50 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed"
-              style={{ backgroundColor: "#7F37AE" }}
+              className="w-full inline-flex items-center justify-center gap-2 rounded-full px-8 py-3.5 text-base font-semibold text-white transition-colors focus:outline-none focus:ring-2 focus:ring-[hsl(267,55%,45%)]/50 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed"
+              style={{ backgroundColor: "#6A33B0" }}
               whileHover={agreed ? { scale: 1.02 } : {}}
               whileTap={agreed ? { scale: 0.98 } : {}}
             >

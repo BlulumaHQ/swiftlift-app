@@ -323,8 +323,8 @@ const DeploymentContent = () => {
       <motion.button
         onClick={handleCheckout}
         disabled={!planSelected || isSubmitting}
-        className="mt-5 w-full inline-flex items-center justify-center gap-2 rounded-full px-8 py-3.5 text-base font-bold text-white transition-colors focus:outline-none focus:ring-2 focus:ring-[hsl(275,51%,46%)]/50 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed"
-        style={{ backgroundColor: "#7F37AE" }}
+        className="mt-5 w-full inline-flex items-center justify-center gap-2 rounded-full px-8 py-3.5 text-base font-bold text-white transition-colors focus:outline-none focus:ring-2 focus:ring-[hsl(267,55%,45%)]/50 focus:ring-offset-2 disabled:opacity-50 disabled:cursor-not-allowed"
+        style={{ backgroundColor: "#6A33B0" }}
         whileHover={planSelected ? { scale: 1.02 } : {}}
         whileTap={planSelected ? { scale: 0.98 } : {}}
       >
@@ -377,7 +377,7 @@ const DeploymentContent = () => {
               <div ref={step1Ref} className="mb-10 scroll-mt-24">
                 <div className="rounded-2xl border-2 border-border bg-background p-5 md:p-6 shadow-sm">
                   <div className="flex items-center gap-2 mb-1">
-                    <span className="inline-flex items-center justify-center w-7 h-7 rounded-full text-xs font-bold text-white" style={{ backgroundColor: "#7F37AE" }}>1</span>
+                    <span className="inline-flex items-center justify-center w-7 h-7 rounded-full text-xs font-bold text-white" style={{ backgroundColor: "#6A33B0" }}>1</span>
                     <h2 className="text-lg md:text-xl font-black text-foreground font-display">
                       Your Details
                     </h2>
@@ -413,7 +413,7 @@ const DeploymentContent = () => {
                         value={clientName}
                         onChange={(e) => { setClientName(e.target.value); if (showRequiredError) setShowRequiredError(false); }}
                         placeholder="John Lee"
-                        className={`w-full rounded-lg border bg-background px-4 py-2.5 text-sm text-foreground placeholder:text-muted-foreground/60 focus:outline-none focus:ring-2 focus:ring-[hsl(275,51%,46%)]/40 focus:border-[hsl(275,51%,46%)] transition-colors ${showRequiredError && !clientName.trim() ? "border-destructive" : "border-border"}`}
+                        className={`w-full rounded-lg border bg-background px-4 py-2.5 text-sm text-foreground placeholder:text-muted-foreground/60 focus:outline-none focus:ring-2 focus:ring-[hsl(267,55%,45%)]/40 focus:border-[hsl(267,55%,45%)] transition-colors ${showRequiredError && !clientName.trim() ? "border-destructive" : "border-border"}`}
                       />
                     </div>
                     <div>
@@ -426,7 +426,7 @@ const DeploymentContent = () => {
                         value={businessName}
                         onChange={(e) => { setBusinessName(e.target.value); if (showRequiredError) setShowRequiredError(false); }}
                         placeholder="Lee Construction"
-                        className={`w-full rounded-lg border bg-background px-4 py-2.5 text-sm text-foreground placeholder:text-muted-foreground/60 focus:outline-none focus:ring-2 focus:ring-[hsl(275,51%,46%)]/40 focus:border-[hsl(275,51%,46%)] transition-colors ${showRequiredError && !businessName.trim() ? "border-destructive" : "border-border"}`}
+                        className={`w-full rounded-lg border bg-background px-4 py-2.5 text-sm text-foreground placeholder:text-muted-foreground/60 focus:outline-none focus:ring-2 focus:ring-[hsl(267,55%,45%)]/40 focus:border-[hsl(267,55%,45%)] transition-colors ${showRequiredError && !businessName.trim() ? "border-destructive" : "border-border"}`}
                       />
                     </div>
                     <div>
@@ -439,7 +439,7 @@ const DeploymentContent = () => {
                         value={clientEmail}
                         onChange={(e) => { setClientEmail(e.target.value); if (showRequiredError) setShowRequiredError(false); }}
                         placeholder="john@domain.com"
-                        className={`w-full rounded-lg border bg-background px-4 py-2.5 text-sm text-foreground placeholder:text-muted-foreground/60 focus:outline-none focus:ring-2 focus:ring-[hsl(275,51%,46%)]/40 focus:border-[hsl(275,51%,46%)] transition-colors ${showRequiredError && !clientEmail.trim() ? "border-destructive" : "border-border"}`}
+                        className={`w-full rounded-lg border bg-background px-4 py-2.5 text-sm text-foreground placeholder:text-muted-foreground/60 focus:outline-none focus:ring-2 focus:ring-[hsl(267,55%,45%)]/40 focus:border-[hsl(267,55%,45%)] transition-colors ${showRequiredError && !clientEmail.trim() ? "border-destructive" : "border-border"}`}
                       />
                     </div>
                   </div>
@@ -491,7 +491,7 @@ const DeploymentContent = () => {
                               <button
                                 type="button"
                                 onClick={() => handleHostingSelect(row.value as HostingPlan)}
-                                className={`flex-shrink-0 text-xs font-semibold px-3 py-1.5 rounded-full transition-colors ${hostingPlan === row.value ? "bg-[hsl(275,51%,46%)] text-white" : "bg-muted text-foreground hover:bg-muted-foreground/10"}`}
+                                className={`flex-shrink-0 text-xs font-semibold px-3 py-1.5 rounded-full transition-colors ${hostingPlan === row.value ? "bg-[hsl(267,55%,45%)] text-white" : "bg-muted text-foreground hover:bg-muted-foreground/10"}`}
                               >
                                 {hostingPlan === row.value ? "Selected" : "Select"}
                               </button>
@@ -513,18 +513,18 @@ const DeploymentContent = () => {
                         onClick={(e) => { e.preventDefault(); handleHostingSelect(opt.value); }}
                         className={`rounded-xl border-2 p-4 cursor-pointer transition-all block ${
                           isSelected
-                            ? "border-[hsl(275,51%,46%)] bg-[hsl(275,51%,46%,0.04)]"
+                            ? "border-[hsl(267,55%,45%)] bg-[hsl(267,55%,45%,0.04)]"
                             : "border-border bg-background hover:border-muted-foreground/30"
                         }`}
                       >
                         <div className="flex items-start gap-4">
                           <span
                             className={`flex-shrink-0 w-5 h-5 mt-0.5 rounded-full border-2 flex items-center justify-center transition-colors ${
-                              isSelected ? "border-[hsl(275,51%,46%)]" : "border-muted-foreground/40"
+                              isSelected ? "border-[hsl(267,55%,45%)]" : "border-muted-foreground/40"
                             }`}
                           >
                             {isSelected && (
-                              <span className="w-2.5 h-2.5 rounded-full bg-[hsl(275,51%,46%)]" />
+                              <span className="w-2.5 h-2.5 rounded-full bg-[hsl(267,55%,45%)]" />
                             )}
                           </span>
 
@@ -586,15 +586,15 @@ const DeploymentContent = () => {
                     return (
                       <div key={addon.id} className="rounded-xl border-2 transition-all overflow-hidden"
                         style={{
-                          borderColor: isSelected ? "hsl(275 51% 46%)" : "hsl(var(--border))",
-                          backgroundColor: isSelected ? "hsl(275 51% 46% / 0.04)" : "hsl(var(--background))",
+                          borderColor: isSelected ? "hsl(267 55% 45%)" : "hsl(var(--border))",
+                          backgroundColor: isSelected ? "hsl(267 55% 45% / 0.04)" : "hsl(var(--background))",
                         }}
                       >
                         <label className="flex items-start gap-4 p-4 cursor-pointer" onClick={(e) => { e.preventDefault(); toggleAddon(addon.id); }}>
                           <span
                             className={`flex-shrink-0 w-5 h-5 rounded border-2 flex items-center justify-center transition-colors mt-0.5 ${
                               isSelected
-                                ? "border-[hsl(275,51%,46%)] bg-[hsl(275,51%,46%)]"
+                                ? "border-[hsl(267,55%,45%)] bg-[hsl(267,55%,45%)]"
                                 : "border-muted-foreground/40"
                             }`}
                           >
@@ -610,9 +610,9 @@ const DeploymentContent = () => {
 
                           <div
                             className="flex-shrink-0 w-9 h-9 rounded-lg flex items-center justify-center mt-0.5"
-                            style={{ background: "hsl(275 51% 46% / 0.08)" }}
+                            style={{ background: "hsl(267 55% 45% / 0.08)" }}
                           >
-                            <Icon size={18} style={{ color: "hsl(275 51% 46%)" }} />
+                            <Icon size={18} style={{ color: "hsl(267 55% 45%)" }} />
                           </div>
 
                           <div className="flex-1 min-w-0">
@@ -630,7 +630,7 @@ const DeploymentContent = () => {
                               type="button"
                               onClick={(e) => toggleExpanded(addon.id, e)}
                               className="mt-2 inline-flex items-center gap-1 text-xs font-medium transition-colors hover:opacity-80"
-                              style={{ color: "hsl(275 51% 46%)" }}
+                              style={{ color: "hsl(267 55% 45%)" }}
                             >
                               {isExpanded ? "Hide details" : "View details"}
                               <ChevronDown
@@ -660,7 +660,7 @@ const DeploymentContent = () => {
                                 <ul className="space-y-1.5">
                                   {addon.included.map((item, i) => (
                                     <li key={i} className="flex items-start gap-2 text-sm text-foreground/80">
-                                      <Check size={14} className="flex-shrink-0 mt-0.5" style={{ color: "hsl(275 51% 46%)" }} />
+                                      <Check size={14} className="flex-shrink-0 mt-0.5" style={{ color: "hsl(267 55% 45%)" }} />
                                       {item}
                                     </li>
                                   ))}
@@ -699,7 +699,7 @@ const DeploymentContent = () => {
             onClick={handleCheckout}
             disabled={!planSelected || isSubmitting}
             className="inline-flex items-center justify-center gap-1.5 rounded-full px-6 py-2.5 text-sm font-bold text-white transition-colors focus:outline-none disabled:opacity-50 disabled:cursor-not-allowed flex-shrink-0"
-            style={{ backgroundColor: "#7F37AE" }}
+            style={{ backgroundColor: "#6A33B0" }}
             whileHover={planSelected ? { scale: 1.02 } : {}}
             whileTap={planSelected ? { scale: 0.98 } : {}}
           >

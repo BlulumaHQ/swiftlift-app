@@ -64,7 +64,7 @@ const FaqContent = () => {
                       <div
                         key={key}
                         className={`rounded-xl border border-border overflow-hidden bg-background transition-all ${isOpen ? "border-l-4 faq-expanded-bg" : ""}`}
-                        style={isOpen ? { borderLeftColor: "hsl(275 51% 46%)" } : {}}
+                        style={isOpen ? { borderLeftColor: "hsl(267 55% 45%)" } : {}}
                       >
                         <button
                           onClick={() => setOpenKey(isOpen ? null : key)}
@@ -76,7 +76,7 @@ const FaqContent = () => {
                             transition={{ duration: 0.3, type: "spring", stiffness: 300 }}
                             className="flex-shrink-0"
                           >
-                            <Plus size={18} style={{ color: "hsl(275 51% 46%)" }} />
+                            <Plus size={18} style={{ color: "hsl(267 55% 45%)" }} />
                           </motion.div>
                         </button>
                         <AnimatePresence>

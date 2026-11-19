@@ -104,7 +104,7 @@ const SupportContent = () => {
               <a
                 href="/"
                 className="mt-8 inline-flex items-center justify-center rounded-full px-8 py-3.5 text-base font-semibold text-white transition-colors"
-                style={{ backgroundColor: "#7F37AE" }}
+                style={{ backgroundColor: "#6A33B0" }}
               >
                 {lang === "en" ? "Back to Home" : "返回首页"}
               </a>
@@ -151,7 +151,7 @@ const SupportContent = () => {
                 type="submit"
                 disabled={submitting}
                 className="w-full inline-flex items-center justify-center gap-2 rounded-full px-8 py-3.5 text-base font-semibold text-white transition-colors disabled:opacity-50"
-                style={{ backgroundColor: "#7F37AE" }}
+                style={{ backgroundColor: "#6A33B0" }}
               >
                 <Send size={16} />
                 {submitting
