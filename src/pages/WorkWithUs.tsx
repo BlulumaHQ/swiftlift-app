@@ -165,7 +165,7 @@ const WorkWithUsContent = () => {
               <ul className="mt-6 flex-1 space-y-3 text-[0.95rem]">
                 <li className="flex items-start gap-2.5">{check("hsl(var(--accent-purple))")}{en ? "Classic Facelift: $209 (retail $299)" : "Classic Facelift：$209（零售 $299）"}</li>
                 <li className="flex items-start gap-2.5">{check("hsl(var(--accent-purple))")}{en ? "Growth Facelift: $349 (retail $499)" : "Growth Facelift：$349（零售 $499）"}</li>
-                <li className="flex items-start gap-2.5">{check("hsl(var(--accent-purple))")}<span>{en ? <>Add-ons, extra pages and hosting at 30% off — see the <Link to="/features" className="font-bold text-[hsl(var(--accent-purple))] hover:underline">price list</Link></> : <>加購功能、額外頁面與託管一樣 7 折——見<Link to="/features" className="font-bold text-[hsl(var(--accent-purple))] hover:underline">價目表</Link></>}</span></li>
+                <li className="flex items-start gap-2.5">{check("hsl(var(--accent-purple))")}<span>{en ? <>Add-ons and extra pages at 30% off (hosting is billed at the regular rate) — see the <Link to="/features" className="font-bold text-[hsl(var(--accent-purple))] hover:underline">price list</Link></> : <>加購功能與額外頁面一樣 7 折（託管費用不打折）——見<Link to="/features" className="font-bold text-[hsl(var(--accent-purple))] hover:underline">價目表</Link></>}</span></li>
                 <li className="flex items-start gap-2.5">{check("hsl(var(--accent-purple))")}{en ? "2 unbranded previews in 48 hours, on a neutral domain" : "48 小時內 2 個無品牌預覽，放在中性網域"}</li>
                 <li className="flex items-start gap-2.5">{check("hsl(var(--accent-purple))")}{en ? "No setup fee, no monthly fee — pay per project" : "沒有開通費、沒有月費——按案計費"}</li>
               </ul>
