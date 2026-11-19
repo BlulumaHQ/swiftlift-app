@@ -1,5 +1,6 @@
 import { useEffect } from "react";
 import { useLocation } from "react-router-dom";
+import { SEO_ROUTES } from "@/lib/seoRoutes";
 
 const SITE = "https://swiftlift.app";
 const PLATFORM_HOST = /(^|\.)(lovable\.app|workers\.dev|pages\.dev|netlify\.app)$/i;
@@ -18,6 +19,9 @@ const NOINDEX = new Set([
   "/support",
   "/work-with-us",
   "/addons",
+  "/go-live",
+  "/review",
+  "/admin/send",
 ]);
 
 /** Per-route canonical (index.html ships "/" for every page) and robots. */
@@ -39,6 +43,20 @@ export default function RouteHead() {
     link.href = `${SITE}${clean}`;
     let og = document.head.querySelector<HTMLMetaElement>('meta[property="og:url"]');
     if (og) og.content = `${SITE}${clean}`;
+    // Keep <title> and descriptions in sync on client-side navigation (prerendered HTML already has them).
+    const meta = SEO_ROUTES[clean];
+    if (meta) {
+      document.title = meta.title;
+      const set = (sel: string, value: string) => {
+        const el = document.head.querySelector<HTMLMetaElement>(sel);
+        if (el) el.content = value;
+      };
+      set('meta[name="description"]', meta.description);
+      set('meta[property="og:title"]', meta.title);
+      set('meta[property="og:description"]', meta.description);
+      set('meta[name="twitter:title"]', meta.title);
+      set('meta[name="twitter:description"]', meta.description);
+    }
     if (onPlatformHost()) return;
     let robots = document.head.querySelector<HTMLMetaElement>('meta[name="robots"]');
     if (!robots) {

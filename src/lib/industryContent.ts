@@ -152,7 +152,7 @@ export const INDUSTRY_PAGES: IndustryPage[] = [
     label: "Restaurants",
     title: "Restaurant Website Redesign — See 2 Versions Free | SwiftLift",
     description:
-      "Restaurant and food business website redesign. Two live previews in 48 hours with your menu, hours and location up front — pay only when you're happy. From $299.",
+      "Restaurant website redesign with your menu, hours and location up front. Two live previews in 48 hours — pay only when you're happy. From $299.",
     eyebrow: "Website redesign for restaurants & food businesses",
     h1: "A restaurant website that gets people through the door",
     intro:

@@ -1,0 +1,53 @@
+# SwiftLift
+
+> SwiftLift is a fast, affordable website facelift service for small businesses in the United States that already have a website but feel it looks outdated. We rebuild the existing site into two live versions — a Classic Facelift ($299 USD) and a Growth Facelift ($499 USD) — in 48 hours. Clients only pay after their revisions, once they're happy. Hosting is free forever.
+
+SwiftLift is run by Sony Lin, Founder & Lead Designer, who has built 500+ websites over 20 years for small businesses, clinics, contractors and restaurants. He designed an AI automation system that handles previews, revisions and launch, which is why SwiftLift can deliver custom (non-template) websites quickly at a fraction of typical agency prices ($1,500–3,000). Sony personally reviews every website before the client sees it.
+
+Who it is for: small businesses that already have a website and want it to look modern and bring in more customers. It is not intended for brand-new businesses without a site, online stores with a shopping cart, or large custom builds — those are referred to the Lead Designer's freelance studio, Sonykun Design (https://sonykundesign.com/).
+
+## How it works
+
+1. Submit your website URL and email (about 30 seconds). No credit card, no calls.
+2. Get 2 live previews within 48 hours: a Classic Facelift and a Growth Facelift. Preview links stay open for 72 hours; reply to the preview email to reopen them (requests older than 3 months need a new submission).
+3. Pick your favorite with one click. No payment yet.
+4. 2 rounds of revisions through an online form. Send all changes at once.
+5. Approve and pay — only once you're happy — then fill in a short launch form (domain, hosting, email).
+6. Go live, usually within 7 days of approval.
+
+## Pricing (USD)
+
+- Classic Facelift — $299: clean, modern, mobile-responsive design, up to 7 pages, basic SEO-ready structure, contact form, free hosting, 2 revision rounds.
+- Growth Facelift — $499: everything in Classic, plus a conversion-focused layout, strategic calls to action, trust-building sections and a stronger page flow.
+- Free Hosting — $0, forever: fast, secure hosting with SSL. No monthly fees and no lock-in. Edits after launch are $45 each. Clients can request the full site files at any time.
+- Care Plan — $135/year: up to 2 small edits every month (swap photos, update text, change the hero style, re-layout existing pages). Does not include new pages, new features or blog posts.
+- Extra revision rounds: $45 each. Advanced SEO and other upgrades are optional add-ons.
+- Payments are made by card through Stripe after the client approves the final site, so all payments are final (no refunds).
+
+## Key pages
+
+- [Home](https://swiftlift.app/): the offer, process, pricing, before-and-after examples and how to request free previews.
+- [Portfolio](https://swiftlift.app/portfolio): before-and-after case studies showing both versions each client received.
+- [FAQ](https://swiftlift.app/faq): pricing, timeline, revisions, hosting, domains, email, ownership and SEO.
+- [Hosting Guide](https://swiftlift.app/hosting-guide): free hosting and the Care Plan.
+- [Features & Add-ons](https://swiftlift.app/features): what is included and optional upgrades.
+- [About](https://swiftlift.app/about): who runs SwiftLift and how it works.
+
+## Industry pages
+
+- [Dentists](https://swiftlift.app/website-redesign/dentists)
+- [Contractors](https://swiftlift.app/website-redesign/contractors)
+- [Restaurants](https://swiftlift.app/website-redesign/restaurants)
+- [Salons & spas](https://swiftlift.app/website-redesign/salons)
+- [Real estate](https://swiftlift.app/website-redesign/real-estate)
+- [Auto repair](https://swiftlift.app/website-redesign/auto-repair)
+
+## Contact
+
+- Email: support@swiftlift.app (reply within 1 business day)
+- Start: https://swiftlift.app/#contact
+
+## Optional
+
+- [Privacy Policy](https://swiftlift.app/privacy)
+- [Terms of Service](https://swiftlift.app/terms)

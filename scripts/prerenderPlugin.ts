@@ -7,7 +7,7 @@ import path from "node:path";
 import type { Plugin, ResolvedConfig } from "vite";
 import { SEO_ROUTES, SITE } from "../src/lib/seoRoutes";
 import { INDUSTRY_PAGES } from "../src/lib/industryContent";
-import { ALL_FAQS } from "../src/lib/faqContent";
+import { ALL_FAQS, HOME_FAQS } from "../src/lib/faqContent";
 
 const esc = (s: string) =>
   s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
@@ -20,7 +20,8 @@ const ORG = {
   name: "SwiftLift",
   url: SITE,
   logo: `${SITE}/swiftsite-logo.png`,
-  parentOrganization: { "@type": "Organization", name: "Bluluma Design", url: "https://bluluma.com" },
+  email: "support@swiftlift.app",
+  founder: { "@type": "Person", name: "Sony Lin", jobTitle: "Founder & Lead Designer", url: "https://sonykundesign.com/" },
 };
 const SERVICE = {
   "@type": "ProfessionalService",
@@ -29,9 +30,14 @@ const SERVICE = {
   url: SITE,
   image: `${SITE}/og-image.jpg`,
   description: SEO_ROUTES["/"].description,
-  serviceType: ["Website Redesign", "Small Business Website Design", "Managed Website Hosting"],
+  serviceType: ["Website Facelift", "Website Redesign", "Small Business Website Design"],
   areaServed: { "@type": "Country", name: "United States" },
-  priceRange: "$$",
+  priceRange: "$299–$499",
+  makesOffer: [
+    { "@type": "Offer", name: "Classic Facelift", price: "299", priceCurrency: "USD", description: "A clean, professional website redesign of your existing site." },
+    { "@type": "Offer", name: "Growth Facelift", price: "499", priceCurrency: "USD", description: "Redesign with a conversion-focused layout built to turn more visitors into inquiries." },
+    { "@type": "Offer", name: "Care Plan", price: "135", priceCurrency: "USD", description: "Yearly plan with up to 2 small website edits every month." },
+  ],
   provider: { "@id": `${SITE}/#organization` },
 };
 
@@ -59,7 +65,10 @@ export default function prerenderPlugin(): Plugin {
         html = setTag(html, /<meta property="og:url"[^>]*>/, `<meta property="og:url" content="${url}" />`);
         html = setTag(html, /<link rel="canonical"[^>]*>/, `<link rel="canonical" href="${url}" />`);
         const graph: object[] = [ORG];
-        if (route === "/") graph.push(SERVICE, { "@type": "WebSite", "@id": `${SITE}/#website`, name: "SwiftLift", url: SITE, publisher: { "@id": `${SITE}/#organization` } });
+        if (route === "/") graph.push(SERVICE, { "@type": "WebSite", "@id": `${SITE}/#website`, name: "SwiftLift", url: SITE, publisher: { "@id": `${SITE}/#organization` } }, {
+          "@type": "FAQPage",
+          mainEntity: HOME_FAQS.map((f) => ({ "@type": "Question", name: f.q.en, acceptedAnswer: { "@type": "Answer", text: f.a.en } })),
+        });
         else {
           const ind = INDUSTRY_PAGES.find((p) => route === `/website-redesign/${p.slug}`);
           if (ind) {
