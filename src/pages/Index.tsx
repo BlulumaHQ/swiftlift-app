@@ -752,6 +752,15 @@ const IndexContent = ({ variant = "home" }: { variant?: "home" | "start" }) => {
   const reviewItems = [
     {
       text: lang === "en"
+        ? <>I highly recommend his web design and development services. <strong>He delivers not just a website, but a complete business solution designed to enhance your brand, generate leads, and support long-term growth.</strong> If you're considering upgrading your online presence, I am confident that you'll be impressed with both the process and the results.</>
+        : <>我非常推薦他的網站設計與開發服務。<strong>他交付的不只是一個網站，而是一套完整的商業解決方案，能提升你的品牌、帶來潛在客戶，並支撐長期成長。</strong>如果你正考慮升級你的線上形象，我相信整個合作過程和最後的成果都會讓你印象深刻。</>,
+      name: "Eric Kim",
+      company: "Eric Kim Realty",
+      url: "https://erickimrealty.com/",
+      domain: "erickimrealty.com",
+    },
+    {
+      text: lang === "en"
         ? <>We got two complete directions for our site before committing to anything. <strong>Seeing them side by side made it obvious which one fit how we talk to landowners and investors.</strong> The version we picked is the one live today.</>
         : <>在做任何決定之前，我們就收到了兩個完整的網站方向。<strong>並排比較之後，哪一個更適合我們跟地主和投資人溝通的方式，一目瞭然。</strong>我們選的那個版本就是現在上線的網站。</>,
       name: "Thomas Chen",
@@ -1071,7 +1080,7 @@ const IndexContent = ({ variant = "home" }: { variant?: "home" | "start" }) => {
           <h2 className={`mb-10 text-center md:mb-12 ${sectionTitle}`}>{lang === "en" ? "What Our Clients Say" : "客戶評價"}</h2>
           <div className="mx-auto grid max-w-5xl grid-cols-1 items-stretch gap-5 md:grid-cols-2">
             {reviewItems.map((item, ci) => (
-              <figure key={ci} className="m-0 flex flex-col rounded-[22px] border border-border bg-white p-6 md:p-7">
+              <figure key={ci} className="m-0 flex flex-col rounded-[22px] border border-border bg-white p-6 md:p-7 md:[&:last-child:nth-child(odd)]:col-span-2">
                 <blockquote className="m-0 flex-1 text-base leading-relaxed text-foreground">“{item.text}”</blockquote>
                 <figcaption className="mt-5 border-t border-border pt-4">
                   <p className="text-sm font-bold text-foreground">{item.name}</p>
