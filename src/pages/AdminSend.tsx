@@ -8,7 +8,7 @@ import { JOURNEY_FN } from "@/lib/journey";
 
 type Lead = { id: string; name: string | null; email: string; company_name: string | null; website_url: string | null; status: string | null; source_app: string | null; created_at: string };
 type Project = {
-  id: string; lead_id: string | null; client_name: string | null; client_email: string | null; business_name: string | null; source_url: string | null;
+  id: string; brand?: string | null; lead_id: string | null; client_name: string | null; client_email: string | null; business_name: string | null; source_url: string | null;
   status: string | null; preview_a_url: string | null; preview_b_url: string | null; preview_a_image: string | null; preview_b_image: string | null;
   previews_sent_at: string | null; paid_at: string | null; live_url: string | null; selected_plan: string | null; selected_preview: string | null; created_at: string;
   report_url?: string | null; review_pages?: string[] | null; old_host?: string | null; revision_rounds_used?: number | null;
@@ -54,9 +54,12 @@ const ago = (iso: string) => {
   return h < 48 ? `${h}h ago` : `${Math.round(h / 24)}d ago`;
 };
 
+type Brand = "swiftlift" | "swiftsite";
+const BRAND_LABEL: Record<Brand, string> = { swiftlift: "SwiftLift", swiftsite: "SwiftSite" };
+
 const input = "w-full rounded-lg border border-zinc-300 bg-white px-3 py-2.5 text-sm focus:outline-none focus:ring-2 focus:ring-blue-500/30";
 
-type Row = { key: string; kind: "lead" | "project"; name: string; email: string; business: string; website: string; status: string; created: string; leadId?: string; project?: Project };
+type Row = { key: string; kind: "lead" | "project"; brand: Brand; name: string; email: string; business: string; website: string; status: string; created: string; leadId?: string; project?: Project };
 
 export default function AdminSend() {
   const [key, setKey] = useState(() => {
@@ -71,6 +74,7 @@ export default function AdminSend() {
   const [selected, setSelected] = useState<Row | null>(null);
 
   const [template, setTemplate] = useState<string>("previews_ready");
+  const [brand, setBrand] = useState<Brand>("swiftlift");
   const [f, setF] = useState({ to: "", name: "", business: "", website: "", linkA: "", linkB: "", imgA: "", imgB: "", previewUrl: "", liveUrl: "", roundsLeft: "0", note: "", reportUrl: "", pages: "", oldHost: "" });
   const [reportState, setReportState] = useState<"" | "uploading" | "done" | "error">("");
   const [files, setFiles] = useState<{ name: string; url: string; state: "uploading" | "done" | "error" }[]>([]);
@@ -107,13 +111,13 @@ export default function AdminSend() {
     const byLead = new Set(projects.map((p) => p.lead_id).filter(Boolean));
     const byEmail = new Set(projects.map((p) => (p.client_email || "").toLowerCase()));
     const pRows: Row[] = projects.map((p) => ({
-      key: `p-${p.id}`, kind: "project", name: p.client_name || "", email: p.client_email || "", business: p.business_name || "",
+      key: `p-${p.id}`, kind: "project", brand: p.brand === "swiftsite" ? "swiftsite" : "swiftlift", name: p.client_name || "", email: p.client_email || "", business: p.business_name || "",
       website: p.source_url || "", status: p.status || "", created: p.created_at, leadId: p.lead_id || undefined, project: p,
     }));
     const lRows: Row[] = leads
       .filter((l) => !byLead.has(l.id) && !byEmail.has((l.email || "").toLowerCase()))
       .map((l) => ({
-        key: `l-${l.id}`, kind: "lead", name: l.name || "", email: l.email, business: l.company_name || "",
+        key: `l-${l.id}`, kind: "lead", brand: l.source_app?.startsWith("swiftsite") ? "swiftsite" : "swiftlift", name: l.name || "", email: l.email, business: l.company_name || "",
         website: l.website_url || "", status: l.status || "new", created: l.created_at, leadId: l.id,
       }));
     return [...lRows, ...pRows].sort((a, b) => b.created.localeCompare(a.created));
@@ -121,6 +125,7 @@ export default function AdminSend() {
 
   const pick = (r: Row) => {
     setSelected(r);
+    setBrand(r.brand);
     setMsg(null);
     const p = r.project;
     setF({
@@ -173,10 +178,11 @@ export default function AdminSend() {
   };
 
   const tpl = TEMPLATES.find((t) => t.value === template)!;
-  const missing = (tpl.needs as readonly string[]).filter((k) => !(f as Record<string, string>)[k]);
+  const needs = brand === "swiftsite" && template === "previews_ready" ? ["linkA"] : (tpl.needs as readonly string[]);
+  const missing = needs.filter((k) => !(f as Record<string, string>)[k]);
 
   const payload = (action: "preview" | "send") => ({
-    action, key, template, projectId: selected?.project?.id, leadId: selected?.leadId,
+    action, key, template, brand, projectId: selected?.project?.id, leadId: selected?.leadId,
     ...f, roundsLeft: Number(f.roundsLeft || 0),
     files: files.filter((x) => x.state === "done").map((x) => ({ name: x.name, url: x.url })),
   });
@@ -272,7 +278,10 @@ export default function AdminSend() {
                 >
                   <div className="flex items-start justify-between gap-2">
                     <div className="min-w-0">
-                      <div className="truncate text-sm font-semibold">{r.business || r.name || r.email}</div>
+                      <div className="flex items-center gap-1.5">
+                        <span className={`shrink-0 rounded px-1.5 py-0.5 text-[10px] font-bold ${r.brand === "swiftsite" ? "bg-lime-100 text-lime-800" : "bg-sky-100 text-sky-800"}`}>{r.brand === "swiftsite" ? "SS" : "SL"}</span>
+                        <span className="truncate text-sm font-semibold">{r.business || r.name || r.email}</span>
+                      </div>
                       <div className="truncate text-xs text-zinc-500">{r.name && `${r.name} · `}{r.email}</div>
                       {r.website && <div className="truncate text-xs text-zinc-400">{r.website}</div>}
                     </div>
@@ -299,11 +308,19 @@ export default function AdminSend() {
 
         <section id="composer" className="h-fit rounded-2xl border border-zinc-200 bg-white p-4 lg:sticky lg:top-20">
           <h2 className="text-sm font-semibold">Send an email</h2>
+          <div className="mt-3 grid grid-cols-2 gap-1 rounded-lg bg-zinc-100 p-1" role="group" aria-label="Brand">
+            {(["swiftlift", "swiftsite"] as Brand[]).map((b) => (
+              <button key={b} onClick={() => setBrand(b)} aria-pressed={brand === b}
+                className={`rounded-md py-2 text-sm font-semibold ${brand === b ? "bg-white shadow-sm" : "text-zinc-500"}`}>
+                {BRAND_LABEL[b]}
+              </button>
+            ))}
+          </div>
           <div className="mt-3 grid grid-cols-1 gap-2">
             {TEMPLATES.map((t) => (
               <button key={t.value} onClick={() => setTemplate(t.value)}
                 className={`rounded-lg border px-3 py-2 text-left text-sm ${template === t.value ? "border-blue-500 bg-blue-50 font-semibold" : "border-zinc-200"}`}>
-                {t.label}
+                {brand === "swiftsite" && t.value === "previews_ready" ? "B1 · Preview is ready" : t.label}
               </button>
             ))}
           </div>
@@ -318,10 +335,16 @@ export default function AdminSend() {
 
             {template === "previews_ready" && (
               <>
-                {field("linkA", "Preview A link *", "https://…-a.workers.dev")}
-                {field("linkB", "Preview B link *", "https://…-b.workers.dev")}
-                {field("imgA", "Preview A screenshot URL (optional)")}
-                {field("imgB", "Preview B screenshot URL (optional)")}
+                {brand === "swiftsite" ? (
+                  field("linkA", "Preview link *", "https://….workers.dev")
+                ) : (
+                  <>
+                    {field("linkA", "Preview A link *", "https://…-a.workers.dev")}
+                    {field("linkB", "Preview B link *", "https://…-b.workers.dev")}
+                    {field("imgA", "Preview A screenshot URL (optional)")}
+                    {field("imgB", "Preview B screenshot URL (optional)")}
+                  </>
+                )}
                 <label className="block">
                   <span className="text-xs font-semibold text-zinc-600">Preview report PDF (attached to the email)</span>
                   <input id="report-pdf" type="file" accept="application/pdf" onChange={(e) => uploadReport(e.target.files?.[0])} className="mt-1 block w-full text-sm" />
@@ -331,14 +354,18 @@ export default function AdminSend() {
                 </label>
                 {field("pages", "Pages on the review form", "Home, Services, About, Contact")}
                 {field("oldHost", "Current host (auto-detected if empty)", "Wix")}
-                <p className="text-xs text-zinc-500">Starts the 24h reminder and 72h expiry timers. The email links to the client's review page (pick A/B, send changes, approve &amp; pay).</p>
+                <p className="text-xs text-zinc-500">
+                  {brand === "swiftsite"
+                    ? "Starts the 24h reminder and 72h expiry timers. The email links to swiftsite.ca/review: launch & pay ($99 + plan), then 2 rounds of changes."
+                    : "Starts the 24h reminder and 72h expiry timers. The email links to the client's review page (pick A/B, send changes, approve & pay)."}
+                </p>
               </>
             )}
             {template === "revision_done" && (
               <>
                 {field("previewUrl", "Link to updated site *")}
                 <p className="text-xs text-zinc-500">
-                  Rounds used: {selected?.project?.revision_rounds_used ?? 0} of 2 — the email shows how many free rounds are left automatically.
+                  Rounds used: {selected?.project?.revision_rounds_used ?? 0} of 2 — the email shows how many rounds are left automatically.
                 </p>
               </>
             )}

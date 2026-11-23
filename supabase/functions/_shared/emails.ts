@@ -12,6 +12,41 @@ export const ADMIN_TO = "support@swiftlift.app";
 const LOGO_URL = `${SITE}/swiftsite-logo.png`;
 const ACCENT = "#337DAF";
 
+// ---------- brands ----------
+// One email system, two brands. SwiftSite (swiftsite.ca, Canada): 1 preview, pay at preview, then 2 rounds of changes.
+export type Brand = "swiftlift" | "swiftsite";
+export const SS_PRICE = { setup: 99, monthly: 25, yearly: 250, includedRounds: 2, seo: 199 } as const;
+export const BRANDS = {
+  swiftlift: {
+    name: "SwiftLift",
+    site: SITE,
+    from: FROM,
+    replyTo: REPLY_TO,
+    support: "support@swiftlift.app",
+    logo: LOGO_URL,
+    logoWidth: 140,
+    accent: ACCENT,
+    team: "The SwiftLift Team",
+    resendEnv: "RESEND_KEY_SWIFTLIFT",
+  },
+  swiftsite: {
+    name: "SwiftSite",
+    site: "https://swiftsite.ca",
+    from: "SwiftSite <info@swiftsite.ca>",
+    replyTo: "info@swiftsite.ca",
+    support: "info@swiftsite.ca",
+    logo: "https://swiftsite.ca/images/swiftsite-logo-email.png",
+    logoWidth: 160,
+    accent: "#0A5CF5",
+    team: "Sony Lin & the SwiftSite team",
+    resendEnv: "RESEND_KEY_SWIFTSITE",
+  },
+} as const;
+export const brandOf = (b: unknown): Brand => (b === "swiftsite" ? "swiftsite" : "swiftlift");
+
+// Colours and footer follow the brand being rendered (render() sets this; rendering is synchronous).
+let CUR: (typeof BRANDS)[Brand] = BRANDS.swiftlift;
+
 export function esc(s: unknown): string {
   return String(s ?? "")
     .replace(/&/g, "&amp;")
@@ -29,24 +64,24 @@ export function firstName(name?: string): string {
 const p = (html: string) => `<p style="margin:0 0 16px 0;">${html}</p>`;
 const h2 = (t: string) => `<h2 style="font-size:18px;font-weight:700;margin:28px 0 12px 0;">${t}</h2>`;
 const btn = (href: string, label: string) =>
-  `<p style="margin:0 0 16px 0;"><a href="${esc(href)}" style="display:inline-block;background:${ACCENT};color:#ffffff;text-decoration:none;font-weight:700;padding:12px 22px;border-radius:8px;">${esc(label)}</a></p>`;
+  `<p style="margin:0 0 16px 0;"><a href="${esc(href)}" style="display:inline-block;background:${CUR.accent};color:#ffffff;text-decoration:none;font-weight:700;padding:12px 22px;border-radius:8px;">${esc(label)}</a></p>`;
 const ul = (items: string[]) =>
   `<ul style="margin:0 0 16px 0;padding-left:20px;">${items.map((i) => `<li style="margin:0 0 8px 0;">${i}</li>`).join("")}</ul>`;
 const box = (html: string, bg = "#F3F7FA") =>
   `<div style="background:${bg};border-radius:10px;padding:16px 18px;margin:0 0 16px 0;">${html}</div>`;
 const link = (href: string, label?: string) =>
-  `<a href="${esc(href)}" style="color:${ACCENT};">${esc(label || href)}</a>`;
+  `<a href="${esc(href)}" style="color:${CUR.accent};">${esc(label || href)}</a>`;
 
 function layout(title: string, body: string): string {
   return `<!DOCTYPE html><html><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1"></head>
 <body style="margin:0;padding:0;background:#ffffff;">
 <div style="font-family:Arial,Helvetica,sans-serif;font-size:16px;line-height:1.6;color:#111111;max-width:600px;margin:0 auto;padding:20px;">
-  <div style="text-align:center;margin-bottom:20px;"><img src="${LOGO_URL}" alt="SwiftLift" width="140" style="width:140px;height:auto;display:inline-block;" /></div>
+  <div style="text-align:center;margin-bottom:20px;"><img src="${CUR.logo}" alt="${CUR.name}" width="${CUR.logoWidth}" style="width:${CUR.logoWidth}px;height:auto;display:inline-block;" /></div>
   <h1 style="font-size:26px;font-weight:700;margin:0 0 16px 0;">${esc(title)}</h1>
   ${body}
-  <hr style="border:none;border-top:1px solid ${ACCENT};margin:28px 0 16px 0;" />
-  <p style="margin:0 0 4px 0;">The SwiftLift Team</p>
-  <p style="margin:0;">${link("mailto:support@swiftlift.app", "support@swiftlift.app")} · just reply to this email</p>
+  <hr style="border:none;border-top:1px solid ${CUR.accent};margin:28px 0 16px 0;" />
+  <p style="margin:0 0 4px 0;">${CUR.team}</p>
+  <p style="margin:0;">${link(`mailto:${CUR.support}`, CUR.support)} · just reply to this email</p>
 </div></body></html>`;
 }
 
@@ -64,6 +99,10 @@ export function payBuildUrl(tier: "starter" | "growth", d: TemplateData): string
 const SITE_RE = /^https:\/\/((www\.)?swiftlift\.app|[a-z0-9-]+--swiftlift\.netlify\.app)$/i;
 export function siteFrom(origin?: string | null): string {
   return origin && SITE_RE.test(origin) ? origin.replace(/^https:\/\/www\./i, "https://") : SITE;
+}
+// Client pages for a brand: SwiftLift pages follow the request origin (deploy previews); SwiftSite always swiftsite.ca.
+export function brandSite(brand: Brand, origin?: string | null): string {
+  return brand === "swiftsite" ? BRANDS.swiftsite.site : siteFrom(origin);
 }
 
 export function reviewUrl(projectId?: string, site = SITE): string {
@@ -97,6 +136,7 @@ export interface TemplateData {
   site?: string;
   note?: string;
   golive?: GoLiveAnswers;
+  brand?: Brand;
 }
 
 export interface GoLiveAnswers {
@@ -240,6 +280,8 @@ function personal(d: TemplateData): string {
 }
 
 export function render(key: TemplateKey, d: TemplateData): RenderedEmail {
+  CUR = BRANDS[brandOf(d.brand)];
+  if (d.brand === "swiftsite") return renderSwiftSite(key, d);
   const hi = `Hi ${esc(firstName(d.name))},`;
   const biz = esc(d.business || "your business");
   const S = d.site || SITE;
@@ -422,6 +464,175 @@ export function render(key: TemplateKey, d: TemplateData): RenderedEmail {
   }
 }
 
+// ---------- SwiftSite (swiftsite.ca) ----------
+// 1 preview · pay when you love the preview ($99 setup + Hosting & Care) · then 2 rounds of changes · go live.
+function renderSwiftSite(key: TemplateKey, d: TemplateData): RenderedEmail {
+  const hi = `Hi ${esc(firstName(d.name))},`;
+  const biz = esc(d.business || "your business");
+  const S = BRANDS.swiftsite.site;
+  const review = reviewUrl(d.projectId, S);
+  const P = SS_PRICE;
+  const plan = `$${P.monthly}/month, or $${P.yearly}/year (2 months free)`;
+  const link1 = d.linkA || d.previewUrl || "";
+  switch (key) {
+    case "confirm":
+      return {
+        subject: "Your new website is on the way – SwiftSite",
+        html: layout(
+          "We got your request",
+          p(hi) + personal(d) +
+            p(`Thank you for sending us ${d.website ? `<b>${esc(d.website)}</b>` : "your website"}. We're rebuilding ${biz} into a brand-new design, using your own words, services and photos.`) +
+            h2("What happens next") +
+            ul([
+              `Within <b>48 hours</b>, you'll get a link to your new website. It's a real, clickable site, checked by our lead designer before it reaches you.`,
+              `Love it? Launch it for a <b>$${P.setup} setup</b> plus Hosting &amp; Care at ${plan}.`,
+              `Not for you? You pay nothing.`,
+            ]) +
+            p(`Have a new logo or photos you'd like us to use? Just reply and attach them.`) +
+            p(`Talk soon,`),
+        ),
+      };
+
+    case "previews_ready":
+      return {
+        subject: `Your new website for ${d.business || "your business"} is ready`,
+        html: layout(
+          "Your new website is ready",
+          p(hi) + personal(d) +
+            p(`Your brand-new website for ${biz} is ready. It's fully live, so click through every page on both your phone and your computer:`) +
+            btn(link1, "See my new website") +
+            p(`Or open it here: ${link(link1)}`) +
+            (d.reportUrl ? p(`We've also attached a short report on what we changed and why.`) : "") +
+            h2("Love it? Launch it") +
+            p(`Click below to launch your new website. You'll pay the one-time <b>$${P.setup} setup</b> and start your Hosting &amp; Care plan: <b>${plan}</b>. Hosting, backups, security updates and small edits are all included.`) +
+            btn(review, "Launch my new website") +
+            h2("Then we fine-tune it with you") +
+            ul([
+              `You get <b>${P.includedRounds} rounds of changes</b> before we go live. Please send all your changes for each round together in one list.`,
+              `We connect it to your domain. Your domain and email stay yours, and your email keeps working.`,
+              `After launch, your plan includes <b>up to 2 small edits every month</b>.`,
+            ]) +
+            p(`Not quite what you had in mind? You pay nothing. Just reply and tell us what you'd like different.`) +
+            p(`Your new website stays online for <b>72 hours</b>.`),
+        ),
+      };
+
+    case "nudge_24h":
+      return {
+        subject: `Did you get a chance to look at your new website?`,
+        html: layout(
+          "A quick reminder",
+          p(hi) + personal(d) +
+            p(`Just checking in, in case our last email got buried. Your new website for ${biz} is still live: ${link(link1)}`) +
+            p(`Close, but not quite right? That's what your <b>${P.includedRounds} rounds of changes</b> are for, right after you launch.`) +
+            btn(review, "Launch my new website") +
+            p(`It will be taken offline in about <b>48 hours</b>. Simply reply if you have any questions.`),
+        ),
+      };
+
+    case "expired_72h":
+      return {
+        subject: `Your new website is offline — want it back?`,
+        html: layout(
+          "Your preview is offline",
+          p(hi) + personal(d) +
+            p(`Your new website for ${biz} was online for 72 hours, so we've taken it down for now.`) +
+            p(`Still interested? Reply <b>"bring it back"</b> and we'll put it up again within a day. If the direction wasn't right, tell us what you had in mind and we'll take another look.`),
+        ),
+      };
+
+    case "payment_confirmed":
+      return {
+        subject: `You're all set — let's get ${d.business || "your site"} live`,
+        html: layout(
+          "Thank you — you're all set!",
+          p(hi) + personal(d) +
+            p(`We received your payment${d.amount ? ` of <b>${esc(d.amount)}</b>` : ""}. Thank you for choosing SwiftSite! Your receipt comes in a separate email.`) +
+            h2(`1. Send your changes (round 1 of ${P.includedRounds})`) +
+            p(`Look through every page and send <b>all</b> your changes together in one list: text, photos, colours, anything. Screenshots are welcome. Happy with it as it is? You can tell us on the same page.`) +
+            btn(review, "Send my changes") +
+            h2("2. Tell us about your domain (about 3 minutes)") +
+            p(`This short form tells us how to switch your new site over safely: your domain, your email and your current host. Nothing changes until we've checked it.`) +
+            btn(goLiveUrl(d.projectId, S), "Start the go-live form") +
+            p(`After launch, your Hosting &amp; Care plan includes <b>up to 2 small edits every month</b>. Just email ${link(`mailto:${BRANDS.swiftsite.support}`, BRANDS.swiftsite.support)}.`),
+        ),
+      };
+
+    case "revision_received":
+      return {
+        subject: `We got your changes for ${d.business || "your website"}`,
+        html: layout(
+          "Thank you — we're on it",
+          p(hi) + personal(d) +
+            p(`We've received your changes and we're working on them now.`) +
+            ul([
+              `You'll get an email with the updated site within <b>1–2 business days</b>.`,
+              d.paidRound
+                ? `This is change round ${d.round}. Your launch includes ${P.includedRounds} rounds, so we'll confirm any cost with you before we start.`
+                : `This is round <b>${d.round} of ${P.includedRounds}</b> included before launch.`,
+            ]) +
+            p(`Forgot something? ${link(review, "Open your review page")} or simply reply to this email.`),
+        ),
+      };
+
+    case "revision_done":
+      return {
+        subject: `Your changes are done — take a look`,
+        html: layout(
+          "Your updated site is ready",
+          p(hi) + personal(d) +
+            p(`We've made your changes to ${biz}. Please take another look on both your phone and computer:`) +
+            btn(d.previewUrl || link1 || S, "View your updated site") +
+            p(
+              (d.roundsLeft ?? 0) > 0
+                ? `You have <b>${d.roundsLeft} more round${d.roundsLeft === 1 ? "" : "s"} of changes</b> before launch.`
+                : `That was your last included round before launch. After launch, your plan still includes up to 2 small edits every month.`,
+            ) +
+            p(`Happy with it? Approve it on your review page and we'll take it live.`) +
+            btn(review, "Approve or send more changes"),
+        ),
+      };
+
+    case "golive_received": {
+      const g = d.golive || {};
+      return {
+        subject: `Here's how we'll take ${g.domain || "your site"} live`,
+        html: layout(
+          "Your go-live plan",
+          p(hi) + personal(d) +
+            p(`Thank you, we have everything we need. Here's exactly what will happen. Please keep this email for reference.`) +
+            domainSection(g) +
+            emailSection(g) +
+            oldHostSection(g, false) +
+            h2("4. Hosting") +
+            p(`Your SwiftSite Hosting &amp; Care plan is active: secure hosting, backups, security updates and up to 2 small edits every month.`) +
+            p(`If anything here looks wrong, just reply and let us know.`),
+        ),
+      };
+    }
+
+    case "site_live": {
+      const g = d.golive || {};
+      return {
+        subject: `${d.business || "Your site"} is live! 🎉`,
+        html: layout(
+          "Your new website is live",
+          p(hi) + personal(d) +
+            p(`Congratulations, your new website is officially live:`) +
+            btn(d.liveUrl || S, d.liveUrl ? d.liveUrl.replace(/^https?:\/\//, "") : "View your site") +
+            p(`<b>Heads up:</b> it can take <b>2–72 hours</b> for every phone and computer to see the new site. If you still see the old one, that's normal. Try again later or on mobile data.`) +
+            oldHostSection(g, true) +
+            h2("Need a change?") +
+            p(`Your plan includes <b>up to 2 small edits every month</b> (text, photos). Just email ${link(`mailto:${BRANDS.swiftsite.support}`, BRANDS.swiftsite.support)}.`) +
+            h2("Want more customers from it?") +
+            p(`<b>SEO Starter ($${P.seo})</b>: on-page SEO plus Google Business Profile setup, so more local customers find you. Interested? Just reply.`) +
+            p(`Thank you for choosing SwiftSite. If you're happy with your new site, a quick Google review would mean a lot to our small team.`),
+        ),
+      };
+    }
+  }
+}
+
 // ---------- admin notification ----------
 export function adminHtml(title: string, rows: Record<string, unknown>): string {
   const tr = Object.entries(rows)
@@ -431,21 +642,22 @@ export function adminHtml(title: string, rows: Record<string, unknown>): string 
 }
 
 // ---------- sending ----------
-export function resendKey(): string {
-  const k = Deno.env.get("RESEND_KEY_SWIFTLIFT") ?? Deno.env.get("RESEND_API_KEY");
+export function resendKey(brand: Brand = "swiftlift"): string {
+  const k = brand === "swiftsite" ? Deno.env.get(BRANDS.swiftsite.resendEnv) : Deno.env.get("RESEND_KEY_SWIFTLIFT") ?? Deno.env.get("RESEND_API_KEY");
   if (!k) throw new Error("RESEND key not configured");
   return k;
 }
 
 export type Attachment = { filename: string; path: string };
 
-export async function sendEmail(to: string | string[], subject: string, html: string, attachments?: Attachment[]): Promise<string | null> {
+export async function sendEmail(to: string | string[], subject: string, html: string, attachments?: Attachment[], brand: Brand = "swiftlift"): Promise<string | null> {
+  const B = BRANDS[brand];
   const res = await fetch("https://api.resend.com/emails", {
     method: "POST",
-    headers: { "Content-Type": "application/json", Authorization: `Bearer ${resendKey()}` },
+    headers: { "Content-Type": "application/json", Authorization: `Bearer ${resendKey(brand)}` },
     body: JSON.stringify({
-      from: FROM,
-      reply_to: REPLY_TO,
+      from: B.from,
+      reply_to: B.replyTo,
       to: Array.isArray(to) ? to : [to],
       subject,
       html,

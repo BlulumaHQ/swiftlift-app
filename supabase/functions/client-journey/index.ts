@@ -8,7 +8,12 @@
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.45.4";
 import {
   ADMIN_TO,
+  BRANDS,
   PRICE,
+  SS_PRICE,
+  brandOf,
+  brandSite,
+  type Brand,
   reviewUrl,
   siteFrom,
   adminHtml,
@@ -25,6 +30,7 @@ const cors = {
     "authorization, x-client-info, apikey, content-type, x-supabase-client-platform, x-supabase-client-platform-version, x-supabase-client-runtime, x-supabase-client-runtime-version",
 };
 const N8N_LEAD_WEBHOOK = "https://n8n-production-69d1bdd4.up.railway.app/webhook/lead?brand=SwiftLift";
+const N8N_LEAD_WEBHOOK_SS = "https://n8n-production-69d1bdd4.up.railway.app/webhook/lead?brand=SwiftSite";
 const UUID_RE = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
 
 const db = createClient(Deno.env.get("SUPABASE_URL")!, Deno.env.get("SUPABASE_SERVICE_ROLE_KEY")!, {
@@ -59,7 +65,7 @@ async function sendAndLog(
 ) {
   const { subject, html } = render(template, data);
   try {
-    const resendId = await sendEmail(to, subject, html, attachments);
+    const resendId = await sendEmail(to, subject, html, attachments, brandOf(data.brand));
     await db.from("client_emails").insert({
       project_id: ids.projectId ?? null,
       lead_id: ids.leadId ?? null,
@@ -106,6 +112,7 @@ function projectData(p: Record<string, any>): TemplateData {
     reportUrl: p.report_url,
     oldHost: p.old_host,
     selectedPreview: p.selected_preview,
+    brand: brandOf(p.brand),
   };
 }
 
@@ -124,7 +131,7 @@ async function latestGoLive(projectId: string): Promise<GoLiveAnswers | undefine
 async function actionList() {
   const [leads, projects, emails] = await Promise.all([
     db.from("leads").select("id,name,email,company_name,website_url,status,source_app,created_at").order("created_at", { ascending: false }).limit(40),
-    db.from("projects").select("id,lead_id,client_name,client_email,business_name,source_url,status,preview_a_url,preview_b_url,preview_a_image,preview_b_image,previews_sent_at,paid_at,live_url,selected_plan,selected_preview,report_url,review_pages,old_host,revision_rounds_used,created_at").order("created_at", { ascending: false }).limit(40),
+    db.from("projects").select("id,brand,lead_id,client_name,client_email,business_name,source_url,status,preview_a_url,preview_b_url,preview_a_image,preview_b_image,previews_sent_at,paid_at,live_url,selected_plan,selected_preview,report_url,review_pages,old_host,revision_rounds_used,created_at").order("created_at", { ascending: false }).limit(40),
     db.from("client_emails").select("project_id,lead_id,template,to_email,status,created_at").order("created_at", { ascending: false }).limit(100),
   ]);
   return { leads: leads.data ?? [], projects: projects.data ?? [], emails: emails.data ?? [] };
@@ -156,17 +163,18 @@ async function actionSend(b: Record<string, any>, dryRun = false) {
   if (!project) {
     project = (await db.from("projects").select("*").ilike("client_email", to).order("created_at", { ascending: false }).limit(1).maybeSingle()).data;
   }
+  const brand: Brand = brandOf(b.brand || project?.brand);
   const patch: Record<string, any> = {
     client_email: to,
     client_name: b.name || project?.client_name || null,
     business_name: b.business || project?.business_name || null,
     source_url: b.website || project?.source_url || null,
-    brand: "swiftlift",
+    brand,
     updated_at: new Date().toISOString(),
   };
   if (b.leadId && UUID_RE.test(b.leadId)) patch.lead_id = b.leadId;
   if (template === "previews_ready") {
-    if (!b.linkA || !b.linkB) throw new HttpError(400, "Preview A and B links are required");
+    if (!b.linkA || (brand === "swiftlift" && !b.linkB)) throw new HttpError(400, brand === "swiftsite" ? "Preview link is required" : "Preview A and B links are required");
     const pages = String(b.pages || "")
       .split(/[,\n]/)
       .map((x: string) => x.trim())
@@ -176,13 +184,13 @@ async function actionSend(b: Record<string, any>, dryRun = false) {
       review_pages: pages.length ? pages : project?.review_pages || null,
       old_host: b.oldHost || project?.old_host || (await detectHost(patch.source_url)) || null,
       selected_preview: null,
-      revision_rounds_used: 0,
+      revision_rounds_used: project?.paid_at ? project.revision_rounds_used || 0 : 0,
       approved_at: null,
       preview_a_url: b.linkA,
-      preview_b_url: b.linkB,
+      preview_b_url: brand === "swiftsite" ? null : b.linkB,
       preview_a_image: b.imgA || null,
       preview_b_image: b.imgB || null,
-      status: "previews_sent",
+      status: project?.paid_at ? project.status : "previews_sent",
       previews_sent_at: new Date().toISOString(),
       nudge_sent_at: null,
       expired_sent_at: null,
@@ -207,7 +215,7 @@ async function actionSend(b: Record<string, any>, dryRun = false) {
   } else if (project) {
     project = (await db.from("projects").update(patch).eq("id", project.id).select("*").single()).data;
   } else {
-    project = (await db.from("projects").insert({ ...patch, source_app: "swiftlift_admin", project_type: "redesign" }).select("*").single()).data;
+    project = (await db.from("projects").insert({ ...patch, source_app: `${brand}_admin`, project_type: "redesign" }).select("*").single()).data;
   }
   if (!project) throw new Error("could not save project");
   if (patch.lead_id && !dryRun) await db.from("leads").update({ status: patch.status || "in_progress" }).eq("id", patch.lead_id);
@@ -215,9 +223,10 @@ async function actionSend(b: Record<string, any>, dryRun = false) {
   const used = Number(project.revision_rounds_used || 0);
   const data: TemplateData = {
     ...projectData(project),
+    brand,
     previewUrl: b.previewUrl,
-    site: b._site,
-    roundsLeft: Math.max(0, PRICE.includedRounds - used),
+    site: brandSite(brand, b._origin),
+    roundsLeft: Math.max(0, (brand === "swiftsite" ? SS_PRICE.includedRounds : PRICE.includedRounds) - used),
     note: b.note,
   };
   if (template === "site_live" && project.id) data.golive = await latestGoLive(project.id);
@@ -388,7 +397,7 @@ async function actionGoLiveSubmit(b: Record<string, any>) {
   });
   if (project) await db.from("projects").update({ domain, status: "golive_received", updated_at: new Date().toISOString() }).eq("id", project.id);
 
-  const data: TemplateData = { ...(project ? projectData(project) : { name: a.contactName }), golive: a, site: b._site };
+  const data: TemplateData = { ...(project ? projectData(project) : { name: a.contactName }), golive: a, site: brandSite(brandOf(project?.brand), b._origin) };
   await sendAndLog("golive_received", email, data, { projectId: project?.id, leadId: project?.lead_id });
   await notifyAdmin(`Go-live form: ${domain}`, {
     Client: project?.client_name || a.contactName,
@@ -441,7 +450,7 @@ async function detectHost(url?: string | null): Promise<string | null> {
 async function reviewProject(projectId: unknown) {
   if (!UUID_RE.test(String(projectId || ""))) throw new HttpError(404, "This link isn't valid. Please reply to our email and we'll send a new one.");
   const { data: p } = await db.from("projects").select("*").eq("id", projectId).maybeSingle();
-  if (!p || !p.preview_a_url || !p.preview_b_url) throw new HttpError(404, "This link isn't valid. Please reply to our email and we'll send a new one.");
+  if (!p || !p.preview_a_url || (brandOf(p.brand) === "swiftlift" && !p.preview_b_url)) throw new HttpError(404, "This link isn't valid. Please reply to our email and we'll send a new one.");
   return p as Record<string, any>;
 }
 
@@ -454,7 +463,11 @@ async function actionReviewGet(b: Record<string, any>) {
     .order("created_at", { ascending: false })
     .limit(1)
     .maybeSingle();
+  const brand = brandOf(p.brand);
   return {
+    brand,
+    ssPrice: brand === "swiftsite" ? SS_PRICE : undefined,
+    approved: !!p.approved_at,
     firstName: String(p.client_name || "").split(/\s+/)[0] || "",
     business: p.business_name || "",
     linkA: p.preview_a_url,
@@ -465,7 +478,7 @@ async function actionReviewGet(b: Record<string, any>) {
     pages: Array.isArray(p.review_pages) && p.review_pages.length ? p.review_pages : DEFAULT_PAGES,
     selectedPreview: p.selected_preview,
     roundsUsed: Number(p.revision_rounds_used || 0),
-    includedRounds: PRICE.includedRounds,
+    includedRounds: brand === "swiftsite" ? SS_PRICE.includedRounds : PRICE.includedRounds,
     price: { A: PRICE.A, B: PRICE.B, extraRound: PRICE.extraRound },
     status: p.status,
     paid: !!p.paid_at,
@@ -495,8 +508,12 @@ type PageNote = { page: string; note?: string; useOther?: boolean };
 
 async function actionReviewSubmit(b: Record<string, any>) {
   const p = await reviewProject(b.projectId);
-  if (p.paid_at) throw new HttpError(400, "Your site is already approved and paid. Please reply to our email for any further changes.");
-  const pick = b.preview === "B" ? "B" : b.preview === "A" ? "A" : null;
+  const ss = brandOf(p.brand) === "swiftsite";
+  // SwiftLift: changes before paying. SwiftSite: launch (pay) first, then 2 rounds of changes.
+  if (ss && !p.paid_at) throw new HttpError(400, "Please launch your website first. Your 2 rounds of changes start right after.");
+  if (ss && p.approved_at) throw new HttpError(400, "You've approved your website and we're taking it live. For further edits, just email info@swiftsite.ca.");
+  if (!ss && p.paid_at) throw new HttpError(400, "Your site is already approved and paid. Please reply to our email for any further changes.");
+  const pick = ss ? "A" : b.preview === "B" ? "B" : b.preview === "A" ? "A" : null;
   if (!pick) throw new HttpError(400, "Please choose Version A or Version B");
 
   const pages: PageNote[] = (Array.isArray(b.pages) ? b.pages : [])
@@ -516,7 +533,7 @@ async function actionReviewSubmit(b: Record<string, any>) {
   if (recent) throw new HttpError(429, "We already received your changes — thank you!");
 
   const round = Number(p.revision_rounds_used || 0) + 1;
-  const isPaid = round > PRICE.includedRounds;
+  const isPaid = round > (ss ? SS_PRICE.includedRounds : PRICE.includedRounds);
   const { data: rr, error } = await db
     .from("revision_requests")
     .insert({ project_id: p.id, round, selected_preview: pick, pages, overall, files, is_paid_round: isPaid })
@@ -528,7 +545,7 @@ async function actionReviewSubmit(b: Record<string, any>) {
     .update({ selected_preview: pick, revision_rounds_used: round, status: "revision_requested", updated_at: new Date().toISOString() })
     .eq("id", p.id);
 
-  await sendAndLog("revision_received", p.client_email, { ...projectData({ ...p, selected_preview: pick }), round, paidRound: isPaid, site: b._site }, { projectId: p.id, leadId: p.lead_id });
+  await sendAndLog("revision_received", p.client_email, { ...projectData({ ...p, selected_preview: pick }), round, paidRound: isPaid, site: brandSite(brandOf(p.brand), b._origin) }, { projectId: p.id, leadId: p.lead_id });
 
   const signed = await Promise.all(
     files.map(async (f: { path: string; name: string }) => {
@@ -540,8 +557,11 @@ async function actionReviewSubmit(b: Record<string, any>) {
     Client: p.client_name,
     Email: p.client_email,
     Business: p.business_name,
-    "Picked version": `Version ${pick} ($${pick === "A" ? PRICE.A : PRICE.B})`,
-    Round: `${round} of ${PRICE.includedRounds} included${isPaid ? ` — PAID round (+$${PRICE.extraRound} at checkout)` : ""}`,
+    Brand: ss ? "SwiftSite" : "SwiftLift",
+    "Picked version": ss ? "SwiftSite (1 preview)" : `Version ${pick} ($${pick === "A" ? PRICE.A : PRICE.B})`,
+    Round: ss
+      ? `${round} of ${SS_PRICE.includedRounds} included${isPaid ? " — EXTRA round, confirm cost with client" : ""}`
+      : `${round} of ${PRICE.includedRounds} included${isPaid ? ` — PAID round (+$${PRICE.extraRound} at checkout)` : ""}`,
     "Preview link": pick === "A" ? p.preview_a_url : p.preview_b_url,
   };
   for (const x of pages) rows[`Page · ${x.page}`] = `${x.useOther ? `[use Version ${pick === "A" ? "B" : "A"}'s look] ` : ""}${x.note || ""}`;
@@ -549,12 +569,13 @@ async function actionReviewSubmit(b: Record<string, any>) {
   if (signed.length) rows["Screenshots (links valid 7 days)"] = signed.join("\n");
   rows["Revision id"] = rr.id;
   rows["When done"] = "Send E2 'Changes are done' from swiftlift.app/admin/send";
-  await notifyAdmin(`✏️ Revision round ${round}: ${p.business_name || p.client_email} (Version ${pick})`, rows);
+  await notifyAdmin(`✏️ ${ss ? "SwiftSite " : ""}Revision round ${round}: ${p.business_name || p.client_email}${ss ? "" : ` (Version ${pick})`}`, rows);
   return { ok: true, round, paidRound: isPaid };
 }
 
 async function actionReviewApprove(b: Record<string, any>, req: Request) {
   const p = await reviewProject(b.projectId);
+  if (brandOf(p.brand) === "swiftsite") return swiftSiteApprove(p, b);
   if (p.paid_at) throw new HttpError(400, "This site is already paid — thank you!");
   const pick = b.preview === "B" ? "B" : b.preview === "A" ? "A" : null;
   if (!pick) throw new HttpError(400, "Please choose Version A or Version B");
@@ -602,11 +623,125 @@ async function actionReviewApprove(b: Record<string, any>, req: Request) {
   return { url: j.url };
 }
 
+// ---------------- SwiftSite: launch (pay) at preview, approve final before go-live ----------------
+const SS_STRIPE_PRICE = {
+  setup: "price_1UdaGOAfYSE2nzTBYU9lQ7G9", // SwiftSite Website Setup $99 CAD (one-time)
+  monthly: "price_1UdaHFAfYSE2nzTBc1hAy9zw", // SwiftSite Hosting & Care $25/month
+  yearly: "price_1UdaHFAfYSE2nzTBfQCj7jvc", // SwiftSite Hosting & Care $250/year
+};
+
+async function swiftSiteApprove(p: Record<string, any>, b: Record<string, any>) {
+  const S = BRANDS.swiftsite.site;
+  // Already paid → this is "my website is perfect, take it live".
+  if (p.paid_at) {
+    if (p.approved_at) return { ok: true, approved: true };
+    await db.from("projects").update({ approved_at: new Date().toISOString(), status: "approved", updated_at: new Date().toISOString() }).eq("id", p.id);
+    await notifyAdmin(`✅ SwiftSite approved — ready to go live: ${p.business_name || p.client_email}`, {
+      Client: p.client_name,
+      Email: p.client_email,
+      Preview: p.preview_a_url,
+      "Rounds used": `${p.revision_rounds_used || 0} of ${SS_PRICE.includedRounds}`,
+      "Next step": "Take it live, then send E3 'Site is live' from swiftlift.app/admin/send",
+    });
+    return { ok: true, approved: true };
+  }
+  // Not paid yet → Stripe Checkout: $99 setup + Hosting & Care subscription (card saved for renewals).
+  const key = Deno.env.get("STRIPE_SECRET_KEY_SWIFTSITE");
+  if (!key) throw new Error("SwiftSite payments are not set up yet");
+  const yearly = b.plan === "yearly";
+  const form = new URLSearchParams();
+  form.set("mode", "subscription");
+  form.set("line_items[0][price]", yearly ? SS_STRIPE_PRICE.yearly : SS_STRIPE_PRICE.monthly);
+  form.set("line_items[0][quantity]", "1");
+  form.set("line_items[1][price]", SS_STRIPE_PRICE.setup);
+  form.set("line_items[1][quantity]", "1");
+  form.set("success_url", `${S}/review?p=${encodeURIComponent(p.id)}&paid=1`);
+  form.set("cancel_url", `${S}/review?p=${encodeURIComponent(p.id)}&canceled=1`);
+  if (p.client_email) form.set("customer_email", p.client_email);
+  form.set("billing_address_collection", "auto");
+  const meta: Record<string, string> = {
+    payment_type: "ss_launch",
+    brand: "swiftsite",
+    project_id: p.id,
+    client_email: p.client_email || "",
+    client_name: p.client_name || "",
+    business_name: p.business_name || "",
+    hosting_plan: yearly ? "yearly" : "monthly",
+    preview_link: p.preview_a_url || "",
+  };
+  for (const [k, v] of Object.entries(meta)) {
+    form.set(`metadata[${k}]`, v);
+    form.set(`subscription_data[metadata][${k}]`, v);
+  }
+  const res = await fetch("https://api.stripe.com/v1/checkout/sessions", {
+    method: "POST",
+    headers: { Authorization: `Bearer ${key}`, "Content-Type": "application/x-www-form-urlencoded" },
+    body: form,
+  });
+  const j = await res.json();
+  if (!res.ok) throw new Error(`stripe: ${j?.error?.message || res.status}`);
+  await db.from("projects").update({ selected_plan: meta.hosting_plan, updated_at: new Date().toISOString() }).eq("id", p.id);
+  await notifyAdmin(`🛒 SwiftSite checkout opened: ${p.business_name || p.client_email}`, {
+    Client: p.client_name,
+    Email: p.client_email,
+    Plan: `$${SS_PRICE.setup} setup + ${yearly ? `$${SS_PRICE.yearly}/year` : `$${SS_PRICE.monthly}/month`}`,
+    Note: "You'll get a second email once the payment actually goes through.",
+  });
+  return { url: j.url };
+}
+
+// swiftsite.ca "Get my free preview" form (via the swiftsite Worker). Public: honeypot + timing + one request per email per 10 min.
+async function actionSwiftSiteLead(b: Record<string, any>) {
+  if (b.website_hp || (Number(b._t) && Date.now() - Number(b._t) < 1500)) return { ok: true };
+  const email = String(b.email || "").trim().toLowerCase().slice(0, 200);
+  if (!/^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(email)) throw new HttpError(400, "Please enter a valid email");
+  const website = String(b.url || "").trim().slice(0, 300);
+  if (!website) throw new HttpError(400, "Please enter your website");
+
+  const { data: recent } = await db.from("leads").select("id").eq("email", email).eq("source_app", "swiftsite_form").gt("created_at", new Date(Date.now() - 10 * 60e3).toISOString()).limit(1).maybeSingle();
+  if (recent) return { ok: true, duplicate: true };
+
+  const { data: lead, error } = await db
+    .from("leads")
+    .insert({
+      client_id: `swiftsite-${crypto.randomUUID()}`,
+      email,
+      website_url: website,
+      status: "new",
+      source_app: "swiftsite_form",
+    })
+    .select("id")
+    .single();
+  if (error) throw error;
+
+  // Keep the lead (and the project's brand) so the admin page shows it as SwiftSite.
+  await db.from("projects").insert({ lead_id: lead.id, client_email: email, source_url: website, brand: "swiftsite", status: "new", source_app: "swiftsite_form", project_type: "redesign" });
+
+  await sendAndLog("confirm", email, { brand: "swiftsite", website }, { leadId: lead.id });
+  await notifyAdmin(`New SwiftSite lead: ${website}`, {
+    Email: email,
+    Website: website,
+    "Next step": "Build the preview, then send it from swiftlift.app/admin/send (SwiftSite)",
+  });
+  try {
+    await fetch(N8N_LEAD_WEBHOOK_SS, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ name: email.split("@")[0], email: "", phone: "", message: `Current website: ${website}\nEmail: ${email}`, page: "swiftsite.ca" }),
+      signal: AbortSignal.timeout(5000),
+    });
+  } catch (e) {
+    console.error("[client-journey] n8n sheet log failed", e);
+  }
+  return { ok: true };
+}
+
 Deno.serve(async (req) => {
   if (req.method === "OPTIONS") return new Response(null, { headers: cors });
   try {
     const b = await req.json();
-    b._site = siteFrom(req.headers.get("origin"));
+    b._origin = req.headers.get("origin");
+    b._site = siteFrom(b._origin);
     switch (b.action) {
       case "list":
         await requireSecret("admin_send_key", b.key);
@@ -626,6 +761,8 @@ Deno.serve(async (req) => {
       case "reminders":
         await requireSecret("cron_secret", b.secret);
         return json(await actionReminders());
+      case "swiftsite_lead":
+        return json(await actionSwiftSiteLead(b));
       case "golive_get":
         return json(await actionGoLiveGet(b));
       case "golive_submit":
