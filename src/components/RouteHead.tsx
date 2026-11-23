@@ -20,6 +20,7 @@ const NOINDEX = new Set([
   "/addons",
   "/go-live",
   "/review",
+  "/preview",
   "/admin/send",
 ]);
 

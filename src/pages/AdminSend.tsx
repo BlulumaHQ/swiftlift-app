@@ -12,6 +12,7 @@ type Project = {
   status: string | null; preview_a_url: string | null; preview_b_url: string | null; preview_a_image: string | null; preview_b_image: string | null;
   previews_sent_at: string | null; paid_at: string | null; live_url: string | null; selected_plan: string | null; selected_preview: string | null; created_at: string;
   report_url?: string | null; review_pages?: string[] | null; old_host?: string | null; revision_rounds_used?: number | null;
+  preview_expires_at?: string | null; replied_at?: string | null; reopened_at?: string | null;
 };
 type EmailLog = { project_id: string | null; lead_id: string | null; template: string; to_email: string; status: string; created_at: string };
 
@@ -27,7 +28,8 @@ const TEMPLATE_LABEL: Record<string, string> = {
   confirm: "Request received",
   previews_ready: "B1 previews",
   nudge_24h: "B2 24h reminder",
-  expired_72h: "B3 expired",
+  final_6h: "B2b final reminder",
+  expired_72h: "B3 closed",
   payment_confirmed: "E1 paid",
   golive_received: "Go-live plan",
   revision_done: "E2 changes done",
@@ -39,6 +41,8 @@ const STATUS_STYLE: Record<string, string> = {
   new: "bg-sky-100 text-sky-800",
   previews_sent: "bg-amber-100 text-amber-800",
   previews_expired: "bg-zinc-200 text-zinc-700",
+  previews_replied: "bg-orange-100 text-orange-800",
+  previews_reopened: "bg-fuchsia-100 text-fuchsia-800",
   paid: "bg-emerald-100 text-emerald-800",
   golive_received: "bg-emerald-100 text-emerald-800",
   revision_review: "bg-violet-100 text-violet-800",
@@ -52,6 +56,16 @@ const ago = (iso: string) => {
   if (m < 60) return `${m}m ago`;
   const h = Math.round(m / 60);
   return h < 48 ? `${h}h ago` : `${Math.round(h / 24)}d ago`;
+};
+
+// "closes in 5h" / "closes in 3d" / "closed" for previews still in the preview stage.
+const PREVIEW_STATES = ["previews_sent", "previews_replied", "previews_reopened", "previews_expired"];
+const closesIn = (p?: Project) => {
+  if (!p || p.paid_at || !PREVIEW_STATES.includes(p.status || "")) return "";
+  if (p.status === "previews_expired" || !p.preview_expires_at) return p.status === "previews_expired" ? "closed" : "";
+  const h = Math.round((new Date(p.preview_expires_at).getTime() - Date.now()) / 3600e3);
+  if (h <= 0) return "closing";
+  return h < 48 ? `closes in ${h}h` : `closes in ${Math.round(h / 24)}d`;
 };
 
 type Brand = "swiftlift" | "swiftsite";
@@ -177,6 +191,20 @@ export default function AdminSend() {
     }
   };
 
+  // Client replied ("I'll get back to you") but hasn't picked → keep previews open 7 days, stop automatic reminders.
+  const [marking, setMarking] = useState(false);
+  const markReplied = async () => {
+    const p = selected?.project;
+    if (!p) return;
+    setMarking(true); setMsg(null);
+    const { data, error } = await supabase.functions.invoke(JOURNEY_FN, { body: { action: "mark_replied", key, projectId: p.id } });
+    setMarking(false);
+    if (error || data?.error) { setMsg({ ok: false, text: data?.error || error?.message || "Failed" }); return; }
+    setMsg({ ok: true, text: `Previews stay open until ${new Date(data.expiresAt).toLocaleString()}. No more automatic reminders.` });
+    await load(key);
+  };
+  const canMarkReplied = !!selected?.project && !selected.project.paid_at && PREVIEW_STATES.includes(selected.project.status || "");
+
   const tpl = TEMPLATES.find((t) => t.value === template)!;
   const needs = brand === "swiftsite" && template === "previews_ready" ? ["linkA"] : (tpl.needs as readonly string[]);
   const missing = needs.filter((k) => !(f as Record<string, string>)[k]);
@@ -288,6 +316,7 @@ export default function AdminSend() {
                     <div className="shrink-0 text-right">
                       <span className={`inline-block rounded-full px-2 py-0.5 text-[11px] font-semibold ${STATUS_STYLE[r.status] || "bg-zinc-100 text-zinc-600"}`}>{r.status || "new"}</span>
                       <div className="mt-1 text-[11px] text-zinc-400">{ago(r.created)}</div>
+                      {closesIn(r.project) && <div className="text-[11px] font-semibold text-orange-700">{closesIn(r.project)}</div>}
                     </div>
                   </div>
                   {sent.length > 0 && (
@@ -307,6 +336,18 @@ export default function AdminSend() {
         </section>
 
         <section id="composer" className="h-fit rounded-2xl border border-zinc-200 bg-white p-4 lg:sticky lg:top-20">
+          {canMarkReplied && (
+            <div className="mb-4 rounded-xl border border-orange-200 bg-orange-50 p-3">
+              <p className="text-xs text-orange-900">
+                <b>{selected?.business || selected?.email}</b> · {selected?.project?.status?.replace("previews_", "previews ")}{closesIn(selected?.project) && ` · ${closesIn(selected?.project)}`}
+              </p>
+              <button onClick={markReplied} disabled={marking}
+                className="mt-2 inline-flex w-full items-center justify-center gap-2 rounded-lg bg-orange-600 px-3 py-2.5 text-sm font-semibold text-white disabled:opacity-60">
+                {marking ? <Loader2 size={14} className="animate-spin" /> : <Check size={14} />} Client replied — keep previews open 7 days
+              </button>
+              <p className="mt-1.5 text-[11px] text-orange-800">Stops the automatic reminders. You'll get a heads-up 24h before they close.</p>
+            </div>
+          )}
           <h2 className="text-sm font-semibold">Send an email</h2>
           <div className="mt-3 grid grid-cols-2 gap-1 rounded-lg bg-zinc-100 p-1" role="group" aria-label="Brand">
             {(["swiftlift", "swiftsite"] as Brand[]).map((b) => (

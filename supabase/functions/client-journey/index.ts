@@ -5,6 +5,8 @@
 //   golive_get / golive_submit → public /go-live page, keyed by project id
 //   review_get / review_upload_url / review_submit / review_approve → public /review page, keyed by project id
 //   report_upload_url       → admin, signed upload URL for the preview report PDF
+//   mark_replied            → admin, client replied but hasn't decided → previews stay open 7 days
+//   preview_gate / preview_reopen / preview_message → public /preview page (open → redirect, closed → reopen or message us)
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.45.4";
 import {
   ADMIN_TO,
@@ -17,6 +19,8 @@ import {
   reviewUrl,
   siteFrom,
   adminHtml,
+  type AdminAction,
+  previewGateUrl,
   render,
   sendEmail,
   type GoLiveAnswers,
@@ -89,9 +93,9 @@ async function sendAndLog(
   }
 }
 
-async function notifyAdmin(title: string, rows: Record<string, unknown>) {
+async function notifyAdmin(title: string, rows: Record<string, unknown>, actions: AdminAction[] = []) {
   try {
-    await sendEmail(ADMIN_TO, title, adminHtml(title, rows));
+    await sendEmail(ADMIN_TO, title, adminHtml(title, rows, actions));
   } catch (e) {
     console.error("[client-journey] admin notify failed", e);
   }
@@ -113,6 +117,7 @@ function projectData(p: Record<string, any>): TemplateData {
     oldHost: p.old_host,
     selectedPreview: p.selected_preview,
     brand: brandOf(p.brand),
+    site: brandSite(brandOf(p.brand)),
   };
 }
 
@@ -131,7 +136,7 @@ async function latestGoLive(projectId: string): Promise<GoLiveAnswers | undefine
 async function actionList() {
   const [leads, projects, emails] = await Promise.all([
     db.from("leads").select("id,name,email,company_name,website_url,status,source_app,created_at").order("created_at", { ascending: false }).limit(40),
-    db.from("projects").select("id,brand,lead_id,client_name,client_email,business_name,source_url,status,preview_a_url,preview_b_url,preview_a_image,preview_b_image,previews_sent_at,paid_at,live_url,selected_plan,selected_preview,report_url,review_pages,old_host,revision_rounds_used,created_at").order("created_at", { ascending: false }).limit(40),
+    db.from("projects").select("id,brand,lead_id,client_name,client_email,business_name,source_url,status,preview_a_url,preview_b_url,preview_a_image,preview_b_image,previews_sent_at,paid_at,live_url,selected_plan,selected_preview,report_url,review_pages,old_host,revision_rounds_used,preview_expires_at,replied_at,reopened_at,created_at").order("created_at", { ascending: false }).limit(40),
     db.from("client_emails").select("project_id,lead_id,template,to_email,status,created_at").order("created_at", { ascending: false }).limit(100),
   ]);
   return { leads: leads.data ?? [], projects: projects.data ?? [], emails: emails.data ?? [] };
@@ -192,6 +197,10 @@ async function actionSend(b: Record<string, any>, dryRun = false) {
       preview_b_image: b.imgB || null,
       status: project?.paid_at ? project.status : "previews_sent",
       previews_sent_at: new Date().toISOString(),
+      preview_expires_at: inHours(NO_REPLY_HOURS),
+      replied_at: null,
+      reopened_at: null,
+      final_sent_at: null,
       nudge_sent_at: null,
       expired_sent_at: null,
     });
@@ -303,54 +312,214 @@ async function actionIngestLead(b: Record<string, any>) {
   return { ok: true, leadId: lead.id };
 }
 
+// ---------------- preview access rules ----------------
+// No reply: open 72h (reminder at 24h, final reminder 6h before closing, closed email at 72h).
+// Client replied but hasn't decided: open 7 days from the reply, no automatic client emails; Sony gets a heads-up 24h before.
+// Client reopened a closed preview: open 48h, Sony is told right away. Paid / in revisions: always open.
+const NO_REPLY_HOURS = 72;
+const REPLIED_HOURS = 7 * 24;
+const REOPEN_HOURS = 48;
+const FINAL_BEFORE_HOURS = 6;
+const PREVIEW_STATES = ["previews_sent", "previews_replied", "previews_reopened", "previews_expired"];
+const inHours = (h: number) => new Date(Date.now() + h * 3600e3).toISOString();
+
+function previewOpen(p: Record<string, any>): boolean {
+  if (p.paid_at || !PREVIEW_STATES.includes(p.status)) return true; // paid, in revisions, approved, live…
+  if (p.status === "previews_expired") return false;
+  const exp = p.preview_expires_at ? new Date(p.preview_expires_at).getTime() : new Date(p.previews_sent_at || 0).getTime() + NO_REPLY_HOURS * 3600e3;
+  return exp > Date.now();
+}
+
+// Gmail compose window (sony@bluluma.com) prefilled with a short follow-up, so Sony only edits and sends.
+function followUpLink(p: Record<string, any>, subject: string, body: string): string {
+  const u = new URL("https://mail.google.com/mail/");
+  u.searchParams.set("authuser", "sony@bluluma.com");
+  u.searchParams.set("view", "cm");
+  u.searchParams.set("fs", "1");
+  u.searchParams.set("to", p.client_email || "");
+  u.searchParams.set("su", subject);
+  u.searchParams.set("body", body);
+  return u.toString();
+}
+function linksText(p: Record<string, any>): string {
+  const S = brandSite(brandOf(p.brand));
+  return brandOf(p.brand) === "swiftsite" || !p.preview_b_url
+    ? `Your website: ${previewGateUrl(p.id, "A", "", S)}`
+    : `Version A: ${previewGateUrl(p.id, "A", "", S)}\nVersion B: ${previewGateUrl(p.id, "B", "", S)}`;
+}
+const hiName = (p: Record<string, any>) => String(p.client_name || "").split(/\s+/)[0] || "there";
+
+async function markReplied(p: Record<string, any>, how: string) {
+  if (p.paid_at || !PREVIEW_STATES.includes(p.status)) return p; // already past the preview stage
+  const { data } = await db
+    .from("projects")
+    .update({ status: "previews_replied", replied_at: new Date().toISOString(), preview_expires_at: inHours(REPLIED_HOURS), final_sent_at: null, updated_at: new Date().toISOString() })
+    .eq("id", p.id)
+    .select("*")
+    .single();
+  console.log(`[client-journey] replied (${how})`, p.id);
+  return data ?? p;
+}
+
+async function actionMarkReplied(b: Record<string, any>) {
+  if (!UUID_RE.test(String(b.projectId || ""))) throw new HttpError(400, "pick a client first");
+  const { data: p } = await db.from("projects").select("*").eq("id", b.projectId).maybeSingle();
+  if (!p) throw new HttpError(404, "project not found");
+  if (p.paid_at || !PREVIEW_STATES.includes(p.status)) throw new HttpError(400, "This client is past the preview stage — previews already stay open.");
+  const next = await markReplied(p, "admin");
+  return { ok: true, expiresAt: next.preview_expires_at };
+}
+
 async function actionReminders() {
   const now = Date.now();
-  const h24 = new Date(now - 24 * 3600e3).toISOString();
-  const h72 = new Date(now - 72 * 3600e3).toISOString();
+  const iso = (ms: number) => new Date(ms).toISOString();
+  const h24 = iso(now - 24 * 3600e3);
   const done: string[] = [];
 
-  const { data: nudge } = await db
-    .from("projects")
-    .select("*")
-    .eq("status", "previews_sent")
-    .is("paid_at", null)
-    .is("nudge_sent_at", null)
-    .lt("previews_sent_at", h24)
-    .gt("previews_sent_at", h72);
+  // ---- no reply yet (SwiftLift + SwiftSite) ----
+  const finalAt = iso(now + FINAL_BEFORE_HOURS * 3600e3);
+  const { data: nudge } = await db.from("projects").select("*").eq("status", "previews_sent").is("paid_at", null).is("nudge_sent_at", null).lt("previews_sent_at", h24).gt("preview_expires_at", finalAt);
   for (const p of nudge ?? []) {
     try {
       await sendAndLog("nudge_24h", p.client_email, projectData(p), { projectId: p.id, leadId: p.lead_id });
-      await db.from("projects").update({ nudge_sent_at: new Date().toISOString() }).eq("id", p.id);
+      await db.from("projects").update({ nudge_sent_at: iso(Date.now()) }).eq("id", p.id);
       done.push(`nudge:${p.id}`);
     } catch (e) {
       console.error("nudge failed", p.id, e);
     }
   }
-
-  const { data: expire } = await db
-    .from("projects")
-    .select("*")
-    .eq("status", "previews_sent")
-    .is("paid_at", null)
-    .is("expired_sent_at", null)
-    .lt("previews_sent_at", h72);
+  const { data: finals } = await db.from("projects").select("*").eq("status", "previews_sent").is("paid_at", null).is("final_sent_at", null).lte("preview_expires_at", finalAt).gt("preview_expires_at", iso(now));
+  for (const p of finals ?? []) {
+    try {
+      await sendAndLog("final_6h", p.client_email, projectData(p), { projectId: p.id, leadId: p.lead_id });
+      await db.from("projects").update({ final_sent_at: iso(Date.now()) }).eq("id", p.id);
+      done.push(`final:${p.id}`);
+    } catch (e) {
+      console.error("final failed", p.id, e);
+    }
+  }
+  const { data: expire } = await db.from("projects").select("*").eq("status", "previews_sent").is("paid_at", null).lte("preview_expires_at", iso(now));
   for (const p of expire ?? []) {
     try {
+      await db.from("projects").update({ expired_sent_at: iso(Date.now()), status: "previews_expired" }).eq("id", p.id);
       await sendAndLog("expired_72h", p.client_email, projectData(p), { projectId: p.id, leadId: p.lead_id });
-      await db.from("projects").update({ expired_sent_at: new Date().toISOString(), status: "previews_expired" }).eq("id", p.id);
       done.push(`expired:${p.id}`);
-      await notifyAdmin(`Previews expired: ${p.business_name || p.client_email}`, {
+      await notifyAdmin(`Previews closed (no reply): ${p.business_name || p.client_email}`, {
         Client: p.client_name,
         Email: p.client_email,
+        "What the client sees now": "The preview links show a 'preview closed' page with a Reopen button and a message box. You'll be emailed if they use either.",
         "Preview A": p.preview_a_url,
         "Preview B": p.preview_b_url,
-        "To do": "You can take the two preview sites offline now.",
       });
     } catch (e) {
       console.error("expire failed", p.id, e);
     }
   }
+
+  // ---- replied or reopened: no automatic client emails, Sony gets the heads-up ----
+  const { data: warn } = await db.from("projects").select("*").eq("status", "previews_replied").is("paid_at", null).is("final_sent_at", null).lte("preview_expires_at", iso(now + 24 * 3600e3)).gt("preview_expires_at", iso(now));
+  for (const p of warn ?? []) {
+    await db.from("projects").update({ final_sent_at: iso(Date.now()) }).eq("id", p.id);
+    const biz = p.business_name || "your business";
+    await notifyAdmin(
+      `⏰ ${p.business_name || p.client_email}: previews close in 24h`,
+      { Client: p.client_name, Email: p.client_email, Replied: p.replied_at, "Closes at": p.preview_expires_at, "To do": "Send them a short last-call email (button below opens it in Gmail, ready to edit)." },
+      [{ label: "Write the last-call email in Gmail", href: followUpLink(p, `Your website previews for ${biz} close tomorrow`, `Hi ${hiName(p)},\n\nJust a quick heads-up: your website preview${p.preview_b_url ? "s" : ""} for ${biz} close${p.preview_b_url ? "" : "s"} tomorrow. If you'd like more time, simply reply and I'll keep them up for you.\n\n${linksText(p)}\n\nSony`) }],
+    );
+    done.push(`warn:${p.id}`);
+  }
+  const { data: close } = await db.from("projects").select("*").in("status", ["previews_replied", "previews_reopened"]).is("paid_at", null).lte("preview_expires_at", iso(now));
+  for (const p of close ?? []) {
+    await db.from("projects").update({ status: "previews_expired", expired_sent_at: iso(Date.now()) }).eq("id", p.id);
+    await notifyAdmin(`Previews closed: ${p.business_name || p.client_email}`, {
+      Client: p.client_name,
+      Email: p.client_email,
+      Was: p.status === "previews_reopened" ? "Reopened by the client (48h)" : "Client replied (7 days)",
+      Note: "No email went to the client. Their links now show the 'preview closed' page with Reopen + message.",
+    });
+    done.push(`closed:${p.id}`);
+  }
   return { ok: true, done };
+}
+
+// ---------------- public /preview page ----------------
+async function gateProject(b: Record<string, any>) {
+  if (!UUID_RE.test(String(b.projectId || ""))) throw new HttpError(404, "This link isn't valid. Please reply to our email and we'll send a new one.");
+  const { data: p } = await db.from("projects").select("*").eq("id", b.projectId).maybeSingle();
+  if (!p || !p.preview_a_url) throw new HttpError(404, "This link isn't valid. Please reply to our email and we'll send a new one.");
+  return p as Record<string, any>;
+}
+const pickUrl = (p: Record<string, any>, v: unknown) => (v === "B" && p.preview_b_url ? p.preview_b_url : p.preview_a_url);
+const gateInfo = (p: Record<string, any>, b: Record<string, any>) => ({
+  open: previewOpen(p),
+  business: p.business_name || "",
+  firstName: hiName(p) === "there" ? "" : hiName(p),
+  brand: brandOf(p.brand),
+  hasB: !!p.preview_b_url,
+  imgA: p.preview_a_image,
+  imgB: p.preview_b_image,
+  expiresAt: p.preview_expires_at,
+  url: previewOpen(p) ? pickUrl(p, b.v) : undefined,
+  urlA: previewOpen(p) ? p.preview_a_url : undefined,
+  urlB: previewOpen(p) ? p.preview_b_url : undefined,
+});
+
+async function actionPreviewGate(b: Record<string, any>) {
+  return gateInfo(await gateProject(b), b);
+}
+
+async function actionPreviewReopen(b: Record<string, any>) {
+  let p = await gateProject(b);
+  if (previewOpen(p)) return gateInfo(p, b);
+  const recent = p.reopened_at && Date.now() - new Date(p.reopened_at).getTime() < 5 * 60e3;
+  p = (await db
+    .from("projects")
+    .update({ status: "previews_reopened", reopened_at: new Date().toISOString(), preview_expires_at: inHours(REOPEN_HOURS), final_sent_at: null, updated_at: new Date().toISOString() })
+    .eq("id", p.id)
+    .select("*")
+    .single()).data ?? p;
+  if (!recent) {
+    const biz = p.business_name || "your business";
+    await notifyAdmin(
+      `🔁 ${p.business_name || p.client_email} reopened their previews`,
+      { Client: p.client_name, Email: p.client_email, Opened: `Version ${b.v === "B" ? "B" : "A"}`, "Open until": p.preview_expires_at, "Why this matters": "They came back on their own — a personal email now works best." },
+      [{ label: "Write a follow-up in Gmail", href: followUpLink(p, `Your website previews for ${biz}`, `Hi ${hiName(p)},\n\nI saw you took another look at your new website designs for ${biz} — great to have you back! They're open for the next 2 days.\n\n${linksText(p)}\n\nAny questions, or anything you'd like changed? Just reply and I'll take care of it.\n\nSony`) }],
+    );
+  }
+  return gateInfo(p, b);
+}
+
+const REASONS: Record<string, string> = {
+  time: "Need more time to decide",
+  price: "Price question",
+  changes: "Want some changes",
+  not_now: "Not interested right now",
+};
+
+async function actionPreviewMessage(b: Record<string, any>) {
+  if (b.website_hp) return { ok: true };
+  let p = await gateProject(b);
+  const reasons = (Array.isArray(b.reasons) ? b.reasons : []).filter((r: string) => r in REASONS).slice(0, 4);
+  const message = String(b.message || "").trim().slice(0, 4000);
+  if (!reasons.length && !message) throw new HttpError(400, "Please pick an option or write us a message");
+  const { data: recent } = await db.from("preview_messages").select("id").eq("project_id", p.id).gt("created_at", new Date(Date.now() - 60e3).toISOString()).limit(1).maybeSingle();
+  if (recent) throw new HttpError(429, "We already got your message — thank you!");
+  await db.from("preview_messages").insert({ project_id: p.id, reasons, message: message || null });
+  const notInterested = reasons.length === 1 && reasons[0] === "not_now";
+  if (!notInterested) p = await markReplied(p, "message");
+  const biz = p.business_name || "your business";
+  await notifyAdmin(
+    `💬 ${p.business_name || p.client_email} sent a message from the preview page`,
+    {
+      Client: p.client_name,
+      Email: p.client_email,
+      Picked: reasons.map((r: string) => REASONS[r]).join(", ") || "—",
+      Message: message || "—",
+      Previews: notInterested ? "Left closed (not interested right now)" : `Open again until ${p.preview_expires_at} (7 days)`,
+    },
+    [{ label: "Reply in Gmail", href: followUpLink(p, `Re: your website previews for ${biz}`, `Hi ${hiName(p)},\n\nThanks for getting back to me!\n\n\n\nSony`) }],
+  );
+  return { ok: true, ...gateInfo(p, b) };
 }
 
 async function actionGoLiveGet(b: Record<string, any>) {
@@ -775,6 +944,15 @@ Deno.serve(async (req) => {
         return json(await actionReviewSubmit(b));
       case "review_approve":
         return json(await actionReviewApprove(b, req));
+      case "mark_replied":
+        await requireSecret("admin_send_key", b.key);
+        return json(await actionMarkReplied(b));
+      case "preview_gate":
+        return json(await actionPreviewGate(b));
+      case "preview_reopen":
+        return json(await actionPreviewReopen(b));
+      case "preview_message":
+        return json(await actionPreviewMessage(b));
       case "report_upload_url":
         await requireSecret("admin_send_key", b.key);
         return json(await actionReportUploadUrl(b));

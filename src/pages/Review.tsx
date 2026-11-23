@@ -275,7 +275,7 @@ const ReviewContent = () => {
                   {(["A", "B"] as Pick[]).map((v) => {
                     const on = pick === v;
                     const img = v === "A" ? info.imgA : info.imgB;
-                    const href = v === "A" ? info.linkA : info.linkB;
+                    const href = `/preview?p=${encodeURIComponent(projectId)}&v=${v}`; // gate: opens while live, "reopen" page once closed
                     return (
                       <div
                         key={v}

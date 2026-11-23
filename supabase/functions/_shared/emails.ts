@@ -109,6 +109,12 @@ export function reviewUrl(projectId?: string, site = SITE): string {
   return projectId ? `${site}/review?p=${encodeURIComponent(projectId)}` : `${site}/review`;
 }
 
+// Client-facing preview links go through swiftlift.app/preview, which redirects while the preview is open
+// and shows the "preview is closed — reopen?" page after it closes.
+export function previewGateUrl(projectId: string | undefined, v: "A" | "B", fallback = "", site = SITE): string {
+  return projectId ? `${site}/preview?p=${encodeURIComponent(projectId)}&v=${v}` : fallback;
+}
+
 export function goLiveUrl(projectId?: string, site = SITE): string {
   return projectId ? `${site}/go-live?p=${encodeURIComponent(projectId)}` : `${site}/go-live`;
 }
@@ -239,6 +245,7 @@ export type TemplateKey =
   | "confirm"
   | "previews_ready"
   | "nudge_24h"
+  | "final_6h"
   | "expired_72h"
   | "revision_received"
   | "revision_done"
@@ -251,11 +258,15 @@ export interface RenderedEmail {
   html: string;
 }
 
-const previewCards = (d: TemplateData) =>
-  box(
-    `<b>Version A · Launch Ready</b> — $${PRICE.A}<br>${d.imgA ? `<a href="${esc(d.linkA)}"><img src="${esc(d.imgA)}" width="520" style="width:100%;max-width:520px;border-radius:8px;margin:8px 0;" alt="Version A"></a><br>` : ""}${link(d.linkA || "")}` +
-      `<br><br><b>Version B · Sales Focused</b> — $${PRICE.B}<br>${d.imgB ? `<a href="${esc(d.linkB)}"><img src="${esc(d.imgB)}" width="520" style="width:100%;max-width:520px;border-radius:8px;margin:8px 0;" alt="Version B"></a><br>` : ""}${link(d.linkB || "")}`,
+const previewCards = (d: TemplateData) => {
+  const S = d.site || SITE;
+  const a = previewGateUrl(d.projectId, "A", d.linkA || "", S);
+  const b = previewGateUrl(d.projectId, "B", d.linkB || "", S);
+  return box(
+    `<b>Version A · Launch Ready</b> — $${PRICE.A}<br>${d.imgA ? `<a href="${esc(a)}"><img src="${esc(d.imgA)}" width="520" style="width:100%;max-width:520px;border-radius:8px;margin:8px 0;" alt="Version A"></a><br>` : ""}${link(a, "Open Version A")}` +
+      `<br><br><b>Version B · Sales Focused</b> — $${PRICE.B}<br>${d.imgB ? `<a href="${esc(b)}"><img src="${esc(d.imgB)}" width="520" style="width:100%;max-width:520px;border-radius:8px;margin:8px 0;" alt="Version B"></a><br>` : ""}${link(b, "Open Version B")}`,
   );
+};
 
 function hostingNote(d: TemplateData): string {
   const host = d.oldHost ? esc(d.oldHost) : "";
@@ -328,7 +339,7 @@ export function render(key: TemplateKey, d: TemplateData): RenderedEmail {
               `<b>Version B · Sales Focused — $${PRICE.B}</b>: everything in A, plus a conversion-focused layout, strategic call-to-action placement and trust-building sections designed to turn visitors into customers.`,
             ]) +
             hostingNote(d) +
-            p(`These previews stay online for <b>72 hours</b>. As soon as you send us your choice or your changes, we'll keep them up while we work on it.`) +
+            p(`These previews stay online for <b>72 hours</b>. As soon as you reply, or send us your choice or changes, we'll keep them up for you.`) +
             p(`Any questions at all? Just reply — a real person on our team will get back to you.`),
         ),
       };
@@ -340,21 +351,36 @@ export function render(key: TemplateKey, d: TemplateData): RenderedEmail {
           "A quick reminder",
           p(hi) + personal(d) +
             p(`Just checking in, in case our last email got buried. Your 2 website previews for ${biz} are still live:`) +
-            ul([`Version A · Launch Ready: ${link(d.linkA || "")}`, `Version B · Sales Focused: ${link(d.linkB || "")}`]) +
+            ul([`Version A · Launch Ready: ${link(previewGateUrl(d.projectId, "A", d.linkA || "", S), "Open Version A")}`, `Version B · Sales Focused: ${link(previewGateUrl(d.projectId, "B", d.linkB || "", S), "Open Version B")}`]) +
             p(`If one of them feels close but not quite right, that's completely normal — that's what revisions are for. Tell us what you'd change and we'll adjust it for you, at no cost until you approve.`) +
             btn(review, "Pick my favorite or request changes") +
             p(`The previews will be taken down in about <b>48 hours</b>. Simply reply if you have any questions.`),
         ),
       };
 
+    case "final_6h":
+      return {
+        subject: `Your new website for ${d.business || "your business"} goes offline today`,
+        html: layout(
+          "Last day to see your new website",
+          p(hi) + personal(d) +
+            p(`Your 2 new website designs for ${biz} go offline <b>in a few hours</b>. After that, the links will close.`) +
+            previewCards(d) +
+            p(`If one of them is close, pick it and tell us what you'd change — your previews stay online while we work on it, and there's <b>nothing to pay</b> until you're happy.`) +
+            btn(review, "Pick my favorite") +
+            p(`Need more time, or have a question? Just reply to this email and we'll keep them up for you.`),
+        ),
+      };
+
     case "expired_72h":
       return {
-        subject: `Your website previews have expired — want them back?`,
+        subject: `Your website previews are closed — want them back?`,
         html: layout(
-          "Your previews are offline",
+          "Your previews are closed",
           p(hi) + personal(d) +
-            p(`Your 2 preview sites for ${biz} were available for 72 hours, so we've taken them offline for now.`) +
-            p(`We'd still love to help you get a website that brings in more customers. If you're interested, just reply <b>"bring them back"</b> and we'll put them up again within a day.`) +
+            p(`Your 2 preview sites for ${biz} were available for 72 hours, so we've closed them for now.`) +
+            p(`Changed your mind, or just didn't get to it yet? You can reopen them yourself with one click:`) +
+            btn(previewGateUrl(d.projectId, "A", review, S), "Reopen my previews") +
             p(`If neither direction felt right, reply and tell us what you had in mind — a different style, colors, or a site you like — and we'll try a fresh approach. There's still nothing to pay until you're happy.`),
         ),
       };
@@ -474,6 +500,7 @@ function renderSwiftSite(key: TemplateKey, d: TemplateData): RenderedEmail {
   const P = SS_PRICE;
   const plan = `$${P.monthly}/month, or $${P.yearly}/year (2 months free)`;
   const link1 = d.linkA || d.previewUrl || "";
+  const gate = previewGateUrl(d.projectId, "A", link1, S); // opens while live, "closed — reopen?" page after
   switch (key) {
     case "confirm":
       return {
@@ -500,8 +527,8 @@ function renderSwiftSite(key: TemplateKey, d: TemplateData): RenderedEmail {
           "Your new website is ready",
           p(hi) + personal(d) +
             p(`Your brand-new website for ${biz} is ready. It's fully live, so click through every page on both your phone and your computer:`) +
-            btn(link1, "See my new website") +
-            p(`Or open it here: ${link(link1)}`) +
+            btn(gate, "See my new website") +
+            p(`Or open it here: ${link(gate)}`) +
             (d.reportUrl ? p(`We've also attached a short report on what we changed and why.`) : "") +
             h2("Love it? Launch it") +
             p(`Click below to launch your new website. You'll pay the one-time <b>$${P.setup} setup</b> and start your Hosting &amp; Care plan: <b>${plan}</b>. Hosting, backups, security updates and small edits are all included.`) +
@@ -513,7 +540,21 @@ function renderSwiftSite(key: TemplateKey, d: TemplateData): RenderedEmail {
               `After launch, your plan includes <b>up to 2 small edits every month</b>.`,
             ]) +
             p(`Not quite what you had in mind? You pay nothing. Just reply and tell us what you'd like different.`) +
-            p(`Your new website stays online for <b>72 hours</b>.`),
+            p(`Your new website stays online for <b>72 hours</b>. Just reply if you need more time, and we'll keep it up for you.`),
+        ),
+      };
+
+    case "final_6h":
+      return {
+        subject: `Your new website for ${d.business || "your business"} goes offline today`,
+        html: layout(
+          "Last day to see your new website",
+          p(hi) + personal(d) +
+            p(`Your new website for ${biz} goes offline <b>in a few hours</b>. After that, the link will close.`) +
+            btn(gate, "See my new website") +
+            p(`Love it? Launch it now — then you get <b>${P.includedRounds} rounds of changes</b> before we go live.`) +
+            btn(review, "Launch my new website") +
+            p(`Need more time, or have a question? Just reply to this email and we'll keep it up for you.`),
         ),
       };
 
@@ -523,7 +564,7 @@ function renderSwiftSite(key: TemplateKey, d: TemplateData): RenderedEmail {
         html: layout(
           "A quick reminder",
           p(hi) + personal(d) +
-            p(`Just checking in, in case our last email got buried. Your new website for ${biz} is still live: ${link(link1)}`) +
+            p(`Just checking in, in case our last email got buried. Your new website for ${biz} is still live: ${link(gate)}`) +
             p(`Close, but not quite right? That's what your <b>${P.includedRounds} rounds of changes</b> are for, right after you launch.`) +
             btn(review, "Launch my new website") +
             p(`It will be taken offline in about <b>48 hours</b>. Simply reply if you have any questions.`),
@@ -532,12 +573,14 @@ function renderSwiftSite(key: TemplateKey, d: TemplateData): RenderedEmail {
 
     case "expired_72h":
       return {
-        subject: `Your new website is offline — want it back?`,
+        subject: `Your new website preview is closed — want it back?`,
         html: layout(
-          "Your preview is offline",
+          "Your preview is closed",
           p(hi) + personal(d) +
-            p(`Your new website for ${biz} was online for 72 hours, so we've taken it down for now.`) +
-            p(`Still interested? Reply <b>"bring it back"</b> and we'll put it up again within a day. If the direction wasn't right, tell us what you had in mind and we'll take another look.`),
+            p(`Your new website for ${biz} was online for 72 hours, so we've closed it for now.`) +
+            p(`Changed your mind, or just didn't get to it yet? You can reopen it yourself with one click:`) +
+            btn(gate, "Reopen my new website") +
+            p(`If the direction wasn't right, reply and tell us what you had in mind and we'll take another look.`),
         ),
       };
 
@@ -634,11 +677,12 @@ function renderSwiftSite(key: TemplateKey, d: TemplateData): RenderedEmail {
 }
 
 // ---------- admin notification ----------
-export function adminHtml(title: string, rows: Record<string, unknown>): string {
+export type AdminAction = { label: string; href: string };
+export function adminHtml(title: string, rows: Record<string, unknown>, actions: AdminAction[] = []): string {
   const tr = Object.entries(rows)
     .map(([k, v]) => `<tr><td style="padding:6px 10px;font-weight:bold;color:#555;vertical-align:top;">${esc(k)}</td><td style="padding:6px 10px;white-space:pre-wrap;word-break:break-word;">${esc(v ?? "—")}</td></tr>`)
     .join("");
-  return `<div style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto;padding:20px;"><h2 style="margin:0 0 12px 0;">${esc(title)}</h2><table style="border-collapse:collapse;width:100%;">${tr}</table></div>`;
+  return `<div style="font-family:Arial,sans-serif;max-width:600px;margin:0 auto;padding:20px;"><h2 style="margin:0 0 12px 0;">${esc(title)}</h2>${actions.map((a) => `<a href="${esc(a.href)}" style="display:inline-block;background:#337DAF;color:#fff;text-decoration:none;font-weight:700;padding:10px 16px;border-radius:8px;margin:0 8px 12px 0;">${esc(a.label)}</a>`).join("")}<table style="border-collapse:collapse;width:100%;">${tr}</table></div>`;
 }
 
 // ---------- sending ----------

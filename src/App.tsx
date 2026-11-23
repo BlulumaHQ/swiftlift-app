@@ -24,6 +24,7 @@ import About from "./pages/About";
 import Start from "./pages/Start";
 import GoLive from "./pages/GoLive";
 import Review from "./pages/Review";
+import Preview from "./pages/Preview";
 import AdminSend from "./pages/AdminSend";
 import RouteHead from "./components/RouteHead";
 import ClientUpgrades from "./pages/ClientUpgrades";
@@ -62,6 +63,7 @@ const App = () => (
           <Route path="/start" element={<Start />} />
           <Route path="/go-live" element={<GoLive />} />
           <Route path="/review" element={<Review />} />
+          <Route path="/preview" element={<Preview />} />
           <Route path="/admin/send" element={<AdminSend />} />
           <Route path="/client-upgrades" element={<ClientUpgrades />} />
           <Route path="/website-redesign/:slug" element={<IndustryPage />} />
