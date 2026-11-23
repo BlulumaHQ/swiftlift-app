@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useMemo, useState } from "react";
-import { Check, Loader2, LogOut, RefreshCw, Send } from "lucide-react";
+import { Check, Eye, Loader2, LogOut, Paperclip, RefreshCw, Send, X } from "lucide-react";
 import { externalSupabase as supabase } from "@/lib/externalSupabase";
 import { JOURNEY_FN } from "@/lib/journey";
 
@@ -73,6 +73,9 @@ export default function AdminSend() {
   const [template, setTemplate] = useState<string>("previews_ready");
   const [f, setF] = useState({ to: "", name: "", business: "", website: "", linkA: "", linkB: "", imgA: "", imgB: "", previewUrl: "", liveUrl: "", roundsLeft: "0", note: "", reportUrl: "", pages: "", oldHost: "" });
   const [reportState, setReportState] = useState<"" | "uploading" | "done" | "error">("");
+  const [files, setFiles] = useState<{ name: string; url: string; state: "uploading" | "done" | "error" }[]>([]);
+  const [preview, setPreview] = useState<{ subject: string; html: string; to: string; attachments: string[] } | null>(null);
+  const [previewing, setPreviewing] = useState(false);
   const [sending, setSending] = useState(false);
   const [msg, setMsg] = useState<{ ok: boolean; text: string } | null>(null);
 
@@ -129,6 +132,8 @@ export default function AdminSend() {
       reportUrl: p?.report_url || "", pages: (p?.review_pages || []).join(", "), oldHost: p?.old_host || "",
     });
     setReportState(p?.report_url ? "done" : "");
+    setFiles([]);
+    setPreview(null);
     const next = !p || p.status === "new" ? "previews_ready" : p.status === "live" ? "site_live" : p.status === "revision_requested" || p.paid_at ? "revision_done" : "previews_ready";
     setTemplate(next);
     window.scrollTo({ top: document.getElementById("composer")?.offsetTop ?? 0, behavior: "smooth" });
@@ -149,28 +154,60 @@ export default function AdminSend() {
     }
   };
 
+  // Extra attachments (SEO proposal, brochures…) go to the same storage bucket as the preview report.
+  const uploadFiles = async (list: FileList | null) => {
+    if (!list) return;
+    const picked = Array.from(list).slice(0, 5 - files.length);
+    for (const file of picked) {
+      setFiles((s) => [...s, { name: file.name, url: "", state: "uploading" }]);
+      try {
+        const { data, error } = await supabase.functions.invoke(JOURNEY_FN, { body: { action: "report_upload_url", key, name: file.name } });
+        if (error || data?.error) throw new Error(data?.error || error?.message);
+        const up = await supabase.storage.from("client-reports").uploadToSignedUrl(data.path, data.token, file, { contentType: file.type || "application/octet-stream" });
+        if (up.error) throw up.error;
+        setFiles((s) => s.map((x) => (x.name === file.name && x.state === "uploading" ? { ...x, url: data.publicUrl, state: "done" } : x)));
+      } catch {
+        setFiles((s) => s.map((x) => (x.name === file.name && x.state === "uploading" ? { ...x, state: "error" } : x)));
+      }
+    }
+  };
+
   const tpl = TEMPLATES.find((t) => t.value === template)!;
   const missing = (tpl.needs as readonly string[]).filter((k) => !(f as Record<string, string>)[k]);
 
-  const send = async () => {
+  const payload = (action: "preview" | "send") => ({
+    action, key, template, projectId: selected?.project?.id, leadId: selected?.leadId,
+    ...f, roundsLeft: Number(f.roundsLeft || 0),
+    files: files.filter((x) => x.state === "done").map((x) => ({ name: x.name, url: x.url })),
+  });
+
+  // Step 1: show the email exactly as the client will get it. Nothing is sent or saved.
+  const openPreview = async () => {
     if (!f.to || missing.length) {
       setMsg({ ok: false, text: `Fill in: ${["to", ...missing].filter((k) => k !== "to" || !f.to).join(", ")}` });
       return;
     }
-    if (reportState === "uploading") { setMsg({ ok: false, text: "Wait for the PDF upload to finish" }); return; }
-    if (!confirm(`Send "${tpl.label}" to ${f.to}?`)) return;
+    if (reportState === "uploading" || files.some((x) => x.state === "uploading")) { setMsg({ ok: false, text: "Wait for the uploads to finish" }); return; }
+    setPreviewing(true); setMsg(null);
+    const { data, error } = await supabase.functions.invoke(JOURNEY_FN, { body: payload("preview") });
+    setPreviewing(false);
+    if (error || data?.error) { setMsg({ ok: false, text: data?.error || error?.message || "Preview failed" }); return; }
+    setPreview({ subject: data.subject, html: data.html, to: data.to, attachments: data.attachments || [] });
+  };
+
+  // Step 2: send for real, from the preview window.
+  const send = async () => {
     setSending(true); setMsg(null);
-    const { data, error } = await supabase.functions.invoke(JOURNEY_FN, {
-      body: {
-        action: "send", key, template, projectId: selected?.project?.id, leadId: selected?.leadId,
-        ...f, roundsLeft: Number(f.roundsLeft || 0),
-      },
-    });
+    const { data, error } = await supabase.functions.invoke(JOURNEY_FN, { body: payload("send") });
     setSending(false);
     if (error || data?.error) {
       setMsg({ ok: false, text: data?.error || error?.message || "Failed" });
+      setPreview(null);
       return;
     }
+    setPreview(null);
+    setFiles([]);
+    setF((s) => ({ ...s, note: "" }));
     setMsg({ ok: true, text: `Sent: ${data.subject}` });
     await load(key);
   };
@@ -303,10 +340,6 @@ export default function AdminSend() {
                 <p className="text-xs text-zinc-500">
                   Rounds used: {selected?.project?.revision_rounds_used ?? 0} of 2 — the email shows how many free rounds are left automatically.
                 </p>
-                <label className="block">
-                  <span className="text-xs font-semibold text-zinc-600">Note (optional)</span>
-                  <textarea value={f.note} onChange={(e) => setF({ ...f, note: e.target.value })} rows={3} className={`${input} mt-1`} placeholder="e.g. We swapped the hero photo and updated your hours." />
-                </label>
               </>
             )}
             {template === "site_live" && (
@@ -317,18 +350,77 @@ export default function AdminSend() {
             )}
           </div>
 
+          <div className="mt-4 space-y-3 border-t border-zinc-200 pt-4">
+            <label className="block">
+              <span className="text-xs font-semibold text-zinc-600">Personal message (optional)</span>
+              <textarea value={f.note} onChange={(e) => setF({ ...f, note: e.target.value })} rows={5} className={`${input} mt-1`}
+                placeholder={`Shows right under "Hi ${f.name ? f.name.split(" ")[0] : "{name}"}," — write it like your own email.`} />
+            </label>
+            <div>
+              <span className="text-xs font-semibold text-zinc-600">Extra attachments (SEO proposal, etc. — up to 5)</span>
+              {files.length > 0 && (
+                <ul className="mt-1 space-y-1">
+                  {files.map((x, i) => (
+                    <li key={i} className="flex items-center justify-between gap-2 rounded-lg bg-zinc-50 px-2.5 py-1.5 text-xs">
+                      <span className="flex min-w-0 items-center gap-1.5">
+                        <Paperclip size={12} className="shrink-0" />
+                        <span className="truncate">{x.name}</span>
+                        <span className={x.state === "error" ? "text-red-600" : "text-zinc-400"}>{x.state === "uploading" ? "Uploading…" : x.state === "error" ? "Failed" : "✓"}</span>
+                      </span>
+                      <button onClick={() => setFiles((s) => s.filter((_, j) => j !== i))} aria-label={`Remove ${x.name}`} className="p-1 text-zinc-500"><X size={14} /></button>
+                    </li>
+                  ))}
+                </ul>
+              )}
+              {files.length < 5 && (
+                <input type="file" multiple accept=".pdf,.png,.jpg,.jpeg,.webp,.doc,.docx" onChange={(e) => { uploadFiles(e.target.files); e.target.value = ""; }} className="mt-1 block w-full text-sm" />
+              )}
+            </div>
+          </div>
+
           {msg && (
             <p className={`mt-3 flex items-center gap-1.5 text-sm ${msg.ok ? "text-emerald-700" : "text-red-600"}`}>
               {msg.ok && <Check size={14} />} {msg.text}
             </p>
           )}
-          <button onClick={send} disabled={sending}
+          <button onClick={openPreview} disabled={previewing}
             className="mt-4 flex w-full items-center justify-center gap-2 rounded-lg bg-blue-600 py-3 text-sm font-semibold text-white disabled:opacity-50">
-            {sending ? <Loader2 size={16} className="animate-spin" /> : <Send size={16} />}
-            {sending ? "Sending…" : "Send email"}
+            {previewing ? <Loader2 size={16} className="animate-spin" /> : <Eye size={16} />}
+            {previewing ? "Loading preview…" : "Preview email"}
           </button>
+          <p className="mt-2 text-center text-xs text-zinc-500">Nothing is sent until you press Send in the preview.</p>
         </section>
       </div>
+
+      {preview && (
+        <div className="fixed inset-0 z-50 flex items-stretch justify-center bg-black/50 sm:items-center sm:p-6" role="dialog" aria-modal="true" aria-label="Email preview">
+          <div className="flex h-full w-full max-w-3xl flex-col bg-white sm:h-[90vh] sm:rounded-2xl">
+            <div className="flex items-start justify-between gap-3 border-b border-zinc-200 p-4">
+              <div className="min-w-0 text-sm">
+                <p className="truncate"><span className="text-zinc-500">To:</span> {preview.to}</p>
+                <p className="truncate font-semibold"><span className="font-normal text-zinc-500">Subject:</span> {preview.subject}</p>
+                {preview.attachments.length > 0 && (
+                  <p className="mt-1 flex flex-wrap gap-1">
+                    {preview.attachments.map((a) => (
+                      <span key={a} className="inline-flex items-center gap-1 rounded bg-zinc-100 px-1.5 py-0.5 text-[11px]"><Paperclip size={10} />{a}</span>
+                    ))}
+                  </p>
+                )}
+              </div>
+              <button onClick={() => setPreview(null)} className="rounded-lg border border-zinc-300 p-2" aria-label="Close preview"><X size={16} /></button>
+            </div>
+            <iframe title="Email preview" srcDoc={preview.html} sandbox="" className="min-h-0 w-full flex-1 bg-white" />
+            <div className="flex gap-2 border-t border-zinc-200 p-4">
+              <button onClick={() => setPreview(null)} className="flex-1 rounded-lg border border-zinc-300 py-3 text-sm font-semibold">Back to edit</button>
+              <button onClick={send} disabled={sending}
+                className="flex flex-[2] items-center justify-center gap-2 rounded-lg bg-blue-600 py-3 text-sm font-semibold text-white disabled:opacity-50">
+                {sending ? <Loader2 size={16} className="animate-spin" /> : <Send size={16} />}
+                {sending ? "Sending…" : `Send to ${preview.to}`}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   );
 }

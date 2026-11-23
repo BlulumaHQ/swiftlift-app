@@ -229,6 +229,16 @@ function hostingNote(d: TemplateData): string {
   );
 }
 
+// Sony's own words, written in /admin/send. Shown right under "Hi {name}," so the email reads as personal.
+function personal(d: TemplateData): string {
+  const t = String(d.note || "").trim();
+  if (!t) return "";
+  return t
+    .split(/\n\s*\n/)
+    .map((para) => p(esc(para.trim()).replace(/\n/g, "<br>")))
+    .join("");
+}
+
 export function render(key: TemplateKey, d: TemplateData): RenderedEmail {
   const hi = `Hi ${esc(firstName(d.name))},`;
   const biz = esc(d.business || "your business");
@@ -240,7 +250,7 @@ export function render(key: TemplateKey, d: TemplateData): RenderedEmail {
         subject: "Your 2 website previews are on the way – SwiftLift",
         html: layout(
           "We got your request",
-          p(hi) +
+          p(hi) + personal(d) +
             p(`Thank you for sending us ${d.website ? `<b>${esc(d.website)}</b>` : "your website"}. We're excited to work on ${biz}.`) +
             p(`Our team is now going through <b>every page</b> of your current site and building <b>2 different redesigns</b>, using the content, prices and photos you already have — so both versions feel like your business from day one.`) +
             h2("What happens next") +
@@ -259,7 +269,7 @@ export function render(key: TemplateKey, d: TemplateData): RenderedEmail {
         subject: `Your 2 website previews for ${d.business || "your business"} are ready`,
         html: layout(
           "Your previews are ready",
-          p(hi) +
+          p(hi) + personal(d) +
             p(`Thank you for your patience — your two new website designs for ${biz} are ready. Both are fully live, so you can click through every page, button and photo just like a real site:`) +
             previewCards(d) +
             p(`Please take a look on <b>both your phone and your computer</b>.`) +
@@ -286,7 +296,7 @@ export function render(key: TemplateKey, d: TemplateData): RenderedEmail {
         subject: `Did you get a chance to look at your previews?`,
         html: layout(
           "A quick reminder",
-          p(hi) +
+          p(hi) + personal(d) +
             p(`Just checking in, in case our last email got buried. Your 2 website previews for ${biz} are still live:`) +
             ul([`Version A · Launch Ready: ${link(d.linkA || "")}`, `Version B · Sales Focused: ${link(d.linkB || "")}`]) +
             p(`If one of them feels close but not quite right, that's completely normal — that's what revisions are for. Tell us what you'd change and we'll adjust it for you, at no cost until you approve.`) +
@@ -300,7 +310,7 @@ export function render(key: TemplateKey, d: TemplateData): RenderedEmail {
         subject: `Your website previews have expired — want them back?`,
         html: layout(
           "Your previews are offline",
-          p(hi) +
+          p(hi) + personal(d) +
             p(`Your 2 preview sites for ${biz} were available for 72 hours, so we've taken them offline for now.`) +
             p(`We'd still love to help you get a website that brings in more customers. If you're interested, just reply <b>"bring them back"</b> and we'll put them up again within a day.`) +
             p(`If neither direction felt right, reply and tell us what you had in mind — a different style, colors, or a site you like — and we'll try a fresh approach. There's still nothing to pay until you're happy.`),
@@ -312,7 +322,7 @@ export function render(key: TemplateKey, d: TemplateData): RenderedEmail {
         subject: `We got your changes for ${d.business || "your website"}`,
         html: layout(
           "Thank you — we're on it",
-          p(hi) +
+          p(hi) + personal(d) +
             p(`Thank you for your feedback on <b>Version ${esc(d.selectedPreview || "")}</b>. We've received your changes and our team is working on them now.`) +
             ul([
               `You'll get an email with the updated site within <b>1–2 business days</b>.`,
@@ -330,10 +340,9 @@ export function render(key: TemplateKey, d: TemplateData): RenderedEmail {
         subject: `Your changes are done — take a look`,
         html: layout(
           "Your updated site is ready",
-          p(hi) +
+          p(hi) + personal(d) +
             p(`Good news — we've made the changes you asked for on ${biz}. Please take another look on both your phone and computer:`) +
             btn(d.previewUrl || d.liveUrl || S, "View your updated site") +
-            (d.note ? box(esc(d.note)) : "") +
             p(
               (d.roundsLeft ?? 0) > 0
                 ? `You have <b>${d.roundsLeft} more free revision round${d.roundsLeft === 1 ? "" : "s"}</b> left.`
@@ -349,7 +358,7 @@ export function render(key: TemplateKey, d: TemplateData): RenderedEmail {
         subject: `Payment received — let's get ${d.business || "your site"} live`,
         html: layout(
           "Thank you — you're all set!",
-          p(hi) +
+          p(hi) + personal(d) +
             p(`We received your payment${d.amount ? ` of <b>${esc(d.amount)}</b>` : ""}${d.packageLabel ? ` for <b>${esc(d.packageLabel)}</b>` : ""}. Thank you so much for choosing SwiftLift!`) +
             h2("One last step from you (about 3 minutes)") +
             p(`Every business is set up a little differently, so this short form tells us exactly how to switch your new site over <b>safely</b> — your domain, your email, and your current website host. We'll explain everything in plain English, and nothing changes until we've checked it.`) +
@@ -370,7 +379,7 @@ export function render(key: TemplateKey, d: TemplateData): RenderedEmail {
         subject: `Here's how we'll take ${g.domain || "your site"} live`,
         html: layout(
           "Your go-live plan",
-          p(hi) +
+          p(hi) + personal(d) +
             p(`Thank you — we have everything we need. Here's exactly what will happen, in plain English. Please keep this email for reference.`) +
             domainSection(g) +
             emailSection(g) +
@@ -394,7 +403,7 @@ export function render(key: TemplateKey, d: TemplateData): RenderedEmail {
         subject: `${d.business || "Your site"} is live! 🎉`,
         html: layout(
           "Your new website is live",
-          p(hi) +
+          p(hi) + personal(d) +
             p(`Congratulations — your new website is officially live:`) +
             btn(d.liveUrl || S, d.liveUrl ? d.liveUrl.replace(/^https?:\/\//, "") : "View your site") +
             p(`<b>Heads up:</b> it can take <b>2–72 hours</b> for every phone and computer to see the new site. If you still see the old one, that's normal — please try again later or on mobile data.`) +

@@ -1,5 +1,5 @@
 // SwiftLift client journey — one function, several actions.
-//   list / send             → admin (/admin/send), needs admin_send_key
+//   list / send / preview   → admin (/admin/send), needs admin_send_key (preview renders without sending)
 //   ingest_lead             → n8n (Meta Instant Form), needs ingest_secret
 //   reminders               → pg_cron hourly, needs cron_secret
 //   golive_get / golive_submit → public /go-live page, keyed by project id
@@ -130,7 +130,18 @@ async function actionList() {
   return { leads: leads.data ?? [], projects: projects.data ?? [], emails: emails.data ?? [] };
 }
 
-async function actionSend(b: Record<string, any>) {
+// Extra files Sony attaches in /admin/send (SEO proposal etc.). Only files uploaded to our own storage bucket.
+const MAX_FILES = 5;
+function extraFiles(files: unknown): { filename: string; path: string }[] {
+  if (!Array.isArray(files)) return [];
+  const base = `${Deno.env.get("SUPABASE_URL")}/storage/v1/object/public/client-reports/`;
+  return files
+    .filter((f) => f && typeof f.url === "string" && f.url.startsWith(base))
+    .slice(0, MAX_FILES)
+    .map((f) => ({ filename: String(f.name || "Attachment").replace(/[\r\n"]+/g, " ").slice(0, 120), path: f.url }));
+}
+
+async function actionSend(b: Record<string, any>, dryRun = false) {
   const template = b.template as TemplateKey;
   const allowed: TemplateKey[] = ["previews_ready", "revision_done", "site_live", "nudge_24h", "expired_72h", "payment_confirmed", "confirm"];
   if (!allowed.includes(template)) throw new HttpError(400, "unknown template");
@@ -190,13 +201,16 @@ async function actionSend(b: Record<string, any>) {
     }
   }
 
-  if (project) {
+  if (dryRun) {
+    // Preview only: show the email exactly as it would go out, without saving or sending anything.
+    project = { ...(project || {}), ...patch };
+  } else if (project) {
     project = (await db.from("projects").update(patch).eq("id", project.id).select("*").single()).data;
   } else {
     project = (await db.from("projects").insert({ ...patch, source_app: "swiftlift_admin", project_type: "redesign" }).select("*").single()).data;
   }
   if (!project) throw new Error("could not save project");
-  if (patch.lead_id) await db.from("leads").update({ status: patch.status || "in_progress" }).eq("id", patch.lead_id);
+  if (patch.lead_id && !dryRun) await db.from("leads").update({ status: patch.status || "in_progress" }).eq("id", patch.lead_id);
 
   const used = Number(project.revision_rounds_used || 0);
   const data: TemplateData = {
@@ -206,15 +220,20 @@ async function actionSend(b: Record<string, any>) {
     roundsLeft: Math.max(0, PRICE.includedRounds - used),
     note: b.note,
   };
-  if (template === "site_live") data.golive = await latestGoLive(project.id);
-  if (template === "revision_done") {
+  if (template === "site_live" && project.id) data.golive = await latestGoLive(project.id);
+  if (template === "revision_done" && !dryRun) {
     await db.from("revision_requests").update({ status: "done", completed_at: new Date().toISOString() }).eq("project_id", project.id).neq("status", "done");
   }
-  const attachments =
+  const reportFile =
     template === "previews_ready" && project.report_url
       ? [{ filename: `${(project.business_name || "Website").replace(/[^\w\- ]+/g, "")} - Website Preview Report.pdf`, path: project.report_url }]
-      : undefined;
-  const sent = await sendAndLog(template, to, data, { projectId: project.id, leadId: project.lead_id }, attachments);
+      : [];
+  const attachments = [...reportFile, ...extraFiles(b.files)];
+  if (dryRun) {
+    const { subject, html } = render(template, data);
+    return { ok: true, subject, html, to, attachments: attachments.map((a) => a.filename) };
+  }
+  const sent = await sendAndLog(template, to, data, { projectId: project.id, leadId: project.lead_id }, attachments.length ? attachments : undefined);
   return { ok: true, projectId: project.id, ...sent };
 }
 
@@ -595,6 +614,9 @@ Deno.serve(async (req) => {
       case "send":
         await requireSecret("admin_send_key", b.key);
         return json(await actionSend(b));
+      case "preview":
+        await requireSecret("admin_send_key", b.key);
+        return json(await actionSend(b, true));
       case "check_key":
         await requireSecret("admin_send_key", b.key);
         return json({ ok: true });
