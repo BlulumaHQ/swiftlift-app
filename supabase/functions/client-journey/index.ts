@@ -5,6 +5,7 @@
 //   golive_get / golive_submit → public /go-live page, keyed by project id
 //   review_get / review_upload_url / review_submit / review_approve → public /review page, keyed by project id
 //   report_upload_url       → admin, signed upload URL for the preview report PDF
+//   send template "checkin" (B4) → admin, previews reopen 7 days for a client who went quiet
 //   mark_replied            → admin, client replied but hasn't decided → previews stay open 7 days
 //   preview_gate / preview_reopen / preview_message → public /preview page (open → redirect, closed → reopen or message us)
 import { createClient } from "https://esm.sh/@supabase/supabase-js@2.45.4";
@@ -155,7 +156,7 @@ function extraFiles(files: unknown): { filename: string; path: string }[] {
 
 async function actionSend(b: Record<string, any>, dryRun = false) {
   const template = b.template as TemplateKey;
-  const allowed: TemplateKey[] = ["previews_ready", "revision_done", "site_live", "nudge_24h", "expired_72h", "payment_confirmed", "confirm"];
+  const allowed: TemplateKey[] = ["previews_ready", "checkin", "revision_done", "site_live", "nudge_24h", "expired_72h", "payment_confirmed", "confirm"];
   if (!allowed.includes(template)) throw new HttpError(400, "unknown template");
   const to = String(b.to || "").trim().toLowerCase();
   if (!to.includes("@")) throw new HttpError(400, "missing client email");
@@ -205,6 +206,12 @@ async function actionSend(b: Record<string, any>, dryRun = false) {
       expired_sent_at: null,
     });
   }
+  if (template === "checkin") {
+    // B4 · Check-in: client went quiet. Reopen the previews 7 days, no automatic client reminders; Sony gets a heads-up 24h before they close.
+    if (!project?.preview_a_url) throw new HttpError(400, "This client has no previews yet — send B1 first.");
+    if (project.paid_at || !PREVIEW_STATES.includes(project.status)) throw new HttpError(400, "This client is past the preview stage — no check-in needed.");
+    Object.assign(patch, { status: "previews_checkin", preview_expires_at: inHours(CHECKIN_HOURS), final_sent_at: null });
+  }
   if (template === "site_live") {
     if (!b.liveUrl) throw new HttpError(400, "Live URL is required");
     Object.assign(patch, { live_url: b.liveUrl, live_at: new Date().toISOString(), status: "live" });
@@ -243,7 +250,7 @@ async function actionSend(b: Record<string, any>, dryRun = false) {
     await db.from("revision_requests").update({ status: "done", completed_at: new Date().toISOString() }).eq("project_id", project.id).neq("status", "done");
   }
   const reportFile =
-    template === "previews_ready" && project.report_url
+    (template === "previews_ready" || (template === "checkin" && b.attachReport)) && project.report_url
       ? [{ filename: `${(project.business_name || "Website").replace(/[^\w\- ]+/g, "")} - Website Preview Report.pdf`, path: project.report_url }]
       : [];
   const attachments = [...reportFile, ...extraFiles(b.files)];
@@ -316,11 +323,13 @@ async function actionIngestLead(b: Record<string, any>) {
 // No reply: open 72h (reminder at 24h, final reminder 6h before closing, closed email at 72h).
 // Client replied but hasn't decided: open 7 days from the reply, no automatic client emails; Sony gets a heads-up 24h before.
 // Client reopened a closed preview: open 48h, Sony is told right away. Paid / in revisions: always open.
+// Sony sent a B4 check-in: open 7 days, no automatic client emails; Sony gets a heads-up 24h before.
 const NO_REPLY_HOURS = 72;
 const REPLIED_HOURS = 7 * 24;
 const REOPEN_HOURS = 48;
+const CHECKIN_HOURS = 7 * 24;
 const FINAL_BEFORE_HOURS = 6;
-const PREVIEW_STATES = ["previews_sent", "previews_replied", "previews_reopened", "previews_expired"];
+const PREVIEW_STATES = ["previews_sent", "previews_replied", "previews_reopened", "previews_checkin", "previews_expired"];
 const inHours = (h: number) => new Date(Date.now() + h * 3600e3).toISOString();
 
 function previewOpen(p: Record<string, any>): boolean {
@@ -417,24 +426,24 @@ async function actionReminders() {
   }
 
   // ---- replied or reopened: no automatic client emails, Sony gets the heads-up ----
-  const { data: warn } = await db.from("projects").select("*").eq("status", "previews_replied").is("paid_at", null).is("final_sent_at", null).lte("preview_expires_at", iso(now + 24 * 3600e3)).gt("preview_expires_at", iso(now));
+  const { data: warn } = await db.from("projects").select("*").in("status", ["previews_replied", "previews_checkin"]).is("paid_at", null).is("final_sent_at", null).lte("preview_expires_at", iso(now + 24 * 3600e3)).gt("preview_expires_at", iso(now));
   for (const p of warn ?? []) {
     await db.from("projects").update({ final_sent_at: iso(Date.now()) }).eq("id", p.id);
     const biz = p.business_name || "your business";
     await notifyAdmin(
       `⏰ ${p.business_name || p.client_email}: previews close in 24h`,
-      { Client: p.client_name, Email: p.client_email, Replied: p.replied_at, "Closes at": p.preview_expires_at, "To do": "Send them a short last-call email (button below opens it in Gmail, ready to edit)." },
+      { Client: p.client_name, Email: p.client_email, ...(p.status === "previews_checkin" ? { "Check-in sent": p.updated_at } : { Replied: p.replied_at }), "Closes at": p.preview_expires_at, "To do": "Send them a short last-call email (button below opens it in Gmail, ready to edit)." },
       [{ label: "Write the last-call email in Gmail", href: followUpLink(p, `Your website previews for ${biz} close tomorrow`, `Hi ${hiName(p)},\n\nJust a quick heads-up: your website preview${p.preview_b_url ? "s" : ""} for ${biz} close${p.preview_b_url ? "" : "s"} tomorrow. If you'd like more time, simply reply and I'll keep them up for you.\n\n${linksText(p)}\n\nSony`) }],
     );
     done.push(`warn:${p.id}`);
   }
-  const { data: close } = await db.from("projects").select("*").in("status", ["previews_replied", "previews_reopened"]).is("paid_at", null).lte("preview_expires_at", iso(now));
+  const { data: close } = await db.from("projects").select("*").in("status", ["previews_replied", "previews_reopened", "previews_checkin"]).is("paid_at", null).lte("preview_expires_at", iso(now));
   for (const p of close ?? []) {
     await db.from("projects").update({ status: "previews_expired", expired_sent_at: iso(Date.now()) }).eq("id", p.id);
     await notifyAdmin(`Previews closed: ${p.business_name || p.client_email}`, {
       Client: p.client_name,
       Email: p.client_email,
-      Was: p.status === "previews_reopened" ? "Reopened by the client (48h)" : "Client replied (7 days)",
+      Was: p.status === "previews_reopened" ? "Reopened by the client (48h)" : p.status === "previews_checkin" ? "B4 check-in sent (7 days)" : "Client replied (7 days)",
       Note: "No email went to the client. Their links now show the 'preview closed' page with Reopen + message.",
     });
     done.push(`closed:${p.id}`);

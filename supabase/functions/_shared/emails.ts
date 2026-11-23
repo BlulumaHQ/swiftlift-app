@@ -247,6 +247,7 @@ export type TemplateKey =
   | "nudge_24h"
   | "final_6h"
   | "expired_72h"
+  | "checkin"
   | "revision_received"
   | "revision_done"
   | "payment_confirmed"
@@ -384,6 +385,22 @@ export function render(key: TemplateKey, d: TemplateData): RenderedEmail {
             p(`If neither direction felt right, reply and tell us what you had in mind — a different style, colors, or a site you like — and we'll try a fresh approach. There's still nothing to pay until you're happy.`),
         ),
       };
+
+    case "checkin": {
+      const fn = firstName(d.name);
+      return {
+        subject: fn && fn !== "there" ? `Still thinking about your new website, ${fn}?` : `Still thinking about your new website?`,
+        html: layout(
+          "Your previews are open again",
+          p(hi) + personal(d) +
+            p(`We've reopened your 2 website designs for ${biz} for the next <b>7 days</b>, so you can take another look:`) +
+            previewCards(d) +
+            p(`If one of them is close, pick it and tell us what you'd change. There's <b>nothing to pay</b> while we refine it — you only pay once you're happy.`) +
+            btn(review, "Pick my favorite or request changes") +
+            p(`Not quite what you had in mind? Reply and tell us what you'd like instead, and we'll take another look.`),
+        ),
+      };
+    }
 
     case "revision_received":
       return {
@@ -583,6 +600,22 @@ function renderSwiftSite(key: TemplateKey, d: TemplateData): RenderedEmail {
             p(`If the direction wasn't right, reply and tell us what you had in mind and we'll take another look.`),
         ),
       };
+
+    case "checkin": {
+      const fn = firstName(d.name);
+      return {
+        subject: fn && fn !== "there" ? `Still thinking about your new website, ${fn}?` : `Still thinking about your new website?`,
+        html: layout(
+          "Your new website is open again",
+          p(hi) + personal(d) +
+            p(`We've reopened your new website for ${biz} for the next <b>7 days</b>, so you can take another look:`) +
+            btn(gate, "See my new website") +
+            p(`Love it? Launch it — then you get <b>${P.includedRounds} rounds of changes</b> before we go live.`) +
+            btn(review, "Launch my new website") +
+            p(`Not quite what you had in mind? You pay nothing. Just reply and tell us what you'd like different.`),
+        ),
+      };
+    }
 
     case "payment_confirmed":
       return {

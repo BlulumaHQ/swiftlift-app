@@ -18,6 +18,7 @@ type EmailLog = { project_id: string | null; lead_id: string | null; template: s
 
 const TEMPLATES = [
   { value: "previews_ready", label: "B1 · Previews are ready", needs: ["linkA", "linkB"] },
+  { value: "checkin", label: "B4 · Check-in (client went quiet)", needs: [] },
   { value: "revision_done", label: "E2 · Changes are done", needs: ["previewUrl"] },
   { value: "site_live", label: "E3 · Site is live", needs: ["liveUrl"] },
   { value: "confirm", label: "Resend · Request received", needs: [] },
@@ -30,6 +31,7 @@ const TEMPLATE_LABEL: Record<string, string> = {
   nudge_24h: "B2 24h reminder",
   final_6h: "B2b final reminder",
   expired_72h: "B3 closed",
+  checkin: "B4 check-in",
   payment_confirmed: "E1 paid",
   golive_received: "Go-live plan",
   revision_done: "E2 changes done",
@@ -43,6 +45,7 @@ const STATUS_STYLE: Record<string, string> = {
   previews_expired: "bg-zinc-200 text-zinc-700",
   previews_replied: "bg-orange-100 text-orange-800",
   previews_reopened: "bg-fuchsia-100 text-fuchsia-800",
+  previews_checkin: "bg-blue-100 text-blue-800",
   paid: "bg-emerald-100 text-emerald-800",
   golive_received: "bg-emerald-100 text-emerald-800",
   revision_review: "bg-violet-100 text-violet-800",
@@ -59,7 +62,11 @@ const ago = (iso: string) => {
 };
 
 // "closes in 5h" / "closes in 3d" / "closed" for previews still in the preview stage.
-const PREVIEW_STATES = ["previews_sent", "previews_replied", "previews_reopened", "previews_expired"];
+const PREVIEW_STATES = ["previews_sent", "previews_replied", "previews_reopened", "previews_checkin", "previews_expired"];
+
+// B4 · Check-in default text (Sony edits it before sending).
+const CHECKIN_NOTE = "We haven't heard back from you and wanted to check in. If anything isn't quite right, or you have questions about pricing or next steps, just reply here. We're happy to help.";
+const FOLLOW_UP_DAYS = 7;
 const closesIn = (p?: Project) => {
   if (!p || p.paid_at || !PREVIEW_STATES.includes(p.status || "")) return "";
   if (p.status === "previews_expired" || !p.preview_expires_at) return p.status === "previews_expired" ? "closed" : "";
@@ -90,6 +97,7 @@ export default function AdminSend() {
   const [template, setTemplate] = useState<string>("previews_ready");
   const [brand, setBrand] = useState<Brand>("swiftlift");
   const [f, setF] = useState({ to: "", name: "", business: "", website: "", linkA: "", linkB: "", imgA: "", imgB: "", previewUrl: "", liveUrl: "", roundsLeft: "0", note: "", reportUrl: "", pages: "", oldHost: "" });
+  const [attachReport, setAttachReport] = useState(false);
   const [reportState, setReportState] = useState<"" | "uploading" | "done" | "error">("");
   const [files, setFiles] = useState<{ name: string; url: string; state: "uploading" | "done" | "error" }[]>([]);
   const [preview, setPreview] = useState<{ subject: string; html: string; to: string; attachments: string[] } | null>(null);
@@ -153,8 +161,10 @@ export default function AdminSend() {
     setReportState(p?.report_url ? "done" : "");
     setFiles([]);
     setPreview(null);
-    const next = !p || p.status === "new" ? "previews_ready" : p.status === "live" ? "site_live" : p.status === "revision_requested" || p.paid_at ? "revision_done" : "previews_ready";
+    const next = !p || p.status === "new" ? "previews_ready" : p.status === "live" ? "site_live" : p.status === "revision_requested" || p.paid_at ? "revision_done" : p.status === "previews_expired" ? "checkin" : "previews_ready";
     setTemplate(next);
+    setAttachReport(false);
+    if (next === "checkin") setF((s) => ({ ...s, note: CHECKIN_NOTE }));
     window.scrollTo({ top: document.getElementById("composer")?.offsetTop ?? 0, behavior: "smooth" });
   };
 
@@ -211,7 +221,7 @@ export default function AdminSend() {
 
   const payload = (action: "preview" | "send") => ({
     action, key, template, brand, projectId: selected?.project?.id, leadId: selected?.leadId,
-    ...f, roundsLeft: Number(f.roundsLeft || 0),
+    ...f, roundsLeft: Number(f.roundsLeft || 0), attachReport,
     files: files.filter((x) => x.state === "done").map((x) => ({ name: x.name, url: x.url })),
   });
 
@@ -279,6 +289,14 @@ export default function AdminSend() {
   const sentFor = (r: Row) =>
     emails.filter((e) => (r.project && e.project_id === r.project.id) || (r.leadId && e.lead_id === r.leadId) || e.to_email === r.email.toLowerCase());
 
+  // Client went quiet: previews closed and nothing sent for 7+ days → suggest a B4 check-in (never sent automatically).
+  const needsFollowUp = (r: Row, sent: EmailLog[]) => {
+    const p = r.project;
+    if (!p || p.paid_at || p.status !== "previews_expired" || !p.preview_a_url) return false;
+    const last = sent[0]?.created_at || p.previews_sent_at;
+    return !!last && Date.now() - new Date(last).getTime() >= FOLLOW_UP_DAYS * 864e5;
+  };
+
   return (
     <div className="min-h-screen bg-zinc-50 pb-24">
       <header className="sticky top-0 z-10 flex items-center justify-between border-b border-zinc-200 bg-white px-4 py-3">
@@ -317,6 +335,7 @@ export default function AdminSend() {
                       <span className={`inline-block rounded-full px-2 py-0.5 text-[11px] font-semibold ${STATUS_STYLE[r.status] || "bg-zinc-100 text-zinc-600"}`}>{r.status || "new"}</span>
                       <div className="mt-1 text-[11px] text-zinc-400">{ago(r.created)}</div>
                       {closesIn(r.project) && <div className="text-[11px] font-semibold text-orange-700">{closesIn(r.project)}</div>}
+                      {needsFollowUp(r, sent) && <div className="mt-1 inline-block rounded-full bg-blue-600 px-2 py-0.5 text-[11px] font-semibold text-white">Time to follow up</div>}
                     </div>
                   </div>
                   {sent.length > 0 && (
@@ -358,8 +377,8 @@ export default function AdminSend() {
             ))}
           </div>
           <div className="mt-3 grid grid-cols-1 gap-2">
-            {TEMPLATES.map((t) => (
-              <button key={t.value} onClick={() => setTemplate(t.value)}
+            {TEMPLATES.filter((t) => t.value !== "checkin" || (canMarkReplied && !!selected?.project?.preview_a_url)).map((t) => (
+              <button key={t.value} onClick={() => { setTemplate(t.value); if (t.value === "checkin" && !f.note.trim()) setF((s) => ({ ...s, note: CHECKIN_NOTE })); }}
                 className={`rounded-lg border px-3 py-2 text-left text-sm ${template === t.value ? "border-blue-500 bg-blue-50 font-semibold" : "border-zinc-200"}`}>
                 {brand === "swiftsite" && t.value === "previews_ready" ? "B1 · Preview is ready" : t.label}
               </button>
@@ -399,6 +418,19 @@ export default function AdminSend() {
                   {brand === "swiftsite"
                     ? "Starts the 24h reminder and 72h expiry timers. The email links to swiftsite.ca/review: launch & pay ($99 + plan), then 2 rounds of changes."
                     : "Starts the 24h reminder and 72h expiry timers. The email links to the client's review page (pick A/B, send changes, approve & pay)."}
+                </p>
+              </>
+            )}
+            {template === "checkin" && (
+              <>
+                {f.reportUrl && (
+                  <label className="flex items-center gap-2 text-sm">
+                    <input type="checkbox" checked={attachReport} onChange={(e) => setAttachReport(e.target.checked)} className="h-4 w-4" />
+                    Attach the Preview Report PDF again
+                  </label>
+                )}
+                <p className="text-xs text-zinc-500">
+                  Reopens the preview{brand === "swiftsite" ? "" : "s"} for 7 days with your message below. No automatic reminders to the client — you get a heads-up 24h before they close.
                 </p>
               </>
             )}
