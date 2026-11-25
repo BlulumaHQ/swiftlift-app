@@ -1,0 +1,6 @@
+# SPA fallback for Netlify (kept here instead of public/_redirects,
+# which Cloudflare Workers rejects as an infinite loop).
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
