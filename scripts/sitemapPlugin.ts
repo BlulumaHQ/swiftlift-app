@@ -29,6 +29,17 @@ export default function sitemapPlugin(): Plugin {
     },
     closeBundle() {
       const today = new Date().toISOString().slice(0, 10);
+      const outDir = path.resolve(config.root, config.build.outDir);
+      const assetDir = path.join(outDir, "assets");
+      const assets = fs.existsSync(assetDir) ? fs.readdirSync(assetDir) : [];
+      const portfolioShots = assets.filter((f) => /^portfolio-.+\.webp$/.test(f)).map((f) => `${SITE}/assets/${f}`);
+      // Image sitemap entries: portfolio shots on the homepage and portfolio page, founder photo on About.
+      const imagesFor = (p: string): string[] =>
+        p === "/" || p === "/portfolio"
+          ? portfolioShots
+          : p === "/about"
+            ? [`${SITE}/images/sony-lin-swiftlift-lead-designer.webp`]
+            : [];
       const urls = SITEMAP_ROUTES.map((r) =>
         [
           "  <url>",
@@ -36,11 +47,12 @@ export default function sitemapPlugin(): Plugin {
           `    <lastmod>${today}</lastmod>`,
           `    <changefreq>${r.changefreq}</changefreq>`,
           `    <priority>${r.priority.toFixed(1)}</priority>`,
+          ...imagesFor(r.path).map((src) => `    <image:image><image:loc>${src}</image:loc></image:image>`),
           "  </url>",
         ].join("\n"),
       );
-      const xml = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">\n${urls.join("\n")}\n</urlset>\n`;
-      fs.writeFileSync(path.join(path.resolve(config.root, config.build.outDir), "sitemap.xml"), xml);
+      const xml = `<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">\n${urls.join("\n")}\n</urlset>\n`;
+      fs.writeFileSync(path.join(outDir, "sitemap.xml"), xml);
       config.logger.info(`swiftlift-sitemap: ${SITEMAP_ROUTES.length} URLs`);
     },
   };

@@ -511,7 +511,7 @@ const GuaranteeBadge = ({ lang, dark, className = "" }: { lang: string; dark?: b
   </div>
 );
 
-/* ── Founder photo (falls back to initials if /images/sony-lin.jpg is missing) ── */
+/* ── Founder photo (falls back to initials if /images/sony-lin-swiftlift-lead-designer.webp is missing) ── */
 const FounderPhoto = ({ size = "lg" }: { size?: "sm" | "lg" }) => {
   const [failed, setFailed] = useState(false);
   const cls = size === "sm"
@@ -521,7 +521,7 @@ const FounderPhoto = ({ size = "lg" }: { size?: "sm" | "lg" }) => {
     <div className={`${cls} flex flex-shrink-0 items-center justify-center bg-[hsl(var(--accent-purple))] font-display font-black text-white`}>SL</div>
   ) : (
     <img
-      src="/images/sony-lin.jpg"
+      src="/images/sony-lin-swiftlift-lead-designer.webp"
       alt="Sony Lin, founder of SwiftLift"
       width={size === "sm" ? 40 : 144}
       height={size === "sm" ? 40 : 144}

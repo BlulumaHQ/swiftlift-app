@@ -16,7 +16,7 @@ const FounderPhoto = () => {
   return failed ? (
     <div className="flex aspect-[4/5] w-full items-center justify-center rounded-[28px] bg-[hsl(var(--accent-purple))] font-display text-6xl font-black text-white">SL</div>
   ) : (
-    <img src="/images/sony-lin.jpg" alt="Sony Lin, founder and lead designer of SwiftLift" width={480} height={600} onError={() => setFailed(true)} className={`aspect-[4/5] ${cls}`} />
+    <img src="/images/sony-lin-swiftlift-lead-designer.webp" alt="Sony Lin, founder and lead designer of SwiftLift" width={480} height={600} onError={() => setFailed(true)} className={`aspect-[4/5] ${cls}`} />
   );
 };
 
