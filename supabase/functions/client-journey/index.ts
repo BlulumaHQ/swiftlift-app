@@ -94,7 +94,35 @@ async function sendAndLog(
   }
 }
 
+// Phone push to Sony via Pushover (app_config: pushover_token, pushover_user).
+// Tapping the push opens the client's current website when known, else the admin pipeline.
+async function pushAdmin(title: string, rows: Record<string, unknown>) {
+  try {
+    const [token, user] = await Promise.all([config("pushover_token"), config("pushover_user")]);
+    if (!token || !user) return;
+    const lines = Object.entries(rows)
+      .filter(([, v]) => v !== null && v !== undefined && v !== "")
+      .slice(0, 6)
+      .map(([k, v]) => `${k}: ${String(v)}`);
+    const site = String(rows.Website || rows["Current site"] || rows.Site || "").trim();
+    const url = site ? (site.startsWith("http") ? site : `https://${site}`) : "https://swiftlift.app/admin";
+    const form = new URLSearchParams({
+      token,
+      user,
+      title: title.slice(0, 250),
+      message: (lines.join("\n") || title).slice(0, 1000),
+      url,
+      url_title: site ? "Open their website" : "Open SwiftLift admin",
+    });
+    const r = await fetch("https://api.pushover.net/1/messages.json", { method: "POST", body: form });
+    if (!r.ok) console.error("[client-journey] push failed", r.status, await r.text());
+  } catch (e) {
+    console.error("[client-journey] push failed", e);
+  }
+}
+
 async function notifyAdmin(title: string, rows: Record<string, unknown>, actions: AdminAction[] = []) {
+  await pushAdmin(title, rows);
   try {
     await sendEmail(ADMIN_TO, title, adminHtml(title, rows, actions));
   } catch (e) {
@@ -932,6 +960,10 @@ Deno.serve(async (req) => {
         return json(await actionSend(b, true));
       case "check_key":
         await requireSecret("admin_send_key", b.key);
+        return json({ ok: true });
+      case "push_test":
+        await requireSecret("admin_send_key", b.key);
+        await pushAdmin("SwiftLift 推播測試", { Status: "推播接好了，新 lead 會這樣通知你", Website: b.website || "" });
         return json({ ok: true });
       case "ingest_lead":
         await requireSecret("ingest_secret", b.secret ?? req.headers.get("x-ingest-secret"));
