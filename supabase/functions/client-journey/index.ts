@@ -96,10 +96,10 @@ async function sendAndLog(
 
 // Phone push to Sony via Pushover (app_config: pushover_token, pushover_user).
 // Tapping the push opens the client's current website when known, else the admin pipeline.
-async function pushAdmin(title: string, rows: Record<string, unknown>) {
+async function pushAdmin(title: string, rows: Record<string, unknown>): Promise<string> {
   try {
     const [token, user] = await Promise.all([config("pushover_token"), config("pushover_user")]);
-    if (!token || !user) return;
+    if (!token || !user) return "missing pushover config";
     const lines = Object.entries(rows)
       .filter(([, v]) => v !== null && v !== undefined && v !== "")
       .slice(0, 6)
@@ -115,9 +115,12 @@ async function pushAdmin(title: string, rows: Record<string, unknown>) {
       url_title: site ? "Open their website" : "Open SwiftLift admin",
     });
     const r = await fetch("https://api.pushover.net/1/messages.json", { method: "POST", body: form });
-    if (!r.ok) console.error("[client-journey] push failed", r.status, await r.text());
+    const out = `${r.status} ${await r.text()}`;
+    if (!r.ok) console.error("[client-journey] push failed", out);
+    return out;
   } catch (e) {
     console.error("[client-journey] push failed", e);
+    return `error ${String(e)}`;
   }
 }
 
@@ -963,8 +966,7 @@ Deno.serve(async (req) => {
         return json({ ok: true });
       case "push_test":
         await requireSecret("admin_send_key", b.key);
-        await pushAdmin("SwiftLift 推播測試", { Status: "推播接好了，新 lead 會這樣通知你", Website: b.website || "" });
-        return json({ ok: true });
+        return json({ ok: true, push: await pushAdmin("SwiftLift 推播測試", { Status: "推播接好了，新 lead 會這樣通知你", Website: b.website || "" }) });
       case "ingest_lead":
         await requireSecret("ingest_secret", b.secret ?? req.headers.get("x-ingest-secret"));
         return json(await actionIngestLead(b));
