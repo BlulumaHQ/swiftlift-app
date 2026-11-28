@@ -15,7 +15,7 @@ const ACCENT = "#337DAF";
 // ---------- brands ----------
 // One email system, two brands. SwiftSite (swiftsite.ca, Canada): 1 preview, pay at preview, then 2 rounds of changes.
 export type Brand = "swiftlift" | "swiftsite";
-export const SS_PRICE = { setup: 99, monthly: 25, yearly: 250, includedRounds: 2, seo: 199 } as const;
+export const SS_PRICE = { setup: 199, monthly: 25, yearly: 250, includedRounds: 2, seo: 199 } as const;
 export const BRANDS = {
   swiftlift: {
     name: "SwiftLift",
@@ -508,7 +508,7 @@ export function render(key: TemplateKey, d: TemplateData): RenderedEmail {
 }
 
 // ---------- SwiftSite (swiftsite.ca) ----------
-// 1 preview · pay when you love the preview ($99 setup + Hosting & Care) · then 2 rounds of changes · go live.
+// 1 preview · pay when you love the preview ($199 setup + Hosting & Care) · then 2 rounds of changes · go live.
 function renderSwiftSite(key: TemplateKey, d: TemplateData): RenderedEmail {
   const hi = `Hi ${esc(firstName(d.name))},`;
   const biz = esc(d.business || "your business");

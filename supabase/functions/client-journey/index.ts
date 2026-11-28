@@ -834,7 +834,7 @@ async function actionReviewApprove(b: Record<string, any>, req: Request) {
 
 // ---------------- SwiftSite: launch (pay) at preview, approve final before go-live ----------------
 const SS_STRIPE_PRICE = {
-  setup: "price_1UdaGOAfYSE2nzTBYU9lQ7G9", // SwiftSite Website Setup $99 CAD (one-time)
+  setup: "price_1UgaxBAfYSE2nzTBceYHlKz5", // SwiftSite Website Setup $199 CAD (one-time; old $99 price_1UdaGOAfYSE2nzTBYU9lQ7G9 kept)
   monthly: "price_1UdaHFAfYSE2nzTBc1hAy9zw", // SwiftSite Hosting & Care $25/month
   yearly: "price_1UdaHFAfYSE2nzTBfQCj7jvc", // SwiftSite Hosting & Care $250/year
 };
@@ -854,7 +854,7 @@ async function swiftSiteApprove(p: Record<string, any>, b: Record<string, any>) 
     });
     return { ok: true, approved: true };
   }
-  // Not paid yet → Stripe Checkout: $99 setup + Hosting & Care subscription (card saved for renewals).
+  // Not paid yet → Stripe Checkout: $199 setup + Hosting & Care subscription (card saved for renewals).
   const key = Deno.env.get("STRIPE_SECRET_KEY_SWIFTSITE");
   if (!key) throw new Error("SwiftSite payments are not set up yet");
   const yearly = b.plan === "yearly";
