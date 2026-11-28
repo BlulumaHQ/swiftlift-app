@@ -40,6 +40,7 @@ declare global {
     fbq?: (...args: unknown[]) => void;
     gtag?: (...args: unknown[]) => void;
     clarity?: (...args: unknown[]) => void;
+    oaiq?: (...args: unknown[]) => void;
   }
 }
 
@@ -340,6 +341,8 @@ const MultiStepIntake = ({ variant = "hero" }: { variant?: "hero" | "cta" }) => 
         window.fbq?.("track", "Lead");
         window.gtag?.("event", "generate_lead", { form: "preview_request", source: variant });
         window.clarity?.("event", "lead_submitted");
+        window.gtag?.("event", "conversion", { send_to: "AW-18591608238/nLS-CO_i78AdEK7blaFF" });
+        window.oaiq?.("measure", "lead_created", { type: "customer_action" });
       } catch { /* tracking is best-effort */ }
 
       try { sessionStorage.setItem("swiftlift_email", email); } catch {}
